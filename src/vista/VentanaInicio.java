@@ -9,7 +9,7 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Image;
 
-public class VentanaLogin extends JFrame implements ActionListener {
+public class VentanaInicio extends JFrame implements ActionListener {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
@@ -24,7 +24,7 @@ public class VentanaLogin extends JFrame implements ActionListener {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					VentanaLogin frame = new VentanaLogin();
+					VentanaInicio frame = new VentanaInicio();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -33,7 +33,7 @@ public class VentanaLogin extends JFrame implements ActionListener {
 		});
 	}
 
-	public VentanaLogin() {
+	public VentanaInicio() {
 	    setIconImage(Toolkit.getDefaultToolkit().getImage("53283.png"));
 	    setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	    setBounds(100, 100, 779, 550);
