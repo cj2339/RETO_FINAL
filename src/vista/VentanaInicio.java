@@ -70,7 +70,7 @@ public class VentanaInicio extends JFrame implements ActionListener {
 	    txtbienvenidosABordo.setFont(new Font("Mistral", Font.PLAIN, 25));
 	    txtbienvenidosABordo.setForeground(new Color(0, 0, 0));
 	    txtbienvenidosABordo.setHorizontalAlignment(SwingConstants.CENTER);
-	    txtbienvenidosABordo.setText("¡WELCOME ABOARD!");
+	    txtbienvenidosABordo.setText("WELCOME ABOARD!");
 	    contentPane.add(txtbienvenidosABordo);
 	    txtbienvenidosABordo.setColumns(10);
 	    txtbienvenidosABordo.setBorder(null);
