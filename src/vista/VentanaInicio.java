@@ -16,7 +16,7 @@ public class VentanaInicio extends JFrame implements ActionListener {
 	private JTextField txtNombre;
 	private JLabel lblTitulo;
 	private JLabel lblNombre;
-	private Image imagenFondo = new ImageIcon("FotoFondo2.png").getImage();
+	private Image imagenFondo = new ImageIcon("FotooFondo.png").getImage();
 	private JTextField txtbienvenidosABordo;
 	
 
@@ -66,11 +66,11 @@ public class VentanaInicio extends JFrame implements ActionListener {
 	    txtbienvenidosABordo = new JTextField();
 	    txtbienvenidosABordo.setEditable(false);
 	    txtbienvenidosABordo.setBackground(new Color(251, 251, 251));
-	    txtbienvenidosABordo.setBounds(253, 138, 234, 34);
-	    txtbienvenidosABordo.setFont(new Font("Mistral", Font.PLAIN, 20));
+	    txtbienvenidosABordo.setBounds(244, 182, 207, 34);
+	    txtbienvenidosABordo.setFont(new Font("Mistral", Font.PLAIN, 25));
 	    txtbienvenidosABordo.setForeground(new Color(0, 0, 0));
 	    txtbienvenidosABordo.setHorizontalAlignment(SwingConstants.CENTER);
-	    txtbienvenidosABordo.setText("¡BIENVENIDOS A BORDO!");
+	    txtbienvenidosABordo.setText("¡WELCOME ABOARD!");
 	    contentPane.add(txtbienvenidosABordo);
 	    txtbienvenidosABordo.setColumns(10);
 	    txtbienvenidosABordo.setBorder(null);
