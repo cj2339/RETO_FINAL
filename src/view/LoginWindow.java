@@ -29,7 +29,7 @@ public class LoginWindow extends JDialog implements ActionListener{
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private final JPanel contentPanel = new JPanel();
-	private Image imagenFondo = new ImageIcon("barco.png").getImage();
+	private Image imagenFondo = new ImageIcon("images/ship.png").getImage();
 	private JTextField textField;
 	private JPasswordField passwordField;
 	private JLabel lblError;
@@ -54,6 +54,8 @@ public class LoginWindow extends JDialog implements ActionListener{
 	 * Create the dialog.
 	 */
 	public LoginWindow() {
+		
+		
 		setTitle("Login");
 		setBounds(100, 100, 553, 403);
 		getContentPane().setLayout(new BorderLayout());
@@ -99,7 +101,7 @@ public class LoginWindow extends JDialog implements ActionListener{
 		    btn.addActionListener(this);
 		    contentPane.add(btn);
 		    
-		    lblError = new JLabel("User not found");
+		    lblError = new JLabel("");
 		    lblError.setHorizontalAlignment(SwingConstants.CENTER);
 		    lblError.setFont(new Font("Bahnschrift", Font.PLAIN, 20));
 		    lblError.setBounds(277, 164, 183, 25);
@@ -113,14 +115,21 @@ public class LoginWindow extends JDialog implements ActionListener{
 		String password=new String(passwordField.getPassword());
 		
 		if(e.getSource()==btn&&atempts>0) {
-			//if(cont.login(new User(textField.getText(),passwordField.getSelectedText()) {
+			if(cont.checkUser(new User(textField.getText(),passwordField.getSelectedText()))) {
+				MainWindow mainWindow=new MainWindow();
+				mainWindow.setVisible(true);
 				
+				dispose();
 			}else {
-				JOptionPane.showMessageDialog(this,atempts, "Remaining login atempts:" , JOptionPane.INFORMATION_MESSAGE);
+				lblError.setText("User not found");
+				JOptionPane.showMessageDialog(this, atempts, "Remaining login atempts:", JOptionPane.INFORMATION_MESSAGE);
 				atempts--;
 				lblError.setText("User not found");
-			}
-		//}
-		
+			} 
+		}else if(e.getSource()==btn&&atempts==0) {
+			JOptionPane.showMessageDialog(this, "You have exceeded 3 attempts", "Login failure:" , JOptionPane.INFORMATION_MESSAGE);
+			dispose();
+		}
 	}
+
 }

@@ -17,14 +17,8 @@ public class LoginController {
 //		StartWindow ven = new StartWindow(this);
 //		ven.setVisible(true);	
 //	}
-//	public boolean login(User) {
-//		
-//	}
-//	public boolean comprobarUsuario(User user){
-//		return dao.comprobarUsuario(user);	
-//	}
-//	public boolean insertarUsuario(User usuario) {
-//		return dao.insertarUsuario(usuario);
-//	}
+	public boolean checkUser(User user) {
+		return dao.checkUser(user);
+	}
 	
 }

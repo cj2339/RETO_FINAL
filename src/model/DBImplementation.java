@@ -66,6 +66,7 @@ public class DBImplementation implements UserDAO{
 	        }
 	        return existe;
 	    }
+		
 		public boolean checkUser1(User user){
 			boolean existe=false;
 			this.openConnection();
@@ -110,19 +111,5 @@ public class DBImplementation implements UserDAO{
 				return ok;		
 		}
 
-		@Override
-		public boolean login(User user) {
-			boolean loged=false;
-			if(!checkUser(user)) {
-				try {
-					
-				}catch(SQLException e) {
-					System.out.println("Error verifying credentials: "+e.getMessage());
-				}
-			}
-			return loged;
-		}
 		
-		
-
 }
