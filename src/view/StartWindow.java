@@ -50,7 +50,7 @@ public class StartWindow extends JFrame implements ActionListener {
 	    };
 	    setContentPane(contentPane);
 	    contentPane.setLayout(null);
-
+ 
 	    lblNombre = new JLabel();
 	    lblNombre.setBounds(148, 40, 250, 20);
 	    lblNombre.setFont(new Font("Tahoma", Font.BOLD, 10));

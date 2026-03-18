@@ -40,7 +40,7 @@ public class DBImplementation implements UserDAO{
 			this.userBD = this.configFile.getString("DBUser");
 			this.passwordBD = this.configFile.getString("DBPass");
 		}
-
+ 
 		private void openConnection() {
 			try {
 				con = DriverManager.getConnection(urlBD, this.userBD, this.passwordBD);

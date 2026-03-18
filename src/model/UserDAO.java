@@ -9,3 +9,4 @@ public interface UserDAO {
 	public boolean comprobarUsuario(User usuario);
 	public boolean insertarUsuario(User usuario);
 }
+ 

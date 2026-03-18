@@ -106,7 +106,7 @@ public class LoginWindow extends JDialog implements ActionListener{
 		    contentPane.add(lblError);
 		   
 	}
-
+ 
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
