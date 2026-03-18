@@ -1,4 +1,4 @@
-package vista;
+package view;
 
 import java.awt.EventQueue;
 import javax.swing.*;
@@ -9,7 +9,7 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Image;
 
-public class VentanaInicio extends JFrame implements ActionListener {
+public class StartWindow extends JFrame implements ActionListener {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
@@ -24,7 +24,7 @@ public class VentanaInicio extends JFrame implements ActionListener {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					VentanaInicio frame = new VentanaInicio();
+					StartWindow frame = new StartWindow();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -33,7 +33,7 @@ public class VentanaInicio extends JFrame implements ActionListener {
 		});
 	}
 
-	public VentanaInicio() {
+	public StartWindow() {
 	    setIconImage(Toolkit.getDefaultToolkit().getImage("53283.png"));
 	    setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	    setBounds(100, 100, 779, 550);
@@ -70,7 +70,7 @@ public class VentanaInicio extends JFrame implements ActionListener {
 	    txtbienvenidosABordo.setFont(new Font("Mistral", Font.PLAIN, 25));
 	    txtbienvenidosABordo.setForeground(new Color(0, 0, 0));
 	    txtbienvenidosABordo.setHorizontalAlignment(SwingConstants.CENTER);
-	    txtbienvenidosABordo.setText("¡WELCOME ABOARD!");
+	    txtbienvenidosABordo.setText("WELCOME ABOARD!");
 	    contentPane.add(txtbienvenidosABordo);
 	    txtbienvenidosABordo.setColumns(10);
 	    txtbienvenidosABordo.setBorder(null);

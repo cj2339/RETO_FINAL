@@ -1,4 +1,4 @@
-package modelo;
+package model;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -9,7 +9,7 @@ import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.TreeMap;
 
-public class ImplementacionBD implements UsuarioDAO{
+public class DBImplementation implements UserDAO{
 	// Atributos
 		private Connection con;
 		private PreparedStatement stmt;
@@ -33,7 +33,7 @@ public class ImplementacionBD implements UsuarioDAO{
 		
 		// Para la conexión utilizamos un fichero de configuaraci n, config que
 		// guardamos en el paquete control:
-		public ImplementacionBD() {
+		public DBImplementation() {
 			this.configFile = ResourceBundle.getBundle("configClase");
 			this.driverBD = this.configFile.getString("Driver");
 			this.urlBD = this.configFile.getString("Conn");
@@ -52,7 +52,7 @@ public class ImplementacionBD implements UsuarioDAO{
 			}
 		}
 
-		public boolean comprobarUsuario(Usuario usuario){
+		public boolean comprobarUsuario(User usuario){
 			// Abrimos la conexion
 			boolean existe=false;
 			this.openConnection();
@@ -74,7 +74,7 @@ public class ImplementacionBD implements UsuarioDAO{
 	        }
 	        return existe;
 	    }
-		public boolean comprobarUsuario1(Usuario usuario){
+		public boolean comprobarUsuario1(User usuario){
 			// Abrimos la conexion
 			boolean existe=false;
 			this.openConnection();
@@ -99,7 +99,7 @@ public class ImplementacionBD implements UsuarioDAO{
 	        return existe;
 	    }
 		
-		public boolean insertarUsuario(Usuario usuario) {
+		public boolean insertarUsuario(User usuario) {
 			// TODO Auto-generated method stub
 			boolean ok=false;
 			if (!comprobarUsuario1(usuario))
