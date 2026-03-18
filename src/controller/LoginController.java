@@ -13,10 +13,11 @@ import model.UserDAO;
 public class LoginController {
 	UserDAO dao = new DBImplementation();
 
-//	public void visualizarPantalla() {
-//		StartWindow ven = new StartWindow(this);
-//		ven.setVisible(true);	
-//	}
+	public void viewWindow() {
+		StartWindow win=new StartWindow(this);
+		win.setVisible(true);
+	}
+
 	public boolean checkUser(User user) {
 		return dao.checkUser(user);
 	}
