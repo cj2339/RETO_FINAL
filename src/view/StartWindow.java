@@ -13,7 +13,6 @@ public class StartWindow extends JFrame implements ActionListener {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
-	private JTextField txtNombre;
 	private JLabel lblTitulo;
 	private JLabel lblNombre;
 	private Image imagenFondo = new ImageIcon("background1.png").getImage();
@@ -78,7 +77,6 @@ public class StartWindow extends JFrame implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
 		
 	}
 }
