@@ -3,12 +3,15 @@ package view;
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
 import java.awt.Font;
+import java.awt.Graphics;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -19,6 +22,8 @@ public class MainWindow extends JDialog implements ActionListener {
 	private JButton btnWorkers;
 	private JButton btnClient;
 	private JButton btnAdmins;
+	private JPanel contentPane;
+	private Image imagenFondo = new ImageIcon("images/ManagementAnchor.png").getImage();
 
 	/**
 	 * Launch the application.
@@ -36,14 +41,27 @@ public class MainWindow extends JDialog implements ActionListener {
 	/**
 	 * Create the dialog.
 	 */
+	
+	
 	public MainWindow() {
+		
+		 contentPane = new JPanel() {
+		        @Override
+		        protected void paintComponent(Graphics g) {
+		            super.paintComponent(g);
+		            g.drawImage(imagenFondo, 0, 0, getWidth(), getHeight(), this);
+		        }
+		  };
+		  setContentPane(contentPane);
+		  contentPane.setLayout(null);
+		    
 		setTitle("Main Management");
 		setBounds(100, 100, 450, 300);
 		getContentPane().setLayout(null);
 		
 		JLabel lblNewLabel = new JLabel("MANAGEMENT");
 		lblNewLabel.setFont(new Font("Arial", Font.BOLD, 20));
-		lblNewLabel.setBounds(138, 22, 160, 21);
+		lblNewLabel.setBounds(148, 22, 160, 21);
 		getContentPane().add(lblNewLabel);
 		
 		btnCruise = new JButton("CRUISE");
@@ -51,7 +69,7 @@ public class MainWindow extends JDialog implements ActionListener {
 		getContentPane().add(btnCruise);
 		
 		btnWorkers = new JButton("WORKER");
-		btnWorkers.setBounds(283, 77, 112, 38);
+		btnWorkers.setBounds(299, 77, 112, 38);
 		getContentPane().add(btnWorkers);
 		
 		btnClient = new JButton("CLIENT");
@@ -59,13 +77,13 @@ public class MainWindow extends JDialog implements ActionListener {
 		getContentPane().add(btnClient);
 		
 		btnAdmins = new JButton("ADMIN");
-		btnAdmins.setBounds(283, 164, 112, 38);
+		btnAdmins.setBounds(299, 164, 112, 38);
 		getContentPane().add(btnAdmins);
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
+		
 		
 	}
 }

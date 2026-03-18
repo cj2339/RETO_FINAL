@@ -112,16 +112,22 @@ public class DBImplementation implements UserDAO{
 
 		@Override
 		public boolean login(User user) {
-			boolean loged=false;
-			if(!checkUser(user)) {
-				try {
-					
-				}catch(SQLException e) {
-					System.out.println("Error verifying credentials: "+e.getMessage());
-				}
-			}
-			return loged;
+			// TODO Auto-generated method stub
+			return false;
 		}
+
+//		@Override
+//		public boolean login(User user) {
+//			boolean loged=false;
+//			if(!checkUser(user)) {
+//				try {
+//					
+//				}catch(SQLException e) {
+//					System.out.println("Error verifying credentials: "+e.getMessage());
+//				}
+//			}
+//			return loged;
+//		}
 		
 		
 

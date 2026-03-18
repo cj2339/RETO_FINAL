@@ -15,7 +15,7 @@ public class StartWindow extends JFrame implements ActionListener {
 	private JPanel contentPane;
 	private JLabel lblTitulo;
 	private JLabel lblNombre;
-	private Image imagenFondo = new ImageIcon("background1.png").getImage();
+	private Image imagenFondo = new ImageIcon("images/background1.png").getImage();
 	private JTextField txtbienvenidosABordo;
 	
 
