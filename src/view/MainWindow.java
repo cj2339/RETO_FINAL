@@ -19,7 +19,7 @@ public class MainWindow extends JDialog implements ActionListener {
 
 	private static final long serialVersionUID = 1L;
 	private JButton btnCruise;
-	private JButton btnWorkers;
+	private JButton btnWorker;
 	private JButton btnClient;
 	private JButton btnAdmins;
 	private JPanel contentPane;
@@ -67,18 +67,22 @@ public class MainWindow extends JDialog implements ActionListener {
 		btnCruise = new JButton("CRUISE");
 		btnCruise.setBounds(24, 77, 112, 38);
 		getContentPane().add(btnCruise);
+		btnCruise.addActionListener(this);
 		
-		btnWorkers = new JButton("WORKER");
-		btnWorkers.setBounds(299, 77, 112, 38);
-		getContentPane().add(btnWorkers);
+		btnWorker = new JButton("WORKER");
+		btnWorker.setBounds(299, 77, 112, 38);
+		getContentPane().add(btnWorker);
+		btnWorker.addActionListener(this);
 		
 		btnClient = new JButton("CLIENT");
 		btnClient.setBounds(24, 164, 112, 38);
 		getContentPane().add(btnClient);
+		btnClient.addActionListener(this);
 		
 		btnAdmins = new JButton("ADMIN");
 		btnAdmins.setBounds(299, 164, 112, 38);
 		getContentPane().add(btnAdmins);
+		btnAdmins.addActionListener(this);
 	}
 
 	@Override
