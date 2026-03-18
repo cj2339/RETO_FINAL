@@ -33,7 +33,7 @@ public class StartWindow extends JFrame implements ActionListener {
 	}
 
 	public StartWindow() {
-	    setIconImage(Toolkit.getDefaultToolkit().getImage("53283.png"));//Falta la imagen del icono
+	    setIconImage(Toolkit.getDefaultToolkit().getImage("images/Icono.png"));//Falta la imagen del icono
 	    setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	    setBounds(100, 100, 779, 550);
 
