@@ -16,7 +16,7 @@ public class StartWindow extends JFrame implements ActionListener {
 	private JTextField txtNombre;
 	private JLabel lblTitulo;
 	private JLabel lblNombre;
-	private Image imagenFondo = new ImageIcon("FotooFondo.png").getImage();
+	private Image imagenFondo = new ImageIcon("background1.png").getImage();
 	private JTextField txtbienvenidosABordo;
 	
 
@@ -34,11 +34,11 @@ public class StartWindow extends JFrame implements ActionListener {
 	}
 
 	public StartWindow() {
-	    setIconImage(Toolkit.getDefaultToolkit().getImage("53283.png"));
+	    setIconImage(Toolkit.getDefaultToolkit().getImage("53283.png"));//Falta la imagen del icono
 	    setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	    setBounds(100, 100, 779, 550);
 
-	    // 🔒 Bloquear que la ventana pueda redimensionarse o maximizarse
+	    //Bloquear que la ventana pueda redimensionarse o maximizarse
 	    setResizable(false);
 
 	    contentPane = new JPanel() {
