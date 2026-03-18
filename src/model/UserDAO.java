@@ -6,7 +6,8 @@ import java.util.Map;
 import java.util.TreeMap;
 
 public interface UserDAO {
-	public boolean comprobarUsuario(User usuario);
-	public boolean insertarUsuario(User usuario);
+	public boolean login(User user);
+	public boolean checkUser(User user);
+	public boolean insertUser(User user);
 }
  

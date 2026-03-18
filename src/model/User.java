@@ -1,37 +1,33 @@
 package model;
 
 public class User {
-	private String nombre;
-    private String contrasena;
+	private String name;
+    private String password;
 
     public User() {
-        this.nombre = "";
-        this.contrasena = "";
+        this.name = null;
+        this.password = null;
     }
-    public User(String nombre, String contrasena) {
-        this.nombre = nombre;
-        this.contrasena = contrasena;
+    public User(String name, String password) {
+        this.name = name;
+        this.password = password;
     }
  
-    public String getNombre() {
-        return nombre;
+    public String getName() {
+        return name;
     } 
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getContrasena() {
-        return contrasena;
+    public String getPassword() {
+        return password;
     }
 
-    public void setContrasena(String contrasena) {
-        this.contrasena = contrasena;
+    public void setPassword(String password) {
+        this.password = password;
     }
 
-    @Override
-    public String toString() {
-        return "Usuario [nombre=" + nombre + ", contrasena=" + contrasena + "]";
-    }
 
 }

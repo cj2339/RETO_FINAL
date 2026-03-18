@@ -10,40 +10,34 @@ import java.util.ResourceBundle;
 import java.util.TreeMap;
 
 public class DBImplementation implements UserDAO{
-	// Atributos
 		private Connection con;
 		private PreparedStatement stmt;
 
-		// Los siguientes atributos se utilizan para recoger los valores del fich de
-		// configuración
 		private ResourceBundle configFile;
-		private String driverBD;
-		private String urlBD;
-		private String userBD;
-		private String passwordBD;
+		private String driverDB;
+		private String urlDB;
+		private String userDB;
+		private String passwordDB;
 
-		// Sentencias SQL
 		
-		final String SQL = "SELECT * FROM usuario WHERE nombre = ? AND contrasena = ?";		
+		final String SQL = "SELECT * FROM user WHERE name = ? AND password = ?";		
 		final String sql1 = "SELECT * FROM usuario WHERE nombre = ?";
 		final String sqlInsert = "INSERT INTO usuario VALUES (?,?)";
 		final String SQLCONSULTA = "SELECT * FROM usuario";
 		final String SQLBORRAR = "DELETE FROM usuario WHERE nombre=?";
 		final String SQLMODIFICAR = "UPDATE usuario SET contrasena=? WHERE nombre=?";
 		
-		// Para la conexión utilizamos un fichero de configuaraci n, config que
-		// guardamos en el paquete control:
 		public DBImplementation() {
 			this.configFile = ResourceBundle.getBundle("configClase");
-			this.driverBD = this.configFile.getString("Driver");
-			this.urlBD = this.configFile.getString("Conn");
-			this.userBD = this.configFile.getString("DBUser");
-			this.passwordBD = this.configFile.getString("DBPass");
+			this.driverDB = this.configFile.getString("Driver");
+			this.urlDB = this.configFile.getString("Conn");
+			this.userDB = this.configFile.getString("DBUser");
+			this.passwordDB = this.configFile.getString("DBPass");
 		}
  
 		private void openConnection() {
 			try {
-				con = DriverManager.getConnection(urlBD, this.userBD, this.passwordBD);
+				con = DriverManager.getConnection(urlDB, this.userDB, this.passwordDB);
 			} catch (SQLException e) {
 				System.out.println("Error al intentar abrir la BD");
 				e.printStackTrace();
@@ -52,17 +46,15 @@ public class DBImplementation implements UserDAO{
 			}
 		}
 
-		public boolean comprobarUsuario(User usuario){
-			// Abrimos la conexion
+		public boolean checkUser(User user){
 			boolean existe=false;
 			this.openConnection();
 			try {
 				stmt = con.prepareStatement(SQL);
-	            stmt.setString(1, usuario.getNombre());
-	            stmt.setString(2, usuario.getContrasena());
+	            stmt.setString(1, user.getName());
+	            stmt.setString(2, user.getPassword());
 	            ResultSet resultado = stmt.executeQuery();
 
-	            //Si hay un resultado, el usuario existe
 	            if (resultado.next()) {
 	                existe = true;
 	            }
@@ -74,17 +66,15 @@ public class DBImplementation implements UserDAO{
 	        }
 	        return existe;
 	    }
-		public boolean comprobarUsuario1(User usuario){
-			// Abrimos la conexion
+		public boolean checkUser1(User user){
 			boolean existe=false;
 			this.openConnection();
 			
 			try {
 				stmt = con.prepareStatement(sql1);
-	            stmt.setString(1, usuario.getNombre());
+	            stmt.setString(1, user.getName());
 	            ResultSet resultado = stmt.executeQuery();
 
-	            //Si hay un resultado, el usuario existe
 	            if (resultado.next()) {
 	                existe = true;
 	            }
@@ -99,17 +89,15 @@ public class DBImplementation implements UserDAO{
 	        return existe;
 	    }
 		
-		public boolean insertarUsuario(User usuario) {
-			// TODO Auto-generated method stub
+		public boolean insertUser(User user) {
 			boolean ok=false;
-			if (!comprobarUsuario1(usuario))
+			if (!checkUser1(user))
 			{
 				this.openConnection();
 				try {
-					// Preparamos la sentencia stmt con la conexion y sentencia sql correspondiente
 					stmt = con.prepareStatement(sqlInsert);
-					stmt.setString(1, usuario.getNombre());
-					stmt.setString(2, usuario.getContrasena());
+					stmt.setString(1, user.getName());
+					stmt.setString(2, user.getPassword());
 					if (stmt.executeUpdate()>0) {
 						ok=true;
 					}			
@@ -120,6 +108,19 @@ public class DBImplementation implements UserDAO{
 		        }
 			}
 				return ok;		
+		}
+
+		@Override
+		public boolean login(User user) {
+			boolean loged=false;
+			if(!checkUser(user)) {
+				try {
+					
+				}catch(SQLException e) {
+					System.out.println("Error verifying credentials: "+e.getMessage());
+				}
+			}
+			return loged;
 		}
 		
 		
