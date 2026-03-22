@@ -2,10 +2,6 @@ package controller;
 
 import view.StartWindow;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.util.Map;
-
 import model.DBImplementation;
 import model.User;
 import model.UserDAO;
@@ -20,6 +16,6 @@ public class LoginController {
 
 	public boolean checkUser(User user) {
 		return dao.checkUser(user);
-	}
+	} 
 	
 }

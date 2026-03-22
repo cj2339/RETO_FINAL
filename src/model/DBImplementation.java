@@ -28,7 +28,7 @@ public class DBImplementation implements UserDAO{
 		final String SQLMODIFICAR = "UPDATE usuario SET contrasena=? WHERE nombre=?";
 		
 		public DBImplementation() {
-			this.configFile = ResourceBundle.getBundle("configClase");
+			this.configFile = ResourceBundle.getBundle("configClass");
 			this.driverDB = this.configFile.getString("Driver");
 			this.urlDB = this.configFile.getString("Conn");
 			this.userDB = this.configFile.getString("DBUser");

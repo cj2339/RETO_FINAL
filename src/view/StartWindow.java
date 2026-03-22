@@ -2,6 +2,9 @@ package view;
 
 import java.awt.EventQueue;
 import javax.swing.*;
+
+import controller.LoginController;
+
 import java.awt.event.*;
 import java.awt.Toolkit;
 import java.awt.Color;
@@ -13,27 +16,16 @@ public class StartWindow extends JFrame implements ActionListener {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
-	private JLabel lblTitulo;
-	private JLabel lblNombre;
-	private Image imagenFondo = new ImageIcon("images/background1.png").getImage();
-	private JTextField txtbienvenidosABordo;
+	private LoginController cont;
+	private JLabel lblTitle;
+	private JLabel lblName;
+	private Image BackgroundImage = new ImageIcon("images/background1.png").getImage();
+	private JTextField lblText;
 	
-
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					StartWindow frame = new StartWindow();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
-	public StartWindow() {
-	    setIconImage(Toolkit.getDefaultToolkit().getImage("images/Icono.png"));
+	public StartWindow(LoginController loginController) {
+		this.cont=loginController; 
+		
+		setIconImage(Toolkit.getDefaultToolkit().getImage("images/icon.png"));
 	    setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	    setBounds(100, 100, 779, 550);
 
@@ -44,35 +36,36 @@ public class StartWindow extends JFrame implements ActionListener {
 	        @Override
 	        protected void paintComponent(Graphics g) {
 	            super.paintComponent(g);
-	            g.drawImage(imagenFondo, 0, 0, getWidth(), getHeight(), this);
+	            g.drawImage(BackgroundImage, 0, 0, getWidth(), getHeight(), this);
 	        }
 	    };
+	    
 	    setContentPane(contentPane);
 	    contentPane.setLayout(null);
  
-	    lblNombre = new JLabel();
-	    lblNombre.setBounds(148, 40, 250, 20);
-	    lblNombre.setFont(new Font("Tahoma", Font.BOLD, 10));
-	    lblNombre.setBackground(new Color(255, 255, 255));
-	    contentPane.add(lblNombre);
+	    lblName = new JLabel();
+	    lblName.setBounds(148, 40, 250, 20);
+	    lblName.setFont(new Font("Tahoma", Font.BOLD, 10));
+	    lblName.setBackground(new Color(255, 255, 255));
+	    contentPane.add(lblName);
 
-	    lblTitulo = new JLabel();
-	    lblTitulo.setBounds(148, 80, 250, 20);
-	    lblTitulo.setFont(new Font("Tahoma", Font.BOLD, 10));
-	    lblTitulo.setBackground(new Color(255, 255, 255));
-	    contentPane.add(lblTitulo);
+	    lblTitle = new JLabel();
+	    lblTitle.setBounds(148, 80, 250, 20);
+	    lblTitle.setFont(new Font("Tahoma", Font.BOLD, 10));
+	    lblTitle.setBackground(new Color(255, 255, 255));
+	    contentPane.add(lblTitle);
 	    
-	    txtbienvenidosABordo = new JTextField();
-	    txtbienvenidosABordo.setEditable(false);
-	    txtbienvenidosABordo.setBackground(new Color(251, 251, 251));
-	    txtbienvenidosABordo.setBounds(244, 182, 207, 34);
-	    txtbienvenidosABordo.setFont(new Font("Mistral", Font.PLAIN, 25));
-	    txtbienvenidosABordo.setForeground(new Color(0, 0, 0));
-	    txtbienvenidosABordo.setHorizontalAlignment(SwingConstants.CENTER);
-	    txtbienvenidosABordo.setText("WELCOME ABOARD!");
-	    contentPane.add(txtbienvenidosABordo);
-	    txtbienvenidosABordo.setColumns(10);
-	    txtbienvenidosABordo.setBorder(null);
+	    lblText = new JTextField();
+	    lblText.setEditable(false);
+	    lblText.setBackground(new Color(251, 251, 251));
+	    lblText.setBounds(244, 182, 207, 34);
+	    lblText.setFont(new Font("Mistral", Font.PLAIN, 25));
+	    lblText.setForeground(new Color(0, 0, 0));
+	    lblText.setHorizontalAlignment(SwingConstants.CENTER);
+	    lblText.setText("WELCOME ABOARD!");
+	    contentPane.add(lblText);
+	    lblText.setColumns(10);
+	    lblText.setBorder(null);
 	}
 
 	@Override
