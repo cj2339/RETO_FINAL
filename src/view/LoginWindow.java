@@ -1,12 +1,14 @@
 package view;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -35,7 +37,6 @@ public class LoginWindow extends JDialog implements ActionListener{
 	private JPasswordField passwordField;
 	private JLabel lblError;
 	private JButton btn; 
-	
 	
 	private int atempts=3;
 
@@ -74,11 +75,17 @@ public class LoginWindow extends JDialog implements ActionListener{
 		    contentPane.add(lblPassword);
 		    
 		    textField = new JTextField();
+		    textField.setOpaque(false);
+		    textField.setBackground(new Color(255,255,255,100));
+		    textField.setBorder(BorderFactory.createLineBorder(Color.WHITE, 0));
 		    textField.setBounds(277, 55, 183, 34);
 		    contentPane.add(textField);
 		    textField.setColumns(10);
 		    
 		    passwordField = new JPasswordField();
+		    passwordField.setOpaque(false);
+		    passwordField.setBackground(new Color(255,255,255,100));
+		    passwordField.setBorder(BorderFactory.createLineBorder(Color.WHITE, 0));
 		    passwordField.setBounds(277, 117, 183, 34);
 		    contentPane.add(passwordField);
 		    
