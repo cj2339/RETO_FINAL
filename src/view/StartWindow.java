@@ -12,7 +12,7 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Image;
 
-public class StartWindow extends JFrame implements ActionListener {
+public class StartWindow extends JFrame implements MouseListener {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
@@ -40,6 +40,8 @@ public class StartWindow extends JFrame implements ActionListener {
 	        }
 	    };
 	    
+	    contentPane.addMouseListener(this);
+	    
 	    setContentPane(contentPane);
 	    contentPane.setLayout(null);
  
@@ -50,13 +52,16 @@ public class StartWindow extends JFrame implements ActionListener {
 	    contentPane.add(lblName);
 
 	    lblTitle = new JLabel();
-	    lblTitle.setBounds(148, 80, 250, 20);
-	    lblTitle.setFont(new Font("Tahoma", Font.BOLD, 10));
+	    lblTitle.setHorizontalAlignment(SwingConstants.CENTER);
+	    lblTitle.setText("Click to start");
+	    lblTitle.setBounds(227, 440, 250, 34);
+	    lblTitle.setFont(new Font("Mongolian Baiti", Font.PLAIN, 30));
 	    lblTitle.setBackground(new Color(255, 255, 255));
 	    contentPane.add(lblTitle);
 	    
 	    lblText = new JTextField();
 	    lblText.setEditable(false);
+	    lblText.setFocusable(false);
 	    lblText.setBackground(new Color(251, 251, 251));
 	    lblText.setBounds(244, 182, 207, 34);
 	    lblText.setFont(new Font("Mistral", Font.PLAIN, 25));
@@ -69,7 +74,26 @@ public class StartWindow extends JFrame implements ActionListener {
 	}
 
 	@Override
-	public void actionPerformed(ActionEvent e) {
-		
+	public void mouseClicked(MouseEvent e) {
+		dispose();
+		LoginWindow loginWindow=new LoginWindow(this,cont);
+		loginWindow.setVisible(true);
 	}
+
+	@Override
+	public void mousePressed(MouseEvent e) {
+	}
+
+	@Override
+	public void mouseReleased(MouseEvent e) {
+	}
+
+	@Override
+	public void mouseEntered(MouseEvent e) {
+	}
+
+	@Override
+	public void mouseExited(MouseEvent e) {
+	}
+
 }

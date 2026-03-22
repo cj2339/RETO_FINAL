@@ -29,32 +29,19 @@ public class LoginWindow extends JDialog implements ActionListener{
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private final JPanel contentPanel = new JPanel();
+	private LoginController cont;
 	private Image imagenFondo = new ImageIcon("images/ship.png").getImage();
 	private JTextField textField;
 	private JPasswordField passwordField;
 	private JLabel lblError;
 	private JButton btn; 
 	
-	private LoginController cont;
 	
 	private int atempts=3;
 
-	//esto hay que quitarlo luego
-	public static void main(String[] args) {
-		try {
-			LoginWindow dialog = new LoginWindow();
-			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-			dialog.setVisible(true);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-
-	/**
-	 * Create the dialog.
-	 */
-	public LoginWindow() {
-		
+	public LoginWindow(StartWindow startWindow, LoginController cont) {
+		super(startWindow,true);
+		this.cont=cont;
 		
 		setTitle("Login");
 		setBounds(100, 100, 553, 403);
