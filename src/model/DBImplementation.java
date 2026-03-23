@@ -94,7 +94,7 @@ public class DBImplementation implements AdministratorDAO{
 			boolean ok=false;
 			if (!checkUser1(user))
 			{
-				this.openConnection();
+				this.openConnection(); 
 				try {
 					stmt = con.prepareStatement(sqlInsert);
 					stmt.setString(1, user.getName());
