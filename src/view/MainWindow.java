@@ -101,7 +101,7 @@ public class MainWindow extends JDialog implements ActionListener {
 
 	    option = JOptionPane.showOptionDialog(this, "¿what do you want to do?", type.toUpperCase(),
 	            JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, null);
-//
+
 //	    switch (option) {
 //	        case 0:
 //	        	new AddWindow(type).setVisible(true);
@@ -118,6 +118,5 @@ public class MainWindow extends JDialog implements ActionListener {
 //	    }
 
 		
-	    
 	}
 }
