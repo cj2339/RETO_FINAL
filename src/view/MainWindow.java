@@ -80,30 +80,39 @@ public class MainWindow extends JDialog implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		
-	    String[] opciones = {"Add", "Delete", "Modify", "Ver"};
-	    int opcion;
+		
+		String[] options = {"Add", "Eliminate", "Modify", "See"};
+	    int option;
+	    String type = "";
 
 	    if (e.getSource().equals(btnCruise)) {
-	        opcion = JOptionPane.showOptionDialog(this, "¿Qué quieres hacer?", "CRUISE",
-	                JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, null, opciones, null);
-	   
+	    	type = "cruise";
+	    }else if (e.getSource().equals(btnWorker)) {
+	    	type = "worker";
+	    }else if (e.getSource().equals(btnClient)) {
+	    	type = "client";
+	    }else if (e.getSource().equals(btnAdmins)) {
+	    	type = "admin";
 	    }
 
-	    if (e.getSource().equals(btnWorker)) {
-	        opcion = JOptionPane.showOptionDialog(this, "¿Qué quieres hacer?", "WORKER",
-	                JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, null, opciones, null);
+	    option = JOptionPane.showOptionDialog(this, "Select an option: ", type, JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, null);
+
+	    switch (option) {
+	        case 0:
+	        	AddWindow add = new AddWindow(this,true,cont,type);
+	        	add.setVisible(true);
+	            break;
+	        case 1:
+	            new DeleteWindow(type).setVisible(true);
+	            break;
+//	        case 2:
+//	            new ModifyWindow(type).setVisible(true);
+//	            break;
+//	        case 3:
+//	            new ViewWindow(type).setVisible(true);
+//	            break;
 	    }
 
-	    if (e.getSource().equals(btnClient)) {
-	        opcion = JOptionPane.showOptionDialog(this, "¿Qué quieres hacer?", "CLIENT",
-	                JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, null, opciones, null);
-	    }
-
-	    if (e.getSource().equals(btnAdmins)) {
-	        opcion = JOptionPane.showOptionDialog(this, "¿Qué quieres hacer?", "ADMIN",
-	                JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, null, opciones, null);
-	    }
-
-		
+	    
 	}
 }
