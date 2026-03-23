@@ -97,28 +97,25 @@ public class LoginWindow extends JDialog implements ActionListener{
 		    
 		    lblError = new JLabel("");
 		    lblError.setHorizontalAlignment(SwingConstants.CENTER);
-		    lblError.setFont(new Font("Bahnschrift", Font.PLAIN, 20));
-		    lblError.setBounds(277, 164, 183, 25);
+		    lblError.setFont(new Font("Bahnschrift", Font.PLAIN, 17));
+		    lblError.setBounds(277, 161, 183, 77);
 		    contentPane.add(lblError);
 		   
 	}
  
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
 		String password=new String(passwordField.getPassword());
 		
 		if(e.getSource()==btn&&atempts>0) {
-			if(cont.checkUser(new Administrator(textField.getText(),passwordField.getSelectedText()))) {
-				MainWindow mainWindow=new MainWindow();
-				mainWindow.setVisible(true);
-				
+			if(cont.checkUser(new Administrator(textField.getText(),password))) {
 				dispose();
+				MainWindow mainWindow=new MainWindow(this, cont);
+				mainWindow.setVisible(true);
 			}else {
-				lblError.setText("User not found");
-				JOptionPane.showMessageDialog(this, atempts, "Remaining login atempts:", JOptionPane.INFORMATION_MESSAGE);
+				JOptionPane.showMessageDialog(this, "User not found", "Login error", JOptionPane.INFORMATION_MESSAGE);
 				atempts--;
-				lblError.setText("User not found");
+				lblError.setText("Remaining atempts: "+atempts);
 			} 
 		}else if(e.getSource()==btn&&atempts==0) {
 			JOptionPane.showMessageDialog(this, "You have exceeded 3 attempts", "Login failure:" , JOptionPane.INFORMATION_MESSAGE);
