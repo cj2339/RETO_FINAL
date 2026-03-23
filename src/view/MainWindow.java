@@ -90,28 +90,31 @@ public class MainWindow extends JDialog implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		
-	    String[] opciones = {"Añadir", "Eliminar", "Modificar", "Ver"};
+		String[] opciones = {"Add", "Eliminate", "Modify", "See"};
 	    int opcion;
+	    String tipo = "";
 
-	    if (e.getSource().equals(btnCruise)) {
-	        opcion = JOptionPane.showOptionDialog(this, "¿Qué quieres hacer?", "CRUISE",
-	                JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, null, opciones, null);
-	   
-	    }
+	    if (e.getSource().equals(btnCruise)) tipo = "cruise";
+	    if (e.getSource().equals(btnWorker)) tipo = "worker";
+	    if (e.getSource().equals(btnClient)) tipo = "client";
+	    if (e.getSource().equals(btnAdmins)) tipo = "admin";
 
-	    if (e.getSource().equals(btnWorker)) {
-	        opcion = JOptionPane.showOptionDialog(this, "¿Qué quieres hacer?", "WORKER",
-	                JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, null, opciones, null);
-	    }
+	    opcion = JOptionPane.showOptionDialog(this, "¿what do you want to do?", tipo.toUpperCase(),
+	            JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, null, opciones, null);
 
-	    if (e.getSource().equals(btnClient)) {
-	        opcion = JOptionPane.showOptionDialog(this, "¿Qué quieres hacer?", "CLIENT",
-	                JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, null, opciones, null);
-	    }
-
-	    if (e.getSource().equals(btnAdmins)) {
-	        opcion = JOptionPane.showOptionDialog(this, "¿Qué quieres hacer?", "ADMIN",
-	                JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, null, opciones, null);
+	    switch (opcion) {
+	        case 0:
+	            new AddWindow(tipo).setVisible(true);
+	            break;
+	        case 1:
+	            new DeleteWindow(tipo).setVisible(true);
+	            break;
+	        case 2:
+	            new ModifyWindow(tipo).setVisible(true);
+	            break;
+	        case 3:
+	            new ViewWindow(tipo).setVisible(true);
+	            break;
 	    }
 
 		
