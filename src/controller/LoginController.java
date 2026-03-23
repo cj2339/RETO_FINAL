@@ -3,18 +3,18 @@ package controller;
 import view.StartWindow;
 
 import model.DBImplementation;
-import model.User;
-import model.UserDAO;
+import model.Administrator;
+import model.AdministratorDAO;
 
 public class LoginController {
-	UserDAO dao = new DBImplementation();
+	AdministratorDAO dao = new DBImplementation();
 
 	public void viewWindow() {
 		StartWindow win=new StartWindow(this);
 		win.setVisible(true);
 	}
 
-	public boolean checkUser(User user) {
+	public boolean checkUser(Administrator user) {
 		return dao.checkUser(user);
 	} 
 	

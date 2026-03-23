@@ -9,7 +9,7 @@ import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.TreeMap;
 
-public class DBImplementation implements UserDAO{
+public class DBImplementation implements AdministratorDAO{
 		private Connection con;
 		private PreparedStatement stmt;
 
@@ -20,12 +20,12 @@ public class DBImplementation implements UserDAO{
 		private String passwordDB;
 
 		
-		final String SQL = "SELECT * FROM user WHERE name = ? AND password = ?";		
-		final String sql1 = "SELECT * FROM usuario WHERE nombre = ?";
-		final String sqlInsert = "INSERT INTO usuario VALUES (?,?)";
-		final String SQLCONSULTA = "SELECT * FROM usuario";
-		final String SQLBORRAR = "DELETE FROM usuario WHERE nombre=?";
-		final String SQLMODIFICAR = "UPDATE usuario SET contrasena=? WHERE nombre=?";
+		final String SQL = "SELECT * FROM administrator WHERE name_admin = ? AND password_admin = ?";		
+		final String sql1 = "SELECT * FROM administrator WHERE nombre_admin = ?";
+		final String sqlInsert = "INSERT INTO administrator VALUES (?,?)";
+		final String SQLCONSULTA = "SELECT * FROM administrator";
+		final String SQLBORRAR = "DELETE FROM administrator WHERE nombre_admin=?";
+		final String SQLMODIFICAR = "UPDATE administrator SET password_admin=? WHERE name_admin=?";
 		
 		public DBImplementation() {
 			this.configFile = ResourceBundle.getBundle("configClass");
@@ -46,13 +46,13 @@ public class DBImplementation implements UserDAO{
 			}
 		}
 
-		public boolean checkUser(User user){
+		public boolean checkUser(Administrator administrator){
 			boolean existe=false;
 			this.openConnection();
 			try {
 				stmt = con.prepareStatement(SQL);
-	            stmt.setString(1, user.getName());
-	            stmt.setString(2, user.getPassword());
+	            stmt.setString(1, administrator.getName());
+	            stmt.setString(2, administrator.getPassword());
 	            ResultSet resultado = stmt.executeQuery();
 
 	            if (resultado.next()) {
@@ -67,7 +67,7 @@ public class DBImplementation implements UserDAO{
 	        return existe;
 	    }
 		
-		public boolean checkUser1(User user){
+		public boolean checkUser1(Administrator user){
 			boolean existe=false;
 			this.openConnection();
 			
@@ -90,7 +90,7 @@ public class DBImplementation implements UserDAO{
 	        return existe;
 	    }
 		
-		public boolean insertUser(User user) {
+		public boolean insertUser(Administrator user) {
 			boolean ok=false;
 			if (!checkUser1(user))
 			{
@@ -110,6 +110,6 @@ public class DBImplementation implements UserDAO{
 			}
 				return ok;		
 		}
-
+		
 		
 } 

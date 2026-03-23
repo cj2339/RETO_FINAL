@@ -1,14 +1,14 @@
 package model;
 
-public class User {
+public class Administrator {
 	private String name;
     private String password;
 
-    public User() {
+    public Administrator() {
         this.name = null;
         this.password = null;
     }
-    public User(String name, String password) {
+    public Administrator(String name, String password) {
         this.name = name;
         this.password = password;
     }

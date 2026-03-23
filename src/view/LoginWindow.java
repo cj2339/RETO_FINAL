@@ -16,7 +16,7 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import controller.LoginController;
-import model.User;
+import model.Administrator;
 
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -109,7 +109,7 @@ public class LoginWindow extends JDialog implements ActionListener{
 		String password=new String(passwordField.getPassword());
 		
 		if(e.getSource()==btn&&atempts>0) {
-			if(cont.checkUser(new User(textField.getText(),passwordField.getSelectedText()))) {
+			if(cont.checkUser(new Administrator(textField.getText(),passwordField.getSelectedText()))) {
 				MainWindow mainWindow=new MainWindow();
 				mainWindow.setVisible(true);
 				
