@@ -80,7 +80,7 @@ public class MainWindow extends JDialog implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		
-	    String[] opciones = {"Añadir", "Eliminar", "Modificar", "Ver"};
+	    String[] opciones = {"Add", "Delete", "Modify", "Ver"};
 	    int opcion;
 
 	    if (e.getSource().equals(btnCruise)) {

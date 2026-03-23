@@ -32,7 +32,7 @@ public class LoginWindow extends JDialog implements ActionListener{
 	private JPanel contentPane;
 	private final JPanel contentPanel = new JPanel();
 	private LoginController cont;
-	private Image imagenFondo = new ImageIcon("images/ship.png").getImage();
+	private Image backgroundImage = new ImageIcon("images/ship.png").getImage();
 	private JTextField textField;
 	private JPasswordField passwordField;
 	private JLabel lblError;
@@ -57,7 +57,7 @@ public class LoginWindow extends JDialog implements ActionListener{
 		        @Override
 		        protected void paintComponent(Graphics g) {
 		            super.paintComponent(g);
-		            g.drawImage(imagenFondo, 0, 0, getWidth(), getHeight(), this);
+		            g.drawImage(backgroundImage, 0, 0, getWidth(), getHeight(), this);
 		        }
 		    };
 		    
