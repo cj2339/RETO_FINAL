@@ -6,8 +6,12 @@ import java.awt.FlowLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JDialog;
+import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import controller.LoginController;
+
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
@@ -20,32 +24,18 @@ import java.awt.event.ActionListener;
 public class MainWindow extends JDialog implements ActionListener {
 
 	private static final long serialVersionUID = 1L;
+	private LoginController cont;
 	private JButton btnCruise;
 	private JButton btnWorker;
 	private JButton btnClient;
 	private JButton btnAdmins;
 	private JPanel contentPane;
-	private Image imagenFondo = new ImageIcon("images/ManagementAnchor.png").getImage();
-
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		try {
-			MainWindow dialog = new MainWindow();
-			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-			dialog.setVisible(true);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-
-	/**
-	 * Create the dialog.
-	 */
+	private Image imagenFondo = new ImageIcon("images/ManagementAnchor.png").getImage();	
 	
-	
-	public MainWindow() {
+	//preguntar sobre esta herencia
+	public MainWindow(JDialog father, LoginController cont) {
+		super(father,true);
+		this.cont=cont;
 		
 		 contentPane = new JPanel() {
 		        @Override

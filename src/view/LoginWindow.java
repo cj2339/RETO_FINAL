@@ -109,10 +109,9 @@ public class LoginWindow extends JDialog implements ActionListener{
 		
 		if(e.getSource()==btn&&atempts>0) {
 			if(cont.checkUser(new Administrator(textField.getText(),password))) {
-				MainWindow mainWindow=new MainWindow();
-				mainWindow.setVisible(true);
-				
 				dispose();
+				MainWindow mainWindow=new MainWindow(this, cont);
+				mainWindow.setVisible(true);
 			}else {
 				JOptionPane.showMessageDialog(this, "User not found", "Login error", JOptionPane.INFORMATION_MESSAGE);
 				atempts--;
