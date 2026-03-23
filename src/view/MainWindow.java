@@ -9,6 +9,8 @@ import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Image;
@@ -88,6 +90,30 @@ public class MainWindow extends JDialog implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		
+	    String[] opciones = {"Añadir", "Eliminar", "Modificar", "Ver"};
+	    int opcion;
+
+	    if (e.getSource().equals(btnCruise)) {
+	        opcion = JOptionPane.showOptionDialog(this, "¿Qué quieres hacer?", "CRUISE",
+	                JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, null, opciones, null);
+	   
+	    }
+
+	    if (e.getSource().equals(btnWorker)) {
+	        opcion = JOptionPane.showOptionDialog(this, "¿Qué quieres hacer?", "WORKER",
+	                JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, null, opciones, null);
+	    }
+
+	    if (e.getSource().equals(btnClient)) {
+	        opcion = JOptionPane.showOptionDialog(this, "¿Qué quieres hacer?", "CLIENT",
+	                JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, null, opciones, null);
+	    }
+
+	    if (e.getSource().equals(btnAdmins)) {
+	        opcion = JOptionPane.showOptionDialog(this, "¿Qué quieres hacer?", "ADMIN",
+	                JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, null, opciones, null);
+	    }
+
 		
 	}
 }
