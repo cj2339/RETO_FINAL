@@ -6,9 +6,15 @@ import java.awt.FlowLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JDialog;
+import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import controller.LoginController;
+
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Image;
@@ -18,32 +24,18 @@ import java.awt.event.ActionListener;
 public class MainWindow extends JDialog implements ActionListener {
 
 	private static final long serialVersionUID = 1L;
+	private LoginController cont;
 	private JButton btnCruise;
 	private JButton btnWorker;
 	private JButton btnClient;
 	private JButton btnAdmins;
 	private JPanel contentPane;
-	private Image imagenFondo = new ImageIcon("images/ManagementAnchor.png").getImage();
-
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		try {
-			MainWindow dialog = new MainWindow();
-			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-			dialog.setVisible(true);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-
-	/**
-	 * Create the dialog.
-	 */
+	private Image imagenFondo = new ImageIcon("images/ManagementAnchor.png").getImage();	
 	
-	
-	public MainWindow() {
+	//preguntar sobre esta herencia
+	public MainWindow(JDialog father, LoginController cont) {
+		super(father,true);
+		this.cont=cont;
 		
 		 contentPane = new JPanel() {
 		        @Override
@@ -88,6 +80,33 @@ public class MainWindow extends JDialog implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		
-		
+		String[] options = {"Add", "Eliminate", "Modify", "See"};
+	    int option;
+	    String type = "";
+
+	    if (e.getSource().equals(btnCruise)) type = "cruise";
+	    if (e.getSource().equals(btnWorker)) type = "worker";
+	    if (e.getSource().equals(btnClient)) type = "client";
+	    if (e.getSource().equals(btnAdmins)) type = "admin";
+
+	    option = JOptionPane.showOptionDialog(this, "¿what do you want to do?", type.toUpperCase(),
+	            JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, null);
+
+	    switch (option) {
+//	        case 0:
+//	        	new AddWindow(type).setVisible(true);
+//	            break;
+	        case 1:
+	            new DeleteWindow(type).setVisible(true);
+	            break;
+//	        case 2:
+//	            new ModifyWindow(type).setVisible(true);
+//	            break;
+//	        case 3:
+//	            new ViewWindow(type).setVisible(true);
+//	            break;
+	    }
+
+	    
 	}
 }

@@ -1,12 +1,14 @@
 package view;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -14,7 +16,7 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import controller.LoginController;
-import model.User;
+import model.Administrator;
 
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -29,32 +31,18 @@ public class LoginWindow extends JDialog implements ActionListener{
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private final JPanel contentPanel = new JPanel();
+	private LoginController cont;
 	private Image imagenFondo = new ImageIcon("images/ship.png").getImage();
 	private JTextField textField;
 	private JPasswordField passwordField;
 	private JLabel lblError;
 	private JButton btn; 
 	
-	private LoginController cont;
-	
 	private int atempts=3;
 
-	//esto hay que quitarlo luego
-	public static void main(String[] args) {
-		try {
-			LoginWindow dialog = new LoginWindow();
-			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-			dialog.setVisible(true);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-
-	/**
-	 * Create the dialog.
-	 */
-	public LoginWindow() {
-		
+	public LoginWindow(StartWindow startWindow, LoginController cont) {
+		super(startWindow,true);
+		this.cont=cont;
 		
 		setTitle("Login");
 		setBounds(100, 100, 553, 403);
@@ -87,11 +75,17 @@ public class LoginWindow extends JDialog implements ActionListener{
 		    contentPane.add(lblPassword);
 		    
 		    textField = new JTextField();
+		    textField.setOpaque(false);
+		    textField.setBackground(new Color(255,255,255,100));
+		    textField.setBorder(BorderFactory.createLineBorder(Color.WHITE, 0));
 		    textField.setBounds(277, 55, 183, 34);
 		    contentPane.add(textField);
 		    textField.setColumns(10);
 		    
 		    passwordField = new JPasswordField();
+		    passwordField.setOpaque(false);
+		    passwordField.setBackground(new Color(255,255,255,100));
+		    passwordField.setBorder(BorderFactory.createLineBorder(Color.WHITE, 0));
 		    passwordField.setBounds(277, 117, 183, 34);
 		    contentPane.add(passwordField);
 		    
@@ -103,28 +97,25 @@ public class LoginWindow extends JDialog implements ActionListener{
 		    
 		    lblError = new JLabel("");
 		    lblError.setHorizontalAlignment(SwingConstants.CENTER);
-		    lblError.setFont(new Font("Bahnschrift", Font.PLAIN, 20));
-		    lblError.setBounds(277, 164, 183, 25);
+		    lblError.setFont(new Font("Bahnschrift", Font.PLAIN, 17));
+		    lblError.setBounds(277, 161, 183, 77);
 		    contentPane.add(lblError);
 		   
 	}
  
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
 		String password=new String(passwordField.getPassword());
 		
 		if(e.getSource()==btn&&atempts>0) {
-			if(cont.checkUser(new User(textField.getText(),passwordField.getSelectedText()))) {
-				MainWindow mainWindow=new MainWindow();
-				mainWindow.setVisible(true);
-				
+			if(cont.checkUser(new Administrator(textField.getText(),password))) {
 				dispose();
+				MainWindow mainWindow=new MainWindow(this, cont);
+				mainWindow.setVisible(true);
 			}else {
-				lblError.setText("User not found");
-				JOptionPane.showMessageDialog(this, atempts, "Remaining login atempts:", JOptionPane.INFORMATION_MESSAGE);
+				JOptionPane.showMessageDialog(this, "User not found", "Login error", JOptionPane.INFORMATION_MESSAGE);
 				atempts--;
-				lblError.setText("User not found");
+				lblError.setText("Remaining atempts: "+atempts);
 			} 
 		}else if(e.getSource()==btn&&atempts==0) {
 			JOptionPane.showMessageDialog(this, "You have exceeded 3 attempts", "Login failure:" , JOptionPane.INFORMATION_MESSAGE);

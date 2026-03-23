@@ -2,23 +2,20 @@ package controller;
 
 import view.StartWindow;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.util.Map;
-
 import model.DBImplementation;
-import model.User;
-import model.UserDAO;
+import model.Administrator;
+import model.AdministratorDAO;
 
 public class LoginController {
-	UserDAO dao = new DBImplementation();
+	AdministratorDAO dao = new DBImplementation();
 
-//	public void visualizarPantalla() {
-//		StartWindow ven = new StartWindow(this);
-//		ven.setVisible(true);	
-//	}
-	public boolean checkUser(User user) {
-		return dao.checkUser(user);
+	public void viewWindow() {
+		StartWindow win=new StartWindow(this);
+		win.setVisible(true);
 	}
+
+	public boolean checkUser(Administrator user) {
+		return dao.checkUser(user);
+	} 
 	
 }
