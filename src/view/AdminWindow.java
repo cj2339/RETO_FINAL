@@ -4,38 +4,49 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JDialog;
+import javax.swing.JFrame;
+
 import java.awt.Toolkit;
 import java.awt.Window.Type;
 import javax.swing.JPanel;
 import javax.swing.JLabel;
 import java.awt.Font;
+import java.awt.Graphics;
+import java.awt.Image;
+
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JTextField;
 
 public class AdminWindow extends JDialog implements ActionListener {
 	
 	private static final long serialVersionUID = 1L;
+	private JPanel contentPane;
 	private JLabel lblChangePassword;
 	private JLabel lblPassword;
 	private JTextField textFieldPassword;
 	private JTextField textFieldNewPassword;
 	private JButton btnChange;
 	private JLabel lblNewPassword;
-	
-	
-	//esto hay que quitarlo luego
-		public static void main(String[] args) {
-			try {
-				LoginWindow dialog = new LoginWindow();
-				dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-				dialog.setVisible(true);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		}
+	private Image BackgroundImage = new ImageIcon("images/ventanaAdmin.png").getImage();
 		
 	
 	public AdminWindow() {
+		setIconImage(Toolkit.getDefaultToolkit().getImage("images/icon.png"));
+	    setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	    setResizable(false);
+	    
+	    contentPane = new JPanel() {
+	        @Override
+	        protected void paintComponent(Graphics g) {
+	            super.paintComponent(g);
+	            g.drawImage(BackgroundImage, 0, 0, getWidth(), getHeight(), this);
+	        }
+	    };
+	    	    
+	    setContentPane(contentPane);
+	    contentPane.setLayout(null);
+	    
 		setType(Type.POPUP);
 		setTitle("ADMIN");
 		setIconImage(Toolkit.getDefaultToolkit().getImage("images\\Icono.png"));

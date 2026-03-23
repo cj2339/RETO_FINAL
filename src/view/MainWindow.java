@@ -89,7 +89,7 @@ public class MainWindow extends JDialog implements ActionListener {
 	    if (e.getSource().equals(btnClient)) type = "client";
 	    if (e.getSource().equals(btnAdmins)) type = "admin";
 
-	    option = JOptionPane.showOptionDialog(this, "¿what do you want to do?", type.toUpperCase(),
+	    option = JOptionPane.showOptionDialog(this, "What do you want to do?", type.toUpperCase(),
 	            JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, null);
 
 	    switch (option) {
