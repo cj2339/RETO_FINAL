@@ -90,32 +90,32 @@ public class MainWindow extends JDialog implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		
-		String[] opciones = {"Add", "Eliminate", "Modify", "See"};
-	    int opcion;
-	    String tipo = "";
+		String[] options = {"Add", "Eliminate", "Modify", "See"};
+	    int option;
+	    String type = "";
 
-	    if (e.getSource().equals(btnCruise)) tipo = "cruise";
-	    if (e.getSource().equals(btnWorker)) tipo = "worker";
-	    if (e.getSource().equals(btnClient)) tipo = "client";
-	    if (e.getSource().equals(btnAdmins)) tipo = "admin";
+	    if (e.getSource().equals(btnCruise)) type = "cruise";
+	    if (e.getSource().equals(btnWorker)) type = "worker";
+	    if (e.getSource().equals(btnClient)) type = "client";
+	    if (e.getSource().equals(btnAdmins)) type = "admin";
 
-	    opcion = JOptionPane.showOptionDialog(this, "¿what do you want to do?", tipo.toUpperCase(),
-	            JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, null, opciones, null);
-
-	    switch (opcion) {
-	        case 0:
-	            new AddWindow(tipo).setVisible(true);
-	            break;
-	        case 1:
-	            new DeleteWindow(tipo).setVisible(true);
-	            break;
-	        case 2:
-	            new ModifyWindow(tipo).setVisible(true);
-	            break;
-	        case 3:
-	            new ViewWindow(tipo).setVisible(true);
-	            break;
-	    }
+	    option = JOptionPane.showOptionDialog(this, "¿what do you want to do?", type.toUpperCase(),
+	            JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, null);
+//
+//	    switch (option) {
+//	        case 0:
+//	        	new AddWindow(type).setVisible(true);
+//	            break;
+//	        case 1:
+//	            new DeleteWindow(type).setVisible(true);
+//	            break;
+//	        case 2:
+//	            new ModifyWindow(type).setVisible(true);
+//	            break;
+//	        case 3:
+//	            new ViewWindow(type).setVisible(true);
+//	            break;
+//	    }
 
 		
 	}
