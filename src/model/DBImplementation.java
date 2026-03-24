@@ -23,16 +23,17 @@ public class DBImplementation implements AdministratorDAO{
 		
 		final String SQL = "SELECT * FROM administrator WHERE name_admin = ? AND password_admin = ?";		
 		final String sql1 = "SELECT * FROM administrator WHERE nombre_admin = ?";
-		final String sqlInsert = "INSERT INTO administrator VALUES (?,?)";
-		final String SQLCONSULTA = "SELECT * FROM administrator";
-		final String SQLBORRAR = "DELETE FROM administrator WHERE nombre_admin=?";
-		final String SQLMODIFICAR = "UPDATE administrator SET password_admin=? WHERE name_admin=?";
+		final String SQLINSERTADMIN = "INSERT INTO administrator VALUES (?,?)";
+		final String SQLUPDATE = "UPDATE administrator SET password_admin=? WHERE name_admin=?";
+		final String SQLSELECTADMIN = "SELECT * FROM administrator";
 		final String SQLSELECTCRUISE = "SELECT * FROM cruise";
+		final String SQLSELECTCRUISE2 = "SELECT * FROM cruise WHERE cod_cruise=?";
 		final String SQLSELECTWORKER = "SELECT * FROM worker";
 		final String SQLSELECTCLIENT = "SELECT * FROM client";
-		final String SQLDELETE_CRUISE = "DELETE FROM cruise WHERE cod_cruise = ?";
-		final String SQLDELETE_CLIENT = "DELETE FROM client WHERE id_client = ?";
-		final String SQLDELETE_WORKER = "DELETE FROM worker WHERE id_worker = ?";
+		final String SQLDELETEADMIN = "DELETE FROM administrator WHERE nombre_admin=?";
+		final String SQLDELETECRUISE = "DELETE FROM cruise WHERE cod_cruise = ?";
+		final String SQLDELETECLIENT = "DELETE FROM client WHERE id_client = ?";
+		final String SQLDELETEWORKER = "DELETE FROM worker WHERE id_worker = ?";
 		
 		public DBImplementation() {
 			this.configFile = ResourceBundle.getBundle("configClass");
@@ -97,8 +98,23 @@ public class DBImplementation implements AdministratorDAO{
 	        return exists;
 	    }
 		
-		public boolean checkCruise() {
+		public boolean checkCruise(Cruise cruise) {
 			boolean exists=false;
+			this.openConnection();
+			try {
+				stmt=con.prepareStatement(SQLSELECTCRUISE2);
+				stmt.setString(1, cruise.getCodCruise());
+				ResultSet result=stmt.executeQuery();
+				
+				if(result.next()) {
+					exists=true;
+				}
+				result.close();
+				stmt.close();
+				con.close();
+			}catch (SQLException e) {
+	            System.out.println("Error verifying credentials: " + e.getMessage());
+	        }
 			return exists;
 		}
 		
@@ -108,7 +124,7 @@ public class DBImplementation implements AdministratorDAO{
 			{
 				this.openConnection(); 
 				try {
-					stmt = con.prepareStatement(sqlInsert);
+					stmt = con.prepareStatement(SQLINSERTADMIN);
 					stmt.setString(1, user.getName());
 					stmt.setString(2, user.getPassword());
 					if (stmt.executeUpdate()>0) {
@@ -193,7 +209,7 @@ public class DBImplementation implements AdministratorDAO{
 		    boolean ok = false;
 		    this.openConnection();
 		    try {
-		        stmt = con.prepareStatement(SQLDELETE_CRUISE);
+		        stmt = con.prepareStatement(SQLDELETECRUISE);
 		        stmt.setString(1, id);
 		        if (stmt.executeUpdate() > 0) {
 		        	ok = true;
@@ -211,7 +227,7 @@ public class DBImplementation implements AdministratorDAO{
 		    boolean ok = false;
 		    this.openConnection();
 		    try {
-		        stmt = con.prepareStatement(SQLDELETE_CLIENT);
+		        stmt = con.prepareStatement(SQLDELETECLIENT);
 		        stmt.setString(1, id);
 		        if (stmt.executeUpdate() > 0) {
 		        	ok = true;
@@ -229,7 +245,7 @@ public class DBImplementation implements AdministratorDAO{
 		    boolean ok = false;
 		    this.openConnection();
 		    try {
-		        stmt = con.prepareStatement(SQLDELETE_WORKER);
+		        stmt = con.prepareStatement(SQLDELETEWORKER);
 		        stmt.setString(1, id);
 		        if (stmt.executeUpdate() > 0) {
 		        	ok = true;
