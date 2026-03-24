@@ -238,8 +238,8 @@ public class AddWindow extends JDialog implements ActionListener{
 			for(String id: ids) {
 				comboBox2.addItem(id);
 			}
-			comboBox1.setBounds(55, 70, 175, 25);
-			comboBox2.setBounds(55, 108, 175, 25);
+			comboBox1.setBounds(292, 70, 156, 25);
+			comboBox2.setBounds(292, 108, 156, 25);
 
 		}
 
