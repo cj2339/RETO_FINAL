@@ -17,7 +17,7 @@ public class DBImplementation implements AdministratorDAO{
 		private ResourceBundle configFile;
 		private String driverDB;
 		private String urlDB;
-		private String userDB;
+		private String userDB; 
 		private String passwordDB;
 
 		
@@ -53,7 +53,7 @@ public class DBImplementation implements AdministratorDAO{
 			}
 		}
 
-		public boolean checkUser(Administrator administrator){
+		public boolean checkAdmin(Administrator administrator){
 			boolean existe=false;
 			this.openConnection();
 			try {
@@ -74,13 +74,13 @@ public class DBImplementation implements AdministratorDAO{
 	        return existe;
 	    }
 		
-		public boolean checkUser1(Administrator user){
+		public boolean checkAdmin1(Administrator admin){
 			boolean existe=false;
 			this.openConnection();
 			
 			try {
 				stmt = con.prepareStatement(sql1);
-	            stmt.setString(1, user.getName());
+	            stmt.setString(1, admin.getName());
 	            ResultSet resultado = stmt.executeQuery();
 
 	            if (resultado.next()) {
@@ -99,7 +99,7 @@ public class DBImplementation implements AdministratorDAO{
 		
 		public boolean insertUser(Administrator user) {
 			boolean ok=false;
-			if (!checkUser1(user))
+			if (!checkAdmin1(user))
 			{
 				this.openConnection(); 
 				try {
@@ -117,6 +117,13 @@ public class DBImplementation implements AdministratorDAO{
 			}
 				return ok;		
 		}
+		
+//		public boolean insertCruise(Cruise cruise) {
+//			boolean ok=false;
+//			
+//			
+//			return ok;
+//		}
 
 		@Override
 		public ArrayList<String> getCruiseCodes() {
@@ -175,6 +182,7 @@ public class DBImplementation implements AdministratorDAO{
 		    return codes;
 		}
 		
+
 		@Override
 		public boolean deleteCruise(String id) {
 		    boolean ok = false;
@@ -222,5 +230,5 @@ public class DBImplementation implements AdministratorDAO{
 		    }
 		    return ok;
 		}
-			
+
 }
