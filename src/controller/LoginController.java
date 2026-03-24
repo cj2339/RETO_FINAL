@@ -3,6 +3,9 @@ package controller;
 import view.StartWindow;
 
 import model.DBImplementation;
+
+import java.util.ArrayList;
+
 import model.Administrator;
 import model.AdministratorDAO;
 
@@ -17,5 +20,19 @@ public class LoginController {
 	public boolean checkUser(Administrator user) {
 		return dao.checkUser(user);
 	} 
+	
+	public ArrayList<String> getCruiseCodes() {
+	    return dao.getCruiseCodes();
+	}
+
+	public ArrayList<String> getWorkerCodes() {
+	    return dao.getWorkerCodes();
+	}
+
+	public ArrayList<String> getClientCodes() {
+		return dao.getClientCodes();
+	}
+	
+	
 	
 }

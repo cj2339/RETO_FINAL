@@ -5,6 +5,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.TreeMap;
@@ -26,6 +27,9 @@ public class DBImplementation implements AdministratorDAO{
 		final String SQLCONSULTA = "SELECT * FROM administrator";
 		final String SQLBORRAR = "DELETE FROM administrator WHERE nombre_admin=?";
 		final String SQLMODIFICAR = "UPDATE administrator SET password_admin=? WHERE name_admin=?";
+		final String SQLSELECTCRUISE = "SELECT * FROM cruise";
+		final String SQLSELECTWORKER = "SELECT * FROM worker";
+		final String SQLSELECTCLIENT = "SELECT * FROM client";
 		
 		public DBImplementation() {
 			this.configFile = ResourceBundle.getBundle("configClass");
@@ -110,6 +114,66 @@ public class DBImplementation implements AdministratorDAO{
 			}
 				return ok;		
 		}
+
+		@Override
+		public ArrayList<String> getCruiseCodes() {
+		    ArrayList<String> codes = new ArrayList<>();
+		    this.openConnection();
+		    try {
+		        stmt = con.prepareStatement(SQLSELECTCRUISE);
+		        ResultSet rs = stmt.executeQuery();
+		        while (rs.next()) {
+		            codes.add(rs.getString("cod_cruise"));
+		        }
+		        rs.close();
+		        stmt.close();
+		        con.close();
+		    } catch (SQLException e) {
+		        System.out.println("Error obtaining cruises: " + e.getMessage());
+		    }
+		    return codes;
+		}
+
+		@Override
+		public ArrayList<String> getWorkerCodes() {
+		    ArrayList<String> codes = new ArrayList<>();
+		    this.openConnection();
+		    try {
+		        stmt = con.prepareStatement(SQLSELECTWORKER);
+		        ResultSet rs = stmt.executeQuery();
+		        while (rs.next()) {
+		            codes.add(rs.getString("id_worker"));
+		        }
+		        rs.close();
+		        stmt.close();
+		        con.close();
+		    } catch (SQLException e) {
+		        System.out.println("Error obtaining cruises: " + e.getMessage());
+		    }
+		    return codes;
+		}
+
+		@Override
+		public ArrayList<String> getClientCodes() {
+		    ArrayList<String> codes = new ArrayList<>();
+		    this.openConnection();
+		    try {
+		        stmt = con.prepareStatement(SQLSELECTCLIENT);
+		        ResultSet rs = stmt.executeQuery();
+		        while (rs.next()) {
+		            codes.add(rs.getString("id_client"));
+		        }
+		        rs.close();
+		        stmt.close();
+		        con.close();
+		    } catch (SQLException e) {
+		        System.out.println("Error obtaining cruises: " + e.getMessage());
+		    }
+		    return codes;
+		}
+
+		
+	
 		
 		
 } 

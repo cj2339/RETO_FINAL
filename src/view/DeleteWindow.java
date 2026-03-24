@@ -7,52 +7,101 @@ import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import controller.LoginController;
+
 import javax.swing.JComboBox;
 import javax.swing.JTextField;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
-public class DeleteWindow extends JDialog {
+public class DeleteWindow extends JDialog implements ActionListener {
 
-	private static final long serialVersionUID = 1L;
-	private final JPanel contentPanel = new JPanel();
-	JComboBox<String> comboBox;
+    private static final long serialVersionUID = 1L;
+    private JComboBox<String> comboBox;
+    private JButton btnDelete;
+    private JButton btnCancelar;
+    private LoginController controller;
+    private String tipo;
 
-	public DeleteWindow(String tipo) {
-		setTitle("Eliminate");
-		setBounds(100, 100, 450, 300);
-		getContentPane().setLayout(new BorderLayout());
-		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
-		getContentPane().add(contentPanel, BorderLayout.CENTER);
-		contentPanel.setLayout(null);
-		{
-			comboBox = new JComboBox<String>();
-			JComboBox comboBox = new JComboBox();
-			comboBox.setBounds(227, 61, 169, 21);
-			contentPanel.add(comboBox);
-		}
-		comboBox = new JComboBox<String>();
-		JComboBox comboBox = new JComboBox();
-		comboBox.setBounds(227, 121, 169, 21);
-		contentPanel.add(comboBox);
-		
-		JLabel lblNewLabel = new JLabel("Eliminate");
-		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 16));
-		lblNewLabel.setBounds(166, 10, 106, 24);
-		contentPanel.add(lblNewLabel);
-		
-		JButton btnNewButton = new JButton("New button");
-		btnNewButton.setBounds(146, 191, 114, 34);
-		contentPanel.add(btnNewButton);
-		
-		JLabel lblNewLabel_1 = new JLabel("Code Cruise\r\n");
-		lblNewLabel_1.setFont(new Font("Arial", Font.BOLD, 14));
-		lblNewLabel_1.setBounds(67, 65, 106, 12);
-		contentPanel.add(lblNewLabel_1);
-		
-		JLabel lblNewLabel_1_1 = new JLabel("ID Client");
-		lblNewLabel_1_1.setFont(new Font("Arial", Font.BOLD, 14));
-		lblNewLabel_1_1.setBounds(67, 125, 106, 12);
-		contentPanel.add(lblNewLabel_1_1);
-	}
+    public DeleteWindow(JDialog parent, LoginController controller, String tipo) {
+        super(parent, true);
+        this.controller = controller;
+        this.tipo = tipo;
+
+        setTitle("Eliminate " + tipo);
+        setBounds(100, 100, 450, 300);
+        getContentPane().setLayout(null);
+
+        JLabel lblTitulo = new JLabel("Delete Window");
+        lblTitulo.setFont(new Font("Tahoma", Font.BOLD, 16));
+        lblTitulo.setBounds(150, 10, 149, 24);
+        getContentPane().add(lblTitulo);
+
+        JLabel lblCodigo = new JLabel("Select code:");
+        lblCodigo.setFont(new Font("Arial", Font.BOLD, 14));
+        lblCodigo.setBounds(67, 65, 120, 20);
+        getContentPane().add(lblCodigo);
+
+        comboBox = new JComboBox<String>();
+        comboBox.setBounds(200, 61, 169, 21);
+        getContentPane().add(comboBox);
+
+        btnDelete = new JButton("Delete");
+        btnDelete.setBounds(100, 190, 114, 34);
+        btnDelete.addActionListener(this);
+        getContentPane().add(btnDelete);
+
+        btnCancelar = new JButton("Cancel");
+        btnCancelar.setBounds(230, 190, 114, 34);
+        btnCancelar.addActionListener(this);
+        getContentPane().add(btnCancelar);
+
+        cargarCombo();
+    }
+
+    private void cargarCombo() {
+        ArrayList<String> codes = new ArrayList<>();
+
+        switch (tipo) {
+            case "cruise": codes = controller.getCruiseCodes(); break;
+            case "worker": codes = controller.getWorkerCodes(); break;
+            case "client": codes = controller.getClientCodes(); break;
+        }
+
+        for (String code : codes) {
+            comboBox.addItem(code);
+        }
+    }
+
+    public void actionPerformed(ActionEvent e) {
+
+        if (e.getSource().equals(btnCancelar)) {
+            dispose();
+        }
+
+        if (e.getSource().equals(btnDelete)) {
+            String id = (String) comboBox.getSelectedItem();
+
+            int confirmar = JOptionPane.showConfirmDialog(this,
+                    "Are you sure you want to delete " + id + "?", "Confirm",
+                    JOptionPane.YES_NO_OPTION);
+
+            if (confirmar == JOptionPane.YES_OPTION) {
+                switch (tipo) {
+ //                   case "cruise": controller.deleteCruise(id); break;
+ //                   case "worker": controller.deleteWorker(id); break;
+ //                   case "client": controller.deleteClient(id); break;
+                }
+                JOptionPane.showMessageDialog(this, id + " deleted successfully");
+                comboBox.removeItem(id);
+            }
+        }
+    }
 }
+
