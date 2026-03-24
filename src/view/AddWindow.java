@@ -6,6 +6,7 @@ import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -44,9 +45,11 @@ public class AddWindow extends JDialog implements ActionListener{
 	private JLabel lbl5;
 	private JLabel lbl6;
 	private JLabel lbl7;
-	private JComboBox<String> comboBox1;
 	private JButton btn;
-	private JComboBox comboBox2;
+	private JComboBox<String> comboBox1;
+	private JComboBox<String> comboBox2;
+	private ArrayList<String> codes = new ArrayList<>();
+	private ArrayList<String> ids = new ArrayList<>();
 
 
 	public AddWindow(MainWindow mainWindow, boolean b, LoginController cont, String type) {
@@ -81,7 +84,7 @@ public class AddWindow extends JDialog implements ActionListener{
 		lblInsert.setFont(new Font("Bahnschrift", Font.BOLD, 25));
 		lblInsert.setBounds(33, 34, 306, 25);
 		contentPane.add(lblInsert);
-		
+
 		lbl1 = new JLabel("");
 		lbl1.setFont(new Font("Bahnschrift", Font.PLAIN, 20));
 		lbl1.setBounds(55, 70, 175, 25);
@@ -157,15 +160,19 @@ public class AddWindow extends JDialog implements ActionListener{
 		btn.setFont(new Font("Bahnschrift", Font.PLAIN, 20));
 		btn.setBounds(292, 378, 156, 36);
 		contentPane.add(btn);
-		
+
 		comboBox1 = new JComboBox<String>();
 		comboBox1.setVisible(false);
 		contentPane.add(comboBox1);
-		
+
 		comboBox2 = new JComboBox();
 		comboBox1.setVisible(false);
 		contentPane.add(comboBox2);
-		
+
+		//llama al método para rellenar los combobox con los códigos
+		codes=cont.getCruiseCodes();
+		ids=cont.getWorkerCodes();
+
 
 		if(type.equals("cruise")) {
 			lbl1.setText("Cruise code:");
@@ -193,6 +200,9 @@ public class AddWindow extends JDialog implements ActionListener{
 			comboBox1.setBounds(292, 108, 156, 25);
 			comboBox1.setModel(new DefaultComboBoxModel<String>(new String[] {"captain", "cook", "guide", "receptionist"}));
 			comboBox2.setVisible(true);
+			for(String code: codes) {
+				comboBox2.addItem(code);
+			}
 			comboBox2.setBounds(292, 213, 156, 25);
 		}else if(type.equals("client")) {
 			lbl1.setText("Client ID:");
@@ -214,6 +224,12 @@ public class AddWindow extends JDialog implements ActionListener{
 			textField2.setVisible(false);
 			comboBox1.setVisible(true);
 			comboBox2.setVisible(true);
+			for(String code: codes) {
+				comboBox1.addItem(code);
+			}
+			for(String id: ids) {
+				comboBox2.addItem(id);
+			}
 			comboBox1.setBounds(55, 70, 175, 25);
 			comboBox2.setBounds(55, 108, 175, 25);
 		}
@@ -222,7 +238,17 @@ public class AddWindow extends JDialog implements ActionListener{
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
+		if(e.getSource()==btn) {
+			
+			
+			textField1.setText("");
+			textField2.setText("");
+			textField3.setText("");
+			textField4.setText("");
+			textField5.setText("");
+			textField6.setText("");
+			textField7.setText("");
+		}
 
-		
 	}
 }
