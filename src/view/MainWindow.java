@@ -62,7 +62,7 @@ public class MainWindow extends JDialog implements ActionListener {
 		getContentPane().add(btnCruise);
 		btnCruise.addActionListener(this);
 
-		btnWorker = new JButton("WORKER");
+		btnWorker = new JButton("WORKER"); 
 		btnWorker.setBounds(299, 82, 112, 38);
 		getContentPane().add(btnWorker);
 		btnWorker.addActionListener(this);
@@ -80,12 +80,11 @@ public class MainWindow extends JDialog implements ActionListener {
 		btnBook = new JButton("BOOK");
 		btnBook.setBounds(299, 168, 112, 38);
 		contentPane.add(btnBook);
-		btnAdmins.addActionListener(this);
+		btnBook.addActionListener(this);
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-
 
 		String[] options = {"Add", "Eliminate", "Modify", "See"};
 		int option;
@@ -100,7 +99,6 @@ public class MainWindow extends JDialog implements ActionListener {
 		} else if (e.getSource().equals(btnBook)) {
 			type = "book";
 		}
-
 
 			option = JOptionPane.showOptionDialog(this, "Select an option: ", type, JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, null);
 
