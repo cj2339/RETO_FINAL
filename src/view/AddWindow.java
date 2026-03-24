@@ -126,7 +126,6 @@ public class AddWindow extends JDialog implements ActionListener{
 		contentPane.add(lbl7);
 
 		textField1 = new JTextField();
-		textField1.setEditable(false);
 		textField1.setBounds(292, 70, 156, 25);
 		contentPane.add(textField1);
 		textField1.setColumns(10);
