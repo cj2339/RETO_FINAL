@@ -75,23 +75,25 @@ public class LoginWindow extends JDialog implements ActionListener{
 		    contentPane.add(lblPassword);
 		    
 		    textField = new JTextField();
+		    textField.setFont(new Font("Bahnschrift", Font.PLAIN, 20));
 		    textField.setOpaque(false);
 		    textField.setBackground(new Color(255,255,255,100));
 		    textField.setBorder(BorderFactory.createLineBorder(Color.WHITE, 0));
-		    textField.setBounds(277, 55, 183, 34);
+		    textField.setBounds(277, 40, 202, 58);
 		    contentPane.add(textField);
 		    textField.setColumns(10);
 		    
 		    passwordField = new JPasswordField();
+		    passwordField.setFont(new Font("Bahnschrift", Font.PLAIN, 20));
 		    passwordField.setOpaque(false);
 		    passwordField.setBackground(new Color(255,255,255,100));
 		    passwordField.setBorder(BorderFactory.createLineBorder(Color.WHITE, 0));
-		    passwordField.setBounds(277, 117, 183, 34);
+		    passwordField.setBounds(277, 108, 183, 58);
 		    contentPane.add(passwordField);
 		    
 		    btn = new JButton("Login");
 		    btn.setFont(new Font("Bahnschrift", Font.PLAIN, 30));
-		    btn.setBounds(277, 280, 183, 58);
+		    btn.setBounds(277, 280, 183, 58); 
 		    btn.addActionListener(this);
 		    contentPane.add(btn);
 		    
