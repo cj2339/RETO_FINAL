@@ -106,7 +106,7 @@ public class DeleteWindow extends JDialog implements ActionListener {
                     	cont.deleteCruise(id); 
                     	break;
                     case "worker": 
-                    	cont.deleteWorker(id); 
+                    	cont.deleteWorker(id);  
                     	break;
                     case "client": 
                     	cont.deleteClient(id); 

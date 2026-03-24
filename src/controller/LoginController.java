@@ -13,7 +13,7 @@ public class LoginController {
 	AdministratorDAO dao = new DBImplementation();
 
 	public void viewWindow() {
-		StartWindow win=new StartWindow(this);
+		StartWindow win=new StartWindow(this); 
 		win.setVisible(true);
 	}
 
