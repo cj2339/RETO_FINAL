@@ -87,7 +87,7 @@ public class AddWindow extends JDialog implements ActionListener{
 
 		lbl1 = new JLabel("");
 		lbl1.setFont(new Font("Bahnschrift", Font.PLAIN, 20));
-		lbl1.setBounds(55, 70, 175, 25);
+		lbl1.setBounds(55, 73, 175, 25);
 		contentPane.add(lbl1);
 
 		lbl2 = new JLabel("");
