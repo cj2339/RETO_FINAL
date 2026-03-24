@@ -84,10 +84,10 @@ public class MainWindow extends JDialog implements ActionListener {
 	    int option;
 	    String type = "";
 
-	    if (e.getSource().equals(btnCruise)) type = "cruise";
-	    if (e.getSource().equals(btnWorker)) type = "worker";
-	    if (e.getSource().equals(btnClient)) type = "client";
-	    if (e.getSource().equals(btnAdmins)) type = "admin";
+	    if (e.getSource().equals(btnCruise)) { type = "cruise";
+	    } else if (e.getSource().equals(btnWorker)) { type = "worker";
+	    } else if (e.getSource().equals(btnClient)) { type = "client"; 
+	    } else if (e.getSource().equals(btnAdmins)) type = "admin";
 
 	    option = JOptionPane.showOptionDialog(this, "¿what do you want to do?", type.toUpperCase(),
 	            JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, null);
@@ -97,7 +97,8 @@ public class MainWindow extends JDialog implements ActionListener {
 //	        	new AddWindow(type).setVisible(true);
 //	            break;
 	        case 1:
-	            new DeleteWindow(type).setVisible(true);
+	            new DeleteWindow(this, cont, type).setVisible(true);
+	            dispose();
 	            break;
 //	        case 2:
 //	            new ModifyWindow(type).setVisible(true);
