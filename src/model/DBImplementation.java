@@ -1,4 +1,4 @@
-package model;
+ package model;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -17,7 +17,7 @@ public class DBImplementation implements AdministratorDAO{
 		private ResourceBundle configFile;
 		private String driverDB;
 		private String urlDB;
-		private String userDB;
+		private String userDB; 
 		private String passwordDB;
 
 		
@@ -30,6 +30,9 @@ public class DBImplementation implements AdministratorDAO{
 		final String SQLSELECTCRUISE = "SELECT * FROM cruise";
 		final String SQLSELECTWORKER = "SELECT * FROM worker";
 		final String SQLSELECTCLIENT = "SELECT * FROM client";
+		final String SQLDELETE_CRUISE = "DELETE FROM cruise WHERE cod_cruise = ?";
+		final String SQLDELETE_CLIENT = "DELETE FROM client WHERE id_client = ?";
+		final String SQLDELETE_WORKER = "DELETE FROM worker WHERE id_worker = ?";
 		
 		public DBImplementation() {
 			this.configFile = ResourceBundle.getBundle("configClass");
@@ -179,6 +182,53 @@ public class DBImplementation implements AdministratorDAO{
 		    return codes;
 		}
 		
-		
-			
+
+		@Override
+		public boolean deleteCruise(String id) {
+		    boolean ok = false;
+		    this.openConnection();
+		    try {
+		        stmt = con.prepareStatement(SQLDELETE_CRUISE);
+		        stmt.setString(1, id);
+		        if (stmt.executeUpdate() > 0) ok = true;
+		        stmt.close();
+		        con.close();
+		    } catch (SQLException e) {
+		        System.out.println("Error: " + e.getMessage());
+		    }
+		    return ok;
+		}
+
+		@Override
+		public boolean deleteClient(String id) {
+		    boolean ok = false;
+		    this.openConnection();
+		    try {
+		        stmt = con.prepareStatement(SQLDELETE_CLIENT);
+		        stmt.setString(1, id);
+		        if (stmt.executeUpdate() > 0) ok = true;
+		        stmt.close();
+		        con.close();
+		    } catch (SQLException e) {
+		        System.out.println("Error: " + e.getMessage());
+		    }
+		    return ok;
+		}
+
+		@Override
+		public boolean deleteWorker(String id) {
+		    boolean ok = false;
+		    this.openConnection();
+		    try {
+		        stmt = con.prepareStatement(SQLDELETE_WORKER);
+		        stmt.setString(1, id);
+		        if (stmt.executeUpdate() > 0) ok = true;
+		        stmt.close();
+		        con.close();
+		    } catch (SQLException e) {
+		        System.out.println("Error: " + e.getMessage());
+		    }
+		    return ok;
+		}
+
 }

@@ -8,6 +8,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -21,7 +22,6 @@ import java.awt.Graphics;
 
 import javax.swing.JTextField;
 import javax.swing.JComboBox;
-import javax.swing.DefaultComboBoxModel;
 
 public class AddWindow extends JDialog implements ActionListener{
 
@@ -115,6 +115,11 @@ public class AddWindow extends JDialog implements ActionListener{
 		lbl6.setBounds(55, 248, 175, 25);
 		contentPane.add(lbl6);
 
+		lbl1 = new JLabel("");
+		lbl1.setFont(new Font("Bahnschrift", Font.PLAIN, 20));
+		lbl1.setBounds(55, 70, 175, 25);
+		contentPane.add(lbl1);
+
 		lbl7 = new JLabel("");
 		lbl7.setFont(new Font("Bahnschrift", Font.PLAIN, 20));
 		lbl7.setBounds(55, 282, 175, 25);
@@ -156,10 +161,10 @@ public class AddWindow extends JDialog implements ActionListener{
 		textField7.setBounds(292, 282, 156, 25);
 		contentPane.add(textField7);
 
-		btn = new JButton("Confirm");
+		JButton btn = new JButton("Confirm");
 		btn.setFont(new Font("Bahnschrift", Font.PLAIN, 20));
 		btn.setBounds(292, 378, 156, 36);
-		contentPane.add(btn);
+		contentPane.add(btn); 
 
 		comboBox1 = new JComboBox<String>();
 		comboBox1.setVisible(false);
@@ -173,6 +178,9 @@ public class AddWindow extends JDialog implements ActionListener{
 		codes=cont.getCruiseCodes();
 		ids=cont.getWorkerCodes();
 
+		JComboBox comboBox = new JComboBox();
+		comboBox.setBounds(292, 143, 156, 25);
+		contentPane.add(comboBox);
 
 		if(type.equals("cruise")) {
 			lbl1.setText("Cruise code:");
@@ -232,6 +240,7 @@ public class AddWindow extends JDialog implements ActionListener{
 			}
 			comboBox1.setBounds(55, 70, 175, 25);
 			comboBox2.setBounds(55, 108, 175, 25);
+
 		}
 
 	}

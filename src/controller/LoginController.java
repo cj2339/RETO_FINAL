@@ -33,5 +33,17 @@ public class LoginController {
 		return dao.getClientCodes();
 	}
 	
+	public boolean deleteCruise(String id) {
+        return dao.deleteCruise(id);
+    }
+
+    public boolean deleteWorker(String id) {
+        return dao.deleteWorker(id);
+    }
+
+    public boolean deleteClient(String id) {
+        return dao.deleteClient(id);
+    }
+	
 	
 }
