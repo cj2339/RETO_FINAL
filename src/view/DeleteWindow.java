@@ -26,12 +26,12 @@ public class DeleteWindow extends JDialog implements ActionListener {
     private JComboBox<String> comboBox;
     private JButton btnDelete;
     private JButton btnCancelar;
-    private LoginController controller;
+    private LoginController cont;
     private String tipo;
 
-    public DeleteWindow(JDialog parent, LoginController controller, String tipo) {
+    public DeleteWindow(JDialog parent, LoginController cont, String tipo) {
         super(parent, true);
-        this.controller = controller;
+        this.cont = cont;
         this.tipo = tipo;
 
         setTitle("Eliminate " + tipo);
@@ -69,12 +69,17 @@ public class DeleteWindow extends JDialog implements ActionListener {
         ArrayList<String> codes = new ArrayList<>();
 
         switch (tipo) {
-            case "cruise": codes = controller.getCruiseCodes(); 
+
+            case "cruise": 
+            	codes = cont.getCruiseCodes(); 
             	break;
-            case "worker": codes = controller.getWorkerCodes(); 
+            case "worker": 
+            	codes = cont.getWorkerCodes(); 
             	break;
-            case "client": codes = controller.getClientCodes(); 
+            case "client": 
+            	codes = cont.getClientCodes(); 
             	break;
+
         }
 
         for (String code : codes) {
@@ -97,11 +102,14 @@ public class DeleteWindow extends JDialog implements ActionListener {
 
             if (confirmar == JOptionPane.YES_OPTION) {
                 switch (tipo) {
-                    case "cruise": controller.deleteCruise(id); 
+                    case "cruise": 
+                    	cont.deleteCruise(id); 
                     	break;
-                    case "worker": controller.deleteWorker(id); 
+                    case "worker": 
+                    	cont.deleteWorker(id); 
                     	break;
-                    case "client": controller.deleteClient(id); 
+                    case "client": 
+                    	cont.deleteClient(id); 
                     	break;
                 }
                 JOptionPane.showMessageDialog(this, id + " deleted successfully");
