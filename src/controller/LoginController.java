@@ -18,7 +18,7 @@ public class LoginController {
 	}
 
 	public boolean checkUser(Administrator user) {
-		return dao.checkAdmin(user);
+		return dao.checkUser(user);
 	} 
 	
 	public ArrayList<String> getCruiseCodes() {

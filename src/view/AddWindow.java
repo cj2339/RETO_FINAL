@@ -6,9 +6,7 @@ import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
 
-import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -45,11 +43,6 @@ public class AddWindow extends JDialog implements ActionListener{
 	private JLabel lbl5;
 	private JLabel lbl6;
 	private JLabel lbl7;
-	private JButton btn;
-	private JComboBox<String> comboBox1;
-	private JComboBox<String> comboBox2;
-	private ArrayList<String> codes = new ArrayList<>();
-	private ArrayList<String> ids = new ArrayList<>();
 
 
 	public AddWindow(MainWindow mainWindow, boolean b, LoginController cont, String type) {
@@ -84,11 +77,6 @@ public class AddWindow extends JDialog implements ActionListener{
 		lblInsert.setFont(new Font("Bahnschrift", Font.BOLD, 25));
 		lblInsert.setBounds(33, 34, 306, 25);
 		contentPane.add(lblInsert);
-
-		lbl1 = new JLabel("");
-		lbl1.setFont(new Font("Bahnschrift", Font.PLAIN, 20));
-		lbl1.setBounds(55, 70, 175, 25);
-		contentPane.add(lbl1);
 
 		lbl2 = new JLabel("");
 		lbl2.setFont(new Font("Bahnschrift", Font.PLAIN, 20));
@@ -164,20 +152,8 @@ public class AddWindow extends JDialog implements ActionListener{
 		JButton btn = new JButton("Confirm");
 		btn.setFont(new Font("Bahnschrift", Font.PLAIN, 20));
 		btn.setBounds(292, 378, 156, 36);
-		contentPane.add(btn); 
-
-		comboBox1 = new JComboBox<String>();
-		comboBox1.setVisible(false);
-		contentPane.add(comboBox1);
-
-		comboBox2 = new JComboBox();
-		comboBox1.setVisible(false);
-		contentPane.add(comboBox2);
-
-		//llama al método para rellenar los combobox con los códigos
-		codes=cont.getCruiseCodes();
-		ids=cont.getWorkerCodes();
-
+		contentPane.add(btn);
+		
 		JComboBox comboBox = new JComboBox();
 		comboBox.setBounds(292, 143, 156, 25);
 		contentPane.add(comboBox);
@@ -186,78 +162,13 @@ public class AddWindow extends JDialog implements ActionListener{
 			lbl1.setText("Cruise code:");
 			lbl2.setText("Origin city:");
 			lbl3.setText("Type");
-			lbl4.setText("Number of rooms:");
-			lbl5.setText("Max capacity:");
-			textField3.setVisible(false);
-			textField6.setVisible(false);
-			textField7.setVisible(false);
-			comboBox1.setVisible(true);
-			comboBox1.setBounds(292, 143, 156, 25);
-			comboBox1.setModel(new DefaultComboBoxModel<String>(new String[] {"luxury", "premium", "family", "expedition"}));
-		}else if(type.equals("worker")) {
-			lbl1.setText("Worker ID:");
-			lbl2.setText("Service:");
-			lbl3.setText("Name:");
-			lbl4.setText("Surname:");
-			lbl5.setText("Cruise code:");
-			textField2.setVisible(false);
-			textField5.setVisible(false);
-			textField6.setVisible(false);
-			textField7.setVisible(false);
-			comboBox1.setVisible(true);
-			comboBox1.setBounds(292, 108, 156, 25);
-			comboBox1.setModel(new DefaultComboBoxModel<String>(new String[] {"captain", "cook", "guide", "receptionist"}));
-			comboBox2.setVisible(true);
-			for(String code: codes) {
-				comboBox2.addItem(code);
-			}
-			comboBox2.setBounds(292, 213, 156, 25);
-		}else if(type.equals("client")) {
-			lbl1.setText("Client ID:");
-			lbl2.setText("Name:");
-			lbl3.setText("Surname:");
-			lbl4.setText("Age:");
-			textField5.setVisible(false);
-			textField6.setVisible(false);
-			textField7.setVisible(false);
-		}else if(type.equals("book")) {
-			lbl1.setText("Client ID:");
-			lbl2.setText("Cruise ID:");
-			lbl3.setText("Origin city:");
-			lbl4.setText("Destination city:");
-			lbl1.setText("Start date:");
-			lbl2.setText("End date:");
-			lbl3.setText("Base price:");
-			textField1.setVisible(false);
-			textField2.setVisible(false);
-			comboBox1.setVisible(true);
-			comboBox2.setVisible(true);
-			for(String code: codes) {
-				comboBox1.addItem(code);
-			}
-			for(String id: ids) {
-				comboBox2.addItem(id);
-			}
-			comboBox1.setBounds(55, 70, 175, 25);
-			comboBox2.setBounds(55, 108, 175, 25);
-
 		}
 
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		if(e.getSource()==btn) {
-			
-			
-			textField1.setText("");
-			textField2.setText("");
-			textField3.setText("");
-			textField4.setText("");
-			textField5.setText("");
-			textField6.setText("");
-			textField7.setText("");
-		}
 
+		
 	}
 }

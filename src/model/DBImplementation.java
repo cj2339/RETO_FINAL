@@ -17,7 +17,7 @@ public class DBImplementation implements AdministratorDAO{
 		private ResourceBundle configFile;
 		private String driverDB;
 		private String urlDB;
-		private String userDB; 
+		private String userDB;
 		private String passwordDB;
 
 		
@@ -47,80 +47,80 @@ public class DBImplementation implements AdministratorDAO{
 			try {
 				con = DriverManager.getConnection(urlDB, this.userDB, this.passwordDB);
 			} catch (SQLException e) {
-				System.out.println("Error trying to open the DB");
+				System.out.println("Error al intentar abrir la BD");
 				e.printStackTrace();
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
 		}
 
-		public boolean checkAdmin(Administrator administrator){
-			boolean exists=false;
+		public boolean checkUser(Administrator administrator){
+			boolean existe=false;
 			this.openConnection();
 			try {
 				stmt = con.prepareStatement(SQL);
 	            stmt.setString(1, administrator.getName());
 	            stmt.setString(2, administrator.getPassword());
-	            ResultSet result = stmt.executeQuery();
+	            ResultSet resultado = stmt.executeQuery();
 
-	            if (result.next()) {
-	                exists = true;
+	            if (resultado.next()) {
+	                existe = true;
 	            }
-	            result.close();
+	            resultado.close();
 	            stmt.close();
 	            con.close();
 	        } catch (SQLException e) {
-	            System.out.println("Error verifying credentials: " + e.getMessage());
+	            System.out.println("Error al verificar credenciales: " + e.getMessage());
 	        }
-	        return exists;
+	        return existe;
 	    }
 		
-		public boolean checkAdmin1(Administrator admin){
-			boolean exists=false;
+		public boolean checkUser1(Administrator user){
+			boolean existe=false;
 			this.openConnection();
 			
 			try {
 				stmt = con.prepareStatement(sql1);
-	            stmt.setString(1, admin.getName());
-	            ResultSet result = stmt.executeQuery();
+	            stmt.setString(1, user.getName());
+	            ResultSet resultado = stmt.executeQuery();
 
-	            if (result.next()) {
-	                exists = true;
+	            if (resultado.next()) {
+	                existe = true;
 	            }
-	            result.close();
+	            resultado.close();
 	            stmt.close();
 	            con.close();
 
 	        } catch (SQLException e) {
-	            System.out.println("Error verifying credentials: " + e.getMessage());
+	            System.out.println("Error al verificar credenciales: " + e.getMessage());
 	        }
 
-	        return exists;
+	        return existe;
 	    }
 		
-		public boolean checkCruise(Cruise cruise) {
-			boolean exists=false;
-			this.openConnection();
-			try {
-				stmt=con.prepareStatement(SQLSELECTCRUISE2);
-				stmt.setString(1, cruise.getCodCruise());
-				ResultSet result=stmt.executeQuery();
-				
-				if(result.next()) {
-					exists=true;
-				}
-				result.close();
-				stmt.close();
-				con.close();
-			}catch (SQLException e) {
-	            System.out.println("Error verifying credentials: " + e.getMessage());
-	        }
-			return exists;
-		}
+//		public boolean checkCruise(Cruise cruise) {
+//			boolean exists=false;
+//			this.openConnection();
+//			try {
+//				stmt=con.prepareStatement(SQLSELECTCRUISE2);
+//				stmt.setString(1, cruise.getCodCruise());
+//				ResultSet result=stmt.executeQuery();
+//				
+//				if(result.next()) {
+//					exists=true;
+//				}
+//				result.close();
+//				stmt.close();
+//				con.close();
+//			}catch (SQLException e) {
+//	            System.out.println("Error verifying credentials: " + e.getMessage());
+//	        }
+//			return exists;
+//		}
 		
 		public boolean insertUser(Administrator user) {
 			boolean ok=false;
-			if (!checkAdmin1(user))
+			if (!checkUser1(user))
 			{
 				this.openConnection(); 
 				try {
@@ -133,18 +133,11 @@ public class DBImplementation implements AdministratorDAO{
 		            stmt.close();
 		            con.close();
 				  } catch (SQLException e) {
-		             System.out.println("Error verifying credentials: " + e.getMessage());
+		             System.out.println("Error al verificar credenciales: " + e.getMessage());
 		        }
 			}
 				return ok;		
 		}
-		
-//		public boolean insertCruise(Cruise cruise) {
-//			boolean ok=false;
-//			
-//			
-//			return ok;
-//		}
 
 		@Override
 		public ArrayList<String> getCruiseCodes() {
@@ -203,7 +196,6 @@ public class DBImplementation implements AdministratorDAO{
 		    return codes;
 		}
 		
-
 		@Override
 		public boolean deleteCruise(String id) {
 		    boolean ok = false;
@@ -211,9 +203,7 @@ public class DBImplementation implements AdministratorDAO{
 		    try {
 		        stmt = con.prepareStatement(SQLDELETECRUISE);
 		        stmt.setString(1, id);
-		        if (stmt.executeUpdate() > 0) {
-		        	ok = true;
-		        }
+		        if (stmt.executeUpdate() > 0) ok = true;
 		        stmt.close();
 		        con.close();
 		    } catch (SQLException e) {
@@ -229,9 +219,7 @@ public class DBImplementation implements AdministratorDAO{
 		    try {
 		        stmt = con.prepareStatement(SQLDELETECLIENT);
 		        stmt.setString(1, id);
-		        if (stmt.executeUpdate() > 0) {
-		        	ok = true;
-		        }
+		        if (stmt.executeUpdate() > 0) ok = true;
 		        stmt.close();
 		        con.close();
 		    } catch (SQLException e) {
@@ -247,9 +235,7 @@ public class DBImplementation implements AdministratorDAO{
 		    try {
 		        stmt = con.prepareStatement(SQLDELETEWORKER);
 		        stmt.setString(1, id);
-		        if (stmt.executeUpdate() > 0) {
-		        	ok = true;
-		        }
+		        if (stmt.executeUpdate() > 0) ok = true;
 		        stmt.close();
 		        con.close();
 		    } catch (SQLException e) {
@@ -257,5 +243,5 @@ public class DBImplementation implements AdministratorDAO{
 		    }
 		    return ok;
 		}
-
+			
 }

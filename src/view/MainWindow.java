@@ -30,6 +30,7 @@ public class MainWindow extends JDialog implements ActionListener {
 	private JButton btnClient;
 	private JButton btnAdmins;
 	private JPanel contentPane;
+	private JButton btnBook;
 	private Image imagenFondo = new ImageIcon("images/ManagementAnchor.png").getImage();	
 
 	//preguntar sobre esta herencia
@@ -45,35 +46,40 @@ public class MainWindow extends JDialog implements ActionListener {
 			}
 		};
 		setContentPane(contentPane);
-		contentPane.setLayout(null);
 
 		setTitle("Main Management");
-		setBounds(100, 100, 450, 300);
+		setBounds(100, 100, 450, 333);
 		getContentPane().setLayout(null);
+		contentPane.setLayout(null);
 
 		JLabel lblNewLabel = new JLabel("MANAGEMENT");
-		lblNewLabel.setFont(new Font("Arial", Font.BOLD, 20));
 		lblNewLabel.setBounds(148, 22, 160, 21);
+		lblNewLabel.setFont(new Font("Arial", Font.BOLD, 20));
 		getContentPane().add(lblNewLabel);
 
 		btnCruise = new JButton("CRUISE");
-		btnCruise.setBounds(24, 77, 112, 38);
+		btnCruise.setBounds(24, 82, 112, 38);
 		getContentPane().add(btnCruise);
 		btnCruise.addActionListener(this);
 
 		btnWorker = new JButton("WORKER");
-		btnWorker.setBounds(299, 77, 112, 38);
+		btnWorker.setBounds(299, 82, 112, 38);
 		getContentPane().add(btnWorker);
 		btnWorker.addActionListener(this);
 
 		btnClient = new JButton("CLIENT");
-		btnClient.setBounds(24, 164, 112, 38);
+		btnClient.setBounds(24, 168, 112, 38);
 		getContentPane().add(btnClient);
 		btnClient.addActionListener(this);
 
 		btnAdmins = new JButton("ADMIN");
-		btnAdmins.setBounds(299, 164, 112, 38);
+		btnAdmins.setBounds(180, 254, 81, 21);
 		getContentPane().add(btnAdmins);
+		btnAdmins.addActionListener(this);
+		
+		btnBook = new JButton("BOOK");
+		btnBook.setBounds(299, 168, 112, 38);
+		contentPane.add(btnBook);
 		btnAdmins.addActionListener(this);
 	}
 
@@ -91,6 +97,8 @@ public class MainWindow extends JDialog implements ActionListener {
 			type = "worker";
 		}else if (e.getSource().equals(btnClient)) {
 			type = "client";
+		} else if (e.getSource().equals(btnBook)) {
+			type = "book";
 		}
 
 
@@ -102,7 +110,8 @@ public class MainWindow extends JDialog implements ActionListener {
 				add.setVisible(true);
 				break;
 			case 1:
-				new DeleteWindow(this, cont, type).setVisible(true);
+				DeleteWindow delete = new DeleteWindow(this, cont, type);
+				delete.setVisible(true);
 				break;
 				//	        case 2:
 				//	            new ModifyWindow(type).setVisible(true);
@@ -111,26 +120,8 @@ public class MainWindow extends JDialog implements ActionListener {
 				//	            new ViewWindow(type).setVisible(true);
 				//	            break;
 			}
-
-			option = JOptionPane.showOptionDialog(this, "Select an option: ", type, JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, null);
-
-			switch (option) {
-			case 0:
-				AddWindow add = new AddWindow(this,true,cont,type);
-				add.setVisible(true);
-				break;
-			case 1:
-				new DeleteWindow(this, cont, type).setVisible(true);
-				break;
-				//	        case 2:
-				//	            new ModifyWindow(type).setVisible(true);
-				//	            break;
-				//	        case 3:
-				//	            new ViewWindow(type).setVisible(true);
-				//	            break;
-			}
-
-
 		}
 
-	}
+
+}
+

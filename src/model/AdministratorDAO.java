@@ -8,7 +8,7 @@ import java.util.TreeMap;
 
 
 public interface AdministratorDAO {
-	public boolean checkAdmin(Administrator user);
+	public boolean checkUser(Administrator user);
 	public boolean insertUser(Administrator user);
 	public ArrayList<String> getCruiseCodes();
 	public ArrayList<String> getWorkerCodes();
