@@ -26,12 +26,12 @@ public class DeleteWindow extends JDialog implements ActionListener {
     private JComboBox<String> comboBox;
     private JButton btnDelete;
     private JButton btnCancelar;
-    private LoginController controller;
+    private LoginController cont;
     private String tipo;
 
-    public DeleteWindow(JDialog parent, LoginController controller, String tipo) {
+    public DeleteWindow(JDialog parent, LoginController cont, String tipo) {
         super(parent, true);
-        this.controller = controller;
+        this.cont = cont;
         this.tipo = tipo;
 
         setTitle("Eliminate " + tipo);
@@ -69,9 +69,15 @@ public class DeleteWindow extends JDialog implements ActionListener {
         ArrayList<String> codes = new ArrayList<>();
 
         switch (tipo) {
-            case "cruise": codes = controller.getCruiseCodes(); break;
-            case "worker": codes = controller.getWorkerCodes(); break;
-            case "client": codes = controller.getClientCodes(); break;
+            case "cruise": 
+            	codes = cont.getCruiseCodes(); 
+            break;
+            case "worker": 
+            	codes = cont.getWorkerCodes(); 
+            break;
+            case "client": 
+            	codes = cont.getClientCodes(); 
+            break;
         }
 
         for (String code : codes) {
