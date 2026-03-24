@@ -169,5 +169,6 @@ public class AddWindow extends JDialog implements ActionListener{
 	@Override
 	public void actionPerformed(ActionEvent e) {
 
+		
 	}
 }

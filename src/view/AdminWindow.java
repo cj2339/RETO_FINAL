@@ -49,7 +49,8 @@ public class AdminWindow extends JDialog implements ActionListener {
 		setIconImage(Toolkit.getDefaultToolkit().getImage("images/icon.png"));
 		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		setResizable(false);
-
+		setSize(600, 400);
+		setLocationRelativeTo(null);
 		contentPane = new JPanel() {
 			@Override
 			protected void paintComponent(Graphics g) {
@@ -67,40 +68,41 @@ public class AdminWindow extends JDialog implements ActionListener {
 		getContentPane().setLayout(null);
 
 		lblChangePassword = new JLabel("CHANGE PASSWORD");
-		lblChangePassword.setFont(new Font("Bahnschrift", Font.PLAIN, 30));
-		lblChangePassword.setBounds(24, 10, 342, 58);
+		lblChangePassword.setFont(new Font("Bahnschrift", Font.BOLD, 40));
+		lblChangePassword.setBounds(116, 9, 397, 58);
 		getContentPane().add(lblChangePassword);
 
 		lblPassword = new JLabel("PASSWORD");
-		lblPassword.setFont(new Font("Bahnschrift", Font.BOLD, 20));
-		lblPassword.setBounds(34, 78, 139, 25);
+		lblPassword.setFont(new Font("Bahnschrift", Font.BOLD, 25));
+		lblPassword.setBounds(103, 84, 155, 25);
 		getContentPane().add(lblPassword);
 
 		lblNewPassword = new JLabel("NEW PASSWORD");
-		lblNewPassword.setFont(new Font("Bahnschrift", Font.BOLD, 20));
-		lblNewPassword.setBounds(34, 143, 192, 25);
+		lblNewPassword.setFont(new Font("Bahnschrift", Font.BOLD, 25));
+		lblNewPassword.setBounds(102, 140, 232, 25);
 		getContentPane().add(lblNewPassword);
 
 		btnChange = new JButton("CHANGE");
 		btnChange.addActionListener(this);
 		btnChange.setVerticalAlignment(SwingConstants.TOP);
 		btnChange.setFont(new Font("Bahnschrift", Font.PLAIN, 30));
-		btnChange.setBounds(229, 178, 183, 34);
+		btnChange.setBounds(356, 193, 183, 34);
 		getContentPane().add(btnChange);
 
 		textFieldPassword = new JTextField();
 		textFieldPassword.setColumns(10);
-		textFieldPassword.setBounds(229, 78, 183, 34);
+		textFieldPassword.setBounds(355, 78, 183, 34);
 		getContentPane().add(textFieldPassword);
 
 		textFieldNewPassword = new JTextField();
 		textFieldNewPassword.setColumns(10);
-		textFieldNewPassword.setBounds(229, 134, 183, 34);
+		textFieldNewPassword.setBounds(355, 128, 183, 34);
 		getContentPane().add(textFieldNewPassword);
 		
 		lblWarning = new JLabel("");
+		lblWarning.setBackground(new Color(128, 255, 255));
 		lblWarning.setFont(new Font("Bahnschrift", Font.PLAIN, 15));
-		lblWarning.setBounds(10, 222, 400, 30);
+		lblWarning.setBounds(81, 311, 400, 30);
 		lblWarning.setForeground(Color.RED);	
 		contentPane.add(lblWarning);
 	}
