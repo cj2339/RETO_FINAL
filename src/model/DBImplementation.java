@@ -98,25 +98,25 @@ public class DBImplementation implements AdministratorDAO{
 	        return existe;
 	    }
 		
-//		public boolean checkCruise(Cruise cruise) {
-//			boolean exists=false;
-//			this.openConnection();
-//			try {
-//				stmt=con.prepareStatement(SQLSELECTCRUISE2);
-//				stmt.setString(1, cruise.getCodCruise());
-//				ResultSet result=stmt.executeQuery();
-//				
-//				if(result.next()) {
-//					exists=true;
-//				}
-//				result.close();
-//				stmt.close();
-//				con.close();
-//			}catch (SQLException e) {
-//	            System.out.println("Error verifying credentials: " + e.getMessage());
-//	        }
-//			return exists;
-//		}
+		public boolean checkCruise(Cruise cruise) {
+			boolean exists=false;
+			this.openConnection();
+			try {
+				stmt=con.prepareStatement(SQLSELECTCRUISE2);
+				stmt.setString(1, cruise.getCodCruise());
+				ResultSet result=stmt.executeQuery();
+				
+				if(result.next()) {
+					exists=true;
+				}
+				result.close();
+				stmt.close();
+				con.close();
+			}catch (SQLException e) {
+	            System.out.println("Error verifying credentials: " + e.getMessage());
+	        }
+			return exists;
+		}
 		
 		public boolean insertUser(Administrator user) {
 			boolean ok=false;
