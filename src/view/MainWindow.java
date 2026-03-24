@@ -100,7 +100,7 @@ public class MainWindow extends JDialog implements ActionListener {
 				add.setVisible(true);
 				break;
 			case 1:
-				new DeleteWindow(type).setVisible(true);
+				new DeleteWindow(this, cont, type).setVisible(true);
 				break;
 				//	        case 2:
 					//	            new ModifyWindow(type).setVisible(true);
