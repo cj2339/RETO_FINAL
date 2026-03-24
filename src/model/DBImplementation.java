@@ -195,7 +195,9 @@ public class DBImplementation implements AdministratorDAO{
 		    try {
 		        stmt = con.prepareStatement(SQLDELETE_CRUISE);
 		        stmt.setString(1, id);
-		        if (stmt.executeUpdate() > 0) ok = true;
+		        if (stmt.executeUpdate() > 0) {
+		        	ok = true;
+		        }
 		        stmt.close();
 		        con.close();
 		    } catch (SQLException e) {
@@ -211,7 +213,9 @@ public class DBImplementation implements AdministratorDAO{
 		    try {
 		        stmt = con.prepareStatement(SQLDELETE_CLIENT);
 		        stmt.setString(1, id);
-		        if (stmt.executeUpdate() > 0) ok = true;
+		        if (stmt.executeUpdate() > 0) {
+		        	ok = true;
+		        }
 		        stmt.close();
 		        con.close();
 		    } catch (SQLException e) {
@@ -227,7 +231,9 @@ public class DBImplementation implements AdministratorDAO{
 		    try {
 		        stmt = con.prepareStatement(SQLDELETE_WORKER);
 		        stmt.setString(1, id);
-		        if (stmt.executeUpdate() > 0) ok = true;
+		        if (stmt.executeUpdate() > 0) {
+		        	ok = true;
+		        }
 		        stmt.close();
 		        con.close();
 		    } catch (SQLException e) {
