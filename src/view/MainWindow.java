@@ -101,6 +101,7 @@ public class MainWindow extends JDialog implements ActionListener {
 			type = "book";
 		}
 
+
 			option = JOptionPane.showOptionDialog(this, "Select an option: ", type, JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, null);
 
 			switch (option) {
@@ -113,7 +114,25 @@ public class MainWindow extends JDialog implements ActionListener {
 				delete.setVisible(true);
 				break;
 				//	        case 2:
-					//	            new ModifyWindow(type).setVisible(true);
+				//	            new ModifyWindow(type).setVisible(true);
+				//	            break;
+				//	        case 3:
+				//	            new ViewWindow(type).setVisible(true);
+				//	            break;
+			}
+
+			option = JOptionPane.showOptionDialog(this, "Select an option: ", type, JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, null);
+
+			switch (option) {
+			case 0:
+				AddWindow add = new AddWindow(this,true,cont,type);
+				add.setVisible(true);
+				break;
+			case 1:
+				new DeleteWindow(this, cont, type).setVisible(true);
+				break;
+				//	        case 2:
+				//	            new ModifyWindow(type).setVisible(true);
 				//	            break;
 				//	        case 3:
 				//	            new ViewWindow(type).setVisible(true);
@@ -122,4 +141,9 @@ public class MainWindow extends JDialog implements ActionListener {
 
 
 		}
+<<<<<<< HEAD
 }
+=======
+
+	}
+>>>>>>> branch 'main' of https://github.com/cj2339/RETO_FINAL.git
