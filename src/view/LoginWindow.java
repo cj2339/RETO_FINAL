@@ -38,7 +38,6 @@ public class LoginWindow extends JDialog implements ActionListener{
 	private JPasswordField passwordField;
 	private JLabel lblError;
 	private JButton btn; 
-
 	private int atempts=3;
 
 	public LoginWindow(StartWindow startWindow, LoginController cont) {

@@ -10,6 +10,8 @@ import java.awt.Toolkit;
 import java.awt.Window.Type;
 import javax.swing.JPanel;
 import javax.swing.JLabel;
+
+import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Image;
@@ -17,6 +19,7 @@ import java.awt.Image;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JTextField;
+import javax.swing.SwingConstants;
 
 public class AdminWindow extends JDialog implements ActionListener {
 
@@ -28,12 +31,23 @@ public class AdminWindow extends JDialog implements ActionListener {
 	private JTextField textFieldNewPassword;
 	private JButton btnChange;
 	private JLabel lblNewPassword;
+	private JLabel lblWarning;
 	private Image BackgroundImage = new ImageIcon("images/ventanaAdmin.png").getImage();
+	private int atempts=3;
 
-
+	public static void main(String[] args) {
+	    try {
+	        AdminWindow dialog = new AdminWindow();
+	        dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+	        dialog.setVisible(true);
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
+	}
+	
 	public AdminWindow() {
 		setIconImage(Toolkit.getDefaultToolkit().getImage("images/icon.png"));
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		setResizable(false);
 
 		contentPane = new JPanel() {
@@ -68,8 +82,10 @@ public class AdminWindow extends JDialog implements ActionListener {
 		getContentPane().add(lblNewPassword);
 
 		btnChange = new JButton("CHANGE");
+		btnChange.addActionListener(this);
+		btnChange.setVerticalAlignment(SwingConstants.TOP);
 		btnChange.setFont(new Font("Bahnschrift", Font.PLAIN, 30));
-		btnChange.setBounds(229, 195, 183, 58);
+		btnChange.setBounds(229, 178, 183, 34);
 		getContentPane().add(btnChange);
 
 		textFieldPassword = new JTextField();
@@ -81,6 +97,12 @@ public class AdminWindow extends JDialog implements ActionListener {
 		textFieldNewPassword.setColumns(10);
 		textFieldNewPassword.setBounds(229, 134, 183, 34);
 		getContentPane().add(textFieldNewPassword);
+		
+		lblWarning = new JLabel("");
+		lblWarning.setFont(new Font("Bahnschrift", Font.PLAIN, 15));
+		lblWarning.setBounds(10, 222, 400, 30);
+		lblWarning.setForeground(Color.RED);	
+		contentPane.add(lblWarning);
 	}
 
 
@@ -90,24 +112,25 @@ public class AdminWindow extends JDialog implements ActionListener {
 		String oldPass = textFieldPassword.getText();
 		String newPass = textFieldNewPassword.getText();
 
-		// 1. comprobamos que no estén vacíos
+		// 1. We check that they are not empty
 		if (oldPass.isEmpty() || newPass.isEmpty()) {
-			System.out.println("Debes rellenar ambos campos");
+			lblWarning.setText("You must fill in both fields");
 			valido = false;
 		}
-		// 2. compruebamos que la contraseña sea realmente la introducida
-		else if (valido && !oldPass.equals("")) {//debe comparar con la contraseña asociada al usuario en la bd, pero ahora no sé hacerlo
-			System.out.println("La contraseña actual no es correcta");
+		// 2. We verify that the password is indeed the one entered
+		else if (valido && !oldPass.equals("")) {//debe comparar con la contraseña asociada al admin registrado en la bd, pero ahora no sé hacerlo
+			lblWarning.setText("The current password is incorrect");
 			valido = false;
 		}
-		// 3. compruebamos que sea diferente a la antigua
+		// 3. We check that it is different from the old one
 		else if (valido && oldPass.equals(newPass)) {
-			System.out.println("La nueva contraseña no puede ser igual a la anterior");
+			lblWarning.setText("The new password cannot be the same as the previous one");
 			valido = false;
 		}
-		// 4. todo válido, cambiamos contraseña
+		// 4. Everything is fine; let's change the password
 		else{
-			System.out.println("Contraseña cambiada a: " + newPass);
+			lblWarning.setForeground(Color.BLACK);
+			lblWarning.setText("Password changed!");
 		}
 	}}
 }
