@@ -13,5 +13,8 @@ public interface AdministratorDAO {
 	public ArrayList<String> getCruiseCodes();
 	public ArrayList<String> getWorkerCodes();
 	public ArrayList<String> getClientCodes();
+	public boolean deleteCruise(String id);
+    public boolean deleteWorker(String id);
+    public boolean deleteClient(String id);
 	
 }

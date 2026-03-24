@@ -69,9 +69,12 @@ public class DeleteWindow extends JDialog implements ActionListener {
         ArrayList<String> codes = new ArrayList<>();
 
         switch (tipo) {
-            case "cruise": codes = controller.getCruiseCodes(); break;
-            case "worker": codes = controller.getWorkerCodes(); break;
-            case "client": codes = controller.getClientCodes(); break;
+            case "cruise": codes = controller.getCruiseCodes(); 
+            	break;
+            case "worker": codes = controller.getWorkerCodes(); 
+            	break;
+            case "client": codes = controller.getClientCodes(); 
+            	break;
         }
 
         for (String code : codes) {
@@ -94,9 +97,12 @@ public class DeleteWindow extends JDialog implements ActionListener {
 
             if (confirmar == JOptionPane.YES_OPTION) {
                 switch (tipo) {
- //                   case "cruise": controller.deleteCruise(id); break;
- //                   case "worker": controller.deleteWorker(id); break;
- //                   case "client": controller.deleteClient(id); break;
+                    case "cruise": controller.deleteCruise(id); 
+                    	break;
+                    case "worker": controller.deleteWorker(id); 
+                    	break;
+                    case "client": controller.deleteClient(id); 
+                    	break;
                 }
                 JOptionPane.showMessageDialog(this, id + " deleted successfully");
                 comboBox.removeItem(id);
