@@ -6,6 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.TreeMap;
@@ -34,6 +35,7 @@ public class DBImplementation implements AdministratorDAO{
 		final String SQLDELETECRUISE = "DELETE FROM cruise WHERE cod_cruise = ?";
 		final String SQLDELETECLIENT = "DELETE FROM client WHERE id_client = ?";
 		final String SQLDELETEWORKER = "DELETE FROM worker WHERE id_worker = ?";
+		final String SQLGETCRUISE = "SELECT * FROM cruise";
 		
 		public DBImplementation() {
 			this.configFile = ResourceBundle.getBundle("configClass");
@@ -156,6 +158,37 @@ public class DBImplementation implements AdministratorDAO{
 		        System.out.println("Error obtaining cruises: " + e.getMessage());
 		    }
 		    return codes;
+		}
+		
+		
+		public List<Cruise> getAllCruises() {
+		    List<Cruise> list = new ArrayList<>();
+		    Cruise c;
+		    this.openConnection();
+		    try {
+		        stmt = con.prepareStatement(SQLGETCRUISE);
+		        ResultSet rs = stmt.executeQuery();
+
+		        while (rs.next()) {
+		            TypeCruise type = TypeCruise.valueOf(
+		                rs.getString("type_cruise").toUpperCase()
+		            );
+		            	c = new Cruise(
+		                rs.getString("cod_cruise"),
+		                type,
+		                rs.getString("name_cruise"),
+		                rs.getInt("num_rooms"),
+		                rs.getInt("capacity_max")
+		            );
+		            list.add(c);
+		        }
+		        rs.close();
+		        stmt.close();
+		        con.close();
+		    } catch (SQLException e) {
+		        System.out.println("Error al cargar cruceros: " + e.getMessage());
+		    }
+		    return list;
 		}
 
 		@Override
