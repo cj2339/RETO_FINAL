@@ -66,7 +66,7 @@ public class DeleteWindow extends JDialog implements ActionListener {
        ArrayList<String> codes = new ArrayList<>();
        switch (tipo) {
            case "cruise":
-           	codes = cont.getCruiseCodes();
+           //	codes = cont.getCruiseCodes();
            	break;
            case "worker":
            	codes = cont.getWorkerCodes();
@@ -75,7 +75,7 @@ public class DeleteWindow extends JDialog implements ActionListener {
            	codes = cont.getClientCodes();
            	break;
            case "book":
-               codes = cont.getCruiseCodes();
+             //  codes = cont.getCruiseCodes();
                for (String code : cont.getClientCodes()) {
                    comboBoxClient.addItem(code);
                }
