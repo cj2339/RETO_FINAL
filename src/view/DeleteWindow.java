@@ -25,9 +25,9 @@ public class DeleteWindow extends JDialog implements ActionListener {
    private LoginController cont;
    private String tipo;
    Container contentPanel;
-   public DeleteWindow(JDialog parent, LoginController controller, String tipo) {
+   public DeleteWindow(JDialog parent, LoginController cont, String tipo) {
        super(parent, "Delete " + tipo, true);
-       this.cont = controller;
+       this.cont = cont;
        this.tipo = tipo;
        setTitle("Eliminate " + tipo);
        setBounds(100, 100, 450, 300);
@@ -51,8 +51,7 @@ public class DeleteWindow extends JDialog implements ActionListener {
        comboBoxClient = new JComboBox<String>();
        comboBoxClient.setBounds(197, 114, 169, 21);
        getContentPane().add(comboBoxClient);
-       lblClient.setVisible(tipo.equals("book"));
-       comboBoxClient.setVisible(tipo.equals("book"));
+      
        btnDelete = new JButton("Delete");
        btnDelete.setBounds(100, 190, 114, 34);
        btnDelete.addActionListener(this);

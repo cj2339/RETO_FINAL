@@ -97,7 +97,8 @@ public class MainWindow extends JDialog implements ActionListener {
 			}else if (e.getSource().equals(btnWorker)) {
 				
 			}else if (e.getSource().equals(btnClient)) {
-				
+				ClientManagement clientManagement = new ClientManagement(this, true, cont);
+				clientManagement.setVisible(true);
 			} else if (e.getSource().equals(btnBook)) {
 				
 			}
