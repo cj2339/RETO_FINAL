@@ -40,6 +40,14 @@ public class LoginWindow extends JDialog implements ActionListener{
 	private JLabel lblPassword;
 	private JButton btn; 
 	private int atempts=3;
+	
+	public static void main(String[] args) {
+	    LoginController cont = new LoginController();
+	    StartWindow start = null; // si no tienes StartWindow, puedes pasar null
+
+	    LoginWindow login = new LoginWindow(start, cont);
+	    login.setVisible(true);
+	}
 
 	public LoginWindow(StartWindow startWindow, LoginController cont) {
 		super(startWindow,true);

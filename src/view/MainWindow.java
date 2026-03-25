@@ -1,23 +1,16 @@
 package view;
 
-import java.awt.BorderLayout;
-import java.awt.FlowLayout;
-
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JDialog;
-import javax.swing.JFrame;
 import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-
 import controller.LoginController;
-
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Image;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -54,6 +47,8 @@ public class MainWindow extends JDialog implements ActionListener {
 		setBounds(100, 100, 450, 333);
 		getContentPane().setLayout(null);
 		contentPane.setLayout(null);
+		setIconImage(Toolkit.getDefaultToolkit().getImage("images/icon.png"));
+
 
 		lblNewLabel = new JLabel("MANAGEMENT");
 		lblNewLabel.setBounds(148, 22, 160, 21);

@@ -7,9 +7,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.ResourceBundle;
-import java.util.TreeMap;
 
 public class DBImplementation implements AdministratorDAO{
 		private Connection con;
@@ -37,7 +35,6 @@ public class DBImplementation implements AdministratorDAO{
 		final String SQLDELETEWORKER = "DELETE FROM worker WHERE id_worker = ?";
 		final String SQLDELETEBOOK = "DELETE FROM book WHERE cod_cruise = ? AND id_client = ?";
 		final String SQLGETCRUISE = "SELECT * FROM cruise";
-		final String SQLMODIFICAR = "UPDATE administrator SET password_admin=? WHERE name_admin=?";
 		final String SQLUPDATE_PASSWORD = "UPDATE administrator SET password_admin = ? WHERE name_admin = ?";
 		
 		public DBImplementation() {
