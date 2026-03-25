@@ -71,7 +71,7 @@ public class AdminWindow extends JDialog implements ActionListener {
 
 		setType(Type.POPUP);
 		setTitle("ADMIN");
-		setIconImage(Toolkit.getDefaultToolkit().getImage("images\\Icono.png"));
+		setIconImage(Toolkit.getDefaultToolkit().getImage("images/icon.png"));
 		getContentPane().setLayout(null);
 
 		lblChangePassword = new JLabel("CHANGE PASSWORD");
