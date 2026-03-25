@@ -9,4 +9,5 @@ public interface CruiseDAO {
 	public Cruise getCruiseByCode(String id);
 	public boolean deleteCruise(String id);
 	public boolean updateCruiseByCode(Cruise cruise);
+	public boolean insertCruise(Cruise cruise);
 }

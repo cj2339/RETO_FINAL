@@ -174,7 +174,7 @@ public class AddWindow extends JDialog implements ActionListener{
 		contentPane.add(comboBox2);
 
 		//llama al método para rellenar los combobox con los códigos
-		codes=cont.getCruiseCodes();
+		//codes=cont.getCruiseCodes();
 		ids=cont.getWorkerCodes();
 
 		JComboBox comboBox = new JComboBox();

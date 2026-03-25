@@ -3,6 +3,7 @@ package view;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JDialog;
+import javax.swing.JFrame;
 import javax.swing.JPanel;
 import controller.LoginController;
 import javax.swing.JLabel;
@@ -93,7 +94,8 @@ public class MainWindow extends JDialog implements ActionListener {
 
 		}else{
 			if (e.getSource().equals(btnCruise)) {
-				
+				CruiseListWindow cruiseWindow = new CruiseListWindow(this, cont, adminName);
+				cruiseWindow.setVisible(true);
 			}else if (e.getSource().equals(btnWorker)) {
 				
 			}else if (e.getSource().equals(btnClient)) {

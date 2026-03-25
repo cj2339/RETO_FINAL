@@ -23,6 +23,7 @@ public class DBImplementationCruiseDAO implements CruiseDAO {
 	final String SQLDELETEBYCODE = "DELETE FROM cruise WHERE cod_cruise = ?";
 	final String SQLSELECTBYCODE = "SELECT * FROM cruise WHERE cod_cruise=?";
 	final String SQLUPDATEBYCODE ="UPDATE cruise set type_cruise=?,name_cruise=?, num_rooms=?,capacity_max=? WHERE cod_cruise=?";
+	final String SQLINSERT="INSERT INTO CRUISE VALUES(?,?,?,?,?);";
 
 	public DBImplementationCruiseDAO() {
 		this.configFile = ResourceBundle.getBundle("configClass");
@@ -130,6 +131,30 @@ public class DBImplementationCruiseDAO implements CruiseDAO {
 			System.out.println("Error: " + e.getMessage());
 		}
 		return updatePerformed;
+	}
+
+	@Override
+	public boolean insertCruise(Cruise cruise) {
+		boolean insertPerformed=false;
+		this.openConnection();
+		
+		try {
+			statement = connection.prepareStatement(SQLINSERT);
+			statement.setString(1, cruise.getCodCruise());
+			statement.setString(2, cruise.getTypeCruise().toString());
+			statement.setString(3, cruise.getNameCruise());
+			statement.setInt(4, cruise.getNumRooms());
+			statement.setInt(5, cruise.getCapacityMax());
+			
+			if (statement.executeUpdate() > 0) {
+				insertPerformed = true;
+			}
+			statement.close();
+			connection.close();
+		}catch (SQLException e) {
+			System.out.println("Error: " + e.getMessage());
+		}	
+		return insertPerformed;
 	}
 
 }
