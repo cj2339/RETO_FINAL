@@ -40,14 +40,6 @@ public class AdminWindow extends JDialog implements ActionListener {
 	private JLabel lblWarning;
 	private Image BackgroundImage = new ImageIcon("images/adminWindow.png").getImage();
 	private int atempts=3;
-
-	public static void main(String[] args) {
-		LoginController cont = new LoginController();
-		String adminName = "Iker";
-
-		AdminWindow dialog = new AdminWindow(null, cont, adminName);
-		dialog.setVisible(true);
-	}
 	
 	public AdminWindow(JDialog father, LoginController cont, String adminName) {
 		super(father, true);
