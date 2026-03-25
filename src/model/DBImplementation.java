@@ -25,16 +25,12 @@ public class DBImplementation implements AdministratorDAO{
 		final String SQLINSERTADMIN = "INSERT INTO administrator VALUES (?,?)";
 		final String SQLUPDATE = "UPDATE administrator SET password_admin=? WHERE name_admin=?";
 		final String SQLSELECTADMIN = "SELECT * FROM administrator";
-		final String SQLSELECTCRUISE = "SELECT * FROM cruise";
-		final String SQLSELECTCRUISE2 = "SELECT * FROM cruise WHERE cod_cruise=?";
 		final String SQLSELECTWORKER = "SELECT * FROM worker";
 		final String SQLSELECTCLIENT = "SELECT * FROM client";
 		final String SQLDELETEADMIN = "DELETE FROM administrator WHERE nombre_admin=?";
-		final String SQLDELETECRUISE = "DELETE FROM cruise WHERE cod_cruise = ?";
 		final String SQLDELETECLIENT = "DELETE FROM client WHERE id_client = ?";
 		final String SQLDELETEWORKER = "DELETE FROM worker WHERE id_worker = ?";
 		final String SQLDELETEBOOK = "DELETE FROM book WHERE cod_cruise = ? AND id_client = ?";
-		final String SQLGETCRUISE = "SELECT * FROM cruise";
 		final String SQLUPDATE_PASSWORD = "UPDATE administrator SET password_admin = ? WHERE name_admin = ?";
 		
 		public DBImplementation() {
@@ -100,25 +96,6 @@ public class DBImplementation implements AdministratorDAO{
 	        return existe;
 	    }
 		
-		public boolean checkCruise(Cruise cruise) {
-			boolean exists=false;
-			this.openConnection();
-			try {
-				stmt=con.prepareStatement(SQLSELECTCRUISE2);
-				stmt.setString(1, cruise.getCodCruise());
-				ResultSet result=stmt.executeQuery();
-				
-				if(result.next()) {
-					exists=true;
-				}
-				result.close();
-				stmt.close();
-				con.close();
-			}catch (SQLException e) {
-	            System.out.println("Error verifying credentials: " + e.getMessage());
-	        }
-			return exists;
-		}
 		
 		public boolean insertUser(Administrator user) {
 			boolean ok=false;
@@ -141,56 +118,9 @@ public class DBImplementation implements AdministratorDAO{
 				return ok;		
 		}
 
-		@Override
-		public ArrayList<String> getCruiseCodes() {
-		    ArrayList<String> codes = new ArrayList<>();
-		    this.openConnection();
-		    try {
-		        stmt = con.prepareStatement(SQLSELECTCRUISE);
-		        ResultSet rs = stmt.executeQuery();
-		        while (rs.next()) {
-		            codes.add(rs.getString("cod_cruise"));
-		        }
-		        rs.close();
-		        stmt.close();
-		        con.close();
-		    } catch (SQLException e) {
-		        System.out.println("Error obtaining cruises: " + e.getMessage());
-		    }
-		    return codes;
-		}
 		
 		
-		public List<Cruise> getAllCruises() {
-		    List<Cruise> list = new ArrayList<>();
-		    Cruise c;
-		    this.openConnection();
-		    try {
-		        stmt = con.prepareStatement(SQLGETCRUISE);
-		        ResultSet rs = stmt.executeQuery();
-
-		        while (rs.next()) {
-		            TypeCruise type = TypeCruise.valueOf(
-		                rs.getString("type_cruise").toUpperCase()
-		            );
-		            	c = new Cruise(
-		                rs.getString("cod_cruise"),
-		                type,
-		                rs.getString("name_cruise"),
-		                rs.getInt("num_rooms"),
-		                rs.getInt("capacity_max")
-		            );
-		            list.add(c);
-		        }
-		        rs.close();
-		        stmt.close();
-		        con.close();
-		    } catch (SQLException e) {
-		        System.out.println("Error al cargar cruceros: " + e.getMessage());
-		    }
-		    return list;
-		}
-
+		
 		@Override
 		public ArrayList<String> getWorkerCodes() {
 		    ArrayList<String> codes = new ArrayList<>();
@@ -229,23 +159,7 @@ public class DBImplementation implements AdministratorDAO{
 		    return codes;
 		}
 		
-		@Override
-		public boolean deleteCruise(String id) {
-		    boolean ok = false;
-		    this.openConnection();
-		    try {
-		        stmt = con.prepareStatement(SQLDELETECRUISE);
-		        stmt.setString(1, id);
-		        if (stmt.executeUpdate() > 0) {
-		        	ok = true;
-		        }
-		        stmt.close();
-		        con.close();
-		    } catch (SQLException e) {
-		        System.out.println("Error: " + e.getMessage());
-		    }
-		    return ok;
-		}
+		
 
 		@Override
 		public boolean deleteClient(String id) {
