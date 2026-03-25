@@ -35,6 +35,7 @@ public class DBImplementation implements AdministratorDAO{
 		final String SQLDELETECRUISE = "DELETE FROM cruise WHERE cod_cruise = ?";
 		final String SQLDELETECLIENT = "DELETE FROM client WHERE id_client = ?";
 		final String SQLDELETEWORKER = "DELETE FROM worker WHERE id_worker = ?";
+		final String SQLDELETEBOOK = "DELETE FROM book WHERE cod_cruise = ? AND id_client = ?";
 		final String SQLGETCRUISE = "SELECT * FROM cruise";
 		final String SQLMODIFICAR = "UPDATE administrator SET password_admin=? WHERE name_admin=?";
 		final String SQLUPDATE_PASSWORD = "UPDATE administrator SET password_admin = ? WHERE name_admin = ?";
@@ -238,7 +239,9 @@ public class DBImplementation implements AdministratorDAO{
 		    try {
 		        stmt = con.prepareStatement(SQLDELETECRUISE);
 		        stmt.setString(1, id);
-		        if (stmt.executeUpdate() > 0) ok = true;
+		        if (stmt.executeUpdate() > 0) {
+		        	ok = true;
+		        }
 		        stmt.close();
 		        con.close();
 		    } catch (SQLException e) {
@@ -254,7 +257,9 @@ public class DBImplementation implements AdministratorDAO{
 		    try {
 		        stmt = con.prepareStatement(SQLDELETECLIENT);
 		        stmt.setString(1, id);
-		        if (stmt.executeUpdate() > 0) ok = true;
+		        if (stmt.executeUpdate() > 0) {
+		        	ok = true;
+		        }
 		        stmt.close();
 		        con.close();
 		    } catch (SQLException e) {
@@ -270,12 +275,30 @@ public class DBImplementation implements AdministratorDAO{
 		    try {
 		        stmt = con.prepareStatement(SQLDELETEWORKER);
 		        stmt.setString(1, id);
-		        if (stmt.executeUpdate() > 0) ok = true;
+		        if (stmt.executeUpdate() > 0) {
+		        	ok = true;
+		        }
 		        stmt.close();
 		        con.close();
 		    } catch (SQLException e) {
 		        System.out.println("Error: " + e.getMessage());
 		    }
+		    return ok;
+		}
+		
+		@Override
+		public boolean deleteBook(String codCruise, String idClient) {
+			boolean ok = false;
+		    this.openConnection();
+		    try {
+		        stmt = con.prepareStatement(SQLDELETEBOOK);
+		        stmt.setString(1, codCruise);
+		        stmt.setString(2, idClient);
+		        if (stmt.executeUpdate() > 0) {
+		        	ok = true;
+		        }
+		        stmt.close(); con.close();
+		    } catch (SQLException e) { System.out.println("Error: " + e.getMessage()); }
 		    return ok;
 		}
 
@@ -295,4 +318,6 @@ public class DBImplementation implements AdministratorDAO{
 		    }
 		    return ok;
 		}
+
+		
 }
