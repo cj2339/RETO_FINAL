@@ -85,7 +85,6 @@ public class MainWindow extends JDialog implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 
 		String[] options = {"Add", "Eliminate", "Modify", "See"};
-		int option;
 		String type = "";
 
 		if (e.getSource().equals(btnAdmins)) {
@@ -102,25 +101,9 @@ public class MainWindow extends JDialog implements ActionListener {
 			} else if (e.getSource().equals(btnBook)) {
 				type = "book";
 			}
-
-			option = JOptionPane.showOptionDialog(this, "Select an option: ", type, JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, null);
-
-			switch (option) {
-			case 0:
-				AddWindow add = new AddWindow(this,true,cont,type);
-				add.setVisible(true);
-				break;
-			case 1:
-				DeleteWindow delete = new DeleteWindow(this, cont, type);
-				delete.setVisible(true);
-				break;
-				//	        case 2:
-				//	            new ModifyWindow(type).setVisible(true);
-				//	            break;
-				//	        case 3:
-				//	            new ViewWindow(type).setVisible(true);
-				//	            break;
-			}
+			ManagementWindow managementWindow = new ManagementWindow(this, cont, type);
+			managementWindow.setVisible(true);
+			
 		}
 	}
 }
