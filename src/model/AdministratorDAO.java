@@ -10,10 +10,8 @@ import java.util.TreeMap;
 public interface AdministratorDAO {
 	public boolean checkUser(Administrator user);
 	public boolean insertUser(Administrator user);
-	public ArrayList<String> getCruiseCodes(); 
 	public ArrayList<String> getWorkerCodes();
 	public ArrayList<String> getClientCodes();
-	public boolean deleteCruise(String id);
     public boolean deleteWorker(String id);
     public boolean deleteClient(String id);
     public boolean deleteBook(String codCruise, String idClient);
