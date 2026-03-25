@@ -70,6 +70,7 @@ public class ClientManagement extends JDialog implements ActionListener {
 		btnDelete.setBounds(269, 191, 142, 36);
 		contentPanel.add(btnDelete);
 	}
+	
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
