@@ -45,6 +45,10 @@ public class LoginController {
     public boolean deleteClient(String id) {
         return dao.deleteClient(id);
     }
+    
+    public boolean deleteBook(String codCruise, String idClient) { 
+    	return dao.deleteBook(codCruise, idClient); 
+    }
 
     public String getLoggedInAdminName() {
         return loggedInAdminName;

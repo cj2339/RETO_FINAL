@@ -16,5 +16,6 @@ public interface AdministratorDAO {
 	public boolean deleteCruise(String id);
     public boolean deleteWorker(String id);
     public boolean deleteClient(String id);
+    public boolean deleteBook(String codCruise, String idClient);
 	public boolean updatePassword(String adminName, String newPassword);
 }
