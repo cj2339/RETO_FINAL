@@ -38,7 +38,7 @@ public class AdminWindow extends JDialog implements ActionListener {
 	private JButton btnChange;
 	private JLabel lblNewPassword;
 	private JLabel lblWarning;
-	private Image BackgroundImage = new ImageIcon("images/ventanaAdmin.png").getImage();
+	private Image BackgroundImage = new ImageIcon("images/adminWindow.png").getImage();
 	private int atempts=3;
 
 	public static void main(String[] args) {
@@ -109,7 +109,7 @@ public class AdminWindow extends JDialog implements ActionListener {
 		lblWarning = new JLabel("");
 		lblWarning.setBackground(new Color(128, 255, 255));
 		lblWarning.setFont(new Font("Bahnschrift", Font.PLAIN, 15));
-		lblWarning.setBounds(81, 311, 400, 30);
+		lblWarning.setBounds(139, 284, 400, 30);
 		lblWarning.setForeground(Color.RED);	
 		contentPane.add(lblWarning);
 	}
