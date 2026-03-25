@@ -25,18 +25,21 @@ public class MainWindow extends JDialog implements ActionListener {
 
 	private static final long serialVersionUID = 1L;
 	private LoginController cont;
+	private String adminName;
 	private JButton btnCruise;
 	private JButton btnWorker;
 	private JButton btnClient;
 	private JButton btnAdmins;
 	private JPanel contentPane;
 	private JButton btnBook;
+	private JLabel lblNewLabel;
 	private Image imagenFondo = new ImageIcon("images/ManagementAnchor.png").getImage();	
 
 	//preguntar sobre esta herencia
 	public MainWindow(JDialog father, LoginController cont) {
 		super(father,true);
 		this.cont=cont;
+		this.adminName = adminName;
 
 		contentPane = new JPanel() {
 			@Override
@@ -52,7 +55,7 @@ public class MainWindow extends JDialog implements ActionListener {
 		getContentPane().setLayout(null);
 		contentPane.setLayout(null);
 
-		JLabel lblNewLabel = new JLabel("MANAGEMENT");
+		lblNewLabel = new JLabel("MANAGEMENT");
 		lblNewLabel.setBounds(148, 22, 160, 21);
 		lblNewLabel.setFont(new Font("Arial", Font.BOLD, 20));
 		getContentPane().add(lblNewLabel);
@@ -90,7 +93,10 @@ public class MainWindow extends JDialog implements ActionListener {
 		int option;
 		String type = "";
 
-		if (e.getSource().equals(btnCruise)) {
+		if (e.getSource().equals(btnAdmins)) {
+				AdminWindow adminWindow = new AdminWindow(this, cont, adminName);
+				adminWindow.setVisible(true);
+		else if (e.getSource().equals(btnCruise)) {
 			type = "cruise";
 		}else if (e.getSource().equals(btnWorker)) {
 			type = "worker";
@@ -119,7 +125,4 @@ public class MainWindow extends JDialog implements ActionListener {
 				//	            break;
 			}
 		}
-
-
 }
-

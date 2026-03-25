@@ -36,8 +36,9 @@ public class LoginWindow extends JDialog implements ActionListener{
 	private JTextField textField;
 	private JPasswordField passwordField;
 	private JLabel lblError;
+	private JLabel lblUser;
+	private JLabel lblPassword;
 	private JButton btn; 
-	
 	private int atempts=3;
 
 	public LoginWindow(StartWindow startWindow, LoginController cont) {
@@ -64,12 +65,12 @@ public class LoginWindow extends JDialog implements ActionListener{
 		    setContentPane(contentPane);
 		    contentPane.setLayout(null);
 		    
-		    JLabel lblUser = new JLabel("Username");
+		    lblUser = new JLabel("Username");
 		    lblUser.setFont(new Font("Bahnschrift", Font.PLAIN, 30));
 		    lblUser.setBounds(50, 40, 217, 58);
 		    contentPane.add(lblUser);
 		    
-		    JLabel lblPassword = new JLabel("Password");
+		    lblPassword = new JLabel("Password");
 		    lblPassword.setFont(new Font("Bahnschrift", Font.PLAIN, 30));
 		    lblPassword.setBounds(50, 108, 217, 58);
 		    contentPane.add(lblPassword);
@@ -108,18 +109,24 @@ public class LoginWindow extends JDialog implements ActionListener{
 		String password=new String(passwordField.getPassword());
 		
 		if(e.getSource()==btn&&atempts>0) {
-			if(cont.checkUser(new Administrator(textField.getText(),password))) {
+			Administrator admin = new Administrator(textField.getText(), password);
+			if(cont.checkUser(admin)) {
+				cont.setLoggedInAdminName(admin.getName());
 				dispose();
-				MainWindow mainWindow=new MainWindow(this, cont);
+				MainWindow mainWindow=new MainWindow(this, cont, admin.getName());
 				mainWindow.setVisible(true);
 			}else {
 				JOptionPane.showMessageDialog(this, "User not found", "Login error", JOptionPane.INFORMATION_MESSAGE);
 				atempts--;
 				lblError.setText("Remaining atempts: "+atempts);
+				if (atempts == 0) {
+	                JOptionPane.showMessageDialog(this, "You have exceeded 3 attempts", "Login failure", JOptionPane.ERROR_MESSAGE);
+	                dispose();
+	            }
 			} 
 		}else if(e.getSource()==btn&&atempts==0) {
-			JOptionPane.showMessageDialog(this, "You have exceeded 3 attempts", "Login failure:" , JOptionPane.INFORMATION_MESSAGE);
-			dispose();
+			JOptionPane.showMessageDialog(this, "No attempts left. Access blocked.", "Login failure", JOptionPane.ERROR_MESSAGE);
+	        dispose();
 		}
 	}
 

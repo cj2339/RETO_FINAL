@@ -11,6 +11,7 @@ import model.AdministratorDAO;
 
 public class LoginController {
 	AdministratorDAO dao = new DBImplementation();
+	private String loggedInAdminName;
 
 	public void viewWindow() {
 		StartWindow win=new StartWindow(this); 
@@ -44,6 +45,16 @@ public class LoginController {
     public boolean deleteClient(String id) {
         return dao.deleteClient(id);
     }
+
+    public String getLoggedInAdminName() {
+        return loggedInAdminName;
+    }
 	
-	
+	public void setLoggedInAdminName(String loggedInAdminName) {
+		this.loggedInAdminName = loggedInAdminName;
+	}
+
+    public boolean updatePassword(String adminName, String newPassword) {
+        return dao.updatePassword(adminName, newPassword);
+    }
 }

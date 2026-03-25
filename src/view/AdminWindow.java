@@ -24,6 +24,8 @@ import javax.swing.SwingConstants;
 public class AdminWindow extends JDialog implements ActionListener {
 
 	private static final long serialVersionUID = 1L;
+	private LoginController cont;
+	private String adminName;
 	private JPanel contentPane;
 	private JLabel lblChangePassword;
 	private JLabel lblPassword;
@@ -36,16 +38,17 @@ public class AdminWindow extends JDialog implements ActionListener {
 	private int atempts=3;
 
 	public static void main(String[] args) {
-	    try {
-	        AdminWindow dialog = new AdminWindow();
-	        dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-	        dialog.setVisible(true);
-	    } catch (Exception e) {
-	        e.printStackTrace();
-	    }
+		LoginController cont = new LoginController();
+		String adminName = "Iker";
+
+		AdminWindow dialog = new AdminWindow(null, cont, adminName);
+		dialog.setVisible(true);
 	}
 	
-	public AdminWindow() {
+	public AdminWindow(JDialog father, LoginController cont, String adminName) {
+		super(father, true);
+		this.cont = cont;
+		this.adminName = adminName;
 		setIconImage(Toolkit.getDefaultToolkit().getImage("images/icon.png"));
 		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		setResizable(false);
@@ -110,29 +113,52 @@ public class AdminWindow extends JDialog implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {if (e.getSource() == btnChange) {
-		boolean valido = true;
-		String oldPass = textFieldPassword.getText();
-		String newPass = textFieldNewPassword.getText();
+		if (e.getSource() == btnChange) {
 
-		// 1. We check that they are not empty
-		if (oldPass.isEmpty() || newPass.isEmpty()) {
-			lblWarning.setText("You must fill in both fields");
-			valido = false;
-		}
-		// 2. We verify that the password is indeed the one entered
-		else if (valido && !oldPass.equals("")) {//debe comparar con la contraseña asociada al admin registrado en la bd, pero ahora no sé hacerlo
-			lblWarning.setText("The current password is incorrect");
-			valido = false;
-		}
-		// 3. We check that it is different from the old one
-		else if (valido && oldPass.equals(newPass)) {
-			lblWarning.setText("The new password cannot be the same as the previous one");
-			valido = false;
-		}
-		// 4. Everything is fine; let's change the password
-		else{
-			lblWarning.setForeground(Color.BLACK);
-			lblWarning.setText("Password changed!");
+			String oldPass = textFieldPassword.getText();
+			String newPass = textFieldNewPassword.getText();
+			boolean valido = true;
+			lblWarning.setForeground(Color.RED);
+
+			// 0. No attempts available
+			if (atempts == 0) {
+				lblWarning.setText("No attempts left. Access blocked.");
+				btnChange.setEnabled(false);
+				valido=true	;
+			}
+			// 1. We check that they are not empty
+			if (oldPass.isEmpty() || newPass.isEmpty()) {
+				lblWarning.setText("You must fill in both fields!");
+				valido = false;
+			}
+			// 2. Data validation against the database
+			if (valido) {
+				Administrator admin = new Administrator(adminName, oldPass);
+				if (!cont.checkUser(admin)) {  
+					atempts--;
+					lblWarning.setText("Incorrect password! Attempts left: " + atempts);
+					valido = false;
+
+					if (atempts == 0) {
+						btnChange.setEnabled(false);
+						lblWarning.setText("No attempts left. Access blocked.");
+					}
+				}
+			}
+			// 3. We check that the new password is not the same as the previous one
+			if (valido && oldPass.equals(newPass)) {
+				lblWarning.setText("The new password cannot be the same as the previous one!");
+				valido = false;
+			}
+			// 4. All correct, change password
+			if (valido) {            
+				if (cont.updatePassword(adminName, newPass)) {
+					lblWarning.setForeground(Color.BLACK);
+					lblWarning.setText("Password changed successfully!");
+					atempts = 3; // Reset attempts on successful password change
+				} else {
+					lblWarning.setText("Error changing password. Please try again.");
+				}}
 		}
 	}}
 }
