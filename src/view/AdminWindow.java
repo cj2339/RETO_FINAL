@@ -9,6 +9,7 @@ import javax.swing.JFrame;
 import java.awt.Toolkit;
 import java.awt.Window.Type;
 import javax.swing.JPanel;
+import javax.swing.JPasswordField;
 import javax.swing.JLabel;
 
 import java.awt.Color;
@@ -32,8 +33,8 @@ public class AdminWindow extends JDialog implements ActionListener {
 	private JPanel contentPane;
 	private JLabel lblChangePassword;
 	private JLabel lblPassword;
-	private JTextField textFieldPassword;
-	private JTextField textFieldNewPassword;
+	private JPasswordField  textFieldPassword;
+	private JPasswordField  textFieldNewPassword;
 	private JButton btnChange;
 	private JLabel lblNewPassword;
 	private JLabel lblWarning;
@@ -95,12 +96,12 @@ public class AdminWindow extends JDialog implements ActionListener {
 		btnChange.setBounds(356, 193, 183, 34);
 		getContentPane().add(btnChange);
 
-		textFieldPassword = new JTextField();
+		textFieldPassword = new JPasswordField();
 		textFieldPassword.setColumns(10);
 		textFieldPassword.setBounds(355, 78, 183, 34);
 		getContentPane().add(textFieldPassword);
 
-		textFieldNewPassword = new JTextField();
+		textFieldNewPassword = new JPasswordField();
 		textFieldNewPassword.setColumns(10);
 		textFieldNewPassword.setBounds(355, 128, 183, 34);
 		getContentPane().add(textFieldNewPassword);
@@ -118,8 +119,8 @@ public class AdminWindow extends JDialog implements ActionListener {
 	public void actionPerformed(ActionEvent e) {if (e.getSource() == btnChange) {
 		if (e.getSource() == btnChange) {
 
-			String oldPass = textFieldPassword.getText();
-			String newPass = textFieldNewPassword.getText();
+			String oldPass = new String(textFieldPassword.getPassword());
+			String newPass = new String(textFieldNewPassword.getPassword());
 			boolean valido = true;
 			lblWarning.setForeground(Color.RED);
 

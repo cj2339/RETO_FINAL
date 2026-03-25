@@ -36,7 +36,7 @@ public class MainWindow extends JDialog implements ActionListener {
 	private Image imagenFondo = new ImageIcon("images/ManagementAnchor.png").getImage();	
 
 	//preguntar sobre esta herencia
-	public MainWindow(JDialog father, LoginController cont, String string, String adminName) {
+	public MainWindow(JDialog father, LoginController cont, String adminName) {
 		super(father,true);
 		this.cont=cont;
 		this.adminName = adminName;
@@ -79,7 +79,7 @@ public class MainWindow extends JDialog implements ActionListener {
 		btnAdmins.setBounds(180, 254, 81, 21);
 		getContentPane().add(btnAdmins);
 		btnAdmins.addActionListener(this);
-		
+
 		btnBook = new JButton("BOOK");
 		btnBook.setBounds(299, 168, 112, 38);
 		contentPane.add(btnBook);
@@ -94,17 +94,19 @@ public class MainWindow extends JDialog implements ActionListener {
 		String type = "";
 
 		if (e.getSource().equals(btnAdmins)) {
-				AdminWindow adminWindow = new AdminWindow(this, cont, adminName);
-				adminWindow.setVisible(true);
-		}else if (e.getSource().equals(btnCruise)) {
-			type = "cruise";
-		}else if (e.getSource().equals(btnWorker)) {
-			type = "worker";
-		}else if (e.getSource().equals(btnClient)) {
-			type = "client";
-		} else if (e.getSource().equals(btnBook)) {
-			type = "book";
-		}
+			AdminWindow adminWindow = new AdminWindow(this, cont, adminName);
+			adminWindow.setVisible(true);
+
+		}else{
+			if (e.getSource().equals(btnCruise)) {
+				type = "cruise";
+			}else if (e.getSource().equals(btnWorker)) {
+				type = "worker";
+			}else if (e.getSource().equals(btnClient)) {
+				type = "client";
+			} else if (e.getSource().equals(btnBook)) {
+				type = "book";
+			}
 
 			option = JOptionPane.showOptionDialog(this, "Select an option: ", type, JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, null);
 
@@ -125,4 +127,5 @@ public class MainWindow extends JDialog implements ActionListener {
 				//	            break;
 			}
 		}
+	}
 }

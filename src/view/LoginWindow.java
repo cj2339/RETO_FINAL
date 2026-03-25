@@ -106,28 +106,30 @@ public class LoginWindow extends JDialog implements ActionListener{
  
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		String password=new String(passwordField.getPassword());
-		
-		if(e.getSource()==btn&&atempts>0) {
-			Administrator admin = new Administrator(textField.getText(), password);
-			if(cont.checkUser(admin)) {
-				cont.setLoggedInAdminName(admin.getName());
-				dispose();
-				MainWindow mainWindow = new MainWindow(this, cont, admin.getName(), admin.getName());
-				mainWindow.setVisible(true);
-			}else {
-				JOptionPane.showMessageDialog(this, "User not found", "Login error", JOptionPane.INFORMATION_MESSAGE);
-				atempts--;
-				lblError.setText("Remaining atempts: "+atempts);
-				if (atempts == 0) {
-	                JOptionPane.showMessageDialog(this, "You have exceeded 3 attempts", "Login failure", JOptionPane.ERROR_MESSAGE);
+
+	    if (e.getSource() == btn) {
+	        String password = new String(passwordField.getPassword());
+	        if (atempts > 0) {
+	            Administrator admin = new Administrator(textField.getText(), password);
+	            if (cont.checkUser(admin)) {
+	                cont.setLoggedInAdminName(admin.getName());
 	                dispose();
+	                MainWindow mainWindow = new MainWindow(this, cont, admin.getName());
+	                mainWindow.setVisible(true);
+	            } else {
+	                atempts--;
+	                JOptionPane.showMessageDialog(this, "User not found", "Login error", JOptionPane.INFORMATION_MESSAGE);
+	                lblError.setText("Remaining attempts: " + atempts);
+	                if (atempts == 0) {
+	                    JOptionPane.showMessageDialog(this, "You have exceeded 3 attempts", "Login failure", JOptionPane.ERROR_MESSAGE);
+	                    dispose();
+	                }
 	            }
-			} 
-		}else if(e.getSource()==btn&&atempts==0) {
-			JOptionPane.showMessageDialog(this, "No attempts left. Access blocked.", "Login failure", JOptionPane.ERROR_MESSAGE);
-	        dispose();
-		}
+	        } else {
+	            JOptionPane.showMessageDialog(this, "No attempts left. Access blocked.", "Login failure", JOptionPane.ERROR_MESSAGE);
+	            dispose();
+	        }
+	    }
 	}
 
 }
