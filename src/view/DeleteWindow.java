@@ -27,7 +27,7 @@ public class DeleteWindow extends JDialog implements ActionListener {
    Container contentPanel;
    public DeleteWindow(JDialog parent, LoginController controller, String tipo) {
        super(parent, "Delete " + tipo, true);
-       this.cont = cont;
+       this.cont = controller;
        this.tipo = tipo;
        setTitle("Eliminate " + tipo);
        setBounds(100, 100, 450, 300);
@@ -99,18 +99,18 @@ public class DeleteWindow extends JDialog implements ActionListener {
            	boolean ok = false;
                switch (tipo) {
                    case "cruise":
-                   	cont.deleteCruise(id);
-                   	break;
+                	   cont.deleteCruise(id);
+                	   break;
                    case "worker":
-                   	cont.deleteWorker(id); 
-                   	break;
+                	   cont.deleteWorker(id); 
+                	   break;
                    case "client":
-                   	cont.deleteClient(id);
-                   	break;
+                	   cont.deleteClient(id);
+                	   break;
                    case "book":
-                       String idClient = (String) comboBoxClient.getSelectedItem();
-                       ok = cont.deleteBook(id, idClient);
-                       break;
+                	   cont.deleteBook(id, (String) comboBoxClient.getSelectedItem());
+                	   comboBoxClient.removeItem(comboBoxClient.getSelectedItem());
+                	   break;
                }
                JOptionPane.showMessageDialog(this, id + " deleted successfully");
                comboBox.removeItem(id);

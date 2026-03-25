@@ -85,7 +85,7 @@ public class MainWindow extends JDialog implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 
 		String[] options = {"Add", "Eliminate", "Modify", "See"};
-		String type = "";
+		
 
 		if (e.getSource().equals(btnAdmins)) {
 			AdminWindow adminWindow = new AdminWindow(this, cont, adminName);
@@ -93,16 +93,16 @@ public class MainWindow extends JDialog implements ActionListener {
 
 		}else{
 			if (e.getSource().equals(btnCruise)) {
-				type = "cruise";
+				
 			}else if (e.getSource().equals(btnWorker)) {
-				type = "worker";
+				
 			}else if (e.getSource().equals(btnClient)) {
-				type = "client";
+				
 			} else if (e.getSource().equals(btnBook)) {
-				type = "book";
+				
 			}
-			ManagementWindow managementWindow = new ManagementWindow(this, cont, type);
-			managementWindow.setVisible(true);
+			
+			
 			
 		}
 	}
