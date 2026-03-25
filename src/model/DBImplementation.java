@@ -279,20 +279,20 @@ public class DBImplementation implements AdministratorDAO{
 		    return ok;
 		}
 
-+		@Override
-+		public boolean updatePassword(String adminName, String newPassword) {
-+		    boolean ok = false;
-+		    this.openConnection();
-+		    try {
-+		        stmt = con.prepareStatement(SQLUPDATE_PASSWORD);
-+		        stmt.setString(1, newPassword);
-+		        stmt.setString(2, adminName);
-+		        if (stmt.executeUpdate() > 0) ok = true;
-+		        stmt.close();
-+		        con.close();
-+		    } catch (SQLException e) {
-+		        System.out.println("Error al actualizar contraseña: " + e.getMessage());
-+		    }
-+		    return ok;
-+		}
+		@Override
+		public boolean updatePassword(String adminName, String newPassword) {
+		    boolean ok = false;
+		    this.openConnection();
+		    try {
+		        stmt = con.prepareStatement(SQLUPDATE_PASSWORD);
+		        stmt.setString(1, newPassword);
+		        stmt.setString(2, adminName);
+		        if (stmt.executeUpdate() > 0) ok = true;
+		        stmt.close();
+		        con.close();
+		    } catch (SQLException e) {
+		        System.out.println("Error al actualizar contraseña: " + e.getMessage());
+		    }
+		    return ok;
+		}
 }

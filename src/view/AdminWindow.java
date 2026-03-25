@@ -21,6 +21,9 @@ import javax.swing.JButton;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
+import controller.LoginController;
+import model.Administrator;
+
 public class AdminWindow extends JDialog implements ActionListener {
 
 	private static final long serialVersionUID = 1L;

@@ -36,7 +36,7 @@ public class MainWindow extends JDialog implements ActionListener {
 	private Image imagenFondo = new ImageIcon("images/ManagementAnchor.png").getImage();	
 
 	//preguntar sobre esta herencia
-	public MainWindow(JDialog father, LoginController cont) {
+	public MainWindow(JDialog father, LoginController cont, String string, String adminName) {
 		super(father,true);
 		this.cont=cont;
 		this.adminName = adminName;
@@ -96,7 +96,7 @@ public class MainWindow extends JDialog implements ActionListener {
 		if (e.getSource().equals(btnAdmins)) {
 				AdminWindow adminWindow = new AdminWindow(this, cont, adminName);
 				adminWindow.setVisible(true);
-		else if (e.getSource().equals(btnCruise)) {
+		}else if (e.getSource().equals(btnCruise)) {
 			type = "cruise";
 		}else if (e.getSource().equals(btnWorker)) {
 			type = "worker";
