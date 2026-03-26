@@ -15,6 +15,7 @@ import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+
 public class DeleteWindow extends JDialog implements ActionListener {
    private static final long serialVersionUID = 1L;
    private JComboBox<String> comboBoxClient;
@@ -25,6 +26,7 @@ public class DeleteWindow extends JDialog implements ActionListener {
    private LoginController cont;
    private String tipo;
    Container contentPanel;
+   
    public DeleteWindow(JDialog parent, LoginController cont, String tipo) {
        super(parent, "Delete " + tipo, true);
        this.cont = cont;
@@ -60,9 +62,9 @@ public class DeleteWindow extends JDialog implements ActionListener {
        btnCancelar.setBounds(230, 190, 114, 34);
        btnCancelar.addActionListener(this);
        getContentPane().add(btnCancelar);
-       cargarCombo();
+       fillCombo();
    }
-   private void cargarCombo() {
+   private void fillCombo() {
        ArrayList<String> codes = new ArrayList<>();
        switch (tipo) {
            case "cruise":
