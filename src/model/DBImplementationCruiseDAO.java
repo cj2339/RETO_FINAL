@@ -22,8 +22,10 @@ public class DBImplementationCruiseDAO implements CruiseDAO {
 	final String SQLSELECTALL = "SELECT * FROM cruise";
 	final String SQLDELETEBYCODE = "DELETE FROM cruise WHERE cod_cruise = ?";
 	final String SQLSELECTBYCODE = "SELECT * FROM cruise WHERE cod_cruise=?";
-	final String SQLUPDATEBYCODE ="UPDATE cruise set type_cruise=?,name_cruise=?, num_rooms=?,capacity_max=? WHERE cod_cruise=?";
-	final String SQLINSERT="INSERT INTO CRUISE VALUES(?,?,?,?,?);";
+	final String SQLUPDATEBYCODE = "UPDATE cruise set type_cruise=?,name_cruise=?, num_rooms=?,capacity_max=? WHERE cod_cruise=?";
+	final String SQLINSERT = "INSERT INTO CRUISE VALUES(?,?,?,?,?);";
+	final String SQLSELECTWORKERBYCRUISE = "SELECT * FROM WORKER WHERE cod_cruise=?";
+	final String SQLSELECTBOOKBYCREUISE = "SELECT * FROM BOOK WHERE cod_cruise=?";
 
 	public DBImplementationCruiseDAO() {
 		this.configFile = ResourceBundle.getBundle("configClass");
@@ -54,6 +56,7 @@ public class DBImplementationCruiseDAO implements CruiseDAO {
 			ResultSet resultset = statement.executeQuery();
 
 			while (resultset.next()) {
+				// Al conectarlo con la base de datos para que salga en mayusculas
 				TypeCruise type = TypeCruise.valueOf(resultset.getString("type_cruise").toUpperCase());
 				cruise = new Cruise(resultset.getString("cod_cruise"), type, resultset.getString("name_cruise"),
 						resultset.getInt("num_rooms"), resultset.getInt("capacity_max"));
@@ -63,7 +66,7 @@ public class DBImplementationCruiseDAO implements CruiseDAO {
 			statement.close();
 			connection.close();
 		} catch (SQLException e) {
-			System.out.println("Error al cargar cruceros: " + e.getMessage());
+			System.out.println("Error al cargar cruceros: " + e.getMessage());//Esta en español CUIDADOOOO
 		}
 		return cruises;
 	}
@@ -111,7 +114,7 @@ public class DBImplementationCruiseDAO implements CruiseDAO {
 
 	@Override
 	public boolean updateCruiseByCode(Cruise cruise) {
-		boolean updatePerformed=false;
+		boolean updatePerformed = false;
 		this.openConnection();
 		try {
 			statement = connection.prepareStatement(SQLUPDATEBYCODE);
@@ -120,13 +123,13 @@ public class DBImplementationCruiseDAO implements CruiseDAO {
 			statement.setInt(3, cruise.getNumRooms());
 			statement.setInt(4, cruise.getCapacityMax());
 			statement.setString(5, cruise.getCodCruise());
-			
+
 			if (statement.executeUpdate() > 0) {
 				updatePerformed = true;
 			}
 			statement.close();
 			connection.close();
-			
+
 		} catch (SQLException e) {
 			System.out.println("Error: " + e.getMessage());
 		}
@@ -135,9 +138,9 @@ public class DBImplementationCruiseDAO implements CruiseDAO {
 
 	@Override
 	public boolean insertCruise(Cruise cruise) {
-		boolean insertPerformed=false;
+		boolean insertPerformed = false;
 		this.openConnection();
-		
+
 		try {
 			statement = connection.prepareStatement(SQLINSERT);
 			statement.setString(1, cruise.getCodCruise());
@@ -145,16 +148,56 @@ public class DBImplementationCruiseDAO implements CruiseDAO {
 			statement.setString(3, cruise.getNameCruise());
 			statement.setInt(4, cruise.getNumRooms());
 			statement.setInt(5, cruise.getCapacityMax());
-			
+
 			if (statement.executeUpdate() > 0) {
 				insertPerformed = true;
 			}
 			statement.close();
 			connection.close();
-		}catch (SQLException e) {
+		} catch (SQLException e) {
 			System.out.println("Error: " + e.getMessage());
-		}	
+		}
 		return insertPerformed;
+	}
+
+	@Override
+	public boolean checkCruiseInWorker(String id) {
+		boolean cruiseExistInWorker = false;
+		this.openConnection();
+		try {
+			statement = connection.prepareStatement(SQLSELECTWORKERBYCRUISE);
+			statement.setString(1, id);
+			ResultSet resultset = statement.executeQuery();
+			if (resultset.next()) {
+				cruiseExistInWorker = true;
+			}
+			resultset.close();
+			statement.close();
+			connection.close();
+		} catch (SQLException e) {
+			System.out.println("Error: " + e.getMessage());
+		}
+		return cruiseExistInWorker;
+	}
+
+	@Override
+	public boolean checkCruiseInBook(String id) {
+		boolean cruiseExistInBook = false;
+		this.openConnection();
+		try {
+			statement = connection.prepareStatement(SQLSELECTBOOKBYCREUISE);
+			statement.setString(1, id);
+			ResultSet resultset = statement.executeQuery();
+			if (resultset.next()) {
+				cruiseExistInBook = true;
+			}
+			resultset.close();
+			statement.close();
+			connection.close();
+		} catch (SQLException e) {
+			System.out.println("Error: " + e.getMessage());
+		}
+		return cruiseExistInBook;
 	}
 
 }

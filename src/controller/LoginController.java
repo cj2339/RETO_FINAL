@@ -37,7 +37,14 @@ public class LoginController {
 	public boolean insertCruise(Cruise cruise) {
 		return daoCruise.insertCruise(cruise);
 	}
-
+	public boolean checkCruiseInWorker(String id)
+	{
+		return daoCruise.checkCruiseInWorker(id);
+	}
+	public boolean checkCruiseInBook(String id)
+	{
+		return daoCruise.checkCruiseInWorker(id);
+	}
 	public boolean checkUser(Administrator user) {
 		return dao.checkUser(user);
 	}

@@ -10,4 +10,6 @@ public interface CruiseDAO {
 	public boolean deleteCruise(String id);
 	public boolean updateCruiseByCode(Cruise cruise);
 	public boolean insertCruise(Cruise cruise);
+	public boolean checkCruiseInWorker(String id);
+	public boolean checkCruiseInBook(String id);
 }

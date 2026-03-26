@@ -52,7 +52,7 @@ public class CruiseListWindow extends JDialog implements ActionListener {
 			@Override
 			public boolean isCellEditable(int row, int column) {
 				return false;
-			}
+			}//Esto es para que la tabla no sea editable
 		};
 
 		// Rellenar tabla con los usuarios
@@ -103,14 +103,25 @@ public class CruiseListWindow extends JDialog implements ActionListener {
 			String codCruise = tabla.getValueAt(fila, 0).toString();
 
 			// Llamar al controlador con el código
-			if (controller.deleteCruise(codCruise)) {
-				DefaultTableModel modelo = (DefaultTableModel) tabla.getModel();
-				modelo.removeRow(fila);
+			if(!controller.checkCruiseInWorker(codCruise))
+			{
+				if(!controller.checkCruiseInBook(codCruise))
+				{
+					if (controller.deleteCruise(codCruise)) {
+						DefaultTableModel modelo = (DefaultTableModel) tabla.getModel();
+						modelo.removeRow(fila);
 
-				JOptionPane.showMessageDialog(this, "Cruise has been deleted.");
-			} else {
-				JOptionPane.showMessageDialog(this, "Cruise not deleted.");
+						JOptionPane.showMessageDialog(this, "Cruise has been deleted.");
+					} else {
+						JOptionPane.showMessageDialog(this, "Cruise not deleted.");
+					}
+				}else {
+					JOptionPane.showMessageDialog(this, "Cruise not deleted because exists in Book");
+				}
+			}else {
+				JOptionPane.showMessageDialog(this, "Cruise not deleted because exists in Worker");
 			}
+			
 		}
 
 	}
