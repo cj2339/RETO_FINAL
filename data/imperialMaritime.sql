@@ -66,7 +66,7 @@ CREATE TABLE book(
     startDate DATE,
     endDate DATE,
     basePrice DOUBLE,
-    PRIMARY KEY(cod_cruise, id_client),
+    PRIMARY KEY(cod_cruise, id_client, startDate),
     FOREIGN KEY(cod_cruise) REFERENCES cruise(cod_cruise) ON UPDATE CASCADE ON DELETE CASCADE,
     FOREIGN KEY(id_client) REFERENCES client(id_client) ON UPDATE CASCADE ON DELETE CASCADE
 );
