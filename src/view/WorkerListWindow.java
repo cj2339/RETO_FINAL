@@ -23,22 +23,21 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
-public class workerListWindow extends JDialog implements ActionListener {
+public class WorkerListWindow extends JDialog implements ActionListener {
 
 	private static final long serialVersionUID = 1L;
 	private LoginController cont;
-	private String adminName;
 	private JPanel contentPane;
 	private JButton btnADD;
 	private JButton btnDELETE;
 	private JButton btnMODIFY;
-	JTable tabla;
+	JTable table;
 
-	public workerListWindow(JDialog mainWindow, LoginController cont, String adminName) {
+	public WorkerListWindow(JDialog mainWindow, LoginController cont) {
 		super(mainWindow, true);
 		setTitle("Workers");
 		this.cont = cont;
-		this.adminName = adminName;
+		
 		setIconImage(Toolkit.getDefaultToolkit().getImage("images/icon.png"));
 		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 607, 420);
@@ -47,10 +46,9 @@ public class workerListWindow extends JDialog implements ActionListener {
 		setContentPane(contentPane);
 		
 		List<Worker> workers=cont.getAllWorker();
-		List<Cruise> cruises = cont.getAllCruise();
 
 		// Crear modelo de tabla no editable
-		DefaultTableModel modelo = new DefaultTableModel(new String[] { "Code", "Type", "Name", "Rooms", "Capacity" },
+		DefaultTableModel model = new DefaultTableModel(new String[] { "ID", "Service", "Name", "Surname", "Cruise Code" },
 				0) {
 			private static final long serialVersionUID = 1L;
 
@@ -61,14 +59,14 @@ public class workerListWindow extends JDialog implements ActionListener {
 		};
 
 		// Rellenar tabla con los usuarios
-		for (Cruise cruise : cruises) {
-			modelo.addRow(new Object[] { cruise.getCodCruise(), cruise.getTypeCruise().toString(),
-					cruise.getNameCruise(), cruise.getNumRooms(), cruise.getCapacityMax() });
+		
+		for (Worker worker: workers) {
+			model.addRow(new Object[] {worker.getIdWorker(), worker.getService(), worker.getName(), worker.getSurname(), worker.getCodCruise()});
 		}
 		contentPane.setLayout(null);
 
-		tabla = new JTable(modelo);
-		JScrollPane scrollPane = new JScrollPane(tabla);
+		table = new JTable(model);
+		JScrollPane scrollPane = new JScrollPane(table);
 		scrollPane.setBounds(12, 44, 567, 231);
 		getContentPane().add(scrollPane);
 
@@ -92,48 +90,48 @@ public class workerListWindow extends JDialog implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		String type=null;
-		int row = tabla.getSelectedRow();
+		int row = table.getSelectedRow();
+		boolean selected=true;
 		
-		if (e.getSource() == btnDELETE) {
+		if (e.getSource() == btnDELETE&&selected) {
 
 			if (row == -1) {
 				// No hay fila seleccionada
-				JOptionPane.showMessageDialog(this, "Select a cruise to delete.");
-				return;
+				JOptionPane.showMessageDialog(this, "Select a worker to delete.");
+				selected=false;
 			}
 
 			// Obtener el código de la columna 0
-			String codCruise = tabla.getValueAt(row, 0).toString();
+			String idWorker=table.getValueAt(row, 0).toString();
 
 			// Llamar al controlador con el código
-			if(!cont.checkCruiseInWorker(codCruise))
-			{
-				if(!cont.checkCruiseInBook(codCruise))
-				{
-					if (cont.deleteCruise(codCruise)) {
-						DefaultTableModel modelo = (DefaultTableModel) tabla.getModel();
-						modelo.removeRow(row);
-
-						JOptionPane.showMessageDialog(this, "Cruise has been deleted.");
-					} else {
-						JOptionPane.showMessageDialog(this, "Cruise not deleted.");
-					}
-				}else {
-					JOptionPane.showMessageDialog(this, "Cruise not deleted because exists in Book");
-				}
-			}else {
-				JOptionPane.showMessageDialog(this, "Cruise not deleted because exists in Worker");
-			}
-			
-		}else if(e.getSource()==btnMODIFY) {
-			if(row == -1) {
-				JOptionPane.showMessageDialog(this, "Select a cruise to modify");
-			}else {
-				
-			}
-		}else if(e.getSource()==btnADD) {
-			
+//			if(!cont.checkCruiseInWorker(codCruise))
+//			{
+//				if(!cont.checkCruiseInBook(codCruise))
+//				{
+//					if (cont.deleteCruise(codCruise)) {
+//						DefaultTableModel modelo = (DefaultTableModel) table.getModel();
+//						modelo.removeRow(row);
+//
+//						JOptionPane.showMessageDialog(this, "Cruise has been deleted.");
+//					} else {
+//						JOptionPane.showMessageDialog(this, "Cruise not deleted.");
+//					}
+//				}else {
+//					JOptionPane.showMessageDialog(this, "Cruise not deleted because exists in Book");
+//				}
+//			}else {
+//				JOptionPane.showMessageDialog(this, "Cruise not deleted because exists in Worker");
+//			}
+//			
+//		}else if(e.getSource()==btnMODIFY) {
+//			if(row == -1) {
+//				JOptionPane.showMessageDialog(this, "Select a cruise to modify");
+//			}else {
+//				
+//			}
+//		}else if(e.getSource()==btnADD) {
+//			
 		}
 
 	}

@@ -159,25 +159,6 @@ public class DBImplementationWorker implements WorkerDAO {
 //		return insertPerformed;
 //	}
 //
-//	@Override
-//	public boolean checkCruiseInWorker(String id) {
-//		boolean cruiseExistInWorker = false;
-//		this.openConnection();
-//		try {
-//			statement = connection.prepareStatement(SQLSELECTWORKERBYCRUISE);
-//			statement.setString(1, id);
-//			ResultSet resultset = statement.executeQuery();
-//			if (resultset.next()) {
-//				cruiseExistInWorker = true;
-//			}
-//			resultset.close();
-//			statement.close();
-//			connection.close();
-//		} catch (SQLException e) {
-//			System.out.println("Error: " + e.getMessage());
-//		}
-//		return cruiseExistInWorker;
-//	}
 //
 //	@Override
 //	public boolean checkCruiseInBook(String id) {
