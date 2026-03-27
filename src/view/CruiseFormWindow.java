@@ -19,7 +19,7 @@ import javax.swing.DefaultComboBoxModel;
 import model.TypeCruise;
 import javax.swing.JButton;
 
-public class FormCruiseWindow extends JDialog implements ActionListener{
+public class CruiseFormWindow extends JDialog implements ActionListener{
 
 	private static final long serialVersionUID = 1L;
 	private LoginController cont;
@@ -33,7 +33,7 @@ public class FormCruiseWindow extends JDialog implements ActionListener{
 
 	//hay que cambiar el constructor, en vez de recibir type mejor que reciba todo el objeto de crucero (si se quiere modificar)
 	//si se quiere añadir crucero será nulo
-	public FormCruiseWindow(CruiseListWindow cruiseListWindow, boolean b, LoginController cont, String type) {
+	public CruiseFormWindow(CruiseListWindow cruiseListWindow, boolean b, LoginController cont, String type) {
 		super(cruiseListWindow,b);
 		this.cont=cont;
 		

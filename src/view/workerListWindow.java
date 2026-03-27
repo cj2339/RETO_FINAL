@@ -20,7 +20,7 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
-public class CruiseListWindow extends JDialog implements ActionListener {
+public class workerListWindow extends JDialog implements ActionListener {
 
 	private static final long serialVersionUID = 1L;
 	private LoginController cont;
@@ -29,13 +29,13 @@ public class CruiseListWindow extends JDialog implements ActionListener {
 	private JButton btnADD;
 	private JButton btnDELETE;
 	private JButton btnMODIFY;
-	JTable table;
+	JTable tabla;
 
-	public CruiseListWindow(JDialog mainWindow, LoginController cont) {
+	public workerListWindow(JDialog mainWindow, LoginController cont, String adminName) {
 		super(mainWindow, true);
-		setTitle("Cruises");
+		setTitle("Workers");
 		this.cont = cont;
-		
+		this.adminName = adminName;
 		setIconImage(Toolkit.getDefaultToolkit().getImage("images/icon.png"));
 		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 607, 420);
@@ -63,8 +63,8 @@ public class CruiseListWindow extends JDialog implements ActionListener {
 		}
 		contentPane.setLayout(null);
 
-		table = new JTable(modelo);
-		JScrollPane scrollPane = new JScrollPane(table);
+		tabla = new JTable(modelo);
+		JScrollPane scrollPane = new JScrollPane(tabla);
 		scrollPane.setBounds(12, 44, 567, 231);
 		getContentPane().add(scrollPane);
 
@@ -89,7 +89,7 @@ public class CruiseListWindow extends JDialog implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		String type=null;
-		int row = table.getSelectedRow();
+		int row = tabla.getSelectedRow();
 		
 		if (e.getSource() == btnDELETE) {
 
@@ -100,7 +100,7 @@ public class CruiseListWindow extends JDialog implements ActionListener {
 			}
 
 			// Obtener el código de la columna 0
-			String codCruise = table.getValueAt(row, 0).toString();
+			String codCruise = tabla.getValueAt(row, 0).toString();
 
 			// Llamar al controlador con el código
 			if(!cont.checkCruiseInWorker(codCruise))
@@ -108,7 +108,7 @@ public class CruiseListWindow extends JDialog implements ActionListener {
 				if(!cont.checkCruiseInBook(codCruise))
 				{
 					if (cont.deleteCruise(codCruise)) {
-						DefaultTableModel modelo = (DefaultTableModel) table.getModel();
+						DefaultTableModel modelo = (DefaultTableModel) tabla.getModel();
 						modelo.removeRow(row);
 
 						JOptionPane.showMessageDialog(this, "Cruise has been deleted.");
@@ -126,14 +126,10 @@ public class CruiseListWindow extends JDialog implements ActionListener {
 			if(row == -1) {
 				JOptionPane.showMessageDialog(this, "Select a cruise to modify");
 			}else {
-				type="Modify";
-				CruiseFormWindow addModCruise=new CruiseFormWindow(this,true,cont,type);
-				addModCruise.setVisible(true);
+				
 			}
 		}else if(e.getSource()==btnADD) {
-			type="Add";
-			CruiseFormWindow addModCruise=new CruiseFormWindow(this,true,cont,type);
-			addModCruise.setVisible(true);
+			
 		}
 
 	}
