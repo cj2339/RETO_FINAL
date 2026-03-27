@@ -4,6 +4,7 @@ import view.StartWindow;
 
 import model.DBImplementation;
 import model.DBImplementationCruiseDAO;
+import model.Worker;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,6 +19,8 @@ public class LoginController {
 	CruiseDAO daoCruise = new DBImplementationCruiseDAO();
 	private String loggedInAdminName;
 
+	
+	
 	// Cruise CRUD Methods
 	public List<Cruise> getAllCruise() {
 		return daoCruise.getAllCruise();
@@ -45,14 +48,20 @@ public class LoginController {
 	{
 		return daoCruise.checkCruiseInWorker(id);
 	}
-	public boolean checkUser(Administrator user) {
-		return dao.checkUser(user);
-	}
-
+	
+	//worker CRUD Methods
 	public ArrayList<String> getWorkerCodes() {
 		return dao.getWorkerCodes();
 	}
+	
+	public List<Worker> getAllWorker(){
+		return dao.getAllWorker();
+	}
 
+	public boolean checkUser(Administrator user) {
+		return dao.checkUser(user);
+	}
+	
 	public ArrayList<String> getClientCodes() {
 		return dao.getClientCodes();
 	}

@@ -12,8 +12,11 @@ import javax.swing.JScrollPane;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
+
+
 import controller.LoginController;
 import model.Cruise;
+import model.Worker;
 
 import javax.swing.JTable;
 import javax.swing.JButton;
@@ -42,7 +45,8 @@ public class workerListWindow extends JDialog implements ActionListener {
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
-
+		
+		List<Worker> workers=cont.getAllWorker();
 		List<Cruise> cruises = cont.getAllCruise();
 
 		// Crear modelo de tabla no editable
