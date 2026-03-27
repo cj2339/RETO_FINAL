@@ -76,7 +76,7 @@ public class StartWindow extends JFrame implements MouseListener {
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		dispose();
-		LoginWindow loginWindow=new LoginWindow(this,cont);
+		LoginWindow loginWindow=new LoginWindow(null,cont);
 		loginWindow.setVisible(true);
 	}
 

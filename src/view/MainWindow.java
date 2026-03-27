@@ -15,7 +15,7 @@ import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class MainWindow extends JDialog implements ActionListener {
+public class MainWindow extends JFrame implements ActionListener {
 
 	private static final long serialVersionUID = 1L;
 	private LoginController cont;
@@ -30,11 +30,11 @@ public class MainWindow extends JDialog implements ActionListener {
 	private Image imagenFondo = new ImageIcon("images/ManagementAnchor.png").getImage();	
 
 	//preguntar sobre esta herencia
-	public MainWindow(JDialog father, LoginController cont, String adminName) {
-		super(father,true);
+	public MainWindow(LoginController cont, String adminName) {
+		super();
 		this.cont=cont;
 		this.adminName = adminName;
-
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		contentPane = new JPanel() {
 			@Override
 			protected void paintComponent(Graphics g) {
@@ -94,7 +94,7 @@ public class MainWindow extends JDialog implements ActionListener {
 
 		}else{
 			if (e.getSource().equals(btnCruise)) {
-				CruiseListWindow cruiseWindow = new CruiseListWindow(this, cont, adminName);
+				CruiseListWindow cruiseWindow = new CruiseListWindow(this, cont);
 				cruiseWindow.setVisible(true);
 			}else if (e.getSource().equals(btnWorker)) {
 				

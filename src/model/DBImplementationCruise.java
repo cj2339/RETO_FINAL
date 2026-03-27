@@ -23,7 +23,7 @@ public class DBImplementationCruise implements CruiseDAO {
 	final String SQLDELETEBYCODE = "DELETE FROM cruise WHERE cod_cruise = ?";
 	final String SQLSELECTBYCODE = "SELECT * FROM cruise WHERE cod_cruise=?";
 	final String SQLUPDATEBYCODE = "UPDATE cruise set type_cruise=?,name_cruise=?, num_rooms=?,capacity_max=? WHERE cod_cruise=?";
-	final String SQLINSERT = "INSERT INTO CRUISE VALUES(?,?,?,?,?);";
+	final String SQLINSERT = "INSERT INTO cruise(name_cruise, type_cruise, num_rooms, capacity_max) VALUES(?,?,?,?);";
 	final String SQLSELECTWORKERBYCRUISE = "SELECT * FROM WORKER WHERE cod_cruise=?";
 	final String SQLSELECTBOOKBYCREUISE = "SELECT * FROM BOOK WHERE cod_cruise=?";
 
@@ -58,7 +58,7 @@ public class DBImplementationCruise implements CruiseDAO {
 			while (resultset.next()) {
 				// Al conectarlo con la base de datos para que salga en mayusculas
 				TypeCruise type = TypeCruise.valueOf(resultset.getString("type_cruise").toUpperCase());
-				cruise = new Cruise(resultset.getString("cod_cruise"), type, resultset.getString("name_cruise"),
+				cruise = new Cruise(Integer.parseInt(resultset.getString("cod_cruise")), type, resultset.getString("name_cruise"),
 						resultset.getInt("num_rooms"), resultset.getInt("capacity_max"));
 				cruises.add(cruise);
 			}
@@ -100,7 +100,7 @@ public class DBImplementationCruise implements CruiseDAO {
 
 			while (resultset.next()) {
 				TypeCruise type = TypeCruise.valueOf(resultset.getString("type_cruise").toUpperCase());
-				cruise = new Cruise(resultset.getString("cod_cruise"), type, resultset.getString("name_cruise"),
+				cruise = new Cruise(Integer.parseInt(resultset.getString("cod_cruise")), type, resultset.getString("name_cruise"),
 						resultset.getInt("num_rooms"), resultset.getInt("capacity_max"));
 			}
 			resultset.close();
@@ -122,7 +122,7 @@ public class DBImplementationCruise implements CruiseDAO {
 			statement.setString(2, cruise.getNameCruise());
 			statement.setInt(3, cruise.getNumRooms());
 			statement.setInt(4, cruise.getCapacityMax());
-			statement.setString(5, cruise.getCodCruise());
+			statement.setInt(5, cruise.getCodCruise());
 
 			if (statement.executeUpdate() > 0) {
 				updatePerformed = true;
@@ -143,11 +143,10 @@ public class DBImplementationCruise implements CruiseDAO {
 
 		try {
 			statement = connection.prepareStatement(SQLINSERT);
-			statement.setString(1, cruise.getCodCruise());
+			statement.setString(1, cruise.getNameCruise());
 			statement.setString(2, cruise.getTypeCruise().toString());
-			statement.setString(3, cruise.getNameCruise());
-			statement.setInt(4, cruise.getNumRooms());
-			statement.setInt(5, cruise.getCapacityMax());
+			statement.setInt(3, cruise.getNumRooms());
+			statement.setInt(4, cruise.getCapacityMax());
 
 			if (statement.executeUpdate() > 0) {
 				insertPerformed = true;

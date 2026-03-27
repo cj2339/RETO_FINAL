@@ -49,7 +49,7 @@ public class AdminWindow extends JDialog implements ActionListener {
 		dialog.setVisible(true);
 	}
 	
-	public AdminWindow(JDialog father, LoginController cont, String adminName) {
+	public AdminWindow(JFrame father, LoginController cont, String adminName) {
 		super(father, true);
 		this.cont = cont;
 		this.adminName = adminName;

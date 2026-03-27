@@ -31,7 +31,7 @@ public class CruiseListWindow extends JDialog implements ActionListener {
 	private JButton btnMODIFY;
 	JTable table;
 
-	public CruiseListWindow(JDialog mainWindow, LoginController cont) {
+	public CruiseListWindow(JFrame mainWindow, LoginController cont) {
 		super(mainWindow, true);
 		setTitle("Cruises");
 		this.cont = cont;
@@ -43,27 +43,11 @@ public class CruiseListWindow extends JDialog implements ActionListener {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 
-		List<Cruise> cruises = cont.getAllCruise();
-
-		// Crear modelo de tabla no editable
-		DefaultTableModel modelo = new DefaultTableModel(new String[] { "Code", "Type", "Name", "Rooms", "Capacity" },
-				0) {
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			public boolean isCellEditable(int row, int column) {
-				return false;
-			}//Esto es para que la tabla no sea editable
-		};
-
-		// Rellenar tabla con los usuarios
-		for (Cruise cruise : cruises) {
-			modelo.addRow(new Object[] { cruise.getCodCruise(), cruise.getTypeCruise().toString(),
-					cruise.getNameCruise(), cruise.getNumRooms(), cruise.getCapacityMax() });
-		}
+		cargarTabla();
+		
 		contentPane.setLayout(null);
 
-		table = new JTable(modelo);
+		
 		JScrollPane scrollPane = new JScrollPane(table);
 		scrollPane.setBounds(12, 44, 567, 231);
 		getContentPane().add(scrollPane);
@@ -108,8 +92,7 @@ public class CruiseListWindow extends JDialog implements ActionListener {
 				if(!cont.checkCruiseInBook(codCruise))
 				{
 					if (cont.deleteCruise(codCruise)) {
-						DefaultTableModel modelo = (DefaultTableModel) table.getModel();
-						modelo.removeRow(row);
+						cargarTabla();
 
 						JOptionPane.showMessageDialog(this, "Cruise has been deleted.");
 					} else {
@@ -132,9 +115,31 @@ public class CruiseListWindow extends JDialog implements ActionListener {
 			}
 		}else if(e.getSource()==btnADD) {
 			type="Add";
-			CruiseFormWindow addModCruise=new CruiseFormWindow(this,true,cont,type);
-			addModCruise.setVisible(true);
+			FormCruiseWindow formCruiseWindow=new FormCruiseWindow(this, cont, null, true);
+			formCruiseWindow.setVisible(true);
+			cargarTabla();
+			
 		}
+	}
+	
+	private void cargarTabla() {
+		List<Cruise> cruises = cont.getAllCruise();
+		// Crear modelo de tabla no editable
+		DefaultTableModel modelo = new DefaultTableModel(new String[] { "Code", "Type", "Name", "Rooms", "Capacity" },
+				0) {
+			private static final long serialVersionUID = 1L;
 
+			@Override
+			public boolean isCellEditable(int row, int column) {
+				return false;
+			}//Esto es para que la tabla no sea editable
+		};
+
+		// Rellenar tabla con los cruceros
+		for (Cruise cruise : cruises) {
+			modelo.addRow(new Object[] { cruise.getCodCruise(), cruise.getTypeCruise().toString(),
+					cruise.getNameCruise(), cruise.getNumRooms(), cruise.getCapacityMax() });
+		}
+		table = new JTable(modelo);
 	}
 }

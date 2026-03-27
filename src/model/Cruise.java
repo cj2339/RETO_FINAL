@@ -4,13 +4,13 @@ package model;
  */
 public class Cruise {
 
-    private String codCruise;
+    private int codCruise;
     private TypeCruise typeCruise; 
     private String nameCruise;
     private int numRooms;
     private int capacityMax;
 
-    public Cruise(String codCruise, TypeCruise typeCruise, String nameCruise,
+    public Cruise(int codCruise, TypeCruise typeCruise, String nameCruise,
                   int numRooms, int capacityMax) {
         this.codCruise = codCruise;
         this.typeCruise = typeCruise;
@@ -19,11 +19,11 @@ public class Cruise {
         this.capacityMax = capacityMax;
     }
     
-    public String getCodCruise() {
+    public int getCodCruise() {
 		return codCruise;
 	}
 
-	public void setCodCruise(String codCruise) {
+	public void setCodCruise(int codCruise) {
 		this.codCruise = codCruise;
 	}
 
