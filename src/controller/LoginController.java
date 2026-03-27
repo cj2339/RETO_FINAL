@@ -3,8 +3,10 @@ package controller;
 import view.StartWindow;
 
 import model.DBImplementation;
-import model.DBImplementationCruiseDAO;
+import model.DBImplementationCruise;
+import model.DBImplementationWorker;
 import model.Worker;
+import model.WorkerDAO;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,7 +18,8 @@ import model.CruiseDAO;
 
 public class LoginController {
 	AdministratorDAO dao = new DBImplementation();
-	CruiseDAO daoCruise = new DBImplementationCruiseDAO();
+	CruiseDAO daoCruise = new DBImplementationCruise();
+	WorkerDAO daoWorker = new DBImplementationWorker();
 	private String loggedInAdminName;
 
 	
@@ -55,7 +58,7 @@ public class LoginController {
 	}
 	
 	public List<Worker> getAllWorker(){
-		return dao.getAllWorker();
+		return daoWorker.getAllWorker();
 	}
 
 	public boolean checkUser(Administrator user) {
