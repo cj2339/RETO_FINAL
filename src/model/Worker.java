@@ -56,7 +56,4 @@ public class Worker {
 		this.codCruise = codCruise;
 	}
 	
-	
-	
-	
 }
