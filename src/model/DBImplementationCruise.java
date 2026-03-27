@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
-public class DBImplementationCruiseDAO implements CruiseDAO {
+public class DBImplementationCruise implements CruiseDAO {
 	private Connection connection;
 	private PreparedStatement statement;
 
@@ -27,7 +27,7 @@ public class DBImplementationCruiseDAO implements CruiseDAO {
 	final String SQLSELECTWORKERBYCRUISE = "SELECT * FROM WORKER WHERE cod_cruise=?";
 	final String SQLSELECTBOOKBYCREUISE = "SELECT * FROM BOOK WHERE cod_cruise=?";
 
-	public DBImplementationCruiseDAO() {
+	public DBImplementationCruise() {
 		this.configFile = ResourceBundle.getBundle("configClass");
 		this.driverDB = this.configFile.getString("Driver");
 		this.urlDB = this.configFile.getString("Conn");

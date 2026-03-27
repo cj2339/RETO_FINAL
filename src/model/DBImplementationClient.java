@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
-public class DBImplementationClientDAO implements ClientDAO {
+public class DBImplementationClient implements ClientDAO {
 	private Connection connection;
 	private PreparedStatement statement;
 	
@@ -25,7 +25,7 @@ public class DBImplementationClientDAO implements ClientDAO {
 	final String SQLINSERT = "INSERT INTO CLIENT VALUES(?,?,?,?,?);";
 	final String SQLSELECTBOOKBYCREUISE = "SELECT * FROM BOOK WHERE id_client=?";
 	
-	public DBImplementationClientDAO() {
+	public DBImplementationClient() {
 		this.configFile = ResourceBundle.getBundle("configClass");
 		this.driverDB = this.configFile.getString("Driver");
 		this.urlDB = this.configFile.getString("Conn");
