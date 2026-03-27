@@ -52,6 +52,9 @@ public class DBImplementation implements AdministratorDAO{
 			}
 		}
 
+		/*
+		 * 
+		 */
 		public boolean checkUser(Administrator administrator){
 			boolean existe=false;
 			this.openConnection();
