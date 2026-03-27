@@ -127,12 +127,12 @@ public class CruiseListWindow extends JDialog implements ActionListener {
 				JOptionPane.showMessageDialog(this, "Select a cruise to modify");
 			}else {
 				type="Modify";
-				AddModifyCruiseWindow addModCruise=new AddModifyCruiseWindow(this,true,cont,type);
+				FormCruiseWindow addModCruise=new FormCruiseWindow(this,true,cont,type);
 				addModCruise.setVisible(true);
 			}
 		}else if(e.getSource()==btnADD) {
 			type="Add";
-			AddModifyCruiseWindow addModCruise=new AddModifyCruiseWindow(this,true,cont,type);
+			FormCruiseWindow addModCruise=new FormCruiseWindow(this,true,cont,type);
 			addModCruise.setVisible(true);
 		}
 
