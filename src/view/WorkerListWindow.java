@@ -33,39 +33,22 @@ public class WorkerListWindow extends JDialog implements ActionListener {
 	private JButton btnMODIFY;
 	JTable table;
 
-	public WorkerListWindow(JDialog mainWindow, LoginController cont) {
+	public WorkerListWindow(MainWindow mainWindow, LoginController cont) {
 		super(mainWindow, true);
-		setTitle("Workers");
 		this.cont = cont;
-		
+
+		setTitle("Workers");
 		setIconImage(Toolkit.getDefaultToolkit().getImage("images/icon.png"));
 		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 607, 420);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
-		
-		List<Worker> workers=cont.getAllWorker();
 
-		// Crear modelo de tabla no editable
-		DefaultTableModel model = new DefaultTableModel(new String[] { "ID", "Service", "Name", "Surname", "Cruise Code" },
-				0) {
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			public boolean isCellEditable(int row, int column) {
-				return false;
-			}//Esto es para que la tabla no sea editable
-		};
-
-		// Rellenar tabla con los usuarios
-		
-		for (Worker worker: workers) {
-			model.addRow(new Object[] {worker.getIdWorker(), worker.getService(), worker.getName(), worker.getSurname(), worker.getCodCruise()});
-		}
 		contentPane.setLayout(null);
+		
+		table = new JTable();
 
-		table = new JTable(model);
 		JScrollPane scrollPane = new JScrollPane(table);
 		scrollPane.setBounds(12, 44, 567, 231);
 		getContentPane().add(scrollPane);
@@ -85,6 +68,8 @@ public class WorkerListWindow extends JDialog implements ActionListener {
 
 		btnMODIFY.setBounds(400, 303, 97, 25);
 		contentPane.add(btnMODIFY);
+		
+		fillTable();
 
 	}
 
@@ -92,47 +77,62 @@ public class WorkerListWindow extends JDialog implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		int row = table.getSelectedRow();
 		boolean selected=true;
-		
-		if (e.getSource() == btnDELETE&&selected) {
 
+		if (e.getSource() == btnDELETE&&selected) {
 			if (row == -1) {
-				// No hay fila seleccionada
-				JOptionPane.showMessageDialog(this, "Select a worker to delete.");
 				selected=false;
 			}
+			
+			if(!selected) {
+				// Obtener el código de la columna 0
+				String idWorker=table.getValueAt(row, 0).toString();
 
-			// Obtener el código de la columna 0
-			String idWorker=table.getValueAt(row, 0).toString();
+				// Llamar al controlador con el código
 
-			// Llamar al controlador con el código
-//			if(!cont.checkCruiseInWorker(codCruise))
-//			{
-//				if(!cont.checkCruiseInBook(codCruise))
-//				{
-//					if (cont.deleteCruise(codCruise)) {
-//						DefaultTableModel modelo = (DefaultTableModel) table.getModel();
-//						modelo.removeRow(row);
-//
-//						JOptionPane.showMessageDialog(this, "Cruise has been deleted.");
-//					} else {
-//						JOptionPane.showMessageDialog(this, "Cruise not deleted.");
-//					}
-//				}else {
-//					JOptionPane.showMessageDialog(this, "Cruise not deleted because exists in Book");
-//				}
-//			}else {
-//				JOptionPane.showMessageDialog(this, "Cruise not deleted because exists in Worker");
-//			}
-//			
-//		}else if(e.getSource()==btnMODIFY) {
-//			if(row == -1) {
-//				JOptionPane.showMessageDialog(this, "Select a cruise to modify");
-//			}else {
-//				
-//			}
-//		}else if(e.getSource()==btnADD) {
-//			
+				DefaultTableModel modelo = (DefaultTableModel) table.getModel();
+				modelo.removeRow(row);
+
+				JOptionPane.showMessageDialog(this, "Worker has been deleted.");
+			}else {
+				JOptionPane.showMessageDialog(this, "Select a worker to delete.");
+			}
+
+		}else if(e.getSource()==btnMODIFY) {
+			if(row == -1) {
+				JOptionPane.showMessageDialog(this, "Select a worker to modify");
+			}else {
+				
+			}
+		}else if(e.getSource()==btnADD) {
+
 		}
 
+	}
+	
+	private void fillTable() {
+		List<Worker> workers=cont.getAllWorker();
+
+		// Crear modelo de tabla no editable
+		DefaultTableModel model = new DefaultTableModel(new String[] { "ID", "Service", "Name", "Surname", "Cruise Code" }, 0) {
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public boolean isCellEditable(int row, int column) {
+				return false;
+			}//Esto es para que la tabla no sea editable
+		};
+
+		// Rellenar tabla con los usuarios
+
+		for (Worker worker: workers) {
+			model.addRow(new Object[] {
+					worker.getIdWorker(), 
+					worker.getService().toString(), 
+					worker.getName(), 
+					worker.getSurname(), 
+					worker.getCodCruise()
+			});
+		}
+		table = new JTable(model);
 	}
 }

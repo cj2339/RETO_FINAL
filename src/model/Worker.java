@@ -5,9 +5,9 @@ public class Worker {
 	private TypeWorker service;
 	private String name;
 	private String surname;
-	private String codCruise;
+	private int codCruise;
 	
-	public Worker(String idWorker, TypeWorker service, String name, String surname, String codCruise) {
+	public Worker(String idWorker, TypeWorker service, String name, String surname, int codCruise) {
 		super();
 		this.idWorker = idWorker;
 		this.service = service;
@@ -48,11 +48,11 @@ public class Worker {
 		this.surname = surname;
 	}
 
-	public String getCodCruise() {
+	public int getCodCruise() {
 		return codCruise;
 	}
 
-	public void setCodCruise(String codCruise) {
+	public void setCodCruise(int codCruise) {
 		this.codCruise = codCruise;
 	}
 	

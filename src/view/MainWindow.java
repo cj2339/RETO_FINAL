@@ -30,7 +30,7 @@ public class MainWindow extends JFrame implements ActionListener {
 	private Image imagenFondo = new ImageIcon("images/ManagementAnchor.png").getImage();	
 
 	//preguntar sobre esta herencia
-	public MainWindow(LoginController cont, String adminName) {
+	public MainWindow(LoginWindow loginWindow, LoginController cont, String adminName) {
 		super();
 		this.cont=cont;
 		this.adminName = adminName;
@@ -97,7 +97,8 @@ public class MainWindow extends JFrame implements ActionListener {
 				CruiseListWindow cruiseWindow = new CruiseListWindow(this, cont);
 				cruiseWindow.setVisible(true);
 			}else if (e.getSource().equals(btnWorker)) {
-				
+				WorkerListWindow workerWindow=new WorkerListWindow(this, cont);
+				workerWindow.setVisible(true);
 			}else if (e.getSource().equals(btnClient)) {
 				ClientManagement clientManagement = new ClientManagement(this, true, cont);
 				clientManagement.setVisible(true);

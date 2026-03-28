@@ -125,7 +125,7 @@ public class CruiseListWindow extends JDialog implements ActionListener {
 	private void cargarTabla() {
 		List<Cruise> cruises = cont.getAllCruise();
 		// Crear modelo de tabla no editable
-		DefaultTableModel modelo = new DefaultTableModel(new String[] { "Code", "Type", "Name", "Rooms", "Capacity" },
+		DefaultTableModel modelo = new DefaultTableModel(new String[] {"Code", "Type", "Name", "Rooms", "Capacity" },
 				0) {
 			private static final long serialVersionUID = 1L;
 
@@ -137,8 +137,13 @@ public class CruiseListWindow extends JDialog implements ActionListener {
 
 		// Rellenar tabla con los cruceros
 		for (Cruise cruise : cruises) {
-			modelo.addRow(new Object[] { cruise.getCodCruise(), cruise.getTypeCruise().toString(),
-					cruise.getNameCruise(), cruise.getNumRooms(), cruise.getCapacityMax() });
+			modelo.addRow(new Object[] { 
+					cruise.getCodCruise(), 
+					cruise.getTypeCruise().toString(),
+					cruise.getNameCruise(), 
+					cruise.getNumRooms(), 
+					cruise.getCapacityMax() 
+			});
 		}
 		table = new JTable(modelo);
 	}

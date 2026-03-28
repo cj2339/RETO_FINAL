@@ -116,7 +116,7 @@ public class LoginWindow extends JDialog implements ActionListener{
 	                dispose();
 	                MainWindow mainWindow = new MainWindow(this, cont, admin.getName());
 	                mainWindow.setVisible(true);
-	            } else {
+	            } else { 
 	                atempts--;
 	                JOptionPane.showMessageDialog(this, "User not found", "Login error", JOptionPane.INFORMATION_MESSAGE);
 	                lblError.setText("Remaining attempts: " + atempts);
