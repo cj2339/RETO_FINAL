@@ -45,7 +45,7 @@ public class CruiseListWindow extends JDialog implements ActionListener {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 
-		cargarTabla();
+		loadTable();
 
 		contentPane.setLayout(null);
 
@@ -131,7 +131,7 @@ public class CruiseListWindow extends JDialog implements ActionListener {
 		}
 	}
 
-	private void cargarTabla() {
+	private void loadTable() {
 		// Crear modelo de tabla no editable
 		DefaultTableModel modelo = new DefaultTableModel(new String[] { "Code", "Type", "Name", "Rooms", "Capacity" },
 				0) {
