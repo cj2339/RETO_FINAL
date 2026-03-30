@@ -31,7 +31,7 @@ public class FormCruiseWindow extends JDialog implements ActionListener {
 	private JTextField txtNameCruise;
 	private JTextField txtNumRooms;
 	private JTextField txtMaxCapacity;
-	private JComboBox cmbType;
+	private JComboBox<TypeCruise> cmbType;
 	private JButton okButton;
 	private JButton cancelButton;
 	private boolean isInsert;
@@ -67,6 +67,7 @@ public class FormCruiseWindow extends JDialog implements ActionListener {
 		txtNumRooms.setBounds(266, 171, 116, 22);
 		panel.add(txtNumRooms);
 		// Agregar un KeyListener para validar que solo se ingresen números
+		// TODO: validar que el numero de habitaciones no quede vacio
 		txtNumRooms.addKeyListener(new KeyAdapter() {
 		    @Override
 		    public void keyTyped(KeyEvent e) {
@@ -83,6 +84,7 @@ public class FormCruiseWindow extends JDialog implements ActionListener {
 		txtMaxCapacity.setBounds(266, 290, 116, 22);
 		panel.add(txtMaxCapacity);
 		// Agregar un KeyListener para validar que solo se ingresen números
+		// TODO: validar que el numero no quede vacio
 		txtMaxCapacity.addKeyListener(new KeyAdapter() {
 		    @Override
 		    public void keyTyped(KeyEvent e) {
@@ -94,8 +96,8 @@ public class FormCruiseWindow extends JDialog implements ActionListener {
 		});
 
 
-		cmbType = new JComboBox();
-		cmbType.setModel(new DefaultComboBoxModel(TypeCruise.values()));
+		cmbType = new JComboBox<TypeCruise>();
+		cmbType.setModel(new DefaultComboBoxModel<TypeCruise>(TypeCruise.values()));
 		cmbType.setBounds(266, 230, 116, 24);
 		panel.add(cmbType);
 
@@ -148,9 +150,8 @@ public class FormCruiseWindow extends JDialog implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
+		// TODO: validar valores numericos enteros
 		if (e.getSource() == okButton) {
-
 			if (isInsert) {
 				Cruise cruise = new Cruise(0, (TypeCruise) cmbType.getSelectedItem(), txtNameCruise.getText(),
 						Integer.parseInt(txtNumRooms.getText()), Integer.parseInt(txtMaxCapacity.getText()));
