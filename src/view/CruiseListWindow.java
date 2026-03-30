@@ -11,9 +11,11 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 
 import controller.LoginController;
 import model.Cruise;
+import model.TypeCruise;
 
 import javax.swing.JTable;
 import javax.swing.JButton;
@@ -35,7 +37,7 @@ public class CruiseListWindow extends JDialog implements ActionListener {
 		super(mainWindow, true);
 		setTitle("Cruises");
 		this.cont = cont;
-		
+
 		setIconImage(Toolkit.getDefaultToolkit().getImage("images/icon.png"));
 		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 607, 420);
@@ -44,10 +46,9 @@ public class CruiseListWindow extends JDialog implements ActionListener {
 		setContentPane(contentPane);
 
 		cargarTabla();
-		
+
 		contentPane.setLayout(null);
 
-		
 		JScrollPane scrollPane = new JScrollPane(table);
 		scrollPane.setBounds(12, 44, 567, 231);
 		getContentPane().add(scrollPane);
@@ -72,9 +73,8 @@ public class CruiseListWindow extends JDialog implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		String type=null;
 		int row = table.getSelectedRow();
-		
+
 		if (e.getSource() == btnDELETE) {
 
 			if (row == -1) {
@@ -87,64 +87,76 @@ public class CruiseListWindow extends JDialog implements ActionListener {
 			String codCruise = table.getValueAt(row, 0).toString();
 
 			// Llamar al controlador con el código
-			if(!cont.checkCruiseInWorker(codCruise))
-			{
-				if(!cont.checkCruiseInBook(codCruise))
-				{
+			if (!cont.checkCruiseInWorker(codCruise)) {
+				if (!cont.checkCruiseInBook(codCruise)) {
 					if (cont.deleteCruise(codCruise)) {
-						cargarTabla();
-
+						refreshModel();
 						JOptionPane.showMessageDialog(this, "Cruise has been deleted.");
 					} else {
 						JOptionPane.showMessageDialog(this, "Cruise not deleted.");
 					}
-				}else {
+				} else {
 					JOptionPane.showMessageDialog(this, "Cruise not deleted because exists in Book");
 				}
-			}else {
+			} else {
 				JOptionPane.showMessageDialog(this, "Cruise not deleted because exists in Worker");
 			}
 			
-		}else if(e.getSource()==btnMODIFY) {
-			if(row == -1) {
+
+		}
+
+		if (e.getSource() == btnMODIFY) {
+
+			Cruise cruise = new Cruise();
+			int viewRow = table.getSelectedRow();
+			if (viewRow != -1) {
+				int modelRow = table.convertRowIndexToModel(viewRow);
+				TableModel model = table.getModel();
+				cruise.setCodCruise((Integer) model.getValueAt(modelRow, 0));
+				cruise.setTypeCruise(TypeCruise.valueOf((String) model.getValueAt(modelRow, 1)));
+				cruise.setNameCruise((String) model.getValueAt(modelRow, 2));
+				cruise.setNumRooms((Integer) model.getValueAt(modelRow, 3));
+				cruise.setCapacityMax((Integer) model.getValueAt(modelRow, 4));
+				FormCruiseWindow formCruiseWindow = new FormCruiseWindow(this, cont, cruise, false);
+				formCruiseWindow.setVisible(true);
+			} else {
 				JOptionPane.showMessageDialog(this, "Select a cruise to modify");
-			}else {
-				type="Modify";
-				CruiseFormWindow addModCruise=new CruiseFormWindow(this,true,cont,type);
-				addModCruise.setVisible(true);
 			}
-		}else if(e.getSource()==btnADD) {
-			type="Add";
-			FormCruiseWindow formCruiseWindow=new FormCruiseWindow(this, cont, null, true);
+		}
+		if (e.getSource() == btnADD) {
+			FormCruiseWindow formCruiseWindow = new FormCruiseWindow(this, cont, null, true);
 			formCruiseWindow.setVisible(true);
-			cargarTabla();
-			
+			refreshModel();
+
 		}
 	}
-	
+
 	private void cargarTabla() {
-		List<Cruise> cruises = cont.getAllCruise();
 		// Crear modelo de tabla no editable
-		DefaultTableModel modelo = new DefaultTableModel(new String[] {"Code", "Type", "Name", "Rooms", "Capacity" },
+		DefaultTableModel modelo = new DefaultTableModel(new String[] { "Code", "Type", "Name", "Rooms", "Capacity" },
 				0) {
 			private static final long serialVersionUID = 1L;
 
 			@Override
 			public boolean isCellEditable(int row, int column) {
 				return false;
-			}//Esto es para que la tabla no sea editable
+			}// Esto es para que la tabla no sea editable
 		};
-
-		// Rellenar tabla con los cruceros
-		for (Cruise cruise : cruises) {
-			modelo.addRow(new Object[] { 
-					cruise.getCodCruise(), 
-					cruise.getTypeCruise().toString(),
-					cruise.getNameCruise(), 
-					cruise.getNumRooms(), 
-					cruise.getCapacityMax() 
-			});
-		}
 		table = new JTable(modelo);
+		refreshModel();
 	}
+
+	public void refreshModel() {
+		List<Cruise> cruises = cont.getAllCruise(); // Obtener la lista actualizada de cruceros
+		DefaultTableModel modelo = (DefaultTableModel) table.getModel(); // Obtener el modelo de la tabla
+
+		// Limpiar tabla
+		modelo.setRowCount(0);
+		// Rellenar tabla
+		for (Cruise cruise : cruises) {
+			modelo.addRow(new Object[] { cruise.getCodCruise(), cruise.getTypeCruise().toString(),
+					cruise.getNameCruise(), cruise.getNumRooms(), cruise.getCapacityMax() });
+		}
+	}
+
 }

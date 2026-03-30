@@ -34,6 +34,8 @@ public class FormCruiseWindow extends JDialog implements ActionListener {
 	private JButton cancelButton;
 	private boolean isInsert;
 	private LoginController controller;
+	private Cruise cruise;
+	private CruiseListWindow parent;
 
 	public FormCruiseWindow(JDialog cruiseListWindow, LoginController controller, Cruise cruise, boolean isInsert) {
 		super(cruiseListWindow, true);
@@ -44,6 +46,8 @@ public class FormCruiseWindow extends JDialog implements ActionListener {
 		panel.setLayout(null);
 		this.isInsert = isInsert;
 		this.controller = controller;
+		this.cruise=cruise;
+		this.parent = (CruiseListWindow) cruiseListWindow;
 
 		txtCode = new JTextField();
 		txtCode.setEnabled(false);
@@ -90,6 +94,14 @@ public class FormCruiseWindow extends JDialog implements ActionListener {
 		JLabel lblCapacity = new JLabel("Capacity:");
 		lblCapacity.setBounds(52, 293, 56, 16);
 		panel.add(lblCapacity);
+		
+		if(this.cruise!=null){
+			txtCode.setText(String.valueOf(cruise.getCodCruise()));
+			cmbType.setSelectedItem(cruise.getTypeCruise());
+			txtNameCruise.setText(cruise.getNameCruise());
+			txtNumRooms.setText(String.valueOf(cruise.getNumRooms()));
+			txtMaxCapacity.setText(String.valueOf(cruise.getCapacityMax()));
+		}
 		{
 			JPanel buttonPane = new JPanel();
 			buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
@@ -116,14 +128,25 @@ public class FormCruiseWindow extends JDialog implements ActionListener {
 		if (e.getSource() == okButton) {
 
 			if (isInsert) {
-				Cruise cruise = new Cruise(0, (TypeCruise)cmbType.getSelectedItem(), txtNameCruise.getText(), Integer.parseInt(txtNumRooms.getText()),
-						Integer.parseInt(txtMaxCapacity.getText()));
+				Cruise cruise = new Cruise(0, (TypeCruise) cmbType.getSelectedItem(), txtNameCruise.getText(),
+						Integer.parseInt(txtNumRooms.getText()), Integer.parseInt(txtMaxCapacity.getText()));
 				if (controller.insertCruise(cruise)) {
 					JOptionPane.showMessageDialog(this, "Cruise has been inserted.");
 					this.dispose();
 				}
+			}else {
+				Cruise cruise = new Cruise(Integer.parseInt(txtCode.getText()), (TypeCruise) cmbType.getSelectedItem(), txtNameCruise.getText(),
+						Integer.parseInt(txtNumRooms.getText()), Integer.parseInt(txtMaxCapacity.getText()));
+				if (controller.updateCruiseByCode(cruise)) {
+					JOptionPane.showMessageDialog(this, "Cruise has been updated.");
+					parent.refreshModel();
+					
+					this.dispose();
+				}
 			}
-
+		}
+		if (e.getSource() == cancelButton) {
+			this.dispose();
 		}
 	}
 }

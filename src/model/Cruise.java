@@ -1,25 +1,33 @@
 package model;
+
 /**
  * 
  */
 public class Cruise {
 
-    private int codCruise;
-    private TypeCruise typeCruise; 
-    private String nameCruise;
-    private int numRooms;
-    private int capacityMax;
+	private int codCruise;
+	private TypeCruise typeCruise;
+	private String nameCruise;
+	private int numRooms;
+	private int capacityMax;
 
-    public Cruise(int codCruise, TypeCruise typeCruise, String nameCruise,
-                  int numRooms, int capacityMax) {
-        this.codCruise = codCruise;
-        this.typeCruise = typeCruise;
-        this.nameCruise = nameCruise;
-        this.numRooms = numRooms;
-        this.capacityMax = capacityMax;
-    }
-    
-    public int getCodCruise() {
+	public Cruise() {
+		this.codCruise = 0;
+		this.typeCruise = null;
+		this.nameCruise = null;
+		this.numRooms = 0;
+		this.capacityMax = 0;
+	}
+
+	public Cruise(int codCruise, TypeCruise typeCruise, String nameCruise, int numRooms, int capacityMax) {
+		this.codCruise = codCruise;
+		this.typeCruise = typeCruise;
+		this.nameCruise = nameCruise;
+		this.numRooms = numRooms;
+		this.capacityMax = capacityMax;
+	}
+
+	public int getCodCruise() {
 		return codCruise;
 	}
 
@@ -30,7 +38,6 @@ public class Cruise {
 	public TypeCruise getTypeCruise() {
 		return typeCruise;
 	}
-
 
 	public void setTypeCruise(TypeCruise typeCruise) {
 		this.typeCruise = typeCruise;
@@ -52,7 +59,6 @@ public class Cruise {
 		this.numRooms = numRooms;
 	}
 
-
 	public int getCapacityMax() {
 		return capacityMax;
 	}
@@ -61,5 +67,4 @@ public class Cruise {
 		this.capacityMax = capacityMax;
 	}
 
-	
 }
