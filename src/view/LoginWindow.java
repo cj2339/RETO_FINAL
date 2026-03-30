@@ -26,7 +26,7 @@ import javax.swing.JTextField;
 import javax.swing.JPasswordField;
 import javax.swing.SwingConstants;
 
-public class LoginWindow extends JDialog implements ActionListener{
+public class LoginWindow extends JDialog implements ActionListener {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
@@ -38,98 +38,103 @@ public class LoginWindow extends JDialog implements ActionListener{
 	private JLabel lblError;
 	private JLabel lblUser;
 	private JLabel lblPassword;
-	private JButton btn; 
-	private int atempts=3;
+	private JButton btnLogin;
+	private int atempts = 3;
 
 	public LoginWindow(StartWindow startWindow, LoginController cont) {
-		super(startWindow,true);
-		this.cont=cont;
-		
+		super(startWindow, true);
+		this.cont = cont;
+
 		setTitle("Login");
 		setBounds(100, 100, 553, 403);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setLayout(new FlowLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
-		
+
 		setResizable(false);
+
+		contentPane = new JPanel() {
+			@Override
+			protected void paintComponent(Graphics g) {
+				super.paintComponent(g);
+				g.drawImage(imagenFondo, 0, 0, getWidth(), getHeight(), this);
+			}
+		};
+
+		setContentPane(contentPane);
+		contentPane.setLayout(null);
+
+		lblUser = new JLabel("Username");
+		lblUser.setFont(new Font("Bahnschrift", Font.PLAIN, 30));
+		lblUser.setBounds(50, 40, 217, 58);
+		contentPane.add(lblUser);
+
+		lblPassword = new JLabel("Password");
+		lblPassword.setFont(new Font("Bahnschrift", Font.PLAIN, 30));
+		lblPassword.setBounds(50, 108, 217, 58);
+		contentPane.add(lblPassword);
+
+		textField = new JTextField();
+		textField.setOpaque(false);
+		textField.setBackground(new Color(255, 255, 255, 100));
+		textField.setBorder(BorderFactory.createLineBorder(Color.WHITE, 0));
+		textField.setBounds(277, 55, 183, 34);
+		contentPane.add(textField);
+		textField.setColumns(10);
+
+		passwordField = new JPasswordField();
+		passwordField.setOpaque(false);
+		passwordField.setBackground(new Color(255, 255, 255, 100));
+		passwordField.setBorder(BorderFactory.createLineBorder(Color.WHITE, 0));
+		passwordField.setBounds(277, 117, 183, 34);
+		contentPane.add(passwordField);
+
+		btnLogin = new JButton("Login");
+		btnLogin.setFont(new Font("Bahnschrift", Font.PLAIN, 30));
+		btnLogin.setBounds(277, 280, 183, 58);
+		btnLogin.addActionListener(this);
+		contentPane.add(btnLogin);
+
+		lblError = new JLabel("");
+		lblError.setHorizontalAlignment(SwingConstants.CENTER);
+		lblError.setFont(new Font("Bahnschrift", Font.PLAIN, 17));
+		lblError.setBounds(277, 161, 183, 77);
+		contentPane.add(lblError);
 		
-		 contentPane = new JPanel() {
-		        @Override
-		        protected void paintComponent(Graphics g) {
-		            super.paintComponent(g);
-		            g.drawImage(imagenFondo, 0, 0, getWidth(), getHeight(), this);
-		        }
-		    };
-		    
-		    setContentPane(contentPane);
-		    contentPane.setLayout(null);
-		    
-		    lblUser = new JLabel("Username");
-		    lblUser.setFont(new Font("Bahnschrift", Font.PLAIN, 30));
-		    lblUser.setBounds(50, 40, 217, 58);
-		    contentPane.add(lblUser);
-		    
-		    lblPassword = new JLabel("Password");
-		    lblPassword.setFont(new Font("Bahnschrift", Font.PLAIN, 30));
-		    lblPassword.setBounds(50, 108, 217, 58);
-		    contentPane.add(lblPassword);
-		    
-		    textField = new JTextField();
-		    textField.setOpaque(false);
-		    textField.setBackground(new Color(255,255,255,100));
-		    textField.setBorder(BorderFactory.createLineBorder(Color.WHITE, 0));
-		    textField.setBounds(277, 55, 183, 34);
-		    contentPane.add(textField);
-		    textField.setColumns(10);
-		    
-		    passwordField = new JPasswordField();
-		    passwordField.setOpaque(false);
-		    passwordField.setBackground(new Color(255,255,255,100));
-		    passwordField.setBorder(BorderFactory.createLineBorder(Color.WHITE, 0));
-		    passwordField.setBounds(277, 117, 183, 34);
-		    contentPane.add(passwordField);
-		    
-		    btn = new JButton("Login");
-		    btn.setFont(new Font("Bahnschrift", Font.PLAIN, 30));
-		    btn.setBounds(277, 280, 183, 58);
-		    btn.addActionListener(this);
-		    contentPane.add(btn);
-		    
-		    lblError = new JLabel("");
-		    lblError.setHorizontalAlignment(SwingConstants.CENTER);
-		    lblError.setFont(new Font("Bahnschrift", Font.PLAIN, 17));
-		    lblError.setBounds(277, 161, 183, 77);
-		    contentPane.add(lblError);
-		   
+		contentPane.getRootPane().setDefaultButton(btnLogin);
+
 	}
- 
+
 	@Override
 	public void actionPerformed(ActionEvent e) {
 
-	    if (e.getSource() == btn) {
-	        String password = new String(passwordField.getPassword());
-	        if (atempts > 0) {
-	            Administrator admin = new Administrator(textField.getText(), password);
-	            if (cont.checkUser(admin)) {
-	                cont.setLoggedInAdminName(admin.getName());
-	                dispose();
-	                MainWindow mainWindow = new MainWindow(this, cont, admin.getName());
-	                mainWindow.setVisible(true);
-	            } else { 
-	                atempts--;
-	                JOptionPane.showMessageDialog(this, "User not found", "Login error", JOptionPane.INFORMATION_MESSAGE);
-	                lblError.setText("Remaining attempts: " + atempts);
-	                if (atempts == 0) {
-	                    JOptionPane.showMessageDialog(this, "You have exceeded 3 attempts", "Login failure", JOptionPane.ERROR_MESSAGE);
-	                    dispose();
-	                }
-	            }
-	        } else {
-	            JOptionPane.showMessageDialog(this, "No attempts left. Access blocked.", "Login failure", JOptionPane.ERROR_MESSAGE);
-	            dispose();
-	        }
-	    }
+		if (e.getSource() == btnLogin) {
+			String password = new String(passwordField.getPassword());
+			if (atempts > 0) {
+				Administrator admin = new Administrator(textField.getText(), password);
+				if (cont.checkUser(admin)) {
+					cont.setLoggedInAdminName(admin.getName());
+					dispose();
+					MainWindow mainWindow = new MainWindow(this, cont, admin.getName());
+					mainWindow.setVisible(true);
+				} else {
+					atempts--;
+					JOptionPane.showMessageDialog(this, "User not found", "Login error",
+							JOptionPane.INFORMATION_MESSAGE);
+					lblError.setText("Remaining attempts: " + atempts);
+					if (atempts == 0) {
+						JOptionPane.showMessageDialog(this, "You have exceeded 3 attempts", "Login failure",
+								JOptionPane.ERROR_MESSAGE);
+						dispose();
+					}
+				}
+			} else {
+				JOptionPane.showMessageDialog(this, "No attempts left. Access blocked.", "Login failure",
+						JOptionPane.ERROR_MESSAGE);
+				dispose();
+			}
+		}
 	}
 
 }
