@@ -4,6 +4,8 @@ import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -46,7 +48,7 @@ public class FormCruiseWindow extends JDialog implements ActionListener {
 		panel.setLayout(null);
 		this.isInsert = isInsert;
 		this.controller = controller;
-		this.cruise=cruise;
+		this.cruise = cruise;
 		this.parent = (CruiseListWindow) cruiseListWindow;
 
 		txtCode = new JTextField();
@@ -64,11 +66,33 @@ public class FormCruiseWindow extends JDialog implements ActionListener {
 		txtNumRooms.setColumns(10);
 		txtNumRooms.setBounds(266, 171, 116, 22);
 		panel.add(txtNumRooms);
+		// Agregar un KeyListener para validar que solo se ingresen números
+		txtNumRooms.addKeyListener(new KeyAdapter() {
+		    @Override
+		    public void keyTyped(KeyEvent e) {
+		        char c = e.getKeyChar();
+		        if (!Character.isDigit(c)) {
+		            e.consume();
+		        }
+		    }
+		});
+
 
 		txtMaxCapacity = new JTextField();
 		txtMaxCapacity.setColumns(10);
 		txtMaxCapacity.setBounds(266, 290, 116, 22);
 		panel.add(txtMaxCapacity);
+		// Agregar un KeyListener para validar que solo se ingresen números
+		txtMaxCapacity.addKeyListener(new KeyAdapter() {
+		    @Override
+		    public void keyTyped(KeyEvent e) {
+		        char c = e.getKeyChar();
+		        if (!Character.isDigit(c)) {
+		            e.consume();
+		        }
+		    }
+		});
+
 
 		cmbType = new JComboBox();
 		cmbType.setModel(new DefaultComboBoxModel(TypeCruise.values()));
@@ -94,8 +118,8 @@ public class FormCruiseWindow extends JDialog implements ActionListener {
 		JLabel lblCapacity = new JLabel("Capacity:");
 		lblCapacity.setBounds(52, 293, 56, 16);
 		panel.add(lblCapacity);
-		
-		if(this.cruise!=null){
+
+		if (this.cruise != null) {
 			txtCode.setText(String.valueOf(cruise.getCodCruise()));
 			cmbType.setSelectedItem(cruise.getTypeCruise());
 			txtNameCruise.setText(cruise.getNameCruise());
@@ -134,13 +158,14 @@ public class FormCruiseWindow extends JDialog implements ActionListener {
 					JOptionPane.showMessageDialog(this, "Cruise has been inserted.");
 					this.dispose();
 				}
-			}else {
-				Cruise cruise = new Cruise(Integer.parseInt(txtCode.getText()), (TypeCruise) cmbType.getSelectedItem(), txtNameCruise.getText(),
-						Integer.parseInt(txtNumRooms.getText()), Integer.parseInt(txtMaxCapacity.getText()));
+			} else {
+				Cruise cruise = new Cruise(Integer.parseInt(txtCode.getText()), (TypeCruise) cmbType.getSelectedItem(),
+						txtNameCruise.getText(), Integer.parseInt(txtNumRooms.getText()),
+						Integer.parseInt(txtMaxCapacity.getText()));
 				if (controller.updateCruiseByCode(cruise)) {
 					JOptionPane.showMessageDialog(this, "Cruise has been updated.");
 					parent.refreshModel();
-					
+
 					this.dispose();
 				}
 			}
