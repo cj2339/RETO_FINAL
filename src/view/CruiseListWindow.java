@@ -18,6 +18,7 @@ import model.Cruise;
 import model.TypeCruise;
 
 import javax.swing.JTable;
+import javax.swing.ListSelectionModel;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -143,6 +144,7 @@ public class CruiseListWindow extends JDialog implements ActionListener {
 			}// Esto es para que la tabla no sea editable
 		};
 		table = new JTable(modelo);
+		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);// Permitir seleccionar solo una fila
 		refreshModel();
 	}
 
