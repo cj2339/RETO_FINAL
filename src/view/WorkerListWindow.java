@@ -1,21 +1,16 @@
 package view;
 
-import java.awt.EventQueue;
 import java.awt.Toolkit;
 import java.util.List;
 
 import javax.swing.JDialog;
-import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
-
-
 import controller.LoginController;
-import model.Cruise;
 import model.Worker;
 
 import javax.swing.JTable;
@@ -45,9 +40,9 @@ public class WorkerListWindow extends JDialog implements ActionListener {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 
-		contentPane.setLayout(null);
+		fillTable();
 		
-		table = new JTable();
+		contentPane.setLayout(null);
 
 		JScrollPane scrollPane = new JScrollPane(table);
 		scrollPane.setBounds(12, 44, 567, 231);
@@ -69,13 +64,13 @@ public class WorkerListWindow extends JDialog implements ActionListener {
 		btnMODIFY.setBounds(400, 303, 97, 25);
 		contentPane.add(btnMODIFY);
 		
-		fillTable();
 
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		int row = table.getSelectedRow();
+		int confirm;
 		boolean selected=true;
 
 		if (e.getSource() == btnDELETE&&selected) {
@@ -83,16 +78,15 @@ public class WorkerListWindow extends JDialog implements ActionListener {
 				selected=false;
 			}
 			
-			if(!selected) {
-				// Obtener el código de la columna 0
-				String idWorker=table.getValueAt(row, 0).toString();
-
-				// Llamar al controlador con el código
-
-				DefaultTableModel modelo = (DefaultTableModel) table.getModel();
-				modelo.removeRow(row);
-
-				JOptionPane.showMessageDialog(this, "Worker has been deleted.");
+			if(selected) {
+				confirm=JOptionPane.showConfirmDialog(this,"Are you sure you want to delete this worker?", "Warning" , JOptionPane.YES_NO_OPTION);
+				if(confirm==JOptionPane.YES_OPTION) {
+					// Llamar al controlador con el código
+					DefaultTableModel modelo = (DefaultTableModel) table.getModel();
+					modelo.removeRow(row);
+					JOptionPane.showMessageDialog(this, "Worker has been deleted.");
+				}
+				
 			}else {
 				JOptionPane.showMessageDialog(this, "Select a worker to delete.");
 			}
