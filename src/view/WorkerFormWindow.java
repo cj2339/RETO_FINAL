@@ -1,4 +1,4 @@
-package model;
+package view;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
@@ -8,34 +8,25 @@ import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import controller.LoginController;
+import model.Worker;
+
 public class WorkerFormWindow extends JDialog {
 
 	private static final long serialVersionUID = 1L;
 	private final JPanel contentPanel = new JPanel();
+	private LoginController cont;
+	private Worker worker;
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		try {
-			WorkerFormWindow dialog = new WorkerFormWindow();
-			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-			dialog.setVisible(true);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-
-	/**
-	 * Create the dialog.
-	 */
-	public WorkerFormWindow() {
-		setTitle("worker");
-		setBounds(100, 100, 593, 503);
+	public WorkerFormWindow(WorkerListWindow workerListWindow, LoginController cont, Worker worker, boolean b) {
+		super(workerListWindow, true);
+		this.cont=cont;
+		
+		setBounds(100, 100, 500, 600);
 		getContentPane().setLayout(new BorderLayout());
+		contentPanel.setLayout(new FlowLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
-		contentPanel.setLayout(null);
 	}
 
 }

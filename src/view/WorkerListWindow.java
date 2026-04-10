@@ -9,8 +9,10 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 
 import controller.LoginController;
+import model.TypeWorker;
 import model.Worker;
 
 import javax.swing.JTable;
@@ -92,13 +94,25 @@ public class WorkerListWindow extends JDialog implements ActionListener {
 			}
 
 		}else if(e.getSource()==btnMODIFY) {
-			if(row == -1) {
+			Worker worker=new Worker();
+			int viewRow=table.getSelectedRow();
+			if(viewRow == -1) {
 				JOptionPane.showMessageDialog(this, "Select a worker to modify");
 			}else {
+				int modelRow = table.convertRowIndexToModel(viewRow);
+				TableModel model = table.getModel();
+				worker.setIdWorker((String) model.getValueAt(modelRow,  0));
+				worker.setService(TypeWorker.valueOf((String)model.getValueAt(modelRow,1)));
+				worker.setName((String) model.getValueAt(modelRow, 2));
+				worker.setSurname((String) model.getValueAt(modelRow, 3));
+				worker.setCodCruise((Integer)model.getValueAt(modelRow,4));
 				
+				WorkerFormWindow workerFormWindow=new WorkerFormWindow(this, cont, worker, true);
+				//WorkerFormWindow.setVisible(true);
 			}
 		}else if(e.getSource()==btnADD) {
-
+			WorkerFormWindow workerFormWindow=new WorkerFormWindow(this, cont, null, true);
+			//WorkerFormWindow.setVisible(true);
 		}
 
 	}

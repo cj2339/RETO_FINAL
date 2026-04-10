@@ -7,6 +7,9 @@ public class Worker {
 	private String surname;
 	private int codCruise;
 	
+	public Worker() {
+	}
+
 	public Worker(String idWorker, TypeWorker service, String name, String surname, int codCruise) {
 		super();
 		this.idWorker = idWorker;
