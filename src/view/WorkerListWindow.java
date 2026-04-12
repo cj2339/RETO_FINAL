@@ -108,11 +108,11 @@ public class WorkerListWindow extends JDialog implements ActionListener {
 				worker.setCodCruise((Integer)model.getValueAt(modelRow,4));
 				
 				WorkerFormWindow workerFormWindow=new WorkerFormWindow(this, cont, worker, true);
-				//WorkerFormWindow.setVisible(true);
+				workerFormWindow.setVisible(true);
 			}
 		}else if(e.getSource()==btnADD) {
 			WorkerFormWindow workerFormWindow=new WorkerFormWindow(this, cont, null, true);
-			//WorkerFormWindow.setVisible(true);
+			workerFormWindow.setVisible(true);
 		}
 
 	}

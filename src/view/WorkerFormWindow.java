@@ -12,12 +12,15 @@ import controller.LoginController;
 import model.Worker;
 import javax.swing.JLabel;
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
 import javax.swing.JTextField;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 import model.TypeWorker;
 
-public class WorkerFormWindow extends JDialog {
+public class WorkerFormWindow extends JDialog implements ActionListener{
 
 	private static final long serialVersionUID = 1L;
 	private final JPanel contentPanel = new JPanel();
@@ -27,7 +30,7 @@ public class WorkerFormWindow extends JDialog {
 	private JTextField textFieldName;
 	private JTextField textFieldSurname;
 	private JComboBox comboBoxService;
-	private JComboBox comboBoxCruiseCode;
+	private JComboBox comboBoxCodCruise;
 	private JButton btnClear;
 	private JButton btnConfirm;
 
@@ -96,19 +99,43 @@ public class WorkerFormWindow extends JDialog {
 		lblCruiseCode.setBounds(57, 331, 126, 25);
 		contentPanel.add(lblCruiseCode);
 		
-		comboBoxCruiseCode = new JComboBox();
-		comboBoxCruiseCode.setFont(new Font("Bahnschrift", Font.PLAIN, 19));
-		comboBoxCruiseCode.setBounds(279, 333, 175, 25);
-		contentPanel.add(comboBoxCruiseCode);
+		comboBoxCodCruise = new JComboBox();
+		comboBoxCodCruise.setFont(new Font("Bahnschrift", Font.PLAIN, 19));
+		comboBoxCodCruise.setBounds(279, 333, 175, 25);
+		contentPanel.add(comboBoxCodCruise);
 		
 		btnConfirm = new JButton("Confirm");
 		btnConfirm.setFont(new Font("Bahnschrift", Font.PLAIN, 20));
 		btnConfirm.setBounds(302, 452, 133, 37);
 		contentPanel.add(btnConfirm);
+		btnConfirm.addActionListener(this);
 		
 		btnClear = new JButton("Clear");
 		btnClear.setFont(new Font("Bahnschrift", Font.PLAIN, 20));
 		btnClear.setBounds(75, 452, 133, 37);
 		contentPanel.add(btnClear);
+		btnClear.addActionListener(this);
+		
+		if(worker!=null) {
+			textFieldId.setText(worker.getIdWorker());
+			//comboBoxService.setSelectedIndex();
+			textFieldName.setText(worker.getName());
+			textFieldSurname.setText(worker.getSurname());
+			//comboBoxCodCruise.setSelectedIndex();
+		}
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		if(e.getSource()==btnClear) {
+			textFieldId.setText("");
+			comboBoxService.setSelectedIndex(0);
+			textFieldName.setText("");
+			textFieldSurname.setText("");
+			comboBoxCodCruise.setSelectedIndex(0);
+		}
+		if(e.getSource()==btnConfirm) {
+			
+		}
 	}
 }
