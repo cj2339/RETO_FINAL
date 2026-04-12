@@ -2,7 +2,7 @@ package controller;
 
 import view.StartWindow;
 
-import model.DBImplementation;
+import model.DBImplementationAdministrator;
 import model.DBImplementationCruise;
 import model.DBImplementationWorker;
 import model.Worker;
@@ -17,7 +17,7 @@ import model.Cruise;
 import model.CruiseDAO;
 
 public class LoginController {
-	AdministratorDAO dao = new DBImplementation();
+	AdministratorDAO dao = new DBImplementationAdministrator();
 	CruiseDAO daoCruise = new DBImplementationCruise();
 	WorkerDAO daoWorker = new DBImplementationWorker();
 	private String loggedInAdminName;
@@ -28,15 +28,12 @@ public class LoginController {
 	public List<Cruise> getAllCruise() {
 		return daoCruise.getAllCruise();
 	}
-
 	public boolean deleteCruise(String id) {
 		return daoCruise.deleteCruise(id);
 	}
-
 	public boolean updateCruiseByCode(Cruise cruise) {
 		return daoCruise.updateCruiseByCode(cruise);
 	}
-
 	public Cruise getCruiseByCode(String id) {
 		return daoCruise.getCruiseByCode(id);
 	}
@@ -49,13 +46,34 @@ public class LoginController {
 	}
 	public boolean checkCruiseInBook(String id)
 	{
-		return daoCruise.checkCruiseInWorker(id);
+		return daoCruise.checkCruiseInBook(id);
+	}
+	
+	// Administrator CRUD Methods
+	public List<Administrator> getAllAdministrators() {
+		return dao.getAllAdministrators();
+	}
+
+	public boolean insertAdministrator(Administrator admin) {
+		return dao.insertUser(admin);
+	}
+
+	public boolean updateAdministrator(Administrator admin) {
+		return dao.updateAdministrator(admin);
+	}
+
+	public boolean deleteAdministrator(String name) {
+		return dao.deleteAdministrator(name);
+	}
+
+	public boolean checkAdminExists(String name) {
+		return dao.checkAdminExists(name);
 	}
 	
 	//worker CRUD Methods
-	public ArrayList<String> getWorkerCodes() {
-		return dao.getWorkerCodes();
-	}
+//	public ArrayList<String> getWorkerCodes() {
+//		return daoWorker.getWorkerCodes();
+//	}
 	
 	public List<Worker> getAllWorker(){
 		return daoWorker.getAllWorker();
@@ -65,21 +83,21 @@ public class LoginController {
 		return dao.checkUser(user);
 	}
 	
-	public ArrayList<String> getClientCodes() {
-		return dao.getClientCodes();
-	}
-
-	public boolean deleteWorker(String id) {
-		return dao.deleteWorker(id);
-	}
-
-	public boolean deleteClient(String id) {
-		return dao.deleteClient(id);
-	}
-
-	public boolean deleteBook(String codCruise, String idClient) {
-		return dao.deleteBook(codCruise, idClient);
-	}
+//	public ArrayList<String> getClientCodes() {
+//		return daoWorker.getClientCodes();
+//	}
+//
+//	public boolean deleteWorker(String id) {
+//		return daoWorker.deleteWorker(id);
+//	}
+//
+//	public boolean deleteClient(String id) {
+//		return daoWorker.deleteClient(id);
+//	}
+//
+//	public boolean deleteBook(String codCruise, String idClient) {
+//		return daoWorker.deleteBook(codCruise, idClient);
+//	}
 
 	public String getLoggedInAdminName() {
 		return loggedInAdminName;

@@ -7,7 +7,6 @@ import javax.swing.JDialog;
 import javax.swing.JFrame;
 
 import java.awt.Toolkit;
-import java.awt.Window.Type;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JLabel;
@@ -19,13 +18,12 @@ import java.awt.Image;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
 import controller.LoginController;
 import model.Administrator;
 
-public class AdminWindow extends JDialog implements ActionListener {
+public class ChangePasswordAdminWindow extends JDialog implements ActionListener {
 
 	private static final long serialVersionUID = 1L;
 	private LoginController cont;
@@ -45,12 +43,12 @@ public class AdminWindow extends JDialog implements ActionListener {
 		LoginController cont = new LoginController();
 		String adminName = "Iker";
 
-		AdminWindow dialog = new AdminWindow(null, cont, adminName);
+		ChangePasswordAdminWindow dialog = new ChangePasswordAdminWindow(null, cont, adminName);
 		dialog.setVisible(true);
 	}
 	
-	public AdminWindow(JFrame father, LoginController cont, String adminName) {
-		super(father, true);
+	public ChangePasswordAdminWindow(AdminListWindow adminListWindow, LoginController cont, String adminName) {
+		super(adminListWindow, true);
 		this.cont = cont;
 		this.adminName = adminName;
 		setIconImage(Toolkit.getDefaultToolkit().getImage("images/icon.png"));
@@ -116,7 +114,7 @@ public class AdminWindow extends JDialog implements ActionListener {
 
 
 	@Override
-	public void actionPerformed(ActionEvent e) {if (e.getSource() == btnChange) {
+	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == btnChange) {
 
 			String oldPass = new String(textFieldPassword.getPassword());
@@ -164,5 +162,5 @@ public class AdminWindow extends JDialog implements ActionListener {
 					lblWarning.setText("Error changing password. Please try again.");
 				}}
 		}
-	}}
+	}
 }

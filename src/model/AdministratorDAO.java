@@ -1,19 +1,14 @@
 package model;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Map;
-import java.util.TreeMap;
-
+import java.util.List;
 
 public interface AdministratorDAO {
+	public List<Administrator> getAllAdministrators();
+	public Administrator getAdministratorByName(String name);
+	public boolean updateAdministrator(Administrator admin);
+	public boolean deleteAdministrator(String name);
 	public boolean checkUser(Administrator user);
+	public boolean checkAdminExists(String name);
 	public boolean insertUser(Administrator user);
-	public ArrayList<String> getWorkerCodes();
-	public ArrayList<String> getClientCodes();
-    public boolean deleteWorker(String id);
-    public boolean deleteClient(String id);
-    public boolean deleteBook(String codCruise, String idClient);
 	public boolean updatePassword(String adminName, String newPassword);
 }
