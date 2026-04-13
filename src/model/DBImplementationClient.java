@@ -12,18 +12,18 @@ public class DBImplementationClient implements ClientDAO {
 	private Connection connection;
 	private PreparedStatement statement;
 	
-	private ResourceBundle configFile;
-	private String driverDB;
-	private String urlDB;
-	private String userDB;
-	private String passwordDB;
+	private ResourceBundle configFile;//the ResourceBundle object used to read configuration properties from a file, such as database connection details
+	private String driverDB;//the driver class name for the database connection, which is read from the configuration file
+	private String urlDB;//the URL of the database, which is read from the configuration file
+	private String userDB;//the username for the database connection, which is read from the configuration file
+	private String passwordDB;//the password for the database connection, which is read from the configuration file
 	
-	final String SQLSELECTALL = "SELECT * FROM client";
-	final String SQLDELETEBYCODE = "DELETE FROM client WHERE id_client = ?";
-	final String SQLSELECTBYCODE = "SELECT * FROM client WHERE id_client = ?";
-	final String SQLUPDATEBYCODE = "UPDATE client SET name_client=?, surname_client=?, age_client=? WHERE id_client=?";
-	final String SQLINSERT = "INSERT INTO client VALUES(?,?,?,?)";
-	final String SQLSELECTBOOKCLIENT = "SELECT * FROM book WHERE id_client=?";
+	final String SQLSELECTALL = "SELECT * FROM client";//SQL query to select all clients from the database
+	final String SQLDELETEBYCODE = "DELETE FROM client WHERE id_client = ?";//SQL query to delete a client from the database based on their unique identifier (code)
+	final String SQLSELECTBYCODE = "SELECT * FROM client WHERE id_client = ?";//SQL query to select a client from the database based on their unique identifier (code)
+	final String SQLUPDATEBYCODE = "UPDATE client SET name_client=?, surname_client=?, age_client=? WHERE id_client=?";//SQL query to update a client's information in the database based on their unique identifier (code)
+	final String SQLINSERT = "INSERT INTO client VALUES(?,?,?,?)";//SQL query to insert a new client into the database with the provided id, name, surname, and age
+	final String SQLSELECTBOOKCLIENT = "SELECT * FROM book WHERE id_client=?";//SQL query to check if a client is associated with any booking in the database by their unique identifier (id)
 	
 	public DBImplementationClient() {
 		this.configFile = ResourceBundle.getBundle("configClass");
@@ -45,14 +45,15 @@ public class DBImplementationClient implements ClientDAO {
 	}
 
 	@Override
-	public List<Client> getAllClient() {
+	public List<Client> getAllClient() {//this method retrieves all clients from the database
+		//by executing the SQLSELECTALL query and returns a list of Client objects representing the retrieved clients
 		List<Client> clients = new ArrayList<>();
 		this.openConnection();
 		try {
 			statement = connection.prepareStatement(SQLSELECTALL);
 			java.sql.ResultSet rs = statement.executeQuery();
 			while (rs.next()) {
-				clients.add(new Client(
+				clients.add(new Client(//creates a new Client object using the data retrieved from the database and adds it to the clients list
 						rs.getString("id_client"),
 						rs.getString("name_client"),
 						rs.getString("surname_client"),
@@ -89,7 +90,8 @@ public class DBImplementationClient implements ClientDAO {
 	}
 
 	@Override
-	public boolean deleteClient(Client client) {
+	public boolean deleteClient(Client client) {//this method deletes a client from the database
+		//by executing the SQLDELETEBYCODE query with the client's unique identifier (code) and returns true if the deletion was successful, or false otherwise
 	    boolean ok = false;
 	    this.openConnection();
 	    try {
@@ -102,7 +104,7 @@ public class DBImplementationClient implements ClientDAO {
 	}
 
 	@Override
-	public boolean updateClientByCode(Client client) {
+	public boolean updateClientByCode(Client client) {//this method updates a client's information in the database based on their unique identifier (code)
 	    boolean ok = false;
 	    this.openConnection();
 	    try {
@@ -111,14 +113,15 @@ public class DBImplementationClient implements ClientDAO {
 	        statement.setString(2, client.getSurnameClient());
 	        statement.setInt(3, client.getAgeClient());
 	        statement.setString(4, client.getIdClient());
-	        if (statement.executeUpdate() > 0) ok = true;
+	        if (statement.executeUpdate() > 0) ok = true;//by executing the SQLUPDATEBYCODE query with the client's updated information and unique identifier (code)
+	        //and returns true if the update was successful, or false otherwise
 	        statement.close(); connection.close();
 	    } catch (SQLException e) { System.out.println("Error: " + e.getMessage()); }
 	    return ok;
 	}
 
 	@Override
-	public boolean insertClient(Client client) {
+	public boolean insertClient(Client client) {//this method inserts a new client into the database by executing the SQLINSERT query with the client's id, name, surname, and age
 	    boolean ok = false;
 	    this.openConnection();
 	    try {
@@ -134,13 +137,14 @@ public class DBImplementationClient implements ClientDAO {
 	}
 
 	@Override
-	public boolean checkClientInBook(String id) {
+	public boolean checkClientInBook(String id) {//this method checks if a client is associated with any booking in the database 
+		//by executing the SQLSELECTBOOKCLIENT query with the client's unique identifier (id)
 	    boolean existe = false;
 	    this.openConnection();
 	    try {
 	        statement = connection.prepareStatement(SQLSELECTBOOKCLIENT);
 	        statement.setString(1, id);
-	        java.sql.ResultSet rs = statement.executeQuery();
+	        java.sql.ResultSet rs = statement.executeQuery();//and returns true if the client is associated with at least one booking, or false otherwise
 	        if (rs.next()) existe = true;
 	        rs.close(); statement.close(); connection.close();
 	    } catch (SQLException e) { System.out.println("Error: " + e.getMessage()); }
