@@ -18,6 +18,7 @@ import model.TypeWorker;
 import model.Worker;
 
 import javax.swing.JTable;
+import javax.swing.ListSelectionModel;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -39,7 +40,7 @@ public class ListWorkerWindow extends JDialog implements ActionListener {
 		setTitle("Workers");
 		setIconImage(Toolkit.getDefaultToolkit().getImage("images/icon.png"));
 		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 651, 420);
+		setBounds(100, 100, 1000, 420);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -49,23 +50,23 @@ public class ListWorkerWindow extends JDialog implements ActionListener {
 		contentPane.setLayout(null);
 
 		JScrollPane scrollPane = new JScrollPane(table);
-		scrollPane.setBounds(12, 44, 615, 231);
+		scrollPane.setBounds(12, 44, 964, 283);
 		getContentPane().add(scrollPane);
 
 		btnADD = new JButton("ADD");
-		btnADD.setBounds(96, 303, 97, 25);
+		btnADD.setBounds(772, 348, 97, 25);
 		btnADD.addActionListener(this);
 		contentPane.add(btnADD);
 
 		btnDELETE = new JButton("DELETE");
-		btnDELETE.setBounds(259, 348, 97, 25);
+		btnDELETE.setBounds(665, 348, 97, 25);
 		btnDELETE.addActionListener(this);
 		contentPane.add(btnDELETE);
 
 		btnMODIFY = new JButton("MODIFY");
 		btnMODIFY.addActionListener(this);
 
-		btnMODIFY.setBounds(421, 303, 97, 25);
+		btnMODIFY.setBounds(879, 348, 97, 25);
 		contentPane.add(btnMODIFY);
 		
 
@@ -88,6 +89,7 @@ public class ListWorkerWindow extends JDialog implements ActionListener {
 					// Llamar al controlador con el código
 					DefaultTableModel modelo = (DefaultTableModel) table.getModel();
 					modelo.removeRow(row);
+					refreshModel();
 					JOptionPane.showMessageDialog(this, "Worker has been deleted.");
 				}
 				
@@ -103,7 +105,7 @@ public class ListWorkerWindow extends JDialog implements ActionListener {
 			}else {
 				int modelRow = table.convertRowIndexToModel(viewRow);
 				TableModel model = table.getModel();
-				worker.setIdWorker((String) model.getValueAt(modelRow,  0));
+				worker.setIdWorker((String) model.getValueAt(modelRow, 0));
 				worker.setService(TypeWorker.valueOf((String)model.getValueAt(modelRow,1)));
 				worker.setName((String) model.getValueAt(modelRow, 2));
 				worker.setSurname((String) model.getValueAt(modelRow, 3));
@@ -116,10 +118,12 @@ public class ListWorkerWindow extends JDialog implements ActionListener {
 				
 				FormWorkerWindow workerFormWindow=new FormWorkerWindow(this, cont, worker, true);
 				workerFormWindow.setVisible(true);
+				refreshModel();
 			}
 		}else if(e.getSource()==btnADD) {
 			FormWorkerWindow workerFormWindow=new FormWorkerWindow(this, cont, null, true);
 			workerFormWindow.setVisible(true);
+			refreshModel();
 		}
 
 	}
@@ -136,9 +140,16 @@ public class ListWorkerWindow extends JDialog implements ActionListener {
 				return false;
 			}//Esto es para que la tabla no sea editable
 		};
-
+		table = new JTable(model);
+		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		refreshModel();
+	}
+	
+	public void refreshModel() {
 		// Rellenar tabla con los usuarios
-
+		List<Worker> workers = cont.getAllWorker();
+		DefaultTableModel model = (DefaultTableModel) table.getModel();
+		model.setRowCount(0);
 		for (Worker worker: workers) {
 			model.addRow(new Object[] {
 					worker.getIdWorker(), 
@@ -149,10 +160,9 @@ public class ListWorkerWindow extends JDialog implements ActionListener {
 					worker.getPhoneNumber(),
 					worker.getEmail(),
 					worker.getAge(),
-					worker.getLanguage(),
+					worker.getLanguage().toString(),
 					worker.getCodCruise()
 			}); 
 		}
-		table = new JTable(model);
 	}
 }

@@ -37,7 +37,7 @@ CREATE TABLE worker(
     phone_number CHAR(9),
     email VARCHAR(30),
     age INTEGER CHECK(age>18),
-    languages ENUM('Spanish','English','French','German','Chinese','Arabic'),
+    language_worker ENUM('Spanish','English','French','German','Chinese','Arabic'),
     cod_cruise INTEGER,
     FOREIGN KEY(cod_cruise) REFERENCES cruise(cod_cruise) ON UPDATE CASCADE ON DELETE CASCADE
 );

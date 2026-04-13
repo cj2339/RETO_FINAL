@@ -75,6 +75,7 @@ public class ListClientWindow extends JDialog implements ActionListener {
             if (row == -1) {
                 JOptionPane.showMessageDialog(this, "Select a client to delete.");
                 return;
+                //hay que cambiar este return
             }
 
             String idClient = table.getValueAt(row, 0).toString();

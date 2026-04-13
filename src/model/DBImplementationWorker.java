@@ -54,12 +54,20 @@ public class DBImplementationWorker implements WorkerDAO {
 			ResultSet resultset = stmt.executeQuery();
 
 			while (resultset.next()) {
-				// Al conectarlo con la base de datos para que salga en mayusculas
 				TypeWorker type=TypeWorker.valueOf(resultset.getString("service").toUpperCase());// Al conectarlo con la base de datos para que salga en mayusculas
-				Language language=Language.valueOf(resultset.getString("language").toUpperCase());// Al conectarlo con la base de datos para que salga en mayusculas
-				worker=new Worker(resultset.getString("id_worker"), type, resultset.getString("name_worker"), 
-						resultset.getString("surname_worker"),resultset.getDate("hiringDate"), resultset.getString("phoneNumber"), 
-						resultset.getString("email"), resultset.getInt("age"), language, resultset.getInt("cod_cruise"));
+				Language language=Language.valueOf(resultset.getString("language_worker").toUpperCase());// Al conectarlo con la base de datos para que salga en mayusculas
+				worker=new Worker(
+						resultset.getString("id_worker"), 
+						type, 
+						resultset.getString("name_worker"), 
+						resultset.getString("surname_worker"),
+						resultset.getDate("hiring_date"), 
+						resultset.getString("phone_number"), 
+						resultset.getString("email"), 
+						resultset.getInt("age"), 
+						language, 
+						resultset.getInt("cod_cruise")
+				);
 				workers.add(worker);//creates a new Worker object using the data retrieved from the database and adds it to the workers list
 			}
 			resultset.close();
