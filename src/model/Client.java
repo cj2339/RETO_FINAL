@@ -2,12 +2,12 @@ package model;
 
 public class Client {
 	
-	private String idClient;
-	private String nameClient;
-	private String surnameClient;
-	private int ageClient;
+	private String idClient;//the unique identifier for the client
+	private String nameClient;//the name of the client
+	private String surnameClient;//the surname of the client
+	private int ageClient;//the age of the client
 	
-	public Client (String idClient, String nameClient, String surnameClient, int ageClient) {
+	public Client (String idClient, String nameClient, String surnameClient, int ageClient) {//constructor that initializes the client's information
 		this.idClient=idClient;
 		this.nameClient=nameClient;
 		this.surnameClient=surnameClient;

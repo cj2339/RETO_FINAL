@@ -1,14 +1,14 @@
 package model;
 
 public class Administrator {
-	private String name;
-    private String password;
+	private String name;//the unique identifier for the administrator
+    private String password;//the password for the administrator's account
 
     public Administrator() {
         this.name = null;
         this.password = null;
     }
-    public Administrator(String name, String password) {
+    public Administrator(String name, String password) {//constructor that initializes the administrator's information
         this.name = name;
         this.password = password;
     }
