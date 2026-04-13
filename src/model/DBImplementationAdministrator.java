@@ -30,7 +30,6 @@ public class DBImplementationAdministrator implements AdministratorDAO {
         this.passwordDB = this.configFile.getString("DBPass");
     }
 
-    
     private void openConnection() {
         try {
             con = DriverManager.getConnection(urlDB, userDB, passwordDB);
