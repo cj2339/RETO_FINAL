@@ -39,14 +39,6 @@ public class ChangePasswordAdminWindow extends JDialog implements ActionListener
 	private Image BackgroundImage = new ImageIcon("images/adminWindow.png").getImage();
 	private int atempts=3;
 	
-	public static void main(String[] args) {
-		LoginController cont = new LoginController();
-		String adminName = "Iker";
-
-		ChangePasswordAdminWindow dialog = new ChangePasswordAdminWindow(null, cont, adminName);
-		dialog.setVisible(true);
-	}
-	
 	public ChangePasswordAdminWindow(ListAdminWindow listAdminWindow, LoginController cont, String adminName) {
 		super(listAdminWindow, true);
 		this.cont = cont;
@@ -68,7 +60,7 @@ public class ChangePasswordAdminWindow extends JDialog implements ActionListener
 		contentPane.setLayout(null);
 
 		setType(Type.POPUP);
-		setTitle("ADMIN");
+		setTitle("CHANGE PASSWORD");
 		setIconImage(Toolkit.getDefaultToolkit().getImage("images/icon.png"));
 		getContentPane().setLayout(null);
 
