@@ -55,11 +55,8 @@ public class LoginController {
 
 	public boolean checkCruiseInBook(String id) {
 		return daoCruise.checkCruiseInWorker(id);
-		
-	public boolean checkCruiseInBook(String id)
-	{
-		return daoCruise.checkCruiseInBook(id);
 	}
+		
 	
 	// Administrator CRUD Methods
 	public List<Administrator> getAllAdministrators() {
