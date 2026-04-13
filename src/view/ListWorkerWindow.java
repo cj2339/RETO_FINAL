@@ -1,6 +1,7 @@
 package view;
 
 import java.awt.Toolkit;
+import java.util.Date;
 import java.util.List;
 
 import javax.swing.JDialog;
@@ -12,6 +13,7 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 
 import controller.LoginController;
+import model.Language;
 import model.TypeWorker;
 import model.Worker;
 
@@ -37,7 +39,7 @@ public class ListWorkerWindow extends JDialog implements ActionListener {
 		setTitle("Workers");
 		setIconImage(Toolkit.getDefaultToolkit().getImage("images/icon.png"));
 		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 607, 420);
+		setBounds(100, 100, 651, 420);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -47,7 +49,7 @@ public class ListWorkerWindow extends JDialog implements ActionListener {
 		contentPane.setLayout(null);
 
 		JScrollPane scrollPane = new JScrollPane(table);
-		scrollPane.setBounds(12, 44, 567, 231);
+		scrollPane.setBounds(12, 44, 615, 231);
 		getContentPane().add(scrollPane);
 
 		btnADD = new JButton("ADD");
@@ -56,14 +58,14 @@ public class ListWorkerWindow extends JDialog implements ActionListener {
 		contentPane.add(btnADD);
 
 		btnDELETE = new JButton("DELETE");
-		btnDELETE.setBounds(247, 343, 97, 25);
+		btnDELETE.setBounds(259, 348, 97, 25);
 		btnDELETE.addActionListener(this);
 		contentPane.add(btnDELETE);
 
 		btnMODIFY = new JButton("MODIFY");
 		btnMODIFY.addActionListener(this);
 
-		btnMODIFY.setBounds(400, 303, 97, 25);
+		btnMODIFY.setBounds(421, 303, 97, 25);
 		contentPane.add(btnMODIFY);
 		
 
@@ -105,7 +107,12 @@ public class ListWorkerWindow extends JDialog implements ActionListener {
 				worker.setService(TypeWorker.valueOf((String)model.getValueAt(modelRow,1)));
 				worker.setName((String) model.getValueAt(modelRow, 2));
 				worker.setSurname((String) model.getValueAt(modelRow, 3));
-				worker.setCodCruise((Integer)model.getValueAt(modelRow,4));
+				worker.setHiringDate((Date) model.getValueAt(modelRow, 4));
+				worker.setPhoneNumber((String) model.getValueAt(modelRow, 5));
+				worker.setEmail((String) model.getValueAt(modelRow, 6));
+				worker.setAge((int)model.getValueAt(modelRow, 7));
+				worker.setLanguage(Language.valueOf((String)model.getValueAt(modelRow,8)));
+				worker.setCodCruise((Integer)model.getValueAt(modelRow,9));
 				
 				FormWorkerWindow workerFormWindow=new FormWorkerWindow(this, cont, worker, true);
 				workerFormWindow.setVisible(true);
@@ -121,7 +128,7 @@ public class ListWorkerWindow extends JDialog implements ActionListener {
 		List<Worker> workers=cont.getAllWorker();
 
 		// Crear modelo de tabla no editable
-		DefaultTableModel model = new DefaultTableModel(new String[] { "ID", "Service", "Name", "Surname", "Cruise Code" }, 0) {
+		DefaultTableModel model = new DefaultTableModel(new String[] { "ID", "Service", "Name", "Surname", "Hiring date", "Phone number", "Email", "Age", "Language", "Cruise Code" }, 0) {
 			private static final long serialVersionUID = 1L;
 
 			@Override
@@ -138,6 +145,11 @@ public class ListWorkerWindow extends JDialog implements ActionListener {
 					worker.getService().toString(), 
 					worker.getName(), 
 					worker.getSurname(), 
+					worker.getHiringDate(),
+					worker.getPhoneNumber(),
+					worker.getEmail(),
+					worker.getAge(),
+					worker.getLanguage(),
 					worker.getCodCruise()
 			}); 
 		}
