@@ -21,7 +21,7 @@ import java.awt.Toolkit;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
-public class ClientManagement extends JDialog implements ActionListener {
+public class ListClientWindow extends JDialog implements ActionListener {
 
     private static final long serialVersionUID = 1L;
     private LoginController cont;
@@ -31,7 +31,7 @@ public class ClientManagement extends JDialog implements ActionListener {
     private JButton btnMODIFY;
     JTable table;
 
-    public ClientManagement(JFrame mainWindow, LoginController cont) {
+    public ListClientWindow(JFrame mainWindow, LoginController cont) {
         super(mainWindow, true);
         setTitle("Clients");
         this.cont = cont;

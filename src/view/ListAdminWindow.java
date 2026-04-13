@@ -1,6 +1,5 @@
 package view;
 
-import java.awt.EventQueue;
 import java.awt.Toolkit;
 import java.util.List;
 
@@ -14,8 +13,7 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 
 import controller.LoginController;
-import model.Cruise;
-import model.TypeCruise;
+import model.Administrator;
 
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
@@ -23,20 +21,19 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
-public class CruiseListWindow extends JDialog implements ActionListener {
+public class ListAdminWindow extends JDialog implements ActionListener {
 
 	private static final long serialVersionUID = 1L;
 	private LoginController cont;
-	private String adminName;
 	private JPanel contentPane;
 	private JButton btnADD;
 	private JButton btnDELETE;
 	private JButton btnMODIFY;
 	JTable table;
 
-	public CruiseListWindow(JFrame mainWindow, LoginController cont) {
+	public ListAdminWindow(JFrame mainWindow, LoginController cont) {
 		super(mainWindow, true);
-		setTitle("Cruises");
+		setTitle("Administrators");
 		this.cont = cont;
 
 		setIconImage(Toolkit.getDefaultToolkit().getImage("images/icon.png"));
@@ -66,10 +63,11 @@ public class CruiseListWindow extends JDialog implements ActionListener {
 
 		btnMODIFY = new JButton("MODIFY");
 		btnMODIFY.addActionListener(this);
-
 		btnMODIFY.setBounds(400, 303, 97, 25);
 		contentPane.add(btnMODIFY);
 
+		// Aplicar cursor de ancla a los botones
+		// CustomCursor.applyToButtons(this); ESTO LO HE HECHO CON IA
 	}
 
 	@Override
@@ -77,56 +75,46 @@ public class CruiseListWindow extends JDialog implements ActionListener {
 		int row = table.getSelectedRow();
 
 		if (e.getSource() == btnDELETE) {
-
+			//creo que habría que poner una confirmación
 			if (row == -1) {
 				// No hay fila seleccionada
-				JOptionPane.showMessageDialog(this, "Select a cruise to delete.");
+				JOptionPane.showMessageDialog(this, "Select an administrator to delete.");
 				return;
 			}
 
-			// Obtener el código de la columna 0
-			String codCruise = table.getValueAt(row, 0).toString();
+			// Obtener el nombre de la columna 0
+			String adminName = table.getValueAt(row, 0).toString();
 
-			// Llamar al controlador con el código
-			if (!cont.checkCruiseInWorker(codCruise)) {
-				if (!cont.checkCruiseInBook(codCruise)) {
-					if (cont.deleteCruise(codCruise)) {
-						refreshModel();
-						JOptionPane.showMessageDialog(this, "Cruise has been deleted.");
-					} else {
-						JOptionPane.showMessageDialog(this, "Cruise not deleted.");
-					}
-				} else {
-					JOptionPane.showMessageDialog(this, "Cruise not deleted because exists in Book");
-				}
+			// Llamar al controlador con el nombre
+			if (cont.deleteAdministrator(adminName)) {
+				refreshModel();
+				JOptionPane.showMessageDialog(this, "Administrator has been deleted.");
 			} else {
-				JOptionPane.showMessageDialog(this, "Cruise not deleted because exists in Worker");
+				JOptionPane.showMessageDialog(this, "Administrator not deleted.");
 			}
-			
 
 		}
 
 		if (e.getSource() == btnMODIFY) {
 
-			Cruise cruise = new Cruise();
+			Administrator admin = new Administrator();
 			int viewRow = table.getSelectedRow();
 			if (viewRow != -1) {
 				int modelRow = table.convertRowIndexToModel(viewRow);
 				TableModel model = table.getModel();
-				cruise.setCodCruise((Integer) model.getValueAt(modelRow, 0));
-				cruise.setTypeCruise(TypeCruise.valueOf((String) model.getValueAt(modelRow, 1)));
-				cruise.setNameCruise((String) model.getValueAt(modelRow, 2));
-				cruise.setNumRooms((Integer) model.getValueAt(modelRow, 3));
-				cruise.setCapacityMax((Integer) model.getValueAt(modelRow, 4));
-				FormCruiseWindow formCruiseWindow = new FormCruiseWindow(this, cont, cruise, false);
-				formCruiseWindow.setVisible(true);
+				String adminName = (String) model.getValueAt(modelRow, 0);
+			    // Abrir la ventana de cambiar contraseña
+				ChangePasswordAdminWindow adminWindow = new ChangePasswordAdminWindow(this, cont, adminName);
+		        adminWindow.setVisible(true);
+
+				refreshModel();
 			} else {
-				JOptionPane.showMessageDialog(this, "Select a cruise to modify");
+				JOptionPane.showMessageDialog(this, "Select an administrator to modify");
 			}
 		}
 		if (e.getSource() == btnADD) {
-			FormCruiseWindow formCruiseWindow = new FormCruiseWindow(this, cont, null, true);
-			formCruiseWindow.setVisible(true);
+			FormAdminWindow formAdminWindow = new FormAdminWindow(this, cont, null, true);
+			formAdminWindow.setVisible(true);
 			refreshModel();
 
 		}
@@ -134,7 +122,7 @@ public class CruiseListWindow extends JDialog implements ActionListener {
 
 	private void loadTable() {
 		// Crear modelo de tabla no editable
-		DefaultTableModel modelo = new DefaultTableModel(new String[] { "Code", "Type", "Name", "Rooms", "Capacity" },
+		DefaultTableModel modelo = new DefaultTableModel(new String[] { "Name", "Password" },
 				0) {
 			private static final long serialVersionUID = 1L;
 
@@ -149,16 +137,13 @@ public class CruiseListWindow extends JDialog implements ActionListener {
 	}
 
 	public void refreshModel() {
-		List<Cruise> cruises = cont.getAllCruise(); // Obtener la lista actualizada de cruceros
-		DefaultTableModel modelo = (DefaultTableModel) table.getModel(); // Obtener el modelo de la tabla
-
-		// Limpiar tabla
-		modelo.setRowCount(0);
-		// Rellenar tabla
-		for (Cruise cruise : cruises) {
-			modelo.addRow(new Object[] { cruise.getCodCruise(), cruise.getTypeCruise().toString(),
-					cruise.getNameCruise(), cruise.getNumRooms(), cruise.getCapacityMax() });
-		}
+	    List<Administrator> administrators = cont.getAllAdministrators();// Obtener la lista actualizada de administradores
+	    DefaultTableModel modelo = (DefaultTableModel) table.getModel();// Obtener el modelo de la tabla
+	    //Limpiar tabla
+	    modelo.setRowCount(0);
+	    //Rellenar tabla
+	    for (Administrator admin : administrators) {
+	        modelo.addRow(new Object[] {admin.getName(),admin.getPassword()});
+	    }
 	}
-
 }

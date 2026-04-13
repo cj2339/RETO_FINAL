@@ -94,13 +94,13 @@ public class MainWindow extends JFrame implements ActionListener {
 
 		}else{
 			if (e.getSource().equals(btnCruise)) {
-				CruiseListWindow cruiseWindow = new CruiseListWindow(this, cont);
+				ListCruiseWindow cruiseWindow = new ListCruiseWindow(this, cont);
 				cruiseWindow.setVisible(true);
 			}else if (e.getSource().equals(btnWorker)) {
-				WorkerListWindow workerWindow=new WorkerListWindow(this, cont);
+				ListWorkerWindow workerWindow=new ListWorkerWindow(this, cont);
 				workerWindow.setVisible(true);
 			}else if (e.getSource().equals(btnClient)) {
-				ClientManagement clientManagement = new ClientManagement(this, cont);
+				ListClientWindow clientManagement = new ListClientWindow(this, cont);
 				clientManagement.setVisible(true);
 			} else if (e.getSource().equals(btnBook)) {
 				

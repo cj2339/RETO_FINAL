@@ -37,7 +37,7 @@ public class FormCruiseWindow extends JDialog implements ActionListener {
 	private boolean isInsert;
 	private LoginController controller;
 	private Cruise cruise;
-	private CruiseListWindow parent;
+	private ListCruiseWindow parent;
 
 	public FormCruiseWindow(JDialog cruiseListWindow, LoginController controller, Cruise cruise, boolean isInsert) {
 		super(cruiseListWindow, true);
@@ -49,7 +49,7 @@ public class FormCruiseWindow extends JDialog implements ActionListener {
 		this.isInsert = isInsert;
 		this.controller = controller;
 		this.cruise = cruise;
-		this.parent = (CruiseListWindow) cruiseListWindow;
+		this.parent = (ListCruiseWindow) cruiseListWindow;
 
 		txtCode = new JTextField();
 		txtCode.setEnabled(false);

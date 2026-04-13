@@ -33,7 +33,7 @@ public class FormClientWindow extends JDialog implements ActionListener {
     private boolean isInsert;
     private LoginController controller;
     private Client client;
-    private ClientManagement parent;
+    private ListClientWindow parent;
 
     public FormClientWindow(JDialog clientManagement, LoginController controller, Client client, boolean isInsert) {
         super(clientManagement, true);
@@ -45,7 +45,7 @@ public class FormClientWindow extends JDialog implements ActionListener {
         this.isInsert = isInsert;
         this.controller = controller;
         this.client = client;
-        this.parent = (ClientManagement) clientManagement;
+        this.parent = (ListClientWindow) clientManagement;
 
         txtId = new JTextField();
         txtId.setColumns(10);

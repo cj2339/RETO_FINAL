@@ -29,7 +29,7 @@ public class FormAdminWindow extends JDialog implements ActionListener {
 	private boolean isInsert;
 	private LoginController controller;
 	private Administrator administrator;
-	private AdminListWindow parent;
+	private ListAdminWindow parent;
 
 	public FormAdminWindow(JDialog adminListWindow, LoginController controller, Administrator administrator, boolean isInsert) {
 		super(adminListWindow, true);
@@ -41,7 +41,7 @@ public class FormAdminWindow extends JDialog implements ActionListener {
 		this.isInsert = isInsert;
 		this.controller = controller;
 		this.administrator = administrator;
-		this.parent = (AdminListWindow) adminListWindow;
+		this.parent = (ListAdminWindow) adminListWindow;
 
 		txtName = new JTextField();
 		if (!isInsert) {
