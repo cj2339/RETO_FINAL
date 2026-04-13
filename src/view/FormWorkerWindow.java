@@ -181,7 +181,7 @@ public class FormWorkerWindow extends JDialog implements ActionListener{
 		JCheckBox chckbxArabic = new JCheckBox("Arabic");
 		chckbxArabic.setFont(new Font("Bahnschrift", Font.PLAIN, 20));
 		chckbxArabic.setBounds(318, 661, 144, 20);
-		contentPanel.add(chckbxArabic);
+		contentPanel.add(chckbxArabic); 
 		btnClear.addActionListener(this);
 		
 		if(worker!=null) {
