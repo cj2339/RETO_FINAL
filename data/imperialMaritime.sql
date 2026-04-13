@@ -14,7 +14,7 @@ INSERT INTO administrator VALUES
     ('Etna','123');
 
 CREATE TABLE cruise(
-	cod_cruise int auto_increment PRIMARY KEY,
+	cod_cruise INTEGER AUTO_INCREMENT PRIMARY KEY,
     name_cruise VARCHAR(30),
     type_cruise ENUM('luxury','premium','family','expedition'),
 	num_rooms INTEGER,
@@ -33,16 +33,21 @@ CREATE TABLE worker(
     service ENUM('captain','cook','guide','receptionist'),
     name_worker VARCHAR(30),
     surname_worker VARCHAR(30),
-    cod_cruise int,
+    hiring_date DATE,
+    phone_number CHAR(9),
+    email VARCHAR(30),
+    age INTEGER CHECK(age>18),
+    languages ENUM('Español','Inglés','Francés','Alemán','Chino','Árabe'),
+    cod_cruise INTEGER,
     FOREIGN KEY(cod_cruise) REFERENCES cruise(cod_cruise) ON UPDATE CASCADE ON DELETE CASCADE
 );
 
 INSERT INTO worker VALUES 
-('12345678A', 'cook', 'Taylor', 'Robert', 1),
-('12345678B', 'guide', 'Wilson', 'Louis', 1),
-('12345678C', 'receptionist', 'Anderson', 'Laura', 2),
-('12345678D', 'captain', 'Thomas', 'Frank', 3),
-('12345678F', 'guide', 'White', 'Martha', 4);
+('12345678A', 'cook', 'Taylor', 'Robert', '2023-01-15', '600111222', 'taylor.r@email.com', 34, 'Español', 1),
+('12345678B', 'guide', 'Wilson', 'Louis', '2022-11-05', '600333444', 'wilson.l@email.com', 28, 'Inglés', 1),
+('12345678C', 'receptionist', 'Anderson', 'Laura', '2024-02-10', '600555666', 'anderson.l@email.com', 41, 'Francés', 2),
+('12345678D', 'captain', 'Thomas', 'Frank', '2020-05-20', '600777888', 'thomas.f@email.com', 52, 'Alemán', 3),
+('12345678F', 'guide', 'White', 'Martha', '2021-08-12', '600999000', 'white.m@email.com', 30, 'Chino', 4);
 
 CREATE TABLE client(
 	id_client CHAR(9) PRIMARY KEY,
