@@ -20,7 +20,7 @@ import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 import model.TypeWorker;
 
-public class WorkerFormWindow extends JDialog implements ActionListener{
+public class FormWorkerWindow extends JDialog implements ActionListener{
 
 	private static final long serialVersionUID = 1L;
 	private final JPanel contentPanel = new JPanel();
@@ -34,7 +34,7 @@ public class WorkerFormWindow extends JDialog implements ActionListener{
 	private JButton btnClear;
 	private JButton btnConfirm;
 
-	public WorkerFormWindow(WorkerListWindow workerListWindow, LoginController cont, Worker worker, boolean b) {
+	public FormWorkerWindow(ListWorkerWindow workerListWindow, LoginController cont, Worker worker, boolean b) {
 		super(workerListWindow, true);
 		setTitle("worker");
 		this.cont=cont;

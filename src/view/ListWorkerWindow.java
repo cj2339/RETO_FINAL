@@ -20,7 +20,7 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
-public class WorkerListWindow extends JDialog implements ActionListener {
+public class ListWorkerWindow extends JDialog implements ActionListener {
 
 	private static final long serialVersionUID = 1L;
 	private LoginController cont;
@@ -30,7 +30,7 @@ public class WorkerListWindow extends JDialog implements ActionListener {
 	private JButton btnMODIFY;
 	JTable table;
 
-	public WorkerListWindow(MainWindow mainWindow, LoginController cont) {
+	public ListWorkerWindow(MainWindow mainWindow, LoginController cont) {
 		super(mainWindow, true);
 		this.cont = cont;
 
@@ -107,11 +107,11 @@ public class WorkerListWindow extends JDialog implements ActionListener {
 				worker.setSurname((String) model.getValueAt(modelRow, 3));
 				worker.setCodCruise((Integer)model.getValueAt(modelRow,4));
 				
-				WorkerFormWindow workerFormWindow=new WorkerFormWindow(this, cont, worker, true);
+				FormWorkerWindow workerFormWindow=new FormWorkerWindow(this, cont, worker, true);
 				workerFormWindow.setVisible(true);
 			}
 		}else if(e.getSource()==btnADD) {
-			WorkerFormWindow workerFormWindow=new WorkerFormWindow(this, cont, null, true);
+			FormWorkerWindow workerFormWindow=new FormWorkerWindow(this, cont, null, true);
 			workerFormWindow.setVisible(true);
 		}
 
