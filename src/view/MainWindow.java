@@ -100,7 +100,7 @@ public class MainWindow extends JFrame implements ActionListener {
 				WorkerListWindow workerWindow=new WorkerListWindow(this, cont);
 				workerWindow.setVisible(true);
 			}else if (e.getSource().equals(btnClient)) {
-				ClientManagement clientManagement = new ClientManagement(this, true, cont);
+				ClientManagement clientManagement = new ClientManagement(this, cont);
 				clientManagement.setVisible(true);
 			} else if (e.getSource().equals(btnBook)) {
 				

@@ -1,25 +1,30 @@
 package controller;
 
-import view.StartWindow;
+import java.util.ArrayList;
+import java.util.List;
 
+
+
+import model.Administrator;
+import model.AdministratorDAO;
+import model.ClientDAO;
+import model.Cruise;
+import model.CruiseDAO;
 import model.DBImplementation;
+import model.DBImplementationClient;
 import model.DBImplementationCruise;
 import model.DBImplementationWorker;
 import model.Worker;
 import model.WorkerDAO;
+import view.StartWindow;
+import model.Client;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import model.Administrator;
-import model.AdministratorDAO;
-import model.Cruise;
-import model.CruiseDAO;
 
 public class LoginController {
 	AdministratorDAO dao = new DBImplementation();
 	CruiseDAO daoCruise = new DBImplementationCruise();
 	WorkerDAO daoWorker = new DBImplementationWorker();
+	ClientDAO daoClient = new DBImplementationClient();
 	private String loggedInAdminName;
 
 	
@@ -43,13 +48,39 @@ public class LoginController {
 	public boolean insertCruise(Cruise cruise) {
 		return daoCruise.insertCruise(cruise);
 	}
-	public boolean checkCruiseInWorker(String id)
-	{
+	public boolean checkCruiseInWorker(String id) {
 		return daoCruise.checkCruiseInWorker(id);
 	}
-	public boolean checkCruiseInBook(String id)
-	{
+	public boolean checkCruiseInBook(String id) {
 		return daoCruise.checkCruiseInWorker(id);
+	}
+	
+	
+	
+	
+	// Client CRUD Methods
+	public List<Client> getAllClient() {
+	    return daoClient.getAllClient();
+	}
+
+	public boolean deleteClient(Client client) {
+	    return daoClient.deleteClient(client);
+	}
+
+	public Client getClientByCode(Client client) {
+	    return daoClient.getClientByCode(client);
+	}
+
+	public boolean updateClientByCode(Client client) {
+	    return daoClient.updateClientByCode(client);
+	}
+
+	public boolean insertClient(Client client) {
+	    return daoClient.insertClient(client);
+	}
+
+	public boolean checkClientInBook(String id) {
+	    return daoClient.checkClientInBook(id);
 	}
 	
 	//worker CRUD Methods
@@ -65,9 +96,6 @@ public class LoginController {
 		return dao.checkUser(user);
 	}
 	
-	public ArrayList<String> getClientCodes() {
-		return dao.getClientCodes();
-	}
 
 	public boolean deleteWorker(String id) {
 		return dao.deleteWorker(id);

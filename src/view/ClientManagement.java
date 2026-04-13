@@ -1,80 +1,147 @@
 package view;
 
-import java.awt.BorderLayout;
-import java.awt.FlowLayout;
+import java.util.List;
 
-import javax.swing.JButton;
 import javax.swing.JDialog;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.border.EmptyBorder;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 
 import controller.LoginController;
+import model.Client;
 
 import javax.swing.JTable;
-import javax.swing.JLabel;
-import java.awt.Font;
-import java.awt.event.ActionEvent;
+import javax.swing.ListSelectionModel;
+import javax.swing.JButton;
+import java.awt.Toolkit;
 import java.awt.event.ActionListener;
-
-import javax.swing.JTextField;
+import java.awt.event.ActionEvent;
 
 public class ClientManagement extends JDialog implements ActionListener {
 
-	private static final long serialVersionUID = 1L;
-	private final JPanel contentPanel = new JPanel();
-	private JTable table;
-	private JTextField textField;
-	private LoginController cont;
+    private static final long serialVersionUID = 1L;
+    private LoginController cont;
+    private JPanel contentPane;
+    private JButton btnADD;
+    private JButton btnDELETE;
+    private JButton btnMODIFY;
+    JTable table;
 
-	public ClientManagement(MainWindow mainWindow, boolean b, LoginController cont) {
-		super(mainWindow, b);
-		setTitle("Client Management");
-		this.cont=cont;
-		setBounds(100, 100, 450, 300);
-		getContentPane().setLayout(new BorderLayout());
-		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
-		getContentPane().add(contentPanel, BorderLayout.CENTER);
-		contentPanel.setLayout(null);
-		
-		table = new JTable();
-		table.setBounds(28, 44, 207, 183);
-		contentPanel.add(table);
-		
-		JLabel lblNewLabel = new JLabel("Client");
-		lblNewLabel.setFont(new Font("Arial", Font.BOLD, 16));
-		lblNewLabel.setBounds(28, 10, 87, 24);
-		contentPanel.add(lblNewLabel);
-		
-		JLabel lblNewLabel_1 = new JLabel("SEARCH:");
-		lblNewLabel_1.setFont(new Font("Arial", Font.BOLD, 12));
-		lblNewLabel_1.setBounds(269, 44, 62, 14);
-		contentPanel.add(lblNewLabel_1);
-		
-		textField = new JTextField();
-		textField.setBounds(268, 68, 143, 18);
-		contentPanel.add(textField);
-		textField.setColumns(10);
-		
-		JButton btnNewButton = new JButton("ADD");
-		btnNewButton.setFont(new Font("Tahoma", Font.BOLD, 10));
-		btnNewButton.setBounds(269, 96, 142, 36);
-		contentPanel.add(btnNewButton);
-		
-		JButton btnModify = new JButton("MODIFY");
-		btnModify.setFont(new Font("Tahoma", Font.BOLD, 10));
-		btnModify.setBounds(269, 142, 142, 36);
-		contentPanel.add(btnModify);
-		
-		JButton btnDelete = new JButton("DELETE");
-		btnDelete.setFont(new Font("Tahoma", Font.BOLD, 10));
-		btnDelete.setBounds(269, 191, 142, 36);
-		contentPanel.add(btnDelete);
-	}
-	
+    public ClientManagement(JFrame mainWindow, LoginController cont) {
+        super(mainWindow, true);
+        setTitle("Clients");
+        this.cont = cont;
 
-	@Override
-	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
+        setIconImage(Toolkit.getDefaultToolkit().getImage("images/icon.png"));
+        setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+        setBounds(100, 100, 607, 420);
+        contentPane = new JPanel();
+        contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+        setContentPane(contentPane);
+
+        loadTable();
+
+        contentPane.setLayout(null);
+
+        JScrollPane scrollPane = new JScrollPane(table);
+        scrollPane.setBounds(12, 44, 567, 231);
+        getContentPane().add(scrollPane);
+
+        btnADD = new JButton("ADD");
+        btnADD.setBounds(96, 303, 97, 25);
+        btnADD.addActionListener(this);
+        contentPane.add(btnADD);
+
+        btnDELETE = new JButton("DELETE");
+        btnDELETE.setBounds(247, 343, 97, 25);
+        btnDELETE.addActionListener(this);
+        contentPane.add(btnDELETE);
+
+        btnMODIFY = new JButton("MODIFY");
+        btnMODIFY.addActionListener(this);
+        btnMODIFY.setBounds(400, 303, 97, 25);
+        contentPane.add(btnMODIFY);
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        int row = table.getSelectedRow();
+
+        if (e.getSource() == btnDELETE) {
+            if (row == -1) {
+                JOptionPane.showMessageDialog(this, "Select a client to delete.");
+                return;
+            }
+
+            String idClient = table.getValueAt(row, 0).toString();
+            Client client = new Client(idClient, null, null, 0);
+
+            if (!cont.checkClientInBook(idClient)) {
+                if (cont.deleteClient(client)) {
+                    refreshModel();
+                    JOptionPane.showMessageDialog(this, "Client has been deleted.");
+                } else {
+                    JOptionPane.showMessageDialog(this, "Client not deleted.");
+                }
+            } else {
+                JOptionPane.showMessageDialog(this, "Client not deleted because exists in Book");
+            }
+        }
+
+        if (e.getSource() == btnMODIFY) {
+            if (row != -1) {
+                int modelRow = table.convertRowIndexToModel(row);
+                TableModel model = table.getModel();
+                Client client = new Client(
+                    (String) model.getValueAt(modelRow, 0),
+                    (String) model.getValueAt(modelRow, 1),
+                    (String) model.getValueAt(modelRow, 2),
+                    (Integer) model.getValueAt(modelRow, 3)
+                );
+                FormClientWindow formClientWindow = new FormClientWindow(this, cont, client, false);
+                formClientWindow.setVisible(true);
+                refreshModel();
+            } else {
+                JOptionPane.showMessageDialog(this, "Select a client to modify");
+            }
+        }
+
+        if (e.getSource() == btnADD) {
+            FormClientWindow formClientWindow = new FormClientWindow(this, cont, null, true);
+            formClientWindow.setVisible(true);
+            refreshModel();
+        }
+    }
+
+    private void loadTable() {
+        DefaultTableModel modelo = new DefaultTableModel(
+                new String[]{"ID", "Name", "Surname", "Age"}, 0) {
+            private static final long serialVersionUID = 1L;
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
+        table = new JTable(modelo);
+        table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        refreshModel();
+    }
+
+    public void refreshModel() {
+        List<Client> clients = cont.getAllClient();
+        DefaultTableModel modelo = (DefaultTableModel) table.getModel();
+        modelo.setRowCount(0);
+        for (Client client : clients) {
+            modelo.addRow(new Object[]{
+                client.getIdClient(),
+                client.getNameClient(),
+                client.getSurnameClient(),
+                client.getAgeClient()
+            });
+        }
+    }
 }

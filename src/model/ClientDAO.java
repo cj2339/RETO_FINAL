@@ -9,5 +9,6 @@ public interface ClientDAO {
 	public boolean deleteClient(Client client);
 	public boolean updateClientByCode(Client client);
 	public boolean insertClient(Client client);
+	public boolean checkClientInBook(String id);
 
 }
