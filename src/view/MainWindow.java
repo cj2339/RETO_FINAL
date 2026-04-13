@@ -89,8 +89,8 @@ public class MainWindow extends JFrame implements ActionListener {
 		
 
 		if (e.getSource().equals(btnAdmins)) {
-			AdminListWindow adminList = new AdminListWindow(this, cont);
-			adminList.setVisible(true);
+			ListAdminWindow listAdmin = new ListAdminWindow(this, cont);
+			listAdmin.setVisible(true);
 
 		}else{
 			if (e.getSource().equals(btnCruise)) {

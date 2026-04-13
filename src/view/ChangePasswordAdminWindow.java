@@ -47,8 +47,8 @@ public class ChangePasswordAdminWindow extends JDialog implements ActionListener
 		dialog.setVisible(true);
 	}
 	
-	public ChangePasswordAdminWindow(AdminListWindow adminListWindow, LoginController cont, String adminName) {
-		super(adminListWindow, true);
+	public ChangePasswordAdminWindow(ListAdminWindow listAdminWindow, LoginController cont, String adminName) {
+		super(listAdminWindow, true);
 		this.cont = cont;
 		this.adminName = adminName;
 		setIconImage(Toolkit.getDefaultToolkit().getImage("images/icon.png"));
