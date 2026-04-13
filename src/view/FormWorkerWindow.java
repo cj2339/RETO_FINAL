@@ -19,6 +19,9 @@ import javax.swing.JTextField;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 import model.TypeWorker;
+import javax.swing.JSpinner;
+import com.toedter.calendar.JDateChooser;
+import javax.swing.JCheckBox;
 
 public class FormWorkerWindow extends JDialog implements ActionListener{
 
@@ -30,16 +33,19 @@ public class FormWorkerWindow extends JDialog implements ActionListener{
 	private JTextField textFieldName;
 	private JTextField textFieldSurname;
 	private JComboBox comboBoxService;
-	private JComboBox comboBoxCodCruise;
 	private JButton btnClear;
 	private JButton btnConfirm;
+	private JTextField textFieldPhone;
+	private JDateChooser txtHiringDate;
+	private JTextField textFieldEmail;
+	private JCheckBox chckbxSpanish;
 
 	public FormWorkerWindow(ListWorkerWindow workerListWindow, LoginController cont, Worker worker, boolean b) {
 		super(workerListWindow, true);
 		setTitle("worker");
 		this.cont=cont;
 		
-		setBounds(100, 100, 500, 600);
+		setBounds(100, 100, 600, 846);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
@@ -57,7 +63,7 @@ public class FormWorkerWindow extends JDialog implements ActionListener{
 		
 		textFieldId = new JTextField();
 		textFieldId.setFont(new Font("Bahnschrift", Font.PLAIN, 19));
-		textFieldId.setBounds(279, 93, 175, 24);
+		textFieldId.setBounds(318, 93, 175, 24);
 		contentPanel.add(textFieldId);
 		textFieldId.setColumns(10);
 		
@@ -79,41 +85,103 @@ public class FormWorkerWindow extends JDialog implements ActionListener{
 		comboBoxService = new JComboBox();
 		comboBoxService.setFont(new Font("Bahnschrift", Font.PLAIN, 19));
 		comboBoxService.setModel(new DefaultComboBoxModel(TypeWorker.values()));
-		comboBoxService.setBounds(279, 149, 175, 25);
+		comboBoxService.setBounds(318, 149, 175, 25);
 		contentPanel.add(comboBoxService);
 		
 		textFieldName = new JTextField();
 		textFieldName.setFont(new Font("Bahnschrift", Font.PLAIN, 19));
 		textFieldName.setColumns(10);
-		textFieldName.setBounds(279, 213, 175, 24);
+		textFieldName.setBounds(318, 210, 175, 24);
 		contentPanel.add(textFieldName);
 		
 		textFieldSurname = new JTextField();
 		textFieldSurname.setFont(new Font("Bahnschrift", Font.PLAIN, 19));
 		textFieldSurname.setColumns(10);
-		textFieldSurname.setBounds(279, 269, 175, 24);
+		textFieldSurname.setBounds(318, 268, 175, 24);
 		contentPanel.add(textFieldSurname);
 		
 		JLabel lblCruiseCode = new JLabel("Cruise code:");
 		lblCruiseCode.setFont(new Font("Bahnschrift", Font.PLAIN, 20));
-		lblCruiseCode.setBounds(57, 331, 126, 25);
+		lblCruiseCode.setBounds(57, 488, 126, 25);
 		contentPanel.add(lblCruiseCode);
-		
-		comboBoxCodCruise = new JComboBox();
-		comboBoxCodCruise.setFont(new Font("Bahnschrift", Font.PLAIN, 19));
-		comboBoxCodCruise.setBounds(279, 333, 175, 25);
-		contentPanel.add(comboBoxCodCruise);
 		
 		btnConfirm = new JButton("Confirm");
 		btnConfirm.setFont(new Font("Bahnschrift", Font.PLAIN, 20));
-		btnConfirm.setBounds(302, 452, 133, 37);
+		btnConfirm.setBounds(360, 737, 133, 37);
 		contentPanel.add(btnConfirm);
 		btnConfirm.addActionListener(this);
 		
 		btnClear = new JButton("Clear");
 		btnClear.setFont(new Font("Bahnschrift", Font.PLAIN, 20));
-		btnClear.setBounds(75, 452, 133, 37);
+		btnClear.setBounds(57, 737, 133, 37);
 		contentPanel.add(btnClear);
+		
+		JLabel lblHiringDate = new JLabel("Hiring date:");
+		lblHiringDate.setFont(new Font("Bahnschrift", Font.PLAIN, 20));
+		lblHiringDate.setBounds(57, 324, 126, 25);
+		contentPanel.add(lblHiringDate);
+		
+		txtHiringDate = new JDateChooser();
+		txtHiringDate.setDateFormatString("dd/mm/yyyy");
+		txtHiringDate.setBounds(318, 324, 175, 25);
+		contentPanel.add(txtHiringDate);
+		
+		JLabel lblPhoneNumber = new JLabel("Phone number:");
+		lblPhoneNumber.setFont(new Font("Bahnschrift", Font.PLAIN, 20));
+		lblPhoneNumber.setBounds(57, 379, 151, 25);
+		contentPanel.add(lblPhoneNumber);
+		
+		textFieldPhone = new JTextField();
+		textFieldPhone.setFont(new Font("Bahnschrift", Font.PLAIN, 19));
+		textFieldPhone.setColumns(10);
+		textFieldPhone.setBounds(318, 379, 175, 24);
+		contentPanel.add(textFieldPhone);
+		
+		JLabel lblEmail = new JLabel("Email:");
+		lblEmail.setFont(new Font("Bahnschrift", Font.PLAIN, 20));
+		lblEmail.setBounds(57, 437, 151, 25);
+		contentPanel.add(lblEmail);
+		
+		textFieldEmail = new JTextField();
+		textFieldEmail.setFont(new Font("Bahnschrift", Font.PLAIN, 19));
+		textFieldEmail.setColumns(10);
+		textFieldEmail.setBounds(318, 437, 175, 24);
+		contentPanel.add(textFieldEmail);
+		
+		JLabel lblLanguage = new JLabel("Language:");
+		lblLanguage.setFont(new Font("Bahnschrift", Font.PLAIN, 20));
+		lblLanguage.setBounds(57, 535, 126, 25);
+		contentPanel.add(lblLanguage);
+		
+		chckbxSpanish = new JCheckBox("Spanish");
+		chckbxSpanish.setFont(new Font("Bahnschrift", Font.PLAIN, 20));
+		chckbxSpanish.setBounds(82, 581, 144, 20);
+		contentPanel.add(chckbxSpanish);
+		
+		JCheckBox chckbxEnglish = new JCheckBox("English");
+		chckbxEnglish.setFont(new Font("Bahnschrift", Font.PLAIN, 20));
+		chckbxEnglish.setBounds(82, 620, 144, 20);
+		contentPanel.add(chckbxEnglish);
+		
+		JCheckBox chckbxFrench = new JCheckBox("French");
+		chckbxFrench.setFont(new Font("Bahnschrift", Font.PLAIN, 20));
+		chckbxFrench.setBounds(82, 661, 144, 20);
+		contentPanel.add(chckbxFrench);
+		
+		JCheckBox chckbxGerman = new JCheckBox("German");
+		chckbxGerman.setFont(new Font("Bahnschrift", Font.PLAIN, 20));
+		chckbxGerman.setBounds(318, 581, 144, 20);
+		contentPanel.add(chckbxGerman);
+		
+		JCheckBox chckbxChinese = new JCheckBox("Chinese");
+		chckbxChinese.setFont(new Font("Bahnschrift", Font.PLAIN, 20));
+		chckbxChinese.setBounds(318, 620, 144, 20);
+		contentPanel.add(chckbxChinese);
+		
+		JCheckBox chckbxArabic = new JCheckBox("Arabic");
+		chckbxArabic.setFont(new Font("Bahnschrift", Font.PLAIN, 20));
+		chckbxArabic.setBounds(318, 661, 144, 20);
+		contentPanel.add(chckbxArabic);
 		btnClear.addActionListener(this);
 		
 		if(worker!=null) {
@@ -132,7 +200,7 @@ public class FormWorkerWindow extends JDialog implements ActionListener{
 			comboBoxService.setSelectedIndex(0);
 			textFieldName.setText("");
 			textFieldSurname.setText("");
-			comboBoxCodCruise.setSelectedIndex(0);
+			//comboBoxCodCruise.setSelectedIndex(0);
 		}
 		if(e.getSource()==btnConfirm) {
 			

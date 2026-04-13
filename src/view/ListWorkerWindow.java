@@ -139,7 +139,7 @@ public class ListWorkerWindow extends JDialog implements ActionListener {
 					worker.getName(), 
 					worker.getSurname(), 
 					worker.getCodCruise()
-			});
+			}); 
 		}
 		table = new JTable(model);
 	}

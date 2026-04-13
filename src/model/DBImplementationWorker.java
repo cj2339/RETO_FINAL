@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
+
 public class DBImplementationWorker implements WorkerDAO {
 	private Connection con;
 	private PreparedStatement stmt;
@@ -54,7 +55,10 @@ public class DBImplementationWorker implements WorkerDAO {
 			while (resultset.next()) {
 				// Al conectarlo con la base de datos para que salga en mayusculas
 				TypeWorker type=TypeWorker.valueOf(resultset.getString("service").toUpperCase());
-				worker=new Worker(resultset.getString("id_worker"), type, resultset.getString("name_worker"), resultset.getString("surname_worker"), resultset.getInt("cod_cruise"));
+				Language language=Language.valueOf(resultset.getString("language").toUpperCase());
+				worker=new Worker(resultset.getString("id_worker"), type, resultset.getString("name_worker"), 
+						resultset.getString("surname_worker"),resultset.getDate("hiringDate"), resultset.getString("phoneNumber"), 
+						resultset.getString("email"), resultset.getInt("age"), language, resultset.getInt("cod_cruise"));
 				workers.add(worker);
 			}
 			resultset.close();
