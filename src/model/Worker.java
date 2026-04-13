@@ -3,15 +3,15 @@ package model;
 import java.util.Date;
 
 public class Worker {
-	private String idWorker;
-	private TypeWorker service;
-	private String name;
-	private String surname;
-	private Date hiringDate;
-	private String phoneNumber;
-	private String email;
-	private int age;
-	private Language language;
+	private String idWorker;// Unique identifier for the worker
+	private TypeWorker service;// Type of service provided by the worker 
+	private String name;// First name of the worker
+	private String surname;// Last name of the worker
+	private Date hiringDate;// Date when the worker was hired
+	private String phoneNumber;// Contact phone number for the worker
+	private String email;// Contact email address for the worker
+	private int age;// Age of the worker
+	private Language language;// Language spoken by the worker (e.g., English, Spanish, French)
 	private int codCruise;
 	
 	public Worker() {
@@ -19,7 +19,7 @@ public class Worker {
 	}
 
 	public Worker(String idWorker, TypeWorker service, String name, String surname, Date hiringDate,
-			String phoneNumber, String email, int age, Language language, int codCruise) {
+			String phoneNumber, String email, int age, Language language, int codCruise) {// Constructor to initialize all attributes of the Worker class
 		super();
 		this.idWorker = idWorker;
 		this.service = service;

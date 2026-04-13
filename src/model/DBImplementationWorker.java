@@ -20,7 +20,7 @@ public class DBImplementationWorker implements WorkerDAO {
 	private String userDB;
 	private String passwordDB;
 
-	final String SQLSELECTALL = "SELECT * FROM worker";
+	final String SQLSELECTALL = "SELECT * FROM worker";//SQL query to select all workers from the database
 
 	public DBImplementationWorker() {
 		this.configFile = ResourceBundle.getBundle("configClass");
@@ -42,7 +42,8 @@ public class DBImplementationWorker implements WorkerDAO {
 	}
 
 	@Override
-	public List<Worker> getAllWorker() {
+	public List<Worker> getAllWorker() {//this method retrieves all workers from the database 
+		//by executing the SQLSELECTALL query and returns a list of Worker objects representing the retrieved workers
 		Worker worker;
 		List<Worker> workers=new ArrayList<>();
 		
@@ -54,12 +55,12 @@ public class DBImplementationWorker implements WorkerDAO {
 
 			while (resultset.next()) {
 				// Al conectarlo con la base de datos para que salga en mayusculas
-				TypeWorker type=TypeWorker.valueOf(resultset.getString("service").toUpperCase());
-				Language language=Language.valueOf(resultset.getString("language").toUpperCase());
+				TypeWorker type=TypeWorker.valueOf(resultset.getString("service").toUpperCase());// Al conectarlo con la base de datos para que salga en mayusculas
+				Language language=Language.valueOf(resultset.getString("language").toUpperCase());// Al conectarlo con la base de datos para que salga en mayusculas
 				worker=new Worker(resultset.getString("id_worker"), type, resultset.getString("name_worker"), 
 						resultset.getString("surname_worker"),resultset.getDate("hiringDate"), resultset.getString("phoneNumber"), 
 						resultset.getString("email"), resultset.getInt("age"), language, resultset.getInt("cod_cruise"));
-				workers.add(worker);
+				workers.add(worker);//creates a new Worker object using the data retrieved from the database and adds it to the workers list
 			}
 			resultset.close();
 			stmt.close();
