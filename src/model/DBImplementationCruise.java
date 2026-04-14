@@ -23,7 +23,7 @@ public class DBImplementationCruise implements CruiseDAO {
 	final String SQLDELETEBYCODE = "DELETE FROM cruise WHERE cod_cruise = ?";//SQL query to delete a cruise from the database based on its unique identifier (code)
 	final String SQLSELECTBYCODE = "SELECT * FROM cruise WHERE cod_cruise=?";//SQL query to select a cruise from the database based on its unique identifier (code)
 	final String SQLUPDATEBYCODE = "UPDATE cruise set type_cruise=?,name_cruise=?, num_rooms=?,capacity_max=? WHERE cod_cruise=?";//SQL query to update a cruise's information in the database based on its unique identifier (code)
-	final String SQLINSERT = "INSERT INTO cruise(name_cruise, type_cruise, num_rooms, capacity_max) VALUES(?,?,?,?);";//SQL query to insert a new cruise into the database with the provided name, type, number of rooms, and maximum capacity
+	final String SQLINSERT = "INSERT INTO cruise(name_cruise, type_cruise, num_rooms, capacity_max) VALUES(?,?,?,?)";//SQL query to insert a new cruise into the database with the provided name, type, number of rooms, and maximum capacity
 	final String SQLSELECTWORKERBYCRUISE = "SELECT * FROM WORKER WHERE cod_cruise=?";//SQL query to check if a cruise is associated with any worker in the database by its unique identifier (code)
 	final String SQLSELECTBOOKBYCREUISE = "SELECT * FROM BOOK WHERE cod_cruise=?";//SQL query to check if a cruise is associated with any booking in the database by its unique identifier (code)
 

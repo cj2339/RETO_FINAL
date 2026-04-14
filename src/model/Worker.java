@@ -1,6 +1,8 @@
 package model;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public class Worker {
 	private String idWorker;// Unique identifier for the worker
@@ -11,15 +13,16 @@ public class Worker {
 	private String phoneNumber;// Contact phone number for the worker
 	private String email;// Contact email address for the worker
 	private int age;// Age of the worker
-	private Language language;// Language spoken by the worker (e.g., English, Spanish, French)
-	private int codCruise;
+	private boolean spanish; //The worker can speak spanish
+	private boolean english; //the worker can speak english
+	private Cruise cruise; 
 	
 	public Worker() {
 		super();
 	}
 
-	public Worker(String idWorker, TypeWorker service, String name, String surname, Date hiringDate,
-			String phoneNumber, String email, int age, Language language, int codCruise) {// Constructor to initialize all attributes of the Worker class
+	public Worker(String idWorker, TypeWorker service, String name, String surname, Date hiringDate, String phoneNumber,
+			String email, int age, boolean spanish, boolean english, Cruise cruise) {
 		super();
 		this.idWorker = idWorker;
 		this.service = service;
@@ -29,8 +32,9 @@ public class Worker {
 		this.phoneNumber = phoneNumber;
 		this.email = email;
 		this.age = age;
-		this.language = language;
-		this.codCruise = codCruise;
+		this.spanish = spanish;
+		this.english = english;
+		this.cruise = cruise;
 	}
 
 	public String getIdWorker() {
@@ -97,20 +101,30 @@ public class Worker {
 		this.age = age;
 	}
 
-	public Language getLanguage() {
-		return language;
+	public boolean isSpanish() {
+		return spanish;
 	}
 
-	public void setLanguage(Language language) {
-		this.language = language;
+	public void setSpanish(boolean spanish) {
+		this.spanish = spanish;
 	}
 
-	public int getCodCruise() {
-		return codCruise;
+	public boolean isEnglish() {
+		return english;
 	}
 
-	public void setCodCruise(int codCruise) {
-		this.codCruise = codCruise;
+	public void setEnglish(boolean english) {
+		this.english = english;
 	}
+
+	public Cruise getCruise() {
+		return cruise;
+	}
+
+	public void setCruise(Cruise cruise) {
+		this.cruise = cruise;
+	}
+
+	
 	
 }
