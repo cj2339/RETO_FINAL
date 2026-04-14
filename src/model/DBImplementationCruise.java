@@ -19,13 +19,13 @@ public class DBImplementationCruise implements CruiseDAO {
 	private String userDB;
 	private String passwordDB;
 
-	final String SQLSELECTALL = "SELECT * FROM cruise";//SQL query to select all cruises from the database
-	final String SQLDELETEBYCODE = "DELETE FROM cruise WHERE cod_cruise = ?";//SQL query to delete a cruise from the database based on its unique identifier (code)
-	final String SQLSELECTBYCODE = "SELECT * FROM cruise WHERE cod_cruise=?";//SQL query to select a cruise from the database based on its unique identifier (code)
-	final String SQLUPDATEBYCODE = "UPDATE cruise set type_cruise=?,name_cruise=?, num_rooms=?,capacity_max=? WHERE cod_cruise=?";//SQL query to update a cruise's information in the database based on its unique identifier (code)
-	final String SQLINSERT = "INSERT INTO cruise(name_cruise, type_cruise, num_rooms, capacity_max) VALUES(?,?,?,?)";//SQL query to insert a new cruise into the database with the provided name, type, number of rooms, and maximum capacity
-	final String SQLSELECTWORKERBYCRUISE = "SELECT * FROM WORKER WHERE cod_cruise=?";//SQL query to check if a cruise is associated with any worker in the database by its unique identifier (code)
-	final String SQLSELECTBOOKBYCREUISE = "SELECT * FROM BOOK WHERE cod_cruise=?";//SQL query to check if a cruise is associated with any booking in the database by its unique identifier (code)
+	final String SQLSELECTALL = "SELECT * FROM cruise";
+	final String SQLDELETEBYCODE = "DELETE FROM cruise WHERE cod_cruise = ?";
+	final String SQLSELECTBYCODE = "SELECT * FROM cruise WHERE cod_cruise=?";
+	final String SQLUPDATEBYCODE = "UPDATE cruise set type_cruise=?,name_cruise=?, num_rooms=?,capacity_max=? WHERE cod_cruise=?";
+	final String SQLINSERT = "INSERT INTO cruise(name_cruise, type_cruise, num_rooms, capacity_max) VALUES(?,?,?,?)";
+	final String SQLSELECTWORKERBYCRUISE = "SELECT * FROM WORKER WHERE cod_cruise=?";
+	final String SQLSELECTBOOKBYCREUISE = "SELECT * FROM BOOK WHERE cod_cruise=?";
 
 	public DBImplementationCruise() {
 		this.configFile = ResourceBundle.getBundle("configClass");
@@ -47,8 +47,11 @@ public class DBImplementationCruise implements CruiseDAO {
 	}
 
 	@Override
-	public List<Cruise> getAllCruise() {//this method retrieves all cruises from the database 
-		//by executing the SQLSELECTALL query and returns a list of Cruise objects representing the retrieved cruises
+	/**
+	 * This method retrieves all cruises from the database by executing the
+	 * SQLSELECTALL
+	 */
+	public List<Cruise> getAllCruise() {
 		List<Cruise> cruises = new ArrayList<>();
 		Cruise cruise;
 		this.openConnection();
@@ -57,26 +60,33 @@ public class DBImplementationCruise implements CruiseDAO {
 			ResultSet resultset = statement.executeQuery();
 
 			while (resultset.next()) {
-				//creates a new Cruise object using the data retrieved from the database and adds it to the cruises list
-				TypeCruise type = TypeCruise.valueOf(resultset.getString("type_cruise").toUpperCase());//this line converts the string value of the "type_cruise" column from the database to an enum constant of the TypeCruise enum
-				//ensuring that the string is in uppercase to match the enum constant names
-				cruise = new Cruise(Integer.parseInt(resultset.getString("cod_cruise")), type, resultset.getString("name_cruise"),
-						resultset.getInt("num_rooms"), resultset.getInt("capacity_max"));//this line creates a new Cruise object using the retrieved data, including the cruise code, type, name, number of rooms, and maximum capacity
-				
+				TypeCruise type = TypeCruise.valueOf(resultset.getString("type_cruise").toUpperCase());
+				cruise = new Cruise(Integer.parseInt(resultset.getString("cod_cruise")), type,
+						resultset.getString("name_cruise"), resultset.getInt("num_rooms"),
+						resultset.getInt("capacity_max"));
+
 				cruises.add(cruise);
 			}
 			resultset.close();
 			statement.close();
 			connection.close();
 		} catch (SQLException e) {
-			System.out.println("Error " + e.getMessage());//Esta en español CUIDADOOOO
+			System.out.println("Error " + e.getMessage());// Esta en español CUIDADOOOO
 		}
 		return cruises;
 	}
 
 	@Override
-	public boolean deleteCruise(String id) {//this method deletes a cruise from the database 
-		//based on its unique identifier (code) by executing the SQLDELETEBYCODE query and returns a boolean indicating whether the deletion was successful or not
+	/**
+	 * This method deletes a cruise from the database based on the provided cruise
+	 * ID. It opens a connection to the database, prepares a SQL statement to delete
+	 * the cruise with the specified ID, and executes the update. If the deletion is
+	 * successful (i.e., if at least one record is affected), it returns true;
+	 * otherwise, it returns false. The method also handles any SQL exceptions that
+	 * may occur during the process and ensures that all resources are properly
+	 * closed after use.
+	 */
+	public boolean deleteCruise(String id) {
 		boolean deletePerformed = false;
 		this.openConnection();
 		try {
@@ -94,8 +104,16 @@ public class DBImplementationCruise implements CruiseDAO {
 	}
 
 	@Override
-	public Cruise getCruiseByCode(String id) {//this method retrieves a cruise from the database
-		//based on its unique identifier (code) by executing the SQLSELECTBYCODE query and returns a Cruise object representing the retrieved cruise, or null if no cruise is found with the provided code
+	/**
+	 * This method retrieves a cruise from the database based on the provided cruise
+	 * ID. It opens a connection to the database, prepares a SQL statement to select
+	 * the cruise with the specified ID, and executes the query. If a matching
+	 * record is found in the result set, it creates and returns a Cruise object
+	 * representing the retrieved cruise. If no matching record is found, it returns
+	 * null. The method also handles any SQL exceptions that may occur during the
+	 * process and ensures that all resources are properly closed after use.
+	 */
+	public Cruise getCruiseByCode(String id) {
 		Cruise cruise = null;
 		this.openConnection();
 		try {
@@ -105,8 +123,9 @@ public class DBImplementationCruise implements CruiseDAO {
 
 			while (resultset.next()) {
 				TypeCruise type = TypeCruise.valueOf(resultset.getString("type_cruise").toUpperCase());
-				cruise = new Cruise(Integer.parseInt(resultset.getString("cod_cruise")), type, resultset.getString("name_cruise"),
-						resultset.getInt("num_rooms"), resultset.getInt("capacity_max"));
+				cruise = new Cruise(Integer.parseInt(resultset.getString("cod_cruise")), type,
+						resultset.getString("name_cruise"), resultset.getInt("num_rooms"),
+						resultset.getInt("capacity_max"));
 			}
 			resultset.close();
 			statement.close();
@@ -118,8 +137,16 @@ public class DBImplementationCruise implements CruiseDAO {
 	}
 
 	@Override
-	public boolean updateCruiseByCode(Cruise cruise) {//this method updates the information of a cruise in the database 
-		//based on its unique identifier (code) by executing the SQLUPDATEBYCODE query with the provided Cruise object's data and returns a boolean indicating whether the update was successful or not
+	/**
+	 * This method updates the information of a cruise in the database based on the
+	 * provided Cruise object. It opens a connection to the database, prepares a SQL
+	 * statement to update the cruise with the specified information, and executes
+	 * the update. If the update is successful (i.e., if at least one record is
+	 * affected), it returns true; otherwise, it returns false. The method also
+	 * handles any SQL exceptions that may occur during the process and ensures that
+	 * all resources are properly closed after use.
+	 */
+	public boolean updateCruiseByCode(Cruise cruise) {
 		boolean updatePerformed = false;
 		this.openConnection();
 		try {
@@ -143,8 +170,16 @@ public class DBImplementationCruise implements CruiseDAO {
 	}
 
 	@Override
-	public boolean insertCruise(Cruise cruise) {//this method inserts a new cruise into the database 
-		//by executing the SQLINSERT query with the provided Cruise object's data and returns a boolean indicating whether the insertion was successful or not
+	/**
+	 * This method inserts a new cruise into the database based on the provided
+	 * Cruise object. It opens a connection to the database, prepares a SQL
+	 * statement to insert the cruise with the specified information, and executes
+	 * the update. If the insertion is successful (i.e., if at least one record is
+	 * affected), it returns true; otherwise, it returns false. The method also
+	 * handles any SQL exceptions that may occur during the process and ensures that
+	 * all resources are properly closed after use.
+	 */
+	public boolean insertCruise(Cruise cruise) {
 		boolean insertPerformed = false;
 		this.openConnection();
 
@@ -167,7 +202,16 @@ public class DBImplementationCruise implements CruiseDAO {
 	}
 
 	@Override
-	public boolean checkCruiseInWorker(String id) {//this method checks if a cruise is associated with any worker in the database
+	/**
+	 * This method checks if a cruise with the given identifier (id) is associated
+	 * with at least one worker in the database. It opens a connection to the
+	 * database, prepares a SQL statement to select workers associated with the
+	 * specified cruise ID, and executes the query. If a matching record is found in
+	 * the result set, it returns true; otherwise, it returns false. The method also
+	 * handles any SQL exceptions that may occur during the process and ensures that
+	 * all resources are properly closed after use.
+	 */
+	public boolean checkCruiseInWorker(String id) {
 		boolean cruiseExistInWorker = false;
 		this.openConnection();
 		try {
@@ -187,8 +231,16 @@ public class DBImplementationCruise implements CruiseDAO {
 	}
 
 	@Override
-	public boolean checkCruiseInBook(String id) {//this method checks if a cruise is associated with any booking in the database 
-		//by executing the SQLSELECTBOOKBYCREUISE query with the provided cruise code and returns a boolean indicating whether the cruise is associated with at least one booking or not
+	/**
+	 * This method checks if a cruise with the given identifier (id) is associated
+	 * with at least one booking in the database. It opens a connection to the
+	 * database, prepares a SQL statement to select bookings associated with the
+	 * specified cruise ID, and executes the query. If a matching record is found in
+	 * the result set, it returns true; otherwise, it returns false. The method also
+	 * handles any SQL exceptions that may occur during the process and ensures that
+	 * all resources are properly closed after use.
+	 */
+	public boolean checkCruiseInBook(String id) {
 		boolean cruiseExistInBook = false;
 		this.openConnection();
 		try {

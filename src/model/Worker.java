@@ -5,22 +5,41 @@ import java.util.Date;
 import java.util.List;
 
 public class Worker {
-	private String idWorker;// Unique identifier for the worker
-	private TypeWorker service;// Type of service provided by the worker 
-	private String name;// First name of the worker
-	private String surname;// Last name of the worker
-	private Date hiringDate;// Date when the worker was hired
-	private String phoneNumber;// Contact phone number for the worker
-	private String email;// Contact email address for the worker
-	private int age;// Age of the worker
-	private boolean spanish; //The worker can speak spanish
-	private boolean english; //the worker can speak english
-	private Cruise cruise; 
-	
+	private String idWorker;
+	private TypeWorker service;
+	private String name;
+	private String surname;
+	private Date hiringDate;
+	private String phoneNumber;
+	private String email;
+	private int age;
+	private boolean spanish; 
+	private boolean english; 
+	private Cruise cruise;
+
 	public Worker() {
 		super();
 	}
 
+	/**
+	 * Constructor for the Worker class that initializes all attributes of a worker,
+	 * including their unique identifier, type of service, name, surname, hiring
+	 * date, contact information, age, language skills, and associated cruise. This
+	 * constructor allows for the creation of a Worker object with all relevant
+	 * details provided at the time of instantiation.
+	 * 
+	 * @param idWorker
+	 * @param service
+	 * @param name
+	 * @param surname
+	 * @param hiringDate
+	 * @param phoneNumber
+	 * @param email
+	 * @param age
+	 * @param spanish
+	 * @param english
+	 * @param cruise
+	 */
 	public Worker(String idWorker, TypeWorker service, String name, String surname, Date hiringDate, String phoneNumber,
 			String email, int age, boolean spanish, boolean english, Cruise cruise) {
 		super();
@@ -125,6 +144,4 @@ public class Worker {
 		this.cruise = cruise;
 	}
 
-	
-	
 }

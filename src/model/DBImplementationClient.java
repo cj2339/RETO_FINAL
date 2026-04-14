@@ -11,20 +11,20 @@ import java.util.ResourceBundle;
 public class DBImplementationClient implements ClientDAO {
 	private Connection connection;
 	private PreparedStatement statement;
-	
-	private ResourceBundle configFile;//the ResourceBundle object used to read configuration properties from a file, such as database connection details
-	private String driverDB;//the driver class name for the database connection, which is read from the configuration file
-	private String urlDB;//the URL of the database, which is read from the configuration file
-	private String userDB;//the username for the database connection, which is read from the configuration file
-	private String passwordDB;//the password for the database connection, which is read from the configuration file
-	
-	final String SQLSELECTALL = "SELECT * FROM client";//SQL query to select all clients from the database
-	final String SQLDELETEBYCODE = "DELETE FROM client WHERE id_client = ?";//SQL query to delete a client from the database based on their unique identifier (code)
-	final String SQLSELECTBYCODE = "SELECT * FROM client WHERE id_client = ?";//SQL query to select a client from the database based on their unique identifier (code)
-	final String SQLUPDATEBYCODE = "UPDATE client SET name_client=?, surname_client=?, age_client=? WHERE id_client=?";//SQL query to update a client's information in the database based on their unique identifier (code)
-	final String SQLINSERT = "INSERT INTO client VALUES(?,?,?,?)";//SQL query to insert a new client into the database with the provided id, name, surname, and age
-	final String SQLSELECTBOOKCLIENT = "SELECT * FROM book WHERE id_client=?";//SQL query to check if a client is associated with any booking in the database by their unique identifier (id)
-	
+
+	private ResourceBundle configFile;
+	private String driverDB;
+	private String urlDB;
+	private String userDB;
+	private String passwordDB;
+
+	final String SQLSELECTALL = "SELECT * FROM client";
+	final String SQLDELETEBYCODE = "DELETE FROM client WHERE id_client = ?";
+	final String SQLSELECTBYCODE = "SELECT * FROM client WHERE id_client = ?";
+	final String SQLUPDATEBYCODE = "UPDATE client SET name_client=?, surname_client=?, age_client=? WHERE id_client=?";
+	final String SQLINSERT = "INSERT INTO client VALUES(?,?,?,?)";
+	final String SQLSELECTBOOKCLIENT = "SELECT * FROM book WHERE id_client=?";
+
 	public DBImplementationClient() {
 		this.configFile = ResourceBundle.getBundle("configClass");
 		this.driverDB = this.configFile.getString("Driver");
@@ -32,7 +32,7 @@ public class DBImplementationClient implements ClientDAO {
 		this.userDB = this.configFile.getString("DBUser");
 		this.passwordDB = this.configFile.getString("DBPass");
 	}
-	
+
 	private void openConnection() {
 		try {
 			connection = DriverManager.getConnection(urlDB, this.userDB, this.passwordDB);
@@ -45,20 +45,23 @@ public class DBImplementationClient implements ClientDAO {
 	}
 
 	@Override
-	public List<Client> getAllClient() {//this method retrieves all clients from the database
-		//by executing the SQLSELECTALL query and returns a list of Client objects representing the retrieved clients
+	/**
+	 * This method retrieves all clients from the database by executing the
+	 * SQLSELECTALL query and returns a list of Client objects representing the
+	 * retrieved clients. It opens a connection to the database, prepares and
+	 * executes the SQL query, and iterates through the result set to create Client
+	 * objects for each retrieved client. Finally, it closes all resources and
+	 * returns the list of clients.
+	 */
+	public List<Client> getAllClient() {
 		List<Client> clients = new ArrayList<>();
 		this.openConnection();
 		try {
 			statement = connection.prepareStatement(SQLSELECTALL);
 			java.sql.ResultSet rs = statement.executeQuery();
 			while (rs.next()) {
-				clients.add(new Client(//creates a new Client object using the data retrieved from the database and adds it to the clients list
-						rs.getString("id_client"),
-						rs.getString("name_client"),
-						rs.getString("surname_client"),
-						rs.getInt("age_client")
-						));
+				clients.add(new Client(rs.getString("id_client"), rs.getString("name_client"),
+						rs.getString("surname_client"), rs.getInt("age_client")));
 			}
 			rs.close();
 			statement.close();
@@ -70,91 +73,132 @@ public class DBImplementationClient implements ClientDAO {
 	}
 
 	@Override
+	/**
+	 * This method retrieves a client from the database based on their unique
+	 * identifier (code) by executing the SQLSELECTBYCODE query. It opens a
+	 * connection to the database, prepares and executes the SQL query with the
+	 * client's code as a parameter, and checks if a matching record is found in the
+	 * result set. If a matching record is found, it creates and returns a Client
+	 * object representing the retrieved client. If no matching record is found, it
+	 * returns null. Finally, it closes all resources used during the process.
+	 */
 	public Client getClientByCode(Client client) {
-	    this.openConnection();
-	    try {
-	        statement = connection.prepareStatement(SQLSELECTBYCODE);
-	        statement.setString(1, client.getIdClient());
-	        java.sql.ResultSet rs = statement.executeQuery();
-	        if (rs.next()) {
-	            return new Client(
-	                rs.getString("id_client"),
-	                rs.getString("name_client"),
-	                rs.getString("surname_client"),
-	                rs.getInt("age_client")
-	            );
-	        }
-	        rs.close(); statement.close(); connection.close();
-	    } catch (SQLException e) { System.out.println("Error: " + e.getMessage()); }
-	    return null;
+		this.openConnection();
+		try {
+			statement = connection.prepareStatement(SQLSELECTBYCODE);
+			statement.setString(1, client.getIdClient());
+			java.sql.ResultSet rs = statement.executeQuery();
+			if (rs.next()) {
+				return new Client(rs.getString("id_client"), rs.getString("name_client"),
+						rs.getString("surname_client"), rs.getInt("age_client"));
+			}
+			rs.close();
+			statement.close();
+			connection.close();
+		} catch (SQLException e) {
+			System.out.println("Error: " + e.getMessage());
+		}
+		return null;
+	}
+
+	/**
+	 * This method deletes a client from the database based on their unique
+	 * identifier
+	 */
+	@Override
+	public boolean deleteClient(Client client) {
+		boolean ok = false;
+		this.openConnection();
+		try {
+			statement = connection.prepareStatement(SQLDELETEBYCODE);
+			statement.setString(1, client.getIdClient());
+			if (statement.executeUpdate() > 0)
+				ok = true;
+			statement.close();
+			connection.close();
+		} catch (SQLException e) {
+			System.out.println("Error: " + e.getMessage());
+		}
+		return ok;
+	}
+
+	/**
+	 * This method updates the information of a client in the database based on
+	 * their unique identifier (code) by executing the SQLUPDATEBYCODE query. It
+	 * opens a connection to the database, prepares and executes the SQL query with
+	 * the client's updated information as parameters, and checks if the update was
+	 * successful by verifying if any records were affected. If the update was
+	 * successful, it returns true; otherwise, it returns false. Finally, it closes
+	 * all resources used during the process.
+	 */
+	@Override
+	public boolean updateClientByCode(Client client) {
+		boolean ok = false;
+		this.openConnection();
+		try {
+			statement = connection.prepareStatement(SQLUPDATEBYCODE);
+			statement.setString(1, client.getNameClient());
+			statement.setString(2, client.getSurnameClient());
+			statement.setInt(3, client.getAgeClient());
+			statement.setString(4, client.getIdClient());
+			if (statement.executeUpdate() > 0)
+				ok = true;
+			statement.close();
+			connection.close();
+		} catch (SQLException e) {
+			System.out.println("Error: " + e.getMessage());
+		}
+		return ok;
 	}
 
 	@Override
-	public boolean deleteClient(Client client) {//this method deletes a client from the database
-		//by executing the SQLDELETEBYCODE query with the client's unique identifier (code) and returns true if the deletion was successful, or false otherwise
-	    boolean ok = false;
-	    this.openConnection();
-	    try {
-	        statement = connection.prepareStatement(SQLDELETEBYCODE);
-	        statement.setString(1, client.getIdClient());
-	        if (statement.executeUpdate() > 0) ok = true;
-	        statement.close(); connection.close();
-	    } catch (SQLException e) { System.out.println("Error: " + e.getMessage()); }
-	    return ok;
+	/**
+	 * This method inserts a new client into the database by executing the SQLINSERT
+	 */
+	public boolean insertClient(Client client) {
+		boolean ok = false;
+		this.openConnection();
+		try {
+			statement = connection.prepareStatement(SQLINSERT);
+			statement.setString(1, client.getIdClient());
+			statement.setString(2, client.getNameClient());
+			statement.setString(3, client.getSurnameClient());
+			statement.setInt(4, client.getAgeClient());
+			if (statement.executeUpdate() > 0)
+				ok = true;
+			statement.close();
+			connection.close();
+		} catch (SQLException e) {
+			System.out.println("Error: " + e.getMessage());
+		}
+		return ok;
 	}
 
+	/**
+	 * This method checks if a client with the given identifier (id) is associated
+	 * with at least one booking in the database. It opens a connection to the
+	 * database, prepares and executes the SQLSELECTBOOKCLIENT query with the
+	 * client's id as a parameter, and checks if any records are returned in the
+	 * result set. If at least one record is found, it returns true; otherwise, it
+	 * returns false. Finally, it closes all resources used during the process.
+	 */
 	@Override
-	public boolean updateClientByCode(Client client) {//this method updates a client's information in the database based on their unique identifier (code)
-	    boolean ok = false;
-	    this.openConnection();
-	    try {
-	        statement = connection.prepareStatement(SQLUPDATEBYCODE);
-	        statement.setString(1, client.getNameClient());
-	        statement.setString(2, client.getSurnameClient());
-	        statement.setInt(3, client.getAgeClient());
-	        statement.setString(4, client.getIdClient());
-	        if (statement.executeUpdate() > 0) ok = true;//by executing the SQLUPDATEBYCODE query with the client's updated information and unique identifier (code)
-	        //and returns true if the update was successful, or false otherwise
-	        statement.close(); connection.close();
-	    } catch (SQLException e) { System.out.println("Error: " + e.getMessage()); }
-	    return ok;
+	public boolean checkClientInBook(String id) {
+		boolean existe = false;
+		this.openConnection();
+		try {
+			statement = connection.prepareStatement(SQLSELECTBOOKCLIENT);
+			statement.setString(1, id);
+			java.sql.ResultSet rs = statement.executeQuery();
+			if (rs.next())
+				existe = true;
+			rs.close();
+			statement.close();
+			connection.close();
+		} catch (SQLException e) {
+			System.out.println("Error: " + e.getMessage());
+		}
+		return existe;
 	}
-
-	@Override
-	public boolean insertClient(Client client) {//this method inserts a new client into the database by executing the SQLINSERT query with the client's id, name, surname, and age
-	    boolean ok = false;
-	    this.openConnection();
-	    try {
-	        statement = connection.prepareStatement(SQLINSERT);
-	        statement.setString(1, client.getIdClient());
-	        statement.setString(2, client.getNameClient());
-	        statement.setString(3, client.getSurnameClient());
-	        statement.setInt(4, client.getAgeClient());
-	        if (statement.executeUpdate() > 0) ok = true;
-	        statement.close(); connection.close();
-	    } catch (SQLException e) { System.out.println("Error: " + e.getMessage()); }
-	    return ok;
-	}
-
-	@Override
-	public boolean checkClientInBook(String id) {//this method checks if a client is associated with any booking in the database 
-		//by executing the SQLSELECTBOOKCLIENT query with the client's unique identifier (id)
-	    boolean existe = false;
-	    this.openConnection();
-	    try {
-	        statement = connection.prepareStatement(SQLSELECTBOOKCLIENT);
-	        statement.setString(1, id);
-	        java.sql.ResultSet rs = statement.executeQuery();//and returns true if the client is associated with at least one booking, or false otherwise
-	        if (rs.next()) existe = true;
-	        rs.close(); statement.close(); connection.close();
-	    } catch (SQLException e) { System.out.println("Error: " + e.getMessage()); }
-	    return existe;
-	}
-	
-	
-	
-	
-	
-	
 
 }
