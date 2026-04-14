@@ -3,6 +3,7 @@ package export;
 import controller.LoginController;
 import model.Cruise;
 import model.Worker;
+import model.Book;
 import model.Client;
 //import model.Booking;
 
@@ -67,27 +68,30 @@ public class XMLExporter {
 
 
 			// CLIENTS
-			pw.println("<clients>");
-			for (Client c : cont.getAllClient()) {
-				pw.println("    <client id=\"" + c.getIdClient() + "\" vip=\"no\">");
-				pw.println("        <name>" + c.getNameClient() + "</name>");
-				pw.println("        <surname>" + c.getSurnameClient() + "</surname>");
-				pw.println("        <age>" + c.getAgeClient() + "</age>");
-				pw.println("        <photo>images/" + c.getIdClient() + ".png</photo>");
-				pw.println("    </client>");
-			}
-			pw.println("</clients>");
-
+            pw.println("  <clients>");
+            for (Client c : cont.getAllClient()) {
+                pw.println("    <client id=\"" + c.getIdClient() + "\" vip=\"no\">");
+                pw.println("        <name>" + c.getNameClient() + "</name>");
+                pw.println("        <surname>" + c.getSurnameClient() + "</surname>");
+                pw.println("        <age>" + c.getAgeClient() + "</age>");
+                pw.println("    </client>");
+            }
+            pw.println("  </clients>");
+            
+            
 			// BOOKINGS
-			//            pw.println("  <bookings>");
-			//            for (Booking b : cont.getAllBookings()) {
-			//                pw.println("    <booking>");
-			//                pw.println("      <cruise>" + b.getCruiseCode() + "</cruise>");
-			//                pw.println("      <client>" + b.getClientId() + "</client>");
-			//                pw.println("      <date>" + b.getDate() + "</date>");
-			//                pw.println("    </booking>");
-			//            }
-			//            pw.println("  </bookings>");
+             pw.println("  <bookings>");
+             for (Book b : cont.getAllBookings()) {
+                 pw.println("    <booking>");
+                 pw.println("      <cruise>" + b.getCodCruise() + "</cruise>");
+                 pw.println("      <client>" + b.getIdClient() + "</client>");
+                 pw.println("      <startDate>" + b.getStartDate() + "</startDate>");
+                 pw.println("      <endDate>" + b.getEndDate() + "</endDate>");
+                 pw.println("      <room>" + b.getRoomNumber() + "</room>");
+                 pw.println("      <finalPrice>" + b.getFinalPrice() + "</finalPrice>");
+                 pw.println("    </booking>");
+             }
+             pw.println("  </bookings>");
 
 			pw.println("</cruiseManagement>");
 			pw.close();
