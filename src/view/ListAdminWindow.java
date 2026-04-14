@@ -99,7 +99,6 @@ public class ListAdminWindow extends JDialog implements ActionListener {
 		    }
 		}
 
-
 		if (e.getSource() == btnMODIFY) {
 
 			Administrator admin = new Administrator();
