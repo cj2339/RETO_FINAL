@@ -89,3 +89,425 @@ INSERT INTO book VALUES
 ('33333333C', 1, 'London', 'Oslo', '2026-06-01', '2026-06-15', 1, 1200.50, 1200.50),
 ('44444444D', 4, 'Athens', 'Rome', '2026-08-05', '2026-08-12', 1, 1500.00, 1500.00),
 ('55555555E', 5, 'Lisbon', 'Malaga', '2026-09-20', '2026-09-25', 1, 450.00, 450.00);
+
+
+use imperialmaritime;
+-- ---------------------------------------------------------
+-- 1. PROCEDURE: List workers by cruise
+-- ---------------------------------------------------------
+DROP PROCEDURE IF EXISTS p_list_workers_by_cruise;
+DELIMITER //
+CREATE PROCEDURE p_list_workers_by_cruise(IN p_cod_cruise INT)
+BEGIN
+    DECLARE v_name VARCHAR(30);
+    DECLARE v_surname VARCHAR(30);
+    DECLARE v_service VARCHAR(20);
+    DECLARE done INT DEFAULT FALSE;
+    DECLARE v_exists INT DEFAULT 0;
+    DECLARE cur_workers CURSOR FOR
+        SELECT name_worker, surname_worker, service
+        FROM worker
+        WHERE cod_cruise = p_cod_cruise;
+    DECLARE CONTINUE HANDLER FOR NOT FOUND SET done = TRUE;
+    -- Cruise exists?
+    SELECT COUNT(*) INTO v_exists
+    FROM cruise
+    WHERE cod_cruise = p_cod_cruise;
+    IF v_exists = 0 THEN
+        SIGNAL SQLSTATE '45000'
+        SET MESSAGE_TEXT = 'ERROR: Cruise code does not exist';
+    END IF;
+    OPEN cur_workers;
+    read_loop: LOOP
+        FETCH cur_workers INTO v_name, v_surname, v_service;
+        IF done THEN LEAVE read_loop; END IF;
+        SELECT CONCAT('Worker: ', v_name, ' ', v_surname,'\nService: ', v_service) AS 'Cruise ship crew';
+    END LOOP;
+    CLOSE cur_workers;
+END //
+DELIMITER ;
+
+
+
+use imperialmaritime;
+-- ---------------------------------------------------------
+-- 2. PROCEDURE: Make a booking
+-- ---------------------------------------------------------
+DROP PROCEDURE IF EXISTS p_create_booking;
+DELIMITER //
+CREATE PROCEDURE p_create_booking(
+    IN p_id_client VARCHAR(20),
+    IN p_cod_cruise INT,
+    IN p_origin VARCHAR(30),
+    IN p_destination VARCHAR(30),
+    IN p_startDate DATE,
+    IN p_endDate DATE,
+    IN p_room_number INT,
+    OUT p_result VARCHAR(100)
+)
+sp_create_booking: BEGIN
+    DECLARE v_capacity INT;
+    DECLARE v_booked INT;
+    DECLARE v_available INT;
+    DECLARE v_type VARCHAR(20);
+    DECLARE v_basePrice DOUBLE;
+    DECLARE v_finalPrice DOUBLE;
+    DECLARE v_num_rooms INT;
+    DECLARE v_booked_in_room INT;
+    DECLARE EXIT HANDLER FOR SQLEXCEPTION
+    BEGIN
+        ROLLBACK;
+        SET p_result = 'ERROR: Transaction failed. Booking not created.';
+    END;
+    IF LENGTH(p_id_client) > 9 THEN
+        SET p_result = 'ERROR: Client ID too long';
+        LEAVE sp_create_booking;
+    END IF;
+    IF p_startDate >= p_endDate THEN
+        SET p_result = 'ERROR: Invalid date range';
+        LEAVE sp_create_booking;
+    END IF;
+
+    START TRANSACTION;
+    IF (SELECT COUNT(*) FROM client WHERE id_client = p_id_client) = 0 THEN
+        SET p_result = 'ERROR: Client does not exist';
+        ROLLBACK; LEAVE sp_create_booking;
+    END IF;
+    IF (SELECT COUNT(*) FROM cruise WHERE cod_cruise = p_cod_cruise) = 0 THEN
+        SET p_result = 'ERROR: Cruise does not exist';
+        ROLLBACK; LEAVE sp_create_booking;
+    END IF;
+    SELECT num_rooms INTO v_num_rooms
+    FROM cruise
+    WHERE cod_cruise = p_cod_cruise;
+    IF v_num_rooms IS NULL OR p_room_number < 1 OR p_room_number > v_num_rooms THEN
+        SET p_result = 'ERROR: Room does not exist in this cruise';
+        ROLLBACK; LEAVE sp_create_booking;
+    END IF;
+    IF (SELECT COUNT(*) 
+        FROM book
+        WHERE id_client = p_id_client 
+          AND cod_cruise = p_cod_cruise
+          AND startDate = p_startDate) > 0 THEN
+        SET p_result = 'ERROR: Customer already booked this cruise';
+        ROLLBACK; LEAVE sp_create_booking;
+    END IF;
+    SELECT capacity_max INTO v_capacity
+    FROM cruise WHERE cod_cruise = p_cod_cruise;
+    SELECT COUNT(*) INTO v_booked
+    FROM book WHERE cod_cruise = p_cod_cruise;
+    SET v_available = v_capacity - v_booked;
+    IF v_available <= 0 THEN
+        SET p_result = 'ERROR: Cruise fully booked';
+        ROLLBACK; LEAVE sp_create_booking;
+    END IF;
+    SELECT COUNT(*) INTO v_booked_in_room
+    FROM book
+    WHERE cod_cruise = p_cod_cruise
+      AND room_number = p_room_number;
+    IF v_booked_in_room >= 5 THEN
+        SET p_result = 'ERROR: Room is full';
+        ROLLBACK; LEAVE sp_create_booking;
+    END IF;
+    SELECT type_cruise INTO v_type
+    FROM cruise
+    WHERE cod_cruise = p_cod_cruise;
+    CASE v_type
+        WHEN 'luxury' THEN SET v_basePrice = 1500;
+        WHEN 'premium' THEN SET v_basePrice = 1200;
+        WHEN 'family' THEN SET v_basePrice = 800;
+        WHEN 'expedition' THEN SET v_basePrice = 1000;
+        ELSE SET v_basePrice = 1000;
+    END CASE;
+    SET v_finalPrice = fn_calculate_final_price(p_id_client, p_cod_cruise, v_basePrice);
+    IF v_finalPrice IS NULL THEN
+        SET p_result = 'ERROR: Could not calculate final price';
+        ROLLBACK; LEAVE sp_create_booking;
+    END IF;
+    INSERT INTO book (id_client, cod_cruise, originCity, destinationCity, startDate, endDate, basePrice, finalPrice, room_number)
+    VALUES (p_id_client, p_cod_cruise, p_origin, p_destination, p_startDate, p_endDate, v_basePrice, v_finalPrice, p_room_number);
+    COMMIT;
+    SET p_result = 'Booking successfully created';
+END //
+DELIMITER ;
+
+
+
+
+use imperialmaritime;
+-- --------------------------------------------------------------
+-- 3. FUNCTION: Function with discount logic (age + cruise type)
+-- --------------------------------------------------------------
+DROP FUNCTION IF EXISTS fn_calculate_final_price;
+DELIMITER //
+CREATE FUNCTION fn_calculate_final_price(
+    p_id_client VARCHAR(20),
+    p_cod_cruise INT,
+    p_basePrice DOUBLE
+) RETURNS DOUBLE
+DETERMINISTIC
+BEGIN
+    DECLARE v_age INT;
+    DECLARE v_type VARCHAR(20);
+    DECLARE v_discount DOUBLE DEFAULT 0.0;
+    DECLARE v_final DOUBLE;
+    IF p_basePrice IS NULL OR p_basePrice <= 0 THEN
+        RETURN NULL;
+    END IF;
+    SELECT age_client INTO v_age
+    FROM client
+    WHERE id_client = p_id_client
+    LIMIT 1;
+    IF v_age IS NULL THEN
+        RETURN NULL;
+    END IF;
+
+    SELECT type_cruise INTO v_type
+    FROM cruise
+    WHERE cod_cruise = p_cod_cruise
+    LIMIT 1;
+    IF v_type IS NULL THEN
+        RETURN NULL;
+    END IF;
+    IF v_age >= 65 THEN
+        SET v_discount = 0.15;
+    ELSEIF v_type = 'family' AND v_age <= 12 THEN
+        SET v_discount = 0.30;
+    ELSEIF v_type = 'expedition' THEN
+        SET v_discount = 0.10;
+    END IF;
+    SET v_final = p_basePrice * (1 - v_discount);
+    RETURN ROUND(v_final, 2);
+END //
+DELIMITER ;
+
+
+use imperialmaritime;
+-- ---------------------------------------------------------
+-- 4. PROCEDURE: Occupancy report (cursor + calculations)
+-- ---------------------------------------------------------
+DROP PROCEDURE IF EXISTS p_cruise_occupancy_report;
+DELIMITER //
+CREATE PROCEDURE p_cruise_occupancy_report()
+BEGIN
+    DECLARE v_cod VARCHAR(20);
+    DECLARE v_name VARCHAR(50);
+    DECLARE v_capacity INT;
+    DECLARE v_booked INT;
+    DECLARE v_percent DECIMAL(6,2);
+    DECLARE done INT DEFAULT FALSE;
+    DECLARE cur CURSOR FOR 
+        SELECT c.cod_cruise, c.name_cruise, c.capacity_max, COUNT(b.id_client) AS booked
+        FROM cruise c
+        LEFT JOIN book b ON c.cod_cruise = b.cod_cruise
+        GROUP BY c.cod_cruise, c.name_cruise, c.capacity_max;
+    DECLARE CONTINUE HANDLER FOR NOT FOUND SET done = TRUE;
+
+    OPEN cur;
+    read_loop: LOOP
+        FETCH cur INTO v_cod, v_name, v_capacity, v_booked;
+        IF done THEN LEAVE read_loop; END IF;
+
+        -- Avoid division by zero
+        IF v_capacity IS NULL OR v_capacity = 0 THEN
+            SET v_percent = 0;
+        ELSE
+            SET v_percent = (v_booked / v_capacity) * 100;
+        END IF;
+
+        SELECT CONCAT('Cruise: ', v_name, ' (', v_cod, ')','\nOccupation: ', v_booked, '/', v_capacity,' (', ROUND(v_percent,2), '%)') AS 'Occupancy report';
+    END LOOP;
+    CLOSE cur;
+END //
+DELIMITER ;
+
+
+use imperialmaritime;
+-- -----------------------------------------------------------------
+-- 5. PROCEDURE: Cancel a booking in accordance with business rules
+-- -----------------------------------------------------------------
+DROP PROCEDURE IF EXISTS sp_cancel_booking;
+DELIMITER //
+CREATE PROCEDURE sp_cancel_booking(
+    IN p_id_client VARCHAR(20),
+    IN p_cod_cruise VARCHAR(20),
+    OUT p_result VARCHAR(100)
+)
+sp_cancel_booking: BEGIN
+    DECLARE v_start DATE;
+    DECLARE no_row_found BOOL DEFAULT FALSE;
+    -- Handler for SELECT queries with no results
+    DECLARE CONTINUE HANDLER FOR NOT FOUND SET no_row_found = TRUE;
+    -- General handler for SQL errors
+    DECLARE EXIT HANDLER FOR SQLEXCEPTION 
+    BEGIN
+        ROLLBACK;
+        SET p_result = 'ERROR: The booking could not be cancelled';
+    END;
+    START TRANSACTION;
+    -- Search for the booking
+    SELECT startDate INTO v_start
+    FROM book
+    WHERE id_client = p_id_client AND cod_cruise = p_cod_cruise
+    LIMIT 1;
+
+    IF no_row_found OR v_start IS NULL THEN
+        SET p_result = 'ERROR: Booking not found';
+        ROLLBACK; LEAVE sp_cancel_booking;
+    END IF;
+    -- Business rule: minimum 15 days
+    IF DATEDIFF(v_start, CURDATE()) < 15 THEN
+        SET p_result = 'ERROR: Cancellations must be made at least 15 days in advance';
+        ROLLBACK; LEAVE sp_cancel_booking;
+    END IF;
+    -- Cancel booking
+    DELETE FROM book
+    WHERE id_client = p_id_client AND cod_cruise = p_cod_cruise;
+
+    COMMIT;
+    SET p_result = 'Booking successfully cancelled';
+END //
+DELIMITER ;
+
+
+use imperialmaritime;
+-- -----------------------------------------------------------------
+-- 6. PROCEDURE: A customer's booking history
+-- -----------------------------------------------------------------
+DROP PROCEDURE IF EXISTS sp_client_booking_history;
+DELIMITER //
+CREATE PROCEDURE sp_client_booking_history(IN p_id_client VARCHAR(20))
+BEGIN
+    DECLARE v_exists INT DEFAULT 0;
+
+    SELECT COUNT(*) INTO v_exists
+    FROM client
+    WHERE id_client = p_id_client;
+
+    IF v_exists = 0 THEN
+        SIGNAL SQLSTATE '45000'
+        SET MESSAGE_TEXT = 'The customer does not exist';
+    END IF;
+
+    SELECT
+        b.cod_cruise, c.name_cruise, b.startDate, b.endDate, b.basePrice AS precio_base, b.finalPrice AS precio_final, ROUND(b.basePrice - b.finalPrice, 2) AS descuento_aplicado
+    FROM book b 
+    JOIN cruise c ON b.cod_cruise = c.cod_cruise
+    WHERE b.id_client = p_id_client;
+END //
+DELIMITER ;
+
+
+use imperialmaritime;
+-- -----------------------------------------------------------------
+-- 7. PROCEDURE: Revenue statistics by cruise type
+-- -----------------------------------------------------------------
+DROP PROCEDURE IF EXISTS sp_revenue_by_type;
+DELIMITER //
+CREATE PROCEDURE sp_revenue_by_type()
+BEGIN
+    DECLARE v_type VARCHAR(20);
+    DECLARE v_total DOUBLE;
+    DECLARE done INT DEFAULT FALSE;
+    DECLARE cur CURSOR FOR
+        SELECT c.type_cruise, IFNULL(SUM(b.finalPrice), 0)
+        FROM cruise c
+        LEFT JOIN book b ON c.cod_cruise = b.cod_cruise
+        GROUP BY c.type_cruise;
+
+    DECLARE CONTINUE HANDLER FOR NOT FOUND SET done = TRUE;
+    OPEN cur;
+    read_loop: LOOP
+        FETCH cur INTO v_type, v_total;
+        IF done THEN LEAVE read_loop; END IF;
+
+        SELECT CONCAT('Type: ', v_type,'\nTotal revenue: ', ROUND(v_total, 2), ' €') AS 'Revenue by cruise type';
+    END LOOP;
+    CLOSE cur;
+END //
+DELIMITER ;
+use imperialmaritime;
+-- -----------------------------------------------------------------
+-- 8. FUNCTIONS: Availability of places
+-- -----------------------------------------------------------------
+DROP FUNCTION IF EXISTS fn_get_available_seats;
+DELIMITER //
+CREATE FUNCTION fn_get_available_seats(p_cod_cruise VARCHAR(20))
+RETURNS INT
+	DETERMINISTIC
+BEGIN
+    DECLARE v_capacity INT DEFAULT NULL;
+    DECLARE v_booked INT DEFAULT 0;
+    -- Achieve maximum capacity
+    SELECT capacity_max INTO v_capacity
+    FROM cruise
+    WHERE cod_cruise = p_cod_cruise
+    LIMIT 1;
+    -- If there is no cruise
+    IF v_capacity IS NULL THEN
+        RETURN -1;
+    END IF;
+    -- Check availability
+    SELECT COUNT(*) INTO v_booked
+    FROM book
+    WHERE cod_cruise = p_cod_cruise;
+    RETURN v_capacity - v_booked;
+END //
+DELIMITER ;
+
+use imperialmaritime;
+-- -----------------------------------------------------------------
+-- 9. FUNCTIONS: Cruise duration in days (to be displayed in the app)
+-- -----------------------------------------------------------------
+DROP FUNCTION IF EXISTS fn_calculate_trip_duration;
+DELIMITER //
+CREATE FUNCTION fn_calculate_trip_duration(p_cod_cruise VARCHAR(20), p_id_client VARCHAR(20))
+RETURNS INT
+    DETERMINISTIC
+BEGIN
+    DECLARE v_start DATE DEFAULT NULL;
+    DECLARE v_end DATE DEFAULT NULL;
+    -- View booking details
+    SELECT startDate, endDate
+    INTO v_start, v_end
+    FROM book
+    WHERE cod_cruise = p_cod_cruise
+      AND id_client = p_id_client
+    LIMIT 1;
+    -- If there is no booking
+    IF v_start IS NULL OR v_end IS NULL THEN
+        RETURN -1;
+    END IF;
+    RETURN DATEDIFF(v_end, v_start) + 1;
+END //
+DELIMITER ;
+
+
+use imperialmaritime;
+-- -----------------------------------------------------------------
+-- 10. FUNCTIONS: Total expenditure by a customer
+-- -----------------------------------------------------------------
+DROP FUNCTION IF EXISTS fn_get_client_total_spent;
+DELIMITER //
+CREATE FUNCTION fn_get_client_total_spent(p_id_client VARCHAR(20))
+RETURNS DOUBLE
+DETERMINISTIC
+BEGIN
+    DECLARE v_exists INT DEFAULT 0;
+    DECLARE v_total DOUBLE DEFAULT 0.0;
+
+    SELECT COUNT(*) INTO v_exists
+    FROM client
+    WHERE id_client = p_id_client;
+
+    IF v_exists = 0 THEN
+        RETURN -1;
+    END IF;
+
+    SELECT IFNULL(SUM(finalPrice), 0)
+    INTO v_total
+    FROM book
+    WHERE id_client = p_id_client;
+    RETURN ROUND(v_total, 2);
+END //
+DELIMITER ;
