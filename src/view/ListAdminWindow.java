@@ -73,17 +73,17 @@ public class ListAdminWindow extends JDialog implements ActionListener {
 		int row = table.getSelectedRow();
 
 		if (e.getSource() == btnDELETE) {
-			//creo que habría que poner una confirmación
+			//creo que habría que poner una confirmación!!!!!!!!!
 			if (row == -1) {
-				// No hay fila seleccionada
+				// No row selected
 				JOptionPane.showMessageDialog(this, "Select an administrator to delete.");
 				return;
 			}
 
-			// Obtener el nombre de la columna 0
+			// Get the name of column 0
 			String adminName = table.getValueAt(row, 0).toString();
 
-			// Llamar al controlador con el nombre
+			// Call the controller by name
 			if (cont.deleteAdministrator(adminName)) {
 				refreshModel();
 				JOptionPane.showMessageDialog(this, "Administrator has been deleted.");
@@ -101,7 +101,7 @@ public class ListAdminWindow extends JDialog implements ActionListener {
 				int modelRow = table.convertRowIndexToModel(viewRow);
 				TableModel model = table.getModel();
 				String adminName = (String) model.getValueAt(modelRow, 0);
-				// Abrir la ventana de cambiar contraseña
+				// Open the password change window
 				ChangePasswordAdminWindow adminWindow = new ChangePasswordAdminWindow(this, cont, adminName);
 				adminWindow.setVisible(true);
 
@@ -119,7 +119,7 @@ public class ListAdminWindow extends JDialog implements ActionListener {
 	}
 
 	private void loadTable() {
-		// Crear modelo de tabla no editable
+		// Create a non-editable table template
 		DefaultTableModel modelo = new DefaultTableModel(new String[] { "Name", "Password" },
 				0) {
 			private static final long serialVersionUID = 1L;
@@ -127,19 +127,19 @@ public class ListAdminWindow extends JDialog implements ActionListener {
 			@Override
 			public boolean isCellEditable(int row, int column) {
 				return false;
-			}// Esto es para que la tabla no sea editable
+			}// This is to ensure the table cannot be edited
 		};
 		table = new JTable(modelo);
-		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);// Permitir seleccionar solo una fila
+		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);// Allow only one row to be selected
 		refreshModel();
 	}
 
 	public void refreshModel() {
-		List<Administrator> administrators = cont.getAllAdministrators();// Obtener la lista actualizada de administradores
-		DefaultTableModel modelo = (DefaultTableModel) table.getModel();// Obtener el modelo de la tabla
+		List<Administrator> administrators = cont.getAllAdministrators(); //Get the updated list of administrators
+		DefaultTableModel modelo = (DefaultTableModel) table.getModel(); //Retrieve the table model
 		//Limpiar tabla
 		modelo.setRowCount(0);
-		//Rellenar tabla
+		//Fill in the table
 		for (Administrator admin : administrators) {
 			modelo.addRow(new Object[] {admin.getName(),admin.getPassword()});
 		}

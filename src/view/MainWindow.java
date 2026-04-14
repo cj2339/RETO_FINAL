@@ -29,11 +29,9 @@ public class MainWindow extends JFrame implements ActionListener {
 	private JLabel lblNewLabel;
 	private Image imagenFondo = new ImageIcon("images/ManagementAnchor.png").getImage();	
 
-	//preguntar sobre esta herencia
-	public MainWindow(LoginWindow loginWindow, LoginController cont, String adminName) {
+	public MainWindow(LoginWindow loginWindow, LoginController cont) {
 		super();
 		this.cont=cont;
-		this.adminName = adminName;
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		contentPane = new JPanel() {
 			@Override

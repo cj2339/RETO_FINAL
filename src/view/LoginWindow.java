@@ -118,7 +118,7 @@ public class LoginWindow extends JDialog implements ActionListener {
 				if (cont.checkUser(admin)) {
 					cont.setLoggedInAdminName(admin.getName());
 					dispose();
-					MainWindow mainWindow = new MainWindow(this, cont, admin.getName());
+					MainWindow mainWindow = new MainWindow(this, cont);
 					mainWindow.setVisible(true);
 				} else {
 					atempts--;
