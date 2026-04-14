@@ -66,8 +66,6 @@ public class ListAdminWindow extends JDialog implements ActionListener {
 		btnMODIFY.setBounds(400, 303, 97, 25);
 		contentPane.add(btnMODIFY);
 
-		// Aplicar cursor de ancla a los botones
-		// CustomCursor.applyToButtons(this); ESTO LO HE HECHO CON IA
 	}
 
 	@Override
@@ -103,9 +101,9 @@ public class ListAdminWindow extends JDialog implements ActionListener {
 				int modelRow = table.convertRowIndexToModel(viewRow);
 				TableModel model = table.getModel();
 				String adminName = (String) model.getValueAt(modelRow, 0);
-			    // Abrir la ventana de cambiar contraseña
+				// Abrir la ventana de cambiar contraseña
 				ChangePasswordAdminWindow adminWindow = new ChangePasswordAdminWindow(this, cont, adminName);
-		        adminWindow.setVisible(true);
+				adminWindow.setVisible(true);
 
 				refreshModel();
 			} else {
@@ -137,13 +135,13 @@ public class ListAdminWindow extends JDialog implements ActionListener {
 	}
 
 	public void refreshModel() {
-	    List<Administrator> administrators = cont.getAllAdministrators();// Obtener la lista actualizada de administradores
-	    DefaultTableModel modelo = (DefaultTableModel) table.getModel();// Obtener el modelo de la tabla
-	    //Limpiar tabla
-	    modelo.setRowCount(0);
-	    //Rellenar tabla
-	    for (Administrator admin : administrators) {
-	        modelo.addRow(new Object[] {admin.getName(),admin.getPassword()});
-	    }
+		List<Administrator> administrators = cont.getAllAdministrators();// Obtener la lista actualizada de administradores
+		DefaultTableModel modelo = (DefaultTableModel) table.getModel();// Obtener el modelo de la tabla
+		//Limpiar tabla
+		modelo.setRowCount(0);
+		//Rellenar tabla
+		for (Administrator admin : administrators) {
+			modelo.addRow(new Object[] {admin.getName(),admin.getPassword()});
+		}
 	}
 }

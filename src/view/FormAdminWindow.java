@@ -85,7 +85,7 @@ public class FormAdminWindow extends JDialog implements ActionListener {
 		cancelButton.addActionListener(this);
 
 		// Aplicar cursor de ancla a los botones
-//		CustomCursor.applyToButtons(this); ESTO LO HE HECHO CON IA
+		CustomCursor.applyToButtons(this); //ESTO LO HE HECHO CON IA
 	}
 
 	@Override
