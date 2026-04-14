@@ -13,6 +13,7 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 
 import controller.LoginController;
+import model.Cruise;
 import model.Language;
 import model.TypeWorker;
 import model.Worker;
@@ -78,6 +79,7 @@ public class ListWorkerWindow extends JDialog implements ActionListener {
 		int row = table.getSelectedRow();
 		int confirm;
 		boolean selected=true;
+		String idWorker = table.getValueAt(row, 0).toString();
 
 		if (e.getSource() == btnDELETE&&selected) {
 			if (row == -1) {
@@ -89,9 +91,14 @@ public class ListWorkerWindow extends JDialog implements ActionListener {
 				if(confirm==JOptionPane.YES_OPTION) {
 					// Llamar al controlador con el código
 					DefaultTableModel modelo = (DefaultTableModel) table.getModel();
-					modelo.removeRow(row);
-					refreshModel();
-					JOptionPane.showMessageDialog(this, "Worker has been deleted.");
+					if(cont.deleteWorker(idWorker)) {
+						refreshModel();
+						JOptionPane.showMessageDialog(this, "Worker has been deleted.");
+					}else {
+						JOptionPane.showMessageDialog(this, "Worker not deleted.");
+					}
+					
+					
 				}
 				
 			}else {
@@ -101,6 +108,8 @@ public class ListWorkerWindow extends JDialog implements ActionListener {
 		}else if(e.getSource()==btnMODIFY) {
 			Worker worker=new Worker();
 			int viewRow=table.getSelectedRow();
+			int cruiseCode;
+			
 			if(viewRow == -1) {
 				JOptionPane.showMessageDialog(this, "Select a worker to modify");
 			}else {
@@ -110,13 +119,21 @@ public class ListWorkerWindow extends JDialog implements ActionListener {
 				worker.setService(TypeWorker.valueOf((String)model.getValueAt(modelRow,1)));
 				worker.setName((String) model.getValueAt(modelRow, 2));
 				worker.setSurname((String) model.getValueAt(modelRow, 3));
-				worker.setHiringDate((Date) model.getValueAt(modelRow, 4));
+				try {
+					String dateStr = model.getValueAt(modelRow, 4).toString();
+		            worker.setHiringDate(new SimpleDateFormat("dd/MM/yyyy").parse(dateStr));
+				}catch(Exception d) {
+					System.out.println("Error date format: "+d.getMessage());
+				}
 				worker.setPhoneNumber((String) model.getValueAt(modelRow, 5));
 				worker.setEmail((String) model.getValueAt(modelRow, 6));
-				worker.setAge((int)model.getValueAt(modelRow, 7));
-				worker.setSpanish((boolean)model.getValueAt(modelRow, 8));
-				worker.setEnglish((boolean)model.getValueAt(modelRow, 9));
-				worker.setCodCruise((Integer)model.getValueAt(modelRow,10));
+				worker.setAge(Integer.parseInt(model.getValueAt(modelRow, 7).toString()));
+				worker.setSpanish((Boolean)model.getValueAt(modelRow, 8));
+				worker.setEnglish((Boolean)model.getValueAt(modelRow, 9));
+				cruiseCode = Integer.parseInt(model.getValueAt(modelRow, 10).toString());
+		        Cruise tempCruise = new Cruise();
+		        tempCruise.setCodCruise(cruiseCode); //se crea un objeto crucero solo con el código
+		        worker.setCruise(tempCruise);
 				
 				FormWorkerWindow workerFormWindow=new FormWorkerWindow(this, cont, worker, true);
 				workerFormWindow.setVisible(true);
@@ -165,7 +182,7 @@ public class ListWorkerWindow extends JDialog implements ActionListener {
 					worker.getAge(),
 					worker.isSpanish(),
 					worker.isEnglish(),
-					worker.getCodCruise()
+					worker.getCruise().getCodCruise()
 			}); 
 		}
 	}

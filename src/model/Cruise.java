@@ -77,5 +77,10 @@ public class Cruise {
 	public void setCapacityMax(int capacityMax) {
 		this.capacityMax = capacityMax;
 	}
+	
+	@Override
+	public String toString() {
+	    return codCruise + " - " + nameCruise;
+	}
 
 }

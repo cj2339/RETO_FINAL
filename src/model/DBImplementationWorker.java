@@ -22,7 +22,7 @@ public class DBImplementationWorker implements WorkerDAO {
 	private String passwordDB;
 
 	final String SQLSELECTALL = "SELECT w.id_worker, w.service, w.name_worker, w.surname_worker, w.hiring_date, w.phone_number, w.email, "
-			+ "w.age, w.spanish_language, w.cod_cruise, c.name_cruise, c.type_cruise, c.num_rooms, c.capacity_max FROM worker w "
+			+ "w.age, w.spanish_language, w.english_language, w.cod_cruise, c.name_cruise, c.type_cruise, c.num_rooms, c.capacity_max FROM worker w "
 			+ "JOIN cruise c ON w.cod_cruise=c.cod_cruise";//SQL query to select all workers from the database
 	final String SQLDELETEBYCODE ="DELETE FROM worker WHERE id_worker = ?";
 	final String SQLUPDATEBYCODE ="UPDATE worker SET id_worker";
@@ -58,7 +58,7 @@ public class DBImplementationWorker implements WorkerDAO {
 			stmt = con.prepareStatement(SQLSELECTALL);
 			ResultSet resultset = stmt.executeQuery();
 
-			while (resultset.next()) {
+			while (resultset.next()) { 
 				TypeWorker typeWorker=TypeWorker.valueOf(resultset.getString("service").toUpperCase());// Al conectarlo con la base de datos para que salga en mayusculas
 				TypeCruise typeCruise=TypeCruise.valueOf(resultset.getString("type_cruise").toUpperCase());
 				Cruise cruise=new Cruise(

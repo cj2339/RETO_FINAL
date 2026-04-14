@@ -277,9 +277,9 @@ public class LoginController {
 //		return daoWorker.getClientCodes();
 //	}
 //
-//	public boolean deleteWorker(String id) {
-//		return daoWorker.deleteWorker(id);
-//	}
+	public boolean deleteWorker(String id) {
+		return daoWorker.deleteWorker(id);
+	}
 //
 //	public boolean deleteClient(String id) {
 //		return daoWorker.deleteClient(id);

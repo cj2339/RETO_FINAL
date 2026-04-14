@@ -55,6 +55,7 @@ public class FormWorkerWindow extends JDialog implements ActionListener{
 	public FormWorkerWindow(ListWorkerWindow workerListWindow, LoginController cont, Worker worker, boolean b) {
 		super(workerListWindow, true);
 		this.cont=cont;
+		this.worker=worker;
 
 		if (worker==null) {
 			setTitle("Add worker");
@@ -203,24 +204,15 @@ public class FormWorkerWindow extends JDialog implements ActionListener{
 		comboBoxCruiseCode = new JComboBox<Cruise>();
 		List<Cruise> cruises = cont.getAllCruise();
 		for(Cruise c:cruises) {
-			comboBoxCruiseCode.addItem(c.getCodCruise()+" "+c.getNameCruise());
+			comboBoxCruiseCode.addItem(c);
 		}
-		comboBoxCruiseCode.setBounds(318, 543, 151, 20);
+		comboBoxCruiseCode.setBounds(318, 541, 175, 25);
 		contentPanel.add(comboBoxCruiseCode);
 		btnClear.addActionListener(this);
 
 		if(worker!=null) {
 			textFieldId.setText(worker.getIdWorker());
-			if(worker.getService()==TypeWorker.CAPTAIN) {
-				comboBoxService.setSelectedIndex(0);
-			}else if(worker.getService()==TypeWorker.COOK) {
-				comboBoxService.setSelectedIndex(1);
-			}else if(worker.getService()==TypeWorker.GUIDE) {
-				comboBoxService.setSelectedIndex(2);
-			}else if(worker.getService()==TypeWorker.RECEPTIONIST) {
-				comboBoxService.setSelectedIndex(3);
-			}
-
+			comboBoxService.setSelectedItem(worker.getService());
 			textFieldName.setText(worker.getName());
 			textFieldSurname.setText(worker.getSurname());
 			calendarHiringDate.setDate(worker.getHiringDate());
@@ -237,10 +229,27 @@ public class FormWorkerWindow extends JDialog implements ActionListener{
 			}else {
 				chckbxEnglish.setSelected(false);
 			}
-			//comboBoxCodCruise.setSelectedIndex();
+			selectCruiseCode();
+			
+			
 		}
 		
 		
+	}
+	
+	public void selectCruiseCode() {
+		int id = worker.getCruise().getCodCruise();
+		int i = 0;
+		boolean found = false;
+		//getItemCount cuenta la cantidad de elementos de un combo
+		while (i < comboBoxCruiseCode.getItemCount() && !found) {
+		    Cruise c = (Cruise) comboBoxCruiseCode.getItemAt(i);
+		    if (c.getCodCruise()==id) {
+		        comboBoxCruiseCode.setSelectedIndex(i);
+		        found = true;
+		    }
+		    i++;
+		}
 	}
 
 	@Override
@@ -256,7 +265,7 @@ public class FormWorkerWindow extends JDialog implements ActionListener{
 			spinnerAge.setValue(18);
 			chckbxSpanish.setSelected(false);
 			chckbxEnglish.setSelected(false);
-			//comboBoxCodCruise.setSelectedIndex(0);
+			comboBoxCruiseCode.setSelectedIndex(1);
 		}
 		if(e.getSource()==btnConfirm) {
 
