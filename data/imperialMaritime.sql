@@ -71,14 +71,15 @@ CREATE TABLE book(
     startDate DATE,
     endDate DATE,
     basePrice DOUBLE,
+    finalPrice DOUBLE,
     PRIMARY KEY(cod_cruise, id_client, startDate),
     FOREIGN KEY(cod_cruise) REFERENCES cruise(cod_cruise) ON UPDATE CASCADE ON DELETE CASCADE,
     FOREIGN KEY(id_client) REFERENCES client(id_client) ON UPDATE CASCADE ON DELETE CASCADE
 );
 
 INSERT INTO book VALUES 
-('11111111A', 1, 'London', 'Oslo', '2026-06-01', '2026-06-15', 1200.50),
-('22222222B', 2, 'Miami', 'Nassau', '2026-07-10', '2026-07-17', 850.00),
-('33333333C', 1, 'London', 'Oslo', '2026-06-01', '2026-06-15', 1200.50),
-('44444444D', 4, 'Athens', 'Rome', '2026-08-05', '2026-08-12', 1500.00),
-('55555555E', 5, 'Lisbon', 'Malaga', '2026-09-20', '2026-09-25', 450.00);
+('11111111A', 1, 'London', 'Oslo', '2026-06-01', '2026-06-15', 1200.50, 1200.50),
+('22222222B', 2, 'Miami', 'Nassau', '2026-07-10', '2026-07-17', 850.00, 850.00),
+('33333333C', 1, 'London', 'Oslo', '2026-06-01', '2026-06-15', 1200.50, 1200.50),
+('44444444D', 4, 'Athens', 'Rome', '2026-08-05', '2026-08-12', 1500.00, 1500.00),
+('55555555E', 5, 'Lisbon', 'Malaga', '2026-09-20', '2026-09-25', 450.00, 450.00);

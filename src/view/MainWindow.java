@@ -26,6 +26,7 @@ public class MainWindow extends JFrame implements ActionListener {
 	private JButton btnAdmins;
 	private JPanel contentPane;
 	private JButton btnBook;
+	private JButton btnExport;
 	private JLabel lblNewLabel;
 	private Image imagenFondo = new ImageIcon("images/ManagementAnchor.png").getImage();	
 
@@ -78,8 +79,25 @@ public class MainWindow extends JFrame implements ActionListener {
 		btnBook.setBounds(299, 168, 112, 38);
 		contentPane.add(btnBook);
 		btnBook.addActionListener(this);
+		
+		btnExport = new JButton("EXPORT XML");
+		btnExport.setBounds(170, 210, 120, 30);
+		contentPane.add(btnExport);
+		btnExport.addActionListener(this);
+
 	}
 
+	private void exportXML() {
+	    try {
+	        export.XMLExporter exporter = new export.XMLExporter(cont);
+	        exporter.exportToXML();
+	        JOptionPane.showMessageDialog(this, "XML exported successfully");
+	    } catch (Exception ex) {
+	        JOptionPane.showMessageDialog(this, "Error exporting the XML: " + ex.getMessage());
+	    }
+	}
+
+	
 	@Override
 	public void actionPerformed(ActionEvent e) {
 
@@ -102,7 +120,10 @@ public class MainWindow extends JFrame implements ActionListener {
 				clientManagement.setVisible(true);
 			} else if (e.getSource().equals(btnBook)) {
 				
+			}else if (e.getSource().equals(btnExport)) {
+			    exportXML();
 			}
+
 				
 			
 			
