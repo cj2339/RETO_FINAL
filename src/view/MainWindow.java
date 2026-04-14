@@ -79,7 +79,7 @@ public class MainWindow extends JFrame implements ActionListener {
 		btnBook.setBounds(299, 168, 112, 38);
 		contentPane.add(btnBook);
 		btnBook.addActionListener(this);
-		
+
 		btnExport = new JButton("EXPORT XML");
 		btnExport.setBounds(170, 210, 120, 30);
 		contentPane.add(btnExport);
@@ -87,22 +87,22 @@ public class MainWindow extends JFrame implements ActionListener {
 
 	}
 
-	private void exportXML() {
-	    try {
-	        export.XMLExporter exporter = new export.XMLExporter(cont);
-	        exporter.exportToXML();
-	        JOptionPane.showMessageDialog(this, "XML exported successfully");
-	    } catch (Exception ex) {
-	        JOptionPane.showMessageDialog(this, "Error exporting the XML: " + ex.getMessage());
-	    }
+	public void exportXML() {
+		try {
+			export.XMLExporter exporter = new export.XMLExporter(cont);
+			exporter.exportToXML();
+			JOptionPane.showMessageDialog(this, "XML exported successfully");
+		} catch (Exception ex) {
+			JOptionPane.showMessageDialog(this, "Error exporting the XML: " + ex.getMessage());
+		}
 	}
 
-	
+
 	@Override
 	public void actionPerformed(ActionEvent e) {
 
 		String[] options = {"Add", "Eliminate", "Modify", "See"};
-		
+
 
 		if (e.getSource().equals(btnAdmins)) {
 			ListAdminWindow listAdmin = new ListAdminWindow(this, cont);
@@ -119,14 +119,10 @@ public class MainWindow extends JFrame implements ActionListener {
 				ListClientWindow clientManagement = new ListClientWindow(this, cont);
 				clientManagement.setVisible(true);
 			} else if (e.getSource().equals(btnBook)) {
-				
-			}else if (e.getSource().equals(btnExport)) {
-			    exportXML();
-			}
 
-				
-			
-			
+			}else if (e.getSource().equals(btnExport)) {
+				exportXML();
+			}
 		}
 	}
 }
