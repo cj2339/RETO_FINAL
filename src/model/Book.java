@@ -12,6 +12,7 @@ public class Book {
 	private Date endDate;
 	private double basePrice;
 	private double finalPrice;
+	private int roomNumber;
 
 	public Book() {
 		this.idClient = null;
@@ -22,10 +23,11 @@ public class Book {
 		this.endDate = null;
 		this.basePrice = 0;
 		this.finalPrice = 0;
+		this.roomNumber = 0;
 	}
 
 	public Book(String idClient, int codCruise, String originCity, String destinationCity,
-			Date startDate, Date endDate, double basePrice, double finalPrice) {
+			Date startDate, Date endDate, double basePrice, double finalPrice, int roomNumber) {
 		this.idClient = idClient;
 		this.codCruise = codCruise;
 		this.originCity = originCity;
@@ -34,6 +36,7 @@ public class Book {
 		this.endDate = endDate;
 		this.basePrice = basePrice;
 		this.finalPrice = finalPrice;
+		this.roomNumber = roomNumber;
 	}
 
 	public String getIdClient() {
@@ -60,6 +63,9 @@ public class Book {
 	public double getFinalPrice() { 
 		return finalPrice; 
 	}
+	public int getRoomNumber() {
+		return roomNumber; 
+	}
 	public void setIdClient(String idClient) {
 		this.idClient = idClient; 
 	}
@@ -83,5 +89,8 @@ public class Book {
 	}
 	public void setFinalPrice(double finalPrice) { 
 		this.finalPrice = finalPrice; 
+	}
+	public void setRoomNumber(int roomNumber) {
+		this.roomNumber = roomNumber; 
 	}
 }

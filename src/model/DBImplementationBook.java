@@ -1,27 +1,34 @@
 package model;
 
-import java.sql.*;
+import java.sql.CallableStatement;
+import java.sql.Connection;
+import java.sql.Date;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Types;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
 
 public class DBImplementationBook implements BookDAO {
 
-    private Connection con;
-    private PreparedStatement stmt;
-
+    private Connection connection;
+    private PreparedStatement statement;
     private ResourceBundle configFile;
+    private String driverDB;//TENGO QUE PREGUNTARLE A LEIRE!!!!!
     private String urlDB;
     private String userDB;
     private String passwordDB;
 
-    final String SQL_GET_ALL_BOOKINGS = "SELECT * FROM book";
-    final String SQL_DELETE_BOOKING = "DELETE FROM book WHERE id_client = ? AND cod_cruise = ? AND startDate = ?";
- // The INSERT is performed via a procedure --> there is no SQL_INSERT_BOOK
+    // SQL queries
+    final String SQLSELECTALL ="SELECT id_client, cod_cruise, originCity, destinationCity, startDate, endDate, basePrice, finalPrice, room_number FROM book";
+    final String SQLDELETE ="DELETE FROM book WHERE id_client = ? AND cod_cruise = ? AND startDate = ?";
 
     public DBImplementationBook() {
         this.configFile = ResourceBundle.getBundle("configClass");
+        this.driverDB = this.configFile.getString("Driver");
         this.urlDB = this.configFile.getString("Conn");
         this.userDB = this.configFile.getString("DBUser");
         this.passwordDB = this.configFile.getString("DBPass");
@@ -29,51 +36,10 @@ public class DBImplementationBook implements BookDAO {
 
     private void openConnection() {
         try {
-            con = DriverManager.getConnection(urlDB, userDB, passwordDB);
+            connection = DriverManager.getConnection(urlDB, this.userDB, this.passwordDB);
         } catch (SQLException e) {
-            System.out.println("Error opening the database: " + e.getMessage());
+            System.out.println("Error opening DB: " + e.getMessage());
         }
-    }
-
-    @Override
-    public boolean createBooking(Book b) {
-        boolean ok = false;
-        openConnection();
-        try {
-            CallableStatement cs = con.prepareCall("{CALL createBooking(?,?,?,?,?,?,?,?)}");
-            cs.setString(1, b.getIdClient());
-            cs.setInt(2, b.getCodCruise());
-            cs.setString(3, b.getOriginCity());
-            cs.setString(4, b.getDestinationCity());
-            cs.setDate(5, new java.sql.Date(b.getStartDate().getTime()));
-            cs.setDate(6, new java.sql.Date(b.getEndDate().getTime()));
-            cs.setDouble(7, b.getBasePrice());
-            cs.setDouble(8, b.getFinalPrice());
-            ok = cs.executeUpdate() >= 0; // executeUpdate returns 0 in procedures
-            cs.close();
-            con.close();
-        } catch (SQLException e) {
-            System.out.println("Error creating booking: " + e.getMessage());
-        }
-        return ok;
-    }
-
-    @Override
-    public boolean deleteBooking(String idClient, int codCruise, Date startDate) {
-        boolean ok = false;
-        openConnection();
-        try {
-            stmt = con.prepareStatement(SQL_DELETE_BOOKING);
-            stmt.setString(1, idClient);
-            stmt.setInt(2, codCruise);
-            stmt.setDate(3, new java.sql.Date(startDate.getTime()));
-            ok = stmt.executeUpdate() > 0;
-            stmt.close();
-            con.close();
-        } catch (SQLException e) {
-            System.out.println("Error deleting booking: " + e.getMessage());
-        }
-        return ok;
     }
 
     @Override
@@ -81,8 +47,8 @@ public class DBImplementationBook implements BookDAO {
         List<Book> list = new ArrayList<>();
         openConnection();
         try {
-            stmt = con.prepareStatement(SQL_GET_ALL_BOOKINGS);
-            ResultSet rs = stmt.executeQuery();
+            statement = connection.prepareStatement(SQLSELECTALL);
+            ResultSet rs = statement.executeQuery();
             while (rs.next()) {
                 list.add(new Book(
                     rs.getString("id_client"),
@@ -92,37 +58,73 @@ public class DBImplementationBook implements BookDAO {
                     rs.getDate("startDate"),
                     rs.getDate("endDate"),
                     rs.getDouble("basePrice"),
-                    rs.getDouble("finalPrice")
+                    rs.getDouble("finalPrice"),
+                    rs.getInt("room_number")
                 ));
             }
             rs.close();
-            stmt.close();
-            con.close();
+            statement.close();
+            connection.close();
         } catch (SQLException e) {
-            System.out.println("Error retrieving bookings: " + e.getMessage());
+            System.out.println("Error: " + e.getMessage());
         }
         return list;
     }
 
     @Override
-    public boolean updateBooking(Book oldB, Book newB) {
-        boolean ok = true;
-        // 1. Try to delete the old booking
-        boolean deleted = deleteBooking(
-            oldB.getIdClient(),
-            oldB.getCodCruise(),
-            oldB.getStartDate()
-        );
-        if (!deleted) {
-            ok = false;
-        }
-        // 2. If it has been deleted, create a new one
-        if (ok) {
-            boolean created = createBooking(newB);
-            if (!created) {
-                ok = false;
-            }
+    public boolean createBooking(Book b) {
+        boolean ok = false;
+        openConnection();
+
+        try {
+            CallableStatement cs = connection.prepareCall("{CALL p_create_booking(?,?,?,?,?,?,?,?)}");
+            cs.setString(1, b.getIdClient());
+            cs.setInt(2, b.getCodCruise());
+            cs.setString(3, b.getOriginCity());
+            cs.setString(4, b.getDestinationCity());
+            cs.setDate(5, new Date(b.getStartDate().getTime()));
+            cs.setDate(6, new Date(b.getEndDate().getTime()));
+            cs.setInt(7, b.getRoomNumber());
+            cs.registerOutParameter(8, Types.VARCHAR);
+            cs.execute();
+            String result = cs.getString(8);
+            System.out.println("Procedure result: " + result);
+            ok = (result != null && result.startsWith("Booking successfully"));
+            cs.close();
+            connection.close();
+        } catch (SQLException e) {
+            System.out.println("Error creating booking: " + e.getMessage());
         }
         return ok;
+    }
+
+    @Override
+    public boolean deleteBooking(String idClient, int codCruise, java.util.Date startDate) {
+        boolean ok = false;
+        openConnection();
+        try {
+            statement = connection.prepareStatement(SQLDELETE);
+            statement.setString(1, idClient);
+            statement.setInt(2, codCruise);
+            statement.setDate(3, new Date(startDate.getTime()));
+            ok = statement.executeUpdate() > 0;
+            statement.close();
+            connection.close();
+        } catch (SQLException e) {
+            System.out.println("Error deleting booking: " + e.getMessage());
+        }
+        return ok;
+    }
+
+
+    @Override
+    public boolean updateBooking(Book oldBooking, Book newBooking) {
+        boolean deleted = deleteBooking(
+            oldBooking.getIdClient(),
+            oldBooking.getCodCruise(),
+            oldBooking.getStartDate()
+        );
+        if (!deleted) return false;
+        return createBooking(newBooking);
     }
 }

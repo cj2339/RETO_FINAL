@@ -119,7 +119,8 @@ public class MainWindow extends JFrame implements ActionListener {
 				ListClientWindow clientManagement = new ListClientWindow(this, cont);
 				clientManagement.setVisible(true);
 			} else if (e.getSource().equals(btnBook)) {
-
+				ListBookWindow bookingWindow = new ListBookWindow(this, cont);
+				bookingWindow.setVisible(true);
 			}else if (e.getSource().equals(btnExport)) {
 				exportXML();
 			}
