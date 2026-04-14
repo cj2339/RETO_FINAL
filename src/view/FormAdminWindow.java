@@ -89,7 +89,7 @@ public class FormAdminWindow extends JDialog implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == okButton) {
-			// Validar que los campos no estén vacíos
+			// Check that the fields are not empty
 			if (txtName.getText().trim().isEmpty() || txtPassword.getText().trim().isEmpty()) {
 				JOptionPane.showMessageDialog(this, "Please fill in all fields.");
 				return;

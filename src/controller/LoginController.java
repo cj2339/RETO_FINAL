@@ -1,14 +1,18 @@
 package controller;
 
+import java.util.Date;
 import java.util.List;
 
 import model.Administrator;
 import model.AdministratorDAO;
+import model.Book;
+import model.BookDAO;
 import model.ClientDAO;
 import model.Cruise;
 import model.CruiseDAO;
 import model.DBImplementationClient;
 import model.DBImplementationAdministrator;
+import model.DBImplementationBook;
 import model.DBImplementationCruise;
 import model.DBImplementationWorker;
 import model.Worker;
@@ -22,6 +26,7 @@ public class LoginController {
 	CruiseDAO daoCruise = new DBImplementationCruise();
 	WorkerDAO daoWorker = new DBImplementationWorker();
 	ClientDAO daoClient = new DBImplementationClient();
+	BookDAO daoBooking = new DBImplementationBook();
 	private String loggedInAdminName;
 
 	// Cruise CRUD Methods
@@ -318,6 +323,23 @@ public class LoginController {
 		return daoAdministrator.updatePassword(adminName, newPassword);
 	}
 
+	//Book Methods
+	public List<Book> getAllBookings() {
+	    return daoBooking.getAllBookings();
+	}
+
+	public boolean createBooking(Book b) {
+	    return daoBooking.createBooking(b);
+	}
+
+	public boolean deleteBooking(String idClient, int codCruise, Date startDate) {
+	    return daoBooking.deleteBooking(idClient, codCruise, startDate);
+	}
+
+	public boolean updateBooking(Book oldB, Book newB) {
+	    return daoBooking.updateBooking(oldB, newB);
+	}
+	
 	// Windows Methods
 	/**
 	 * Creates a new instance of the StartWindow class, passing the current instance
