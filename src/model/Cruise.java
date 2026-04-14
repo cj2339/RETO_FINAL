@@ -2,12 +2,16 @@ package model;
 
 public class Cruise {
 
-	private int codCruise;//the unique code that identifies the cruise
-	private TypeCruise typeCruise;//the type of cruise, which is an instance of the TypeCruise class
-	private String nameCruise;//the name of the cruise
-	private int numRooms;//the number of rooms available on the cruise
-	private int capacityMax;//the maximum capacity of passengers that the cruise can accommodate
+	private int codCruise;
+	private TypeCruise typeCruise;
+	private String nameCruise;
+	private int numRooms;
+	private int capacityMax;
 
+	/**
+	 * Default constructor that initializes the cruise's information to default
+	 * values.
+	 */
 	public Cruise() {
 		this.codCruise = 0;
 		this.typeCruise = null;
@@ -16,7 +20,17 @@ public class Cruise {
 		this.capacityMax = 0;
 	}
 
-	public Cruise(int codCruise, TypeCruise typeCruise, String nameCruise, int numRooms, int capacityMax) {//constructor that initializes the cruise's information
+	/**
+	 * Constructor that initializes the cruise's information with the provided code,
+	 * type, name, number of rooms, and maximum capacity.
+	 * 
+	 * @param codCruise
+	 * @param typeCruise
+	 * @param nameCruise
+	 * @param numRooms
+	 * @param capacityMax
+	 */
+	public Cruise(int codCruise, TypeCruise typeCruise, String nameCruise, int numRooms, int capacityMax) {
 		this.codCruise = codCruise;
 		this.typeCruise = typeCruise;
 		this.nameCruise = nameCruise;

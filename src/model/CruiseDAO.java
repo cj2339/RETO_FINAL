@@ -3,12 +3,63 @@ package model;
 import java.util.List;
 
 public interface CruiseDAO {
-	
-	public List<Cruise> getAllCruise();//returns a list of all cruises
-	public Cruise getCruiseByCode(String id);//retrieves a cruise by its unique identifier (code)
-	public boolean deleteCruise(String id);//deletes a cruise from the database by its unique identifier (id)
-	public boolean updateCruiseByCode(Cruise cruise);//updates a cruise's information in the database based on its unique identifier (code)
-	public boolean insertCruise(Cruise cruise);//inserts a new cruise into the database
-	public boolean checkCruiseInWorker(String id);//checks if a cruise is associated with any worker in the database by its unique identifier (id)
-	public boolean checkCruiseInBook(String id);//checks if a cruise is associated with any booking in the database by its unique identifier (id)
+
+	/**
+	 * Retrieves a list of all cruises by calling the getAllCruise method of the
+	 * 
+	 * @return
+	 */
+	public List<Cruise> getAllCruise();
+
+	/**
+	 * Retrieves a cruise by calling the getCruiseByCode method of the CruiseDAO
+	 * 
+	 * @param id
+	 * @return
+	 */
+	public Cruise getCruiseByCode(String id);
+
+	/**
+	 * Deletes a cruise by calling the deleteCruise method of the CruiseDAO
+	 * 
+	 * @param id
+	 * @return
+	 */
+	public boolean deleteCruise(String id);
+
+	/**
+	 * Updates a cruise by calling the updateCruiseByCode method of the CruiseDAO
+	 * 
+	 * @param cruise
+	 * @return
+	 */
+	public boolean updateCruiseByCode(Cruise cruise);
+
+	/**
+	 * Inserts a new cruise by calling the insertCruise method of the CruiseDAO
+	 * 
+	 * @param cruise
+	 * @return
+	 */
+	public boolean insertCruise(Cruise cruise);
+
+	/**
+	 * Checks if a cruise is associated with any worker by calling the
+	 * checkCruiseInWorker method of the CruiseDAO implementation with the provided
+	 * id and returns the result.
+	 * 
+	 * @param id
+	 * @return
+	 */
+	public boolean checkCruiseInWorker(String id);
+
+	/**
+	 * Checks if a cruise is associated with any booking by calling the
+	 * checkCruiseInBook method of the CruiseDAO implementation with the provided id
+	 * and returns the result.
+	 * 
+	 * @param id
+	 * @return
+	 */
+	public boolean checkCruiseInBook(String id);
 }
