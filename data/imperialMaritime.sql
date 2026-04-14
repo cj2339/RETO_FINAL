@@ -53,15 +53,17 @@ CREATE TABLE client(
 	id_client CHAR(9) PRIMARY KEY,
     name_client VARCHAR(30),
     surname_client VARCHAR(30),
-    age_client INTEGER
+    age_client INTEGER,
+    phone_client INTEGER,
+    email_client VARCHAR(40)
 );
 
 INSERT INTO client VALUES 
-('11111111A', 'John', 'Smith', 35),
-('22222222B', 'Mary', 'Johnson', 28),
-('33333333C', 'Charles', 'Brown', 45),
-('44444444D', 'Anna', 'Miller', 52),
-('55555555E', 'Helen', 'Davis', 31);
+('11111111A', 'John', 'Smith', 35, 604923059, 'johnsmith@gmail.com'),
+('22222222B', 'Mary', 'Johnson', 28, 693462061, 'maryjohnson@gmail.com'),
+('33333333C', 'Charles', 'Brown', 45, 629403819, 'charlesbrown@gmail.com'),
+('44444444D', 'Anna', 'Miller', 52, 631942840, 'annamiller@gmail.com'),
+('55555555E', 'Helen', 'Davis', 31, 667385867, 'helendavis@gmail.com');
 
 CREATE TABLE book(
 	id_client CHAR(9),
