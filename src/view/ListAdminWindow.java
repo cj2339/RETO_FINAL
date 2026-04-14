@@ -68,30 +68,37 @@ public class ListAdminWindow extends JDialog implements ActionListener {
 
 	}
 
+	@SuppressWarnings("unused")
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		int row = table.getSelectedRow();
 
 		if (e.getSource() == btnDELETE) {
-			//creo que habría que poner una confirmación!!!!!!!!!
-			if (row == -1) {
-				// No row selected
-				JOptionPane.showMessageDialog(this, "Select an administrator to delete.");
-				return;
-			}
+		    if (row == -1) {
+		        JOptionPane.showMessageDialog(this, "Select an administrator to delete.");
+		        return;
+		    }
 
-			// Get the name of column 0
-			String adminName = table.getValueAt(row, 0).toString();
+		    String adminName = table.getValueAt(row, 0).toString();
 
-			// Call the controller by name
-			if (cont.deleteAdministrator(adminName)) {
-				refreshModel();
-				JOptionPane.showMessageDialog(this, "Administrator has been deleted.");
-			} else {
-				JOptionPane.showMessageDialog(this, "Administrator not deleted.");
-			}
+		    int confirm = JOptionPane.showConfirmDialog(
+		            this,
+		            "Are you sure you want to delete administrator: " + adminName + "?",
+		            "Confirm deletion",
+		            JOptionPane.YES_NO_OPTION,
+		            JOptionPane.WARNING_MESSAGE
+		    );
 
+		    if (confirm == JOptionPane.YES_OPTION) {
+		        if (cont.deleteAdministrator(adminName)) {
+		            refreshModel();
+		            JOptionPane.showMessageDialog(this, "Administrator has been deleted.");
+		        } else {
+		            JOptionPane.showMessageDialog(this, "Administrator not deleted.");
+		        }
+		    }
 		}
+
 
 		if (e.getSource() == btnMODIFY) {
 
