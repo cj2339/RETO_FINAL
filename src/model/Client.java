@@ -89,4 +89,9 @@ public class Client implements Serializable {
     public void setEmailClient(String emailClient) {
         this.emailClient = emailClient;
     }
+    
+    @Override
+    public String toString() {
+        return idClient + " - " + nameClient + " " + surnameClient;
+    }
 }

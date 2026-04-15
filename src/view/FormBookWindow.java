@@ -4,7 +4,10 @@ import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.Date;
+import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -15,9 +18,12 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerDateModel;
+import javax.swing.JComboBox;
 
 import controller.LoginController;
 import model.Book;
+import model.Client;
+import model.Cruise;
 
 /**
  * Dialog that shows a form to create or modify a booking. Validates required
@@ -25,201 +31,240 @@ import model.Book;
  */
 public class FormBookWindow extends JDialog implements ActionListener {
 
-	private static final long serialVersionUID = 1L;
-	private final JPanel panel = new JPanel();
+    private static final long serialVersionUID = 1L;
+    private final JPanel panel = new JPanel();
 
-	private JTextField txtClient;
-	private JTextField txtCruise;
-	private JTextField txtOrigin;
-	private JTextField txtDestination;
-	private JTextField txtRoom;
+    private JComboBox<Client> comboClient;
+    private JComboBox<Cruise> comboCruise;
+    private JTextField txtOrigin;
+    private JTextField txtDestination;
+    private JTextField txtRoom;
 
-	private JSpinner spStartDate;
-	private JSpinner spEndDate;
+    private JSpinner spStartDate;
+    private JSpinner spEndDate;
 
-	private JButton okButton;
-	private JButton cancelButton;
+    private JButton okButton;
+    private JButton cancelButton;
 
-	private boolean isInsert;
-	private LoginController controller;
-	private Book oldBooking;
-	private ListBookWindow parent;
+    private boolean isInsert;
+    private LoginController controller;
+    private Book oldBooking;
+    private ListBookWindow parent;
 
-	/**
-	 * Constructs the booking form dialog.
-	 *
-	 * @param parentWindow The parent dialog.
-	 * @param controller   The login controller for database operations.
-	 * @param booking      The booking to modify, or null if creating a new one.
-	 * @param isInsert     True if inserting a new booking, false if updating an existing one.
-	 */
-	public FormBookWindow(JDialog parentWindow, LoginController controller, Book booking, boolean isInsert) {
-		super(parentWindow, true);
-		setBounds(100, 100, 500, 380);
-		getContentPane().setLayout(new BorderLayout());
-		panel.setBorder(new EmptyBorder(5, 5, 5, 5));
-		getContentPane().add(panel, BorderLayout.CENTER);
-		panel.setLayout(null);
+    public FormBookWindow(JDialog parentWindow, LoginController controller, Book booking, boolean isInsert) {
+        super(parentWindow, true);
+        setBounds(100, 100, 500, 380);
+        getContentPane().setLayout(new BorderLayout());
+        panel.setBorder(new EmptyBorder(5, 5, 5, 5));
+        getContentPane().add(panel, BorderLayout.CENTER);
+        panel.setLayout(null);
 
-		this.isInsert = isInsert;
-		this.controller = controller;
-		this.oldBooking = booking;
-		this.parent = (ListBookWindow) parentWindow;
+        this.isInsert = isInsert;
+        this.controller = controller;
+        this.oldBooking = booking;
+        this.parent = (ListBookWindow) parentWindow;
 
-		JLabel lblClient = new JLabel("Client ID:");
-		lblClient.setBounds(40, 40, 120, 20);
-		panel.add(lblClient);
+        JLabel lblClient = new JLabel("Client ID:");
+        lblClient.setBounds(40, 40, 120, 20);
+        panel.add(lblClient);
 
-		txtClient = new JTextField();
-		txtClient.setBounds(200, 40, 200, 22);
-		panel.add(txtClient);
+        comboClient = new JComboBox<>();
+        comboClient.setBounds(200, 40, 200, 22);
+        panel.add(comboClient);
 
-		JLabel lblCruise = new JLabel("Cruise Code:");
-		lblCruise.setBounds(40, 80, 120, 20);
-		panel.add(lblCruise);
+        JLabel lblCruise = new JLabel("Cruise Code:");
+        lblCruise.setBounds(40, 80, 120, 20);
+        panel.add(lblCruise);
 
-		txtCruise = new JTextField();
-		txtCruise.setBounds(200, 80, 200, 22);
-		panel.add(txtCruise);
+        comboCruise = new JComboBox<>();
+        comboCruise.setBounds(200, 80, 200, 22);
+        panel.add(comboCruise);
 
-		JLabel lblOrigin = new JLabel("Origin City:");
-		lblOrigin.setBounds(40, 120, 120, 20);
-		panel.add(lblOrigin);
+        JLabel lblOrigin = new JLabel("Origin City:");
+        lblOrigin.setBounds(40, 120, 120, 20);
+        panel.add(lblOrigin);
 
-		txtOrigin = new JTextField();
-		txtOrigin.setBounds(200, 120, 200, 22);
-		panel.add(txtOrigin);
+        txtOrigin = new JTextField();
+        txtOrigin.setBounds(200, 120, 200, 22);
+        panel.add(txtOrigin);
 
-		JLabel lblDestination = new JLabel("Destination City:");
-		lblDestination.setBounds(40, 160, 120, 20);
-		panel.add(lblDestination);
+        JLabel lblDestination = new JLabel("Destination City:");
+        lblDestination.setBounds(40, 160, 120, 20);
+        panel.add(lblDestination);
 
-		txtDestination = new JTextField();
-		txtDestination.setBounds(200, 160, 200, 22);
-		panel.add(txtDestination);
+        txtDestination = new JTextField();
+        txtDestination.setBounds(200, 160, 200, 22);
+        panel.add(txtDestination);
 
-		JLabel lblStart = new JLabel("Start Date:");
-		lblStart.setBounds(40, 200, 120, 20);
-		panel.add(lblStart);
+        JLabel lblStart = new JLabel("Start Date:");
+        lblStart.setBounds(40, 200, 120, 20);
+        panel.add(lblStart);
 
-		spStartDate = new JSpinner(new SpinnerDateModel());
-		spStartDate.setBounds(200, 200, 200, 22);
-		panel.add(spStartDate);
+        spStartDate = new JSpinner(new SpinnerDateModel());
+        spStartDate.setBounds(200, 200, 200, 22);
+        panel.add(spStartDate);
 
-		JLabel lblEnd = new JLabel("End Date:");
-		lblEnd.setBounds(40, 240, 120, 20);
-		panel.add(lblEnd);
+        JLabel lblEnd = new JLabel("End Date:");
+        lblEnd.setBounds(40, 240, 120, 20);
+        panel.add(lblEnd);
 
-		spEndDate = new JSpinner(new SpinnerDateModel());
-		spEndDate.setBounds(200, 240, 200, 22);
-		panel.add(spEndDate);
+        spEndDate = new JSpinner(new SpinnerDateModel());
+        spEndDate.setBounds(200, 240, 200, 22);
+        panel.add(spEndDate);
 
-		JLabel lblRoom = new JLabel("Room Number:");
-		lblRoom.setBounds(40, 280, 120, 20);
-		panel.add(lblRoom);
+        JLabel lblRoom = new JLabel("Room Number:");
+        lblRoom.setBounds(40, 280, 120, 20);
+        panel.add(lblRoom);
 
-		txtRoom = new JTextField();
-		txtRoom.setBounds(200, 280, 200, 22);
-		panel.add(txtRoom);
+        txtRoom = new JTextField();
+        txtRoom.setBounds(200, 280, 200, 22);
+        panel.add(txtRoom);
 
-		if (!isInsert && oldBooking != null) {
-			txtClient.setText(oldBooking.getIdClient());
-			txtCruise.setText(String.valueOf(oldBooking.getCodCruise()));
-			txtOrigin.setText(oldBooking.getOriginCity());
-			txtDestination.setText(oldBooking.getDestinationCity());
-			spStartDate.setValue(oldBooking.getStartDate());
-			spEndDate.setValue(oldBooking.getEndDate());
-			txtRoom.setText(String.valueOf(oldBooking.getRoomNumber()));
+        loadClients();
+        loadCruises();
 
-			txtClient.setEnabled(false);
-			txtCruise.setEnabled(false);
-			spStartDate.setEnabled(false);
-		}
+        if (!isInsert && oldBooking != null) {
+            selectClient(oldBooking.getIdClient());
+            selectCruise(oldBooking.getCodCruise());
+            txtOrigin.setText(oldBooking.getOriginCity());
+            txtDestination.setText(oldBooking.getDestinationCity());
+            spStartDate.setValue(oldBooking.getStartDate());
+            spEndDate.setValue(oldBooking.getEndDate());
+            txtRoom.setText(String.valueOf(oldBooking.getRoomNumber()));
 
-		JPanel buttonPane = new JPanel();
-		buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
-		getContentPane().add(buttonPane, BorderLayout.SOUTH);
+            comboClient.setEnabled(false);
+            comboCruise.setEnabled(false);
+            spStartDate.setEnabled(false);
+        }
 
-		okButton = new JButton("OK");
-		okButton.setActionCommand("OK");
-		okButton.addActionListener(this);
-		buttonPane.add(okButton);
-		getRootPane().setDefaultButton(okButton);
+        JPanel buttonPane = new JPanel();
+        buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
+        getContentPane().add(buttonPane, BorderLayout.SOUTH);
 
-		cancelButton = new JButton("Cancel");
-		cancelButton.setActionCommand("Cancel");
-		cancelButton.addActionListener(this);
-		buttonPane.add(cancelButton);
-	}
+        okButton = new JButton("OK");
+        okButton.setActionCommand("OK");
+        okButton.addActionListener(this);
+        buttonPane.add(okButton);
+        getRootPane().setDefaultButton(okButton);
 
-	/**
-	 * Handles action events from the OK and Cancel buttons.
-	 * Validates forms fields and performs database modifications.
-	 *
-	 * @param e The action event object.
-	 */
-	@Override
-	public void actionPerformed(ActionEvent e) {
+        cancelButton = new JButton("Cancel");
+        cancelButton.setActionCommand("Cancel");
+        cancelButton.addActionListener(this);
+        buttonPane.add(cancelButton);
+    }
 
-		if (e.getSource() == okButton) {
+    private void loadClients() {
+        List<Client> clients = controller.getAllClient();
+        for (Client c : clients) comboClient.addItem(c);
+    }
 
-			if (txtClient.getText().trim().isEmpty() ||
-					txtCruise.getText().trim().isEmpty() ||
-					txtOrigin.getText().trim().isEmpty() ||
-					txtDestination.getText().trim().isEmpty() ||
-					txtRoom.getText().trim().isEmpty()) {
+    private void loadCruises() {
+        List<Cruise> cruises = controller.getAllCruise();
+        for (Cruise c : cruises) comboCruise.addItem(c);
+    }
 
-				JOptionPane.showMessageDialog(this, "Please fill in all fields.");
-				return;
-			}
+    private void selectClient(String id) {
+        for (int i = 0; i < comboClient.getItemCount(); i++) {
+            if (comboClient.getItemAt(i).getIdClient().equals(id)) {
+                comboClient.setSelectedIndex(i);
+                break;
+            }
+        }
+    }
 
-			int codCruise;
-			int roomNumber;
-			try {
-				codCruise = Integer.parseInt(txtCruise.getText().trim());
-				roomNumber = Integer.parseInt(txtRoom.getText().trim());
-			} catch (NumberFormatException ex) {
-				JOptionPane.showMessageDialog(this, "Cruise code and room number must be numeric.");
-				return;
-			}
+    private void selectCruise(int code) {
+        for (int i = 0; i < comboCruise.getItemCount(); i++) {
+            if (comboCruise.getItemAt(i).getCodCruise() == code) {
+                comboCruise.setSelectedIndex(i);
+                break;
+            }
+        }
+    }
 
-			Date start = (Date) spStartDate.getValue();
-			Date end = (Date) spEndDate.getValue();
-			if (!start.before(end)) {
-				JOptionPane.showMessageDialog(this, "Start date must be before end date.");
-				return;
-			}
+    @Override
+    public void actionPerformed(ActionEvent e) {
 
-			Book newB = new Book(
-					txtClient.getText().trim(),
-					codCruise,
-					txtOrigin.getText().trim(),
-					txtDestination.getText().trim(),
-					start,
-					end,
-					0.0,
-					0.0,
-					roomNumber
-					);
+        if (e.getSource() == okButton) {
 
-			boolean ok;
-			if (isInsert) {
-				ok = controller.createBooking(newB);
-			} else {
-				ok = controller.updateBooking(oldBooking, newB);
-			}
+            if (txtOrigin.getText().trim().isEmpty() ||
+                txtDestination.getText().trim().isEmpty() ||
+                txtRoom.getText().trim().isEmpty()) {
 
-			if (ok) {
-				JOptionPane.showMessageDialog(this, "Booking saved.");
-				parent.refreshModel();
-				this.dispose();
-			} else {
-				JOptionPane.showMessageDialog(this, "Error saving booking.");
-			}
-		}
+                JOptionPane.showMessageDialog(this, "Please fill in all fields.");
+                return;
+            }
 
-		if (e.getSource() == cancelButton) {
-			this.dispose();
-		}
-	}
+            int roomNumber;
+            try {
+                roomNumber = Integer.parseInt(txtRoom.getText().trim());
+            } catch (NumberFormatException ex) {
+                JOptionPane.showMessageDialog(this, "Room number must be numeric.");
+                return;
+            }
+
+            Date start = (Date) spStartDate.getValue();
+            Date end = (Date) spEndDate.getValue();
+
+            if (!start.before(end)) {
+                JOptionPane.showMessageDialog(this, "Start date must be before end date.");
+                return;
+            }
+
+            LocalDate startLD = start.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+            LocalDate today = LocalDate.now();
+
+            if (startLD.isBefore(today.plusDays(15))) {
+                JOptionPane.showMessageDialog(this, "Bookings must be made at least 15 days in advance.");
+                return;
+            }
+
+            Client client = (Client) comboClient.getSelectedItem();
+            Cruise cruise = (Cruise) comboCruise.getSelectedItem();
+
+            Book newB = new Book(
+                    client.getIdClient(),
+                    cruise.getCodCruise(),
+                    txtOrigin.getText().trim(),
+                    txtDestination.getText().trim(),
+                    start,
+                    end,
+                    0.0,
+                    0.0,
+                    roomNumber
+            );
+
+            if (isInsert) {
+
+                String msg = controller.createBooking(newB);
+
+                JOptionPane.showMessageDialog(
+                        this,
+                        msg,
+                        msg.startsWith("Booking successfully") ? "Success" : "Error",
+                        msg.startsWith("Booking successfully") ? JOptionPane.INFORMATION_MESSAGE : JOptionPane.ERROR_MESSAGE
+                );
+
+                if (msg.startsWith("Booking successfully")) {
+                    parent.refreshModel();
+                    this.dispose();
+                }
+
+            } else {
+
+                boolean updated = controller.updateBooking(oldBooking, newB);
+
+                if (updated) {
+                    JOptionPane.showMessageDialog(this, "Booking updated successfully.");
+                    parent.refreshModel();
+                    this.dispose();
+                } else {
+                    JOptionPane.showMessageDialog(this, "Error updating booking.");
+                }
+            }
+        }
+
+        if (e.getSource() == cancelButton) {
+            this.dispose();
+        }
+    }
 }

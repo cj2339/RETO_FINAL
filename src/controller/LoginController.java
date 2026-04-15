@@ -241,9 +241,9 @@ public class LoginController {
 	}
 
 	// worker CRUD Methods
-//	public ArrayList<String> getWorkerCodes() {
-//		return daoWorker.getWorkerCodes();
-//	}
+	//	public ArrayList<String> getWorkerCodes() {
+	//		return daoWorker.getWorkerCodes();
+	//	}
 
 	/**
 	 * Retrieves a list of all workers by calling the getAllWorker method of the
@@ -274,7 +274,7 @@ public class LoginController {
 	public boolean deleteWorker(String id) {
 		return daoWorker.deleteWorker(id);
 	}
-	
+
 	/**
 	 * Updates the details of an existing worker.
 	 * 
@@ -284,7 +284,7 @@ public class LoginController {
 	public boolean updateWorker(Worker worker) {
 		return daoWorker.updateWorker(worker);
 	}
-	
+
 	/**
 	 * Inserts a newly created worker into the system.
 	 * 
@@ -328,14 +328,14 @@ public class LoginController {
 	}
 
 	// Book Methods
-	
+
 	/**
 	 * Retrieves all bookings existing in the database.
 	 * 
 	 * @return A list of all bookings.
 	 */
 	public List<Book> getAllBookings() {
-	    return daoBooking.getAllBookings();
+		return daoBooking.getAllBookings();
 	}
 
 	/**
@@ -344,8 +344,9 @@ public class LoginController {
 	 * @param b The booking object to insert.
 	 * @return true if booking creation was successful, false otherwise.
 	 */
-	public boolean createBooking(Book b) {
-	    return daoBooking.createBooking(b);
+	public String createBooking(Book b) {
+		daoBooking.createBooking(b);
+		return ((DBImplementationBook) daoBooking).getLastMessage();
 	}
 
 	/**
@@ -357,7 +358,7 @@ public class LoginController {
 	 * @return true if deleted properly, false otherwise.
 	 */
 	public boolean deleteBooking(String idClient, int codCruise, Date startDate) {
-	    return daoBooking.deleteBooking(idClient, codCruise, startDate);
+		return daoBooking.deleteBooking(idClient, codCruise, startDate);
 	}
 
 	/**
@@ -368,9 +369,9 @@ public class LoginController {
 	 * @return true if successfully updated, false otherwise.
 	 */
 	public boolean updateBooking(Book oldB, Book newB) {
-	    return daoBooking.updateBooking(oldB, newB);
+		return daoBooking.updateBooking(oldB, newB);
 	}
-	
+
 	// Windows Methods
 	/**
 	 * Creates a new instance of the StartWindow class, passing the current instance

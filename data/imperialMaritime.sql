@@ -202,47 +202,48 @@ CREATE PROCEDURE p_create_booking(
     IN p_destinationCity VARCHAR(30),
     IN p_startDate DATE,
     IN p_endDate DATE,
-    IN p_room_number INT
+    IN p_room_number INT,
+    OUT p_message VARCHAR(200)
 )
-BEGIN
+proc:BEGIN
     DECLARE v_count INT DEFAULT 0;
     DECLARE v_capacity INT;
     DECLARE v_booked INT;
     DECLARE v_basePrice DOUBLE;
     DECLARE v_finalPrice DOUBLE;
     DECLARE v_max_rooms INT;
-    -- ERROR HANDLER
+
+    -- Error handler for unexpected SQL exceptions
     DECLARE EXIT HANDLER FOR SQLEXCEPTION
     BEGIN
         ROLLBACK;
-        SIGNAL SQLSTATE '45000'
-            SET MESSAGE_TEXT = 'Unexpected database error during booking creation';
+        SET p_message = 'Unexpected database error during booking creation';
     END;
 
     START TRANSACTION;
-    -- 1) VALIDATE CUSTOMER
+    -- 1) Validate that the client exists
     SELECT COUNT(*) INTO v_count FROM client WHERE id_client = p_id_client;
     IF v_count = 0 THEN
-        SIGNAL SQLSTATE '45000'
-            SET MESSAGE_TEXT = 'Client does not exist';
+        SET p_message = 'Client does not exist';
+        LEAVE proc;
     END IF;
-    -- 2) VALIDATE CRUISE
+    -- 2) Validate that the cruise exists
     SELECT COUNT(*) INTO v_count FROM cruise WHERE cod_cruise = p_cod_cruise;
     IF v_count = 0 THEN
-        SIGNAL SQLSTATE '45000'
-            SET MESSAGE_TEXT = 'Cruise does not exist';
+        SET p_message = 'Cruise does not exist';
+        LEAVE proc;
     END IF;
-    -- 3) CHECK DATES
+    -- 3) Validate date range
     IF p_startDate >= p_endDate THEN
-        SIGNAL SQLSTATE '45000'
-            SET MESSAGE_TEXT = 'Invalid date range';
+        SET p_message = 'Invalid date range';
+        LEAVE proc;
     END IF;
-    -- 4) AT LEAST 15 DAYS' NOTICE
+    -- 4) Validate minimum 15-day advance booking
     IF DATEDIFF(p_startDate, CURDATE()) < 15 THEN
-        SIGNAL SQLSTATE '45000'
-            SET MESSAGE_TEXT = 'Bookings must be made at least 15 days in advance';
+        SET p_message = 'Bookings must be made at least 15 days in advance';
+        LEAVE proc;
     END IF;
-    -- 5) THE CUSTOMER CANNOT HAVE ANOTHER BOOKING FOR THOSE DATES
+    -- 5) Validate that the client has no overlapping bookings
     SELECT COUNT(*) INTO v_count
     FROM book
     WHERE id_client = p_id_client
@@ -251,12 +252,11 @@ BEGIN
             (startDate <= p_endDate AND endDate >= p_endDate) OR
             (p_startDate <= startDate AND p_endDate >= endDate)
           );
-
     IF v_count > 0 THEN
-        SIGNAL SQLSTATE '45000'
-            SET MESSAGE_TEXT = 'Client already has a booking during these dates';
+        SET p_message = 'Client already has a booking during these dates';
+        LEAVE proc;
     END IF;
-    -- 6) THE CRUISE SHIP CANNOT OPERATE ON ANY OTHER ROUTE ON THOSE DATES
+    -- 6) Validate that the cruise is not assigned to another route during these dates
     SELECT COUNT(*) INTO v_count
     FROM book
     WHERE cod_cruise = p_cod_cruise
@@ -265,12 +265,11 @@ BEGIN
             (startDate <= p_endDate AND endDate >= p_endDate) OR
             (p_startDate <= startDate AND p_endDate >= endDate)
           );
-
     IF v_count > 0 THEN
-        SIGNAL SQLSTATE '45000'
-            SET MESSAGE_TEXT = 'Cruise is already assigned to another route during these dates';
+        SET p_message = 'Cruise is already assigned to another route during these dates';
+        LEAVE proc;
     END IF;
-    -- 7) CHECK ROOM AVAILABILITY BY CRUISE TYPE
+    -- 7) Validate room availability based on cruise type
     SELECT 
         CASE type_cruise
             WHEN 'luxury' THEN 1000
@@ -281,30 +280,27 @@ BEGIN
     INTO v_max_rooms
     FROM cruise
     WHERE cod_cruise = p_cod_cruise;
-
     IF p_room_number > v_max_rooms THEN
-        SIGNAL SQLSTATE '45000'
-            SET MESSAGE_TEXT = 'Room number exceeds allowed range for this cruise type';
+        SET p_message = 'Room number exceeds allowed range for this cruise type';
+        LEAVE proc;
     END IF;
-    -- 8) VERIFY THE CRUISE SHIP’S TOTAL CAPACITY
+    -- 8) Validate cruise total capacity
     SELECT capacity_max INTO v_capacity FROM cruise WHERE cod_cruise = p_cod_cruise;
-    SELECT COUNT(*) INTO v_booked
-    FROM book
-    WHERE cod_cruise = p_cod_cruise;
+    SELECT COUNT(*) INTO v_booked FROM book WHERE cod_cruise = p_cod_cruise;
     IF v_booked >= v_capacity THEN
-        SIGNAL SQLSTATE '45000'
-            SET MESSAGE_TEXT = 'Cruise is fully booked';
+        SET p_message = 'Cruise is fully booked';
+        LEAVE proc;
     END IF;
-    -- 9) CONFIRM ROOM (max. 5 people per room)
+    -- 9) Validate room capacity (max 5 people per room)
     SELECT COUNT(*) INTO v_count
     FROM book
     WHERE cod_cruise = p_cod_cruise
       AND room_number = p_room_number;
     IF v_count >= 5 THEN
-        SIGNAL SQLSTATE '45000'
-            SET MESSAGE_TEXT = 'Selected room is full';
+        SET p_message = 'Selected room is full';
+        LEAVE proc;
     END IF;
-    -- 10) CALCULATE THE BASIC PRICE ACCORDING TO THE TYPE OF CRUISE
+    -- 10) Calculate base price according to cruise type
     SELECT 
         CASE type_cruise
             WHEN 'luxury' THEN 1200
@@ -315,10 +311,10 @@ BEGIN
     INTO v_basePrice
     FROM cruise
     WHERE cod_cruise = p_cod_cruise;
-    -- 11) CALCULATE FINAL PRICE (function)
+    -- 11) Calculate final price (discounts applied)
     SELECT fn_calculate_final_price(p_id_client, p_cod_cruise, v_basePrice)
     INTO v_finalPrice;
-    -- 12) BOOK INSERT
+    -- 12) Insert booking
     INSERT INTO book VALUES(
         p_id_client,
         p_cod_cruise,
@@ -331,8 +327,10 @@ BEGIN
         v_finalPrice
     );
     COMMIT;
+    SET p_message = 'Booking successfully created';
 END//
 DELIMITER ;
+
 
 
 use imperialmaritime;
