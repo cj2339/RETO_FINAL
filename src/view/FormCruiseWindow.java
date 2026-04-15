@@ -69,15 +69,14 @@ public class FormCruiseWindow extends JDialog implements ActionListener {
 		// Agregar un KeyListener para validar que solo se ingresen números
 		// TODO: validar que el numero de habitaciones no quede vacio
 		txtNumRooms.addKeyListener(new KeyAdapter() {
-		    @Override
-		    public void keyTyped(KeyEvent e) {
-		        char c = e.getKeyChar();
-		        if (!Character.isDigit(c)) {
-		            e.consume();
-		        }
-		    }
+			@Override
+			public void keyTyped(KeyEvent e) {
+				char c = e.getKeyChar();
+				if (!Character.isDigit(c)) {
+					e.consume();
+				}
+			}
 		});
-
 
 		txtMaxCapacity = new JTextField();
 		txtMaxCapacity.setColumns(10);
@@ -86,15 +85,14 @@ public class FormCruiseWindow extends JDialog implements ActionListener {
 		// Agregar un KeyListener para validar que solo se ingresen números
 		// TODO: validar que el numero no quede vacio
 		txtMaxCapacity.addKeyListener(new KeyAdapter() {
-		    @Override
-		    public void keyTyped(KeyEvent e) {
-		        char c = e.getKeyChar();
-		        if (!Character.isDigit(c)) {
-		            e.consume();
-		        }
-		    }
+			@Override
+			public void keyTyped(KeyEvent e) {
+				char c = e.getKeyChar();
+				if (!Character.isDigit(c)) {
+					e.consume();
+				}
+			}
 		});
-
 
 		cmbType = new JComboBox<TypeCruise>();
 		cmbType.setModel(new DefaultComboBoxModel<TypeCruise>(TypeCruise.values()));
@@ -150,29 +148,38 @@ public class FormCruiseWindow extends JDialog implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
+		boolean valid = true;
 		// TODO: validar valores numericos enteros
 		if (e.getSource() == okButton) {
-			if (isInsert) {
-				Cruise cruise = new Cruise(0, (TypeCruise) cmbType.getSelectedItem(), txtNameCruise.getText(),
-						Integer.parseInt(txtNumRooms.getText()), Integer.parseInt(txtMaxCapacity.getText()));
-				if (controller.insertCruise(cruise)) {
-					JOptionPane.showMessageDialog(this, "Cruise has been inserted.");
-					this.dispose();
-				}
-			} else {
-				Cruise cruise = new Cruise(Integer.parseInt(txtCode.getText()), (TypeCruise) cmbType.getSelectedItem(),
-						txtNameCruise.getText(), Integer.parseInt(txtNumRooms.getText()),
-						Integer.parseInt(txtMaxCapacity.getText()));
-				if (controller.updateCruiseByCode(cruise)) {
-					JOptionPane.showMessageDialog(this, "Cruise has been updated.");
-					parent.refreshModel();
+			if (txtNameCruise.getText().isEmpty() || txtNumRooms.getText().isEmpty()
+					|| txtMaxCapacity.getText().isEmpty()) {
+				JOptionPane.showMessageDialog(this, "Please fill in all fields.");
+				valid = false;
 
-					this.dispose();
+			}
+			if (valid == true) {
+				if (isInsert) {
+					Cruise cruise = new Cruise(0, (TypeCruise) cmbType.getSelectedItem(), txtNameCruise.getText(),
+							Integer.parseInt(txtNumRooms.getText()), Integer.parseInt(txtMaxCapacity.getText()));
+					if (controller.insertCruise(cruise)) {
+						JOptionPane.showMessageDialog(this, "Cruise has been inserted.");
+						this.dispose();
+					}
+				} else {
+					Cruise cruise = new Cruise(Integer.parseInt(txtCode.getText()),
+							(TypeCruise) cmbType.getSelectedItem(), txtNameCruise.getText(),
+							Integer.parseInt(txtNumRooms.getText()), Integer.parseInt(txtMaxCapacity.getText()));
+					if (controller.updateCruiseByCode(cruise)) {
+						JOptionPane.showMessageDialog(this, "Cruise has been updated.");
+						parent.refreshModel();
+
+						this.dispose();
+					}
 				}
 			}
-		}
-		if (e.getSource() == cancelButton) {
-			this.dispose();
+			if (e.getSource() == cancelButton) {
+				this.dispose();
+			}
 		}
 	}
 }
