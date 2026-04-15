@@ -33,6 +33,11 @@ import com.toedter.calendar.JDateChooser;
 import javax.swing.JCheckBox;
 import javax.swing.SpinnerNumberModel;
 
+/**
+ * Modal dialog that shows a form to add or modify a Worker. The form collects
+ * personal data, hiring date, language flags and associated cruise. Uses
+ * LoginController to persist or update the worker record.
+ */
 public class FormWorkerWindow extends JDialog implements ActionListener{
 
 	private static final long serialVersionUID = 1L;

@@ -22,6 +22,11 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
+/**
+ * Modal dialog that lists bookings and provides operations to create, modify
+ * and delete bookings. Uses the LoginController to perform persistence
+ * operations and refresh the displayed booking list.
+ */
 public class ListBookWindow extends JDialog implements ActionListener {
 
 	private static final long serialVersionUID = 1L;
@@ -143,15 +148,15 @@ public class ListBookWindow extends JDialog implements ActionListener {
 				new String[] {
 						"Client", "Cruise", "Start Date", "Origin", "Destination", "End Date", "Base Price", "Final Price", "Room"
 				},
-				0
-				) {
-			private static final long serialVersionUID = 1L;
+					0
+					) {
+				private static final long serialVersionUID = 1L;
 
-			@Override
-			public boolean isCellEditable(int row, int column) {
-				return false;
-			}
-		};
+				@Override
+				public boolean isCellEditable(int row, int column) {
+					return false;
+				}
+			};
 
 		table = new JTable(modelo);
 		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);

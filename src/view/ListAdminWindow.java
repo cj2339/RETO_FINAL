@@ -21,6 +21,11 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
+/**
+ * Modal dialog that lists administrators and allows adding, deleting and
+ * initiating password changes. Uses LoginController for persistence and to
+ * refresh the administrator list.
+ */
 public class ListAdminWindow extends JDialog implements ActionListener {
 
 	private static final long serialVersionUID = 1L;

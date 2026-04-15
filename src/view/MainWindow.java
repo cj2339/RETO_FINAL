@@ -15,6 +15,11 @@ import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+/**
+ * Main management window used by administrators to navigate to the different
+ * management modules (cruises, workers, clients, bookings, administrators) and
+ * to export data to XML.
+ */
 public class MainWindow extends JFrame implements ActionListener {
 
 	private static final long serialVersionUID = 1L;

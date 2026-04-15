@@ -14,6 +14,12 @@ import controller.LoginController;
 import model.Cruise;
 import model.TypeCruise;
 
+/**
+ * Modal dialog that displays the list of cruises and provides operations to add,
+ * modify and delete cruises. Communicates with LoginController for CRUD
+ * operations and prevents deletion when a cruise is referenced by workers or
+ * bookings.
+ */
 public class ListCruiseWindow extends JDialog implements ActionListener {
 
 	private static final long serialVersionUID = 1L;
@@ -43,7 +49,7 @@ public class ListCruiseWindow extends JDialog implements ActionListener {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-
+		
 		// TITTLE
 		JLabel title = new JLabel("Cruise Management");
 		title.setHorizontalAlignment(SwingConstants.CENTER);

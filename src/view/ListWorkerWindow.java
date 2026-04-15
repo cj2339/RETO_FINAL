@@ -32,6 +32,11 @@ import java.awt.event.ActionListener;
 import java.text.SimpleDateFormat;
 import java.awt.event.ActionEvent;
 
+/**
+ * Modal dialog that displays the list of workers in a table and provides
+ * operations to add, modify and delete workers. It uses the provided
+ * LoginController to perform CRUD operations and refresh the table model.
+ */
 public class ListWorkerWindow extends JDialog implements ActionListener {
 
 	private static final long serialVersionUID = 1L;
@@ -63,7 +68,7 @@ public class ListWorkerWindow extends JDialog implements ActionListener {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-
+		
 		// TITTLE
 		JLabel title = new JLabel("Cruise Management");
 		title.setHorizontalAlignment(SwingConstants.CENTER);

@@ -20,6 +20,11 @@ import javax.swing.table.TableModel;
 import controller.LoginController;
 import model.Client;
 
+/**
+ * Modal dialog that displays the list of clients and allows adding, modifying
+ * and deleting clients. Interacts with the LoginController to perform
+ * persistence operations and prevents deletion when the client has bookings.
+ */
 public class ListClientWindow extends JDialog implements ActionListener {
 
     private static final long serialVersionUID = 1L;

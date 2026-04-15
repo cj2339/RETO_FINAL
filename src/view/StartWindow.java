@@ -12,6 +12,11 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Image;
 
+/**
+ * Initial application window that displays a welcome screen.
+ * When the user clicks the window it closes and opens the login dialog.
+ * This class extends JFrame and implements MouseListener to detect clicks.
+ */
 public class StartWindow extends JFrame implements MouseListener {
 
 	private static final long serialVersionUID = 1L;

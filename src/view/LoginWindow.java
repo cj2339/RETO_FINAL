@@ -26,6 +26,11 @@ import javax.swing.JTextField;
 import javax.swing.JPasswordField;
 import javax.swing.SwingConstants;
 
+/**
+ * Login dialog that prompts for username and password and validates credentials
+ * using the provided LoginController. Limits the number of failed attempts and
+ * opens the main window upon successful authentication.
+ */
 public class LoginWindow extends JDialog implements ActionListener {
 
 	private static final long serialVersionUID = 1L;

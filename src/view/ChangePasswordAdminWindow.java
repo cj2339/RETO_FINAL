@@ -22,6 +22,11 @@ import javax.swing.SwingConstants;
 import controller.LoginController;
 import model.Administrator;
 
+/**
+ * Dialog that allows changing an administrator password. Validates the old
+ * password, enforces attempt limits and updates the password via the
+ * LoginController.
+ */
 public class ChangePasswordAdminWindow extends JDialog implements ActionListener {
 
 	private static final long serialVersionUID = 1L;

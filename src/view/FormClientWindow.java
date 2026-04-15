@@ -20,6 +20,10 @@ import javax.swing.JOptionPane;
 
 import model.Client;
 
+/**
+ * Dialog that displays a form to add or modify a Client. Validates numeric
+ * fields and delegates insert/update actions to the LoginController.
+ */
 public class FormClientWindow extends JDialog implements ActionListener {
 
     private static final long serialVersionUID = 1L;

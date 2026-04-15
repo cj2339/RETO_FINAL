@@ -19,6 +19,10 @@ import javax.swing.SpinnerDateModel;
 import controller.LoginController;
 import model.Book;
 
+/**
+ * Dialog that shows a form to create or modify a booking. Validates required
+ * fields and date order, then delegates creation/update to the LoginController.
+ */
 public class FormBookWindow extends JDialog implements ActionListener {
 
 	private static final long serialVersionUID = 1L;

@@ -18,6 +18,11 @@ import javax.swing.JOptionPane;
 
 import model.Administrator;
 
+/**
+ * Dialog to add or modify an Administrator. Delegates insert/update actions to
+ * the provided LoginController and refreshes the administrators list on the
+ * parent dialog when needed.
+ */
 public class FormAdminWindow extends JDialog implements ActionListener {
 
 	private static final long serialVersionUID = 1L;
