@@ -151,7 +151,6 @@ BEGIN
     DECLARE v_basePrice DOUBLE;
     DECLARE v_finalPrice DOUBLE;
     DECLARE v_max_rooms INT;
-
     -- ERROR HANDLER
     DECLARE EXIT HANDLER FOR SQLEXCEPTION
     BEGIN
@@ -161,34 +160,29 @@ BEGIN
     END;
 
     START TRANSACTION;
-
-    -- 1) VALIDAR CLIENTE
+    -- 1) VALIDATE CUSTOMER
     SELECT COUNT(*) INTO v_count FROM client WHERE id_client = p_id_client;
     IF v_count = 0 THEN
         SIGNAL SQLSTATE '45000'
             SET MESSAGE_TEXT = 'Client does not exist';
     END IF;
-
-    -- 2) VALIDAR CRUCERO
+    -- 2) VALIDATE CRUISE
     SELECT COUNT(*) INTO v_count FROM cruise WHERE cod_cruise = p_cod_cruise;
     IF v_count = 0 THEN
         SIGNAL SQLSTATE '45000'
             SET MESSAGE_TEXT = 'Cruise does not exist';
     END IF;
-
-    -- 3) VALIDAR FECHAS
+    -- 3) CHECK DATES
     IF p_startDate >= p_endDate THEN
         SIGNAL SQLSTATE '45000'
             SET MESSAGE_TEXT = 'Invalid date range';
     END IF;
-
-    -- 4) ANTICIPACIÓN MÍNIMA DE 15 DÍAS
+    -- 4) AT LEAST 15 DAYS' NOTICE
     IF DATEDIFF(p_startDate, CURDATE()) < 15 THEN
         SIGNAL SQLSTATE '45000'
             SET MESSAGE_TEXT = 'Bookings must be made at least 15 days in advance';
     END IF;
-
-    -- 5) CLIENTE NO PUEDE TENER OTRA RESERVA EN ESAS FECHAS
+    -- 5) THE CUSTOMER CANNOT HAVE ANOTHER BOOKING FOR THOSE DATES
     SELECT COUNT(*) INTO v_count
     FROM book
     WHERE id_client = p_id_client
@@ -202,8 +196,7 @@ BEGIN
         SIGNAL SQLSTATE '45000'
             SET MESSAGE_TEXT = 'Client already has a booking during these dates';
     END IF;
-
-    -- 6) EL CRUCERO NO PUEDE TENER OTRA RUTA EN ESAS FECHAS
+    -- 6) THE CRUISE SHIP CANNOT OPERATE ON ANY OTHER ROUTE ON THOSE DATES
     SELECT COUNT(*) INTO v_count
     FROM book
     WHERE cod_cruise = p_cod_cruise
@@ -474,6 +467,8 @@ BEGIN
     CLOSE cur;
 END //
 DELIMITER ;
+
+
 use imperialmaritime;
 -- -----------------------------------------------------------------
 -- 8. FUNCTIONS: Availability of places
