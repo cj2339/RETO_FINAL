@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Imperial Maritime</title>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+
+<nav><span class="brand">Imperial Maritime</span></nav>
+
+<div class="hero">
+    <h1>Imperial Maritime</h1>
+    <p>Cruise management system — Import your XML and visualise data through XSLT transformations</p>
+</div>
+
+<div class="container">
+
+    <div class="upload-area">
+        <h3>Import XML data</h3>
+        <p>Paste XML content below or upload a .xml file — XSL transformations will be applied automatically</p>
+        <textarea id="xmlInput" placeholder="Paste your XML file content here..."></textarea>
+        <br>
+			<label class="btn" for="fileInput">Upload .xml file</label>
+			<input type="file" id="fileInput" accept=".xml">
+			<button onclick="procesarXML()">Process XML with XSLT</button>
+        <br>
+        <div id="status" class="status"></div>
+    </div>
+
+    <div id="resultado"></div>
+
+</div>
+
+<footer>&copy; 2026 Imperial Maritime. All rights reserved.</footer>
+
+<script src="../js/main.js"></script>
+
+</body>
+</html>
