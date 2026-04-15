@@ -5,10 +5,8 @@ import model.Cruise;
 import model.Worker;
 import model.Book;
 import model.Client;
-//import model.Booking;
 
 import java.io.PrintWriter;
-//import java.util.List;
 
 public class XMLExporter {
 

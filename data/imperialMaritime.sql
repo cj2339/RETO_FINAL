@@ -25,8 +25,9 @@ INSERT INTO cruise(name_cruise, type_cruise, num_rooms, capacity_max) VALUES
 ('North Sea', 'luxury', 200, 1000),
 ('Tropical Adventure', 'family', 150, 800),
 ('Antarctic Ice', 'expedition', 50, 150),
-('Mediterranean Diamond', 'luxury', 300, 1500),
-('Coastal Breeze', 'family', 100, 400);
+('Mediterranean Diamond', 'luxury', 300, 1000),
+('Coastal Breeze', 'family', 100, 800);
+
 
 CREATE TABLE worker(
     id_worker CHAR(9) PRIMARY KEY,
@@ -84,9 +85,9 @@ CREATE TABLE book(
 );
 
 INSERT INTO book VALUES 
-('11111111A', 1, 'London', 'Oslo', '2026-06-01', '2026-06-15', 1, 1200.50, 1200.50),
+('11111111A', 1, 'London', 'Oslo', '2026-06-01', '2026-06-15', 1, 1200.00, 1200.50),
 ('22222222B', 2, 'Miami', 'Nassau', '2026-07-10', '2026-07-17', 1, 850.00, 850.00),
-('33333333C', 1, 'London', 'Oslo', '2026-06-01', '2026-06-15', 1, 1200.50, 1200.50),
+('33333333C', 1, 'London', 'Oslo', '2026-06-01', '2026-06-15', 1, 1200.00, 1200.50),
 ('44444444D', 4, 'Athens', 'Rome', '2026-08-05', '2026-08-12', 1, 1500.00, 1500.00),
 ('55555555E', 5, 'Lisbon', 'Malaga', '2026-09-20', '2026-09-25', 1, 450.00, 450.00);
 
@@ -128,7 +129,6 @@ END //
 DELIMITER ;
 
 
-
 use imperialmaritime;
 -- ---------------------------------------------------------
 -- 2. PROCEDURE: Make a booking
@@ -150,6 +150,7 @@ BEGIN
     DECLARE v_booked INT;
     DECLARE v_basePrice DOUBLE;
     DECLARE v_finalPrice DOUBLE;
+    DECLARE v_max_rooms INT;
 
     -- ERROR HANDLER
     DECLARE EXIT HANDLER FOR SQLEXCEPTION
@@ -160,51 +161,79 @@ BEGIN
     END;
 
     START TRANSACTION;
-    -- 1) VALIDATE CUSTOMER
+
+    -- 1) VALIDAR CLIENTE
     SELECT COUNT(*) INTO v_count FROM client WHERE id_client = p_id_client;
     IF v_count = 0 THEN
         SIGNAL SQLSTATE '45000'
             SET MESSAGE_TEXT = 'Client does not exist';
     END IF;
-    -- 2) VALIDATE CRUISE
+
+    -- 2) VALIDAR CRUCERO
     SELECT COUNT(*) INTO v_count FROM cruise WHERE cod_cruise = p_cod_cruise;
     IF v_count = 0 THEN
         SIGNAL SQLSTATE '45000'
             SET MESSAGE_TEXT = 'Cruise does not exist';
     END IF;
-    -- 3) CHECK DATES
+
+    -- 3) VALIDAR FECHAS
     IF p_startDate >= p_endDate THEN
         SIGNAL SQLSTATE '45000'
             SET MESSAGE_TEXT = 'Invalid date range';
     END IF;
-    -- 4) AT LEAST 15 DAYS' NOTICE
+
+    -- 4) ANTICIPACIÓN MÍNIMA DE 15 DÍAS
     IF DATEDIFF(p_startDate, CURDATE()) < 15 THEN
         SIGNAL SQLSTATE '45000'
             SET MESSAGE_TEXT = 'Bookings must be made at least 15 days in advance';
     END IF;
-    -- 5) THE CUSTOMER CANNOT HAVE ANOTHER BOOKING FOR THOSE DATES
+
+    -- 5) CLIENTE NO PUEDE TENER OTRA RESERVA EN ESAS FECHAS
     SELECT COUNT(*) INTO v_count
     FROM book
     WHERE id_client = p_id_client
-      AND ((startDate <= p_startDate AND endDate >= p_startDate) OR
+      AND (
+            (startDate <= p_startDate AND endDate >= p_startDate) OR
             (startDate <= p_endDate AND endDate >= p_endDate) OR
-            (p_startDate <= startDate AND p_endDate >= endDate));
+            (p_startDate <= startDate AND p_endDate >= endDate)
+          );
+
     IF v_count > 0 THEN
         SIGNAL SQLSTATE '45000'
             SET MESSAGE_TEXT = 'Client already has a booking during these dates';
     END IF;
-    -- 6) THE CRUISE SHIP CANNOT OPERATE ON ANY OTHER ROUTE ON THOSE DATES
+
+    -- 6) EL CRUCERO NO PUEDE TENER OTRA RUTA EN ESAS FECHAS
     SELECT COUNT(*) INTO v_count
     FROM book
     WHERE cod_cruise = p_cod_cruise
-      AND ((startDate <= p_startDate AND endDate >= p_startDate) OR
+      AND (
+            (startDate <= p_startDate AND endDate >= p_startDate) OR
             (startDate <= p_endDate AND endDate >= p_endDate) OR
-            (p_startDate <= startDate AND p_endDate >= endDate));
+            (p_startDate <= startDate AND p_endDate >= endDate)
+          );
+
     IF v_count > 0 THEN
         SIGNAL SQLSTATE '45000'
             SET MESSAGE_TEXT = 'Cruise is already assigned to another route during these dates';
     END IF;
-    -- 7) VERIFY THE CRUISE SHIP'S CAPACITY
+    -- 7) CHECK ROOM AVAILABILITY BY CRUISE TYPE
+    SELECT 
+        CASE type_cruise
+            WHEN 'luxury' THEN 1000
+            WHEN 'premium' THEN 500
+            WHEN 'family' THEN 800
+            WHEN 'expedition' THEN 150
+        END
+    INTO v_max_rooms
+    FROM cruise
+    WHERE cod_cruise = p_cod_cruise;
+
+    IF p_room_number > v_max_rooms THEN
+        SIGNAL SQLSTATE '45000'
+            SET MESSAGE_TEXT = 'Room number exceeds allowed range for this cruise type';
+    END IF;
+    -- 8) VERIFY THE CRUISE SHIP’S TOTAL CAPACITY
     SELECT capacity_max INTO v_capacity FROM cruise WHERE cod_cruise = p_cod_cruise;
     SELECT COUNT(*) INTO v_booked
     FROM book
@@ -213,7 +242,7 @@ BEGIN
         SIGNAL SQLSTATE '45000'
             SET MESSAGE_TEXT = 'Cruise is fully booked';
     END IF;
-    -- 8) CONFIRM ROOM (max. 5 people per room)
+    -- 9) CONFIRM ROOM (max. 5 people per room)
     SELECT COUNT(*) INTO v_count
     FROM book
     WHERE cod_cruise = p_cod_cruise
@@ -222,7 +251,7 @@ BEGIN
         SIGNAL SQLSTATE '45000'
             SET MESSAGE_TEXT = 'Selected room is full';
     END IF;
-    -- 9) CALCULATE THE BASIC PRICE ACCORDING TO THE TYPE OF CRUISE
+    -- 10) CALCULATE THE BASIC PRICE ACCORDING TO THE TYPE OF CRUISE
     SELECT 
         CASE type_cruise
             WHEN 'luxury' THEN 1200
@@ -233,10 +262,10 @@ BEGIN
     INTO v_basePrice
     FROM cruise
     WHERE cod_cruise = p_cod_cruise;
-    -- 10) CALCULATE FINAL PRICE (function)
+    -- 11) CALCULATE FINAL PRICE (function)
     SELECT fn_calculate_final_price(p_id_client, p_cod_cruise, v_basePrice)
     INTO v_finalPrice;
-    -- 11) BOOK INSERT
+    -- 12) BOOK INSERT
     INSERT INTO book VALUES(
         p_id_client,
         p_cod_cruise,
