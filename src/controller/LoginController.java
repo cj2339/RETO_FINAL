@@ -20,6 +20,11 @@ import model.WorkerDAO;
 import view.StartWindow;
 import model.Client;
 
+/**
+ * Controller class managing the interactions between the View and the Model (DAO layer)
+ * for the cruise booking application. Consolidates CRUD logic for cruises, administrators, 
+ * clients, workers, and bookings.
+ */
 public class LoginController {
 
 	AdministratorDAO daoAdministrator = new DBImplementationAdministrator();
@@ -251,33 +256,49 @@ public class LoginController {
 	}
 
 	/**
-	 * Inserts a new worker by calling the insertWorker method of the WorkerDAO
-	 * implementation with the provided worker object and returns the result.
+	 * Checks if an administrator's credentials are valid.
 	 * 
-	 * @param worker
-	 * @return
+	 * @param user The administrator object containing name and password.
+	 * @return true if credentials are valid, false otherwise.
 	 */
 	public boolean checkUser(Administrator user) {
 		return daoAdministrator.checkUser(user);
 	}
+
+	/**
+	 * Deletes a worker from the database using their ID.
+	 * 
+	 * @param id The ID of the worker to delete.
+	 * @return true if successfully deleted, false otherwise.
+	 */
 	public boolean deleteWorker(String id) {
 		return daoWorker.deleteWorker(id);
 	}
 	
+	/**
+	 * Updates the details of an existing worker.
+	 * 
+	 * @param worker The worker object holding the updated data.
+	 * @return true if updated successfully, false otherwise.
+	 */
 	public boolean updateWorker(Worker worker) {
 		return daoWorker.updateWorker(worker);
 	}
 	
+	/**
+	 * Inserts a newly created worker into the system.
+	 * 
+	 * @param worker The worker to be inserted.
+	 * @return true if successfully inserted, false otherwise.
+	 */
 	public boolean insertWorker(Worker worker) {
 		return daoWorker.insertWorker(worker);
 	}
 
 	/**
-	 * Retrieves a worker by calling the getWorkerByCode method of the WorkerDAO
-	 * implementation with the provided id and returns it.
+	 * Gets the name of the administrator currently logged into the system.
 	 * 
-	 * @param id
-	 * @return
+	 * @return The name of the logged-in administrator.
 	 */
 	public String getLoggedInAdminName() {
 		return loggedInAdminName;
@@ -306,19 +327,46 @@ public class LoginController {
 		return daoAdministrator.updatePassword(adminName, newPassword);
 	}
 
-	//Book Methods
+	// Book Methods
+	
+	/**
+	 * Retrieves all bookings existing in the database.
+	 * 
+	 * @return A list of all bookings.
+	 */
 	public List<Book> getAllBookings() {
 	    return daoBooking.getAllBookings();
 	}
 
+	/**
+	 * Creates a new booking entry.
+	 * 
+	 * @param b The booking object to insert.
+	 * @return true if booking creation was successful, false otherwise.
+	 */
 	public boolean createBooking(Book b) {
 	    return daoBooking.createBooking(b);
 	}
 
+	/**
+	 * Deletes a booking given its client ID, cruise code, and start date.
+	 * 
+	 * @param idClient  The client's ID.
+	 * @param codCruise The code of the cruise.
+	 * @param startDate The start date of the cruise booking.
+	 * @return true if deleted properly, false otherwise.
+	 */
 	public boolean deleteBooking(String idClient, int codCruise, Date startDate) {
 	    return daoBooking.deleteBooking(idClient, codCruise, startDate);
 	}
 
+	/**
+	 * Replaces an existing booking with a new updated booking.
+	 * 
+	 * @param oldB The former booking.
+	 * @param newB The newly updated booking.
+	 * @return true if successfully updated, false otherwise.
+	 */
 	public boolean updateBooking(Book oldB, Book newB) {
 	    return daoBooking.updateBooking(oldB, newB);
 	}
