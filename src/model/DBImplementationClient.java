@@ -8,6 +8,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
+/**
+ * Relational database mappings resolving Client logic interactions.
+ */
 public class DBImplementationClient implements ClientDAO {
 	private Connection connection;
 	private PreparedStatement statement;
@@ -44,6 +47,11 @@ public class DBImplementationClient implements ClientDAO {
 		}
 	}
 
+	/**
+	 * Retrieves all clients from the database.
+	 *
+	 * @return List containing all clients currently in the database.
+	 */
 	@Override
 	public List<Client> getAllClient() {//this method retrieves all clients from the database
 		//by executing the SQLSELECTALL query and returns a list of Client objects representing the retrieved clients
@@ -71,6 +79,12 @@ public class DBImplementationClient implements ClientDAO {
 		return clients;
 	}
 
+	/**
+	 * Retrieves a specific client based on their client ID.
+	 *
+	 * @param client The client object with an ID attribute set to search for.
+	 * @return The matching Client object or null if not found.
+	 */
 	@Override
 	public Client getClientByCode(Client client) {
 	    this.openConnection();
@@ -95,6 +109,12 @@ public class DBImplementationClient implements ClientDAO {
 	    return null;
 	}
 
+	/**
+	 * Deletes a client based on their identification code.
+	 *
+	 * @param client The client holding the code.
+	 * @return true if deleted properly, false otherwise.
+	 */
 	@Override
 	public boolean deleteClient(Client client) {//this method deletes a client from the database
 		//by executing the SQLDELETEBYCODE query with the client's unique identifier (code) and returns true if the deletion was successful, or false otherwise
@@ -109,6 +129,12 @@ public class DBImplementationClient implements ClientDAO {
 	    return ok;
 	}
 
+	/**
+	 * Updates an existing client's details tracking their ID.
+	 *
+	 * @param client The matching Client with replaced attributes.
+	 * @return true on success update, false alternatively.
+	 */
 	@Override
 	public boolean updateClientByCode(Client client) {//this method updates a client's information in the database based on their unique identifier (code)
 	    boolean ok = false;
@@ -128,6 +154,12 @@ public class DBImplementationClient implements ClientDAO {
 	    return ok;
 	}
 
+	/**
+	 * Submits and processes a new Client persistence into the system layer.
+	 *
+	 * @param client A new client properties structure.
+	 * @return true if insertion returns properly, false on collision.
+	 */
 	@Override
 	public boolean insertClient(Client client) {//this method inserts a new client into the database by executing the SQLINSERT query with the client's id, name, surname, age, phone and email
 	    boolean ok = false;
@@ -146,6 +178,12 @@ public class DBImplementationClient implements ClientDAO {
 	    return ok;
 	}
 
+	/**
+	 * Validates whether a given client ID handles active reservations under the book logs.
+	 *
+	 * @param id The ID to check against tracking system.
+	 * @return true if it belongs to a book, false if transparent.
+	 */
 	@Override
 	public boolean checkClientInBook(String id) {//this method checks if a client is associated with any booking in the database 
 		//by executing the SQLSELECTBOOKCLIENT query with the client's unique identifier (id)

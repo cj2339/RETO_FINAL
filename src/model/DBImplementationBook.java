@@ -12,6 +12,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
+/**
+ * Implementation of the BookDAO interface mapping interactions to a relational database.
+ */
 public class DBImplementationBook implements BookDAO {
 
     private Connection connection;
@@ -26,6 +29,9 @@ public class DBImplementationBook implements BookDAO {
     final String SQLSELECTALL ="SELECT id_client, cod_cruise, originCity, destinationCity, startDate, endDate, basePrice, finalPrice, room_number FROM book";
     final String SQLDELETE ="DELETE FROM book WHERE id_client = ? AND cod_cruise = ? AND startDate = ?";
 
+    /**
+     * Initializes the DB implementation and fetches configuration properties.
+     */
     public DBImplementationBook() {
         this.configFile = ResourceBundle.getBundle("configClass");
         this.driverDB = this.configFile.getString("Driver");
@@ -42,6 +48,11 @@ public class DBImplementationBook implements BookDAO {
         }
     }
 
+    /**
+     * Retrieves all bookings from the database.
+     *
+     * @return a List containing the retrieved booking objects.
+     */
     @Override
     public List<Book> getAllBookings() {
         List<Book> list = new ArrayList<>();
@@ -71,6 +82,12 @@ public class DBImplementationBook implements BookDAO {
         return list;
     }
 
+    /**
+     * Creates a new booking using a stored procedure in the database.
+     *
+     * @param b the Book entity containing necessary data
+     * @return true if the creation is successful, false otherwise.
+     */
     @Override
     public boolean createBooking(Book b) {
         boolean ok = false;
@@ -98,6 +115,14 @@ public class DBImplementationBook implements BookDAO {
         return ok;
     }
 
+    /**
+     * Deletes a booking matching the provided identifiers.
+     *
+     * @param idClient   ID of the client
+     * @param codCruise  Code of the cruise
+     * @param startDate  Start date of the booking
+     * @return true if successfully deleted, false otherwise
+     */
     @Override
     public boolean deleteBooking(String idClient, int codCruise, java.util.Date startDate) {
         boolean ok = false;
@@ -117,6 +142,13 @@ public class DBImplementationBook implements BookDAO {
     }
 
 
+    /**
+     * Updates an old booking by deleting it and creating a new one matching the updated details.
+     *
+     * @param oldBooking The original booking to be deleted
+     * @param newBooking The updated booking to insert
+     * @return true if the operation succeeds, false otherwise
+     */
     @Override
     public boolean updateBooking(Book oldBooking, Book newBooking) {
         boolean deleted = deleteBooking(

@@ -2,6 +2,9 @@ package model;
 
 import java.util.List;
 
+/**
+ * Data Access Object interface for managing Administrator entities.
+ */
 public interface AdministratorDAO {
 	/**
 	 * Retrieves a list of all administrators by calling the getAllAdministrators

@@ -2,6 +2,9 @@ package model;
 
 import java.util.List;
 
+/**
+ * Data Access Object interface defining operations for Client entities.
+ */
 public interface ClientDAO {
 	/**
 	 * Retrieves a list of all clients by calling the getAllClient method of the

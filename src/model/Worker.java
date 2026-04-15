@@ -2,6 +2,9 @@ package model;
 
 import java.util.Date;
 
+/**
+ * Represents a worker providing services within the cruise system.
+ */
 public class Worker {
 	private String idWorker;
 	private TypeWorker service;
@@ -15,6 +18,9 @@ public class Worker {
 	private boolean english;
 	private Cruise cruise;
 
+	/**
+	 * Default constructor for a worker object.
+	 */
 	public Worker() {
 		super();
 	}

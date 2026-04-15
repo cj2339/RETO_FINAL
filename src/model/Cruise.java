@@ -1,5 +1,8 @@
 package model;
 
+/**
+ * Represents a Cruise entity detailing its characteristics and capacity.
+ */
 public class Cruise {
 
 	private int codCruise;

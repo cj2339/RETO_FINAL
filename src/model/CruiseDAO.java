@@ -2,6 +2,9 @@ package model;
 
 import java.util.List;
 
+/**
+ * Data Access Object interface defining operations for Cruise management.
+ */
 public interface CruiseDAO {
 
 	/**

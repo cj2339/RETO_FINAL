@@ -1,5 +1,8 @@
 package model;
 
+/**
+ * Represents an administrator entity in the system handling login and credentials.
+ */
 public class Administrator {
 	private String name;
 	private String password;
@@ -16,10 +19,10 @@ public class Administrator {
 	 * Constructor that initializes the administrator's information with the
 	 * provided name and password.
 	 * 
-	 * @param name
-	 * @param password
+	 * @param name     The administrator's username.
+	 * @param password The administrator's password.
 	 */
-	public Administrator(String name, String password) {// constructor that initializes the administrator's information
+	public Administrator(String name, String password) {
 		this.name = name;
 		this.password = password;
 	}

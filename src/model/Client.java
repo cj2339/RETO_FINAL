@@ -2,6 +2,9 @@ package model;
 
 import java.io.Serializable;
 
+/**
+ * Represents a Client interacting with the cruise system.
+ */
 public class Client implements Serializable {
     private static final long serialVersionUID = 1L;
 
@@ -12,10 +15,23 @@ public class Client implements Serializable {
     private int phoneClient;  
     private String emailClient;
 
+    /**
+     * Default constructor for creating an empty client structure.
+     */
     public Client() {
         super();
     }
 
+    /**
+     * Complete constructor for creating a populated client entity.
+     *
+     * @param idClient      The unique ID (DNI/Passport) of the client.
+     * @param nameClient    The given name of the client.
+     * @param surnameClient The surname of the client.
+     * @param ageClient     The age of the client.
+     * @param phoneClient   The primary phone number.
+     * @param emailClient   The email address.
+     */
     public Client(String idClient, String nameClient, String surnameClient, int ageClient, int phoneClient, String emailClient) {
         this.idClient = idClient;
         this.nameClient = nameClient;

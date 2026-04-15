@@ -9,6 +9,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
+/**
+ * Database implementation logic for matching Worker processes with a SQL connection.
+ */
 public class DBImplementationWorker implements WorkerDAO {
 	private Connection con;
 	private PreparedStatement stmt;

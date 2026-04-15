@@ -9,6 +9,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
+/**
+ * Concrete implementation mapping Cruise operations to a relational database.
+ */
 public class DBImplementationCruise implements CruiseDAO {
 	private Connection connection;
 	private PreparedStatement statement;

@@ -5,6 +5,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
+/**
+ * Concrete implementation of AdministratorDAO connecting to a database.
+ * Handles all Administrator-related persistence operations.
+ */
 public class DBImplementationAdministrator implements AdministratorDAO {
 
 	private Connection con;
@@ -23,6 +27,9 @@ public class DBImplementationAdministrator implements AdministratorDAO {
 	final String SQL_UPDATE_ADMIN_PASSWORD = "UPDATE administrator SET password_admin = ? WHERE name_admin = ?";
 	final String SQL_DELETE_ADMIN = "DELETE FROM administrator WHERE name_admin = ?";
 
+	/**
+	 * Initializes the DAO and reads database connection settings from the configuration file.
+	 */
 	public DBImplementationAdministrator() {
 		this.configFile = ResourceBundle.getBundle("configClass");
 		this.urlDB = this.configFile.getString("Conn");

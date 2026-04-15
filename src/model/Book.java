@@ -2,6 +2,9 @@ package model;
 
 import java.util.Date;
 
+/**
+ * Represents a booking entity containing details about the client, cruise, dates, and prices.
+ */
 public class Book {
 
 	private String idClient;
@@ -14,6 +17,9 @@ public class Book {
 	private double finalPrice;
 	private int roomNumber;
 
+	/**
+	 * Default constructor initializing empty or default values for the booking.
+	 */
 	public Book() {
 		this.idClient = null;
 		this.codCruise = 0;
@@ -26,6 +32,19 @@ public class Book {
 		this.roomNumber = 0;
 	}
 
+	/**
+	 * Constructor initializing a booking with all necessary fields.
+	 *
+	 * @param idClient       The client's identification string.
+	 * @param codCruise      The cruise code.
+	 * @param originCity     The city of origin.
+	 * @param destinationCity The destination city.
+	 * @param startDate      The start date of the booking.
+	 * @param endDate        The end date of the booking.
+	 * @param basePrice      The base calculated price.
+	 * @param finalPrice     The final price after any modifications.
+	 * @param roomNumber     The assigned room number.
+	 */
 	public Book(String idClient, int codCruise, String originCity, String destinationCity,
 			Date startDate, Date endDate, double basePrice, double finalPrice, int roomNumber) {
 		this.idClient = idClient;

@@ -2,6 +2,9 @@ package model;
 
 import java.util.List;
 
+/**
+ * Data Access Object interface identifying operations for Worker data.
+ */
 public interface WorkerDAO {
 	/**
 	 * This method retrieves a list of all workers from the database.
