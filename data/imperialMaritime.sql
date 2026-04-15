@@ -26,7 +26,22 @@ INSERT INTO cruise(name_cruise, type_cruise, num_rooms, capacity_max) VALUES
 ('Tropical Adventure', 'family', 150, 800),
 ('Antarctic Ice', 'expedition', 50, 150),
 ('Mediterranean Diamond', 'luxury', 300, 1000),
-('Coastal Breeze', 'family', 100, 800);
+('Coastal Breeze', 'family', 100, 800),
+('Ocean Spirit', 'premium', 120, 500),
+('Blue Horizon', 'luxury', 250, 1000),
+('Sunset Voyager', 'family', 180, 800),
+('Polar Explorer', 'expedition', 60, 150),
+('Emerald Wave', 'premium', 140, 500),
+('Golden Pearl', 'luxury', 280, 1000),
+('Caribbean Star', 'family', 160, 800),
+('Northern Lights', 'expedition', 55, 150),
+('Pacific Dream', 'luxury', 300, 1000),
+('Baltic Breeze', 'premium', 130, 500),
+('Royal Seagull', 'family', 170, 800),
+('Arctic Wind', 'expedition', 45, 150),
+('Mediterranean Sun', 'luxury', 260, 1000),
+('Coral Princess', 'family', 155, 800),
+('Stormbreaker', 'expedition', 50, 150);
 
 
 CREATE TABLE worker(
@@ -49,7 +64,22 @@ INSERT INTO worker VALUES
 ('12345678B', 'guide', 'Wilson', 'Louis', '2022-11-05', '600333444', 'wilson.l@email.com', 28, true, false, 1),
 ('12345678C', 'receptionist', 'Anderson', 'Laura', '2024-02-10', '600555666', 'anderson.l@email.com', 41, true, false, 2),
 ('12345678D', 'captain', 'Thomas', 'Frank', '2020-05-20', '600777888', 'thomas.f@email.com', 52, true, true, 3),
-('12345678F', 'guide', 'White', 'Martha', '2021-08-12', '600999000', 'white.m@email.com', 30, true, true, 4);
+('12345678F', 'guide', 'White', 'Martha', '2021-08-12', '600999000', 'white.m@email.com', 30, true, true, 4),
+('11111111F','cook','Mario','Lopez','2021-03-10','600111333','mario.lopez@email.com',29,true,true,1),
+('22222222G','guide','Lucia','Garcia','2020-06-22','600222333','lucia.garcia@email.com',33,true,false,2),
+('33333333H','receptionist','Carlos','Perez','2022-09-14','600333555','carlos.perez@email.com',27,true,true,3),
+('44444444I','captain','Sofia','Martinez','2019-11-01','600444666','sofia.martinez@email.com',48,true,true,4),
+('55555555J','cook','David','Ruiz','2023-01-19','600555777','david.ruiz@email.com',36,true,false,5),
+('66666666K','guide','Elena','Santos','2021-07-30','600666888','elena.santos@email.com',31,true,true,6),
+('77777777L','receptionist','Pablo','Iglesias','2020-04-12','600777999','pablo.iglesias@email.com',26,true,false,7),
+('88888888M','captain','Laura','Vega','2018-12-05','600888111','laura.vega@email.com',54,true,true,8),
+('99999999N','cook','Jorge','Navarro','2022-02-17','600999222','jorge.navarro@email.com',38,true,true,9),
+('12121212O','guide','Marta','Diez','2023-05-09','601212333','marta.diez@email.com',29,true,false,10),
+('13131313P','receptionist','Raul','Serrano','2021-10-21','601313444','raul.serrano@email.com',32,true,true,11),
+('14141414Q','captain','Irene','Calvo','2017-08-03','601414555','irene.calvo@email.com',50,true,true,12),
+('15151515R','cook','Victor','Sanz','2020-03-28','601515666','victor.sanz@email.com',40,true,false,13),
+('16161616S','guide','Nuria','Prieto','2022-06-11','601616777','nuria.prieto@email.com',34,true,true,14),
+('17171717T','receptionist','Hugo','Rey','2023-09-07','601717888','hugo.rey@email.com',25,true,false,15);
 
 CREATE TABLE client(
     id_client CHAR(9) PRIMARY KEY,
@@ -65,7 +95,22 @@ INSERT INTO client VALUES
 ('22222222B', 'Mary', 'Johnson', 28, 693462061, 'maryjohnson@gmail.com'),
 ('33333333C', 'Charles', 'Brown', 45, 629403819, 'charlesbrown@gmail.com'),
 ('44444444D', 'Anna', 'Miller', 52, 631942840, 'annamiller@gmail.com'),
-('55555555E', 'Helen', 'Davis', 31, 667385867, 'helendavis@gmail.com');
+('55555555E', 'Helen', 'Davis', 31, 667385867, 'helendavis@gmail.com'),
+('66666666F','Laura','Gomez',30,612345678,'lauragomez@gmail.com'),
+('77777777G','Pedro','Lopez',42,623456789,'pedrolopez@gmail.com'),
+('88888888H','Sara','Martinez',27,634567890,'saramartinez@gmail.com'),
+('99999999I','Javier','Santos',50,645678901,'javiersantos@gmail.com'),
+('12121212J','Lucia','Ruiz',33,656789012,'luciaruiz@gmail.com'),
+('13131313K','Diego','Navarro',29,667890123,'diegonavarro@gmail.com'),
+('14141414L','Paula','Calvo',36,678901234,'paulacalvo@gmail.com'),
+('15151515M','Alberto','Sanz',41,689012345,'albertosanz@gmail.com'),
+('16161616N','Cristina','Rey',26,690123456,'cristinarey@gmail.com'),
+('17171717O','Ruben','Prieto',39,691234567,'rubenprieto@gmail.com'),
+('18181818P','Elena','Diez',28,692345678,'elenadiez@gmail.com'),
+('19191919Q','Oscar','Vega',47,693456789,'oscarvega@gmail.com'),
+('20202020R','Marta','Iglesias',32,694567890,'martaisglesias@gmail.com'),
+('21212121S','Hector','Garcia',45,695678901,'hectorgarcia@gmail.com'),
+('22222222T','Nerea','Lopez',24,696789012,'nerealopez@gmail.com');
 
 CREATE TABLE book(
     id_client CHAR(9),
@@ -89,7 +134,22 @@ INSERT INTO book VALUES
 ('22222222B', 2, 'Miami', 'Nassau', '2026-07-10', '2026-07-17', 1, 850.00, 850.00),
 ('33333333C', 1, 'London', 'Oslo', '2026-06-01', '2026-06-15', 1, 1200.00, 1200.50),
 ('44444444D', 4, 'Athens', 'Rome', '2026-08-05', '2026-08-12', 1, 1500.00, 1500.00),
-('55555555E', 5, 'Lisbon', 'Malaga', '2026-09-20', '2026-09-25', 1, 450.00, 450.00);
+('55555555E', 5, 'Lisbon', 'Malaga', '2026-09-20', '2026-09-25', 1, 450.00, 450.00),
+('66666666F', 6, 'Bilbao','Dublin','2026-10-01','2026-10-10',2,900,900),
+('77777777G', 7, 'Madrid','Ibiza','2026-11-05','2026-11-12',3,700,700),
+('88888888H', 8, 'Paris','London','2026-12-01','2026-12-08',4,1500,1500),
+('99999999I', 9, 'Rome','Athens','2026-09-15','2026-09-22',5,1200,1200),
+('12121212J',10,'Berlin','Oslo','2026-08-10','2026-08-17',2,900,900),
+('13131313K',11,'Lisbon','Madeira','2026-07-20','2026-07-27',1,700,700),
+('14141414L',12,'Barcelona','Naples','2026-06-05','2026-06-12',3,1500,1500),
+('15151515M',13,'Valencia','Malta','2026-05-01','2026-05-08',4,1200,1200),
+('16161616N',14,'Sevilla','Tenerife','2026-04-10','2026-04-17',2,900,900),
+('17171717O',15,'Bilbao','Santorini','2026-03-15','2026-03-22',1,700,700),
+('18181818P',16,'Madrid','Cádiz','2026-02-01','2026-02-08',2,1500,1500),
+('19191919Q',17,'Paris','Nice','2026-01-10','2026-01-17',3,1200,1200),
+('20202020R',18,'Rome','Split','2026-12-20','2026-12-27',4,900,900),
+('21212121S',19,'Berlin','Tallinn','2026-11-15','2026-11-22',5,700,700),
+('22222222T',20,'Lisbon','Porto','2026-10-05','2026-10-12',1,1500,1500);
 
 
 use imperialmaritime;
