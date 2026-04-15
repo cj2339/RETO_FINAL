@@ -1,14 +1,11 @@
 package view;
 
-import java.awt.EventQueue;
-import java.awt.Toolkit;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.List;
 
-import javax.swing.JDialog;
-import javax.swing.JFrame;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
+import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
@@ -17,59 +14,87 @@ import controller.LoginController;
 import model.Cruise;
 import model.TypeCruise;
 
-import javax.swing.JTable;
-import javax.swing.ListSelectionModel;
-import javax.swing.JButton;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-
 public class ListCruiseWindow extends JDialog implements ActionListener {
 
 	private static final long serialVersionUID = 1L;
 	private LoginController cont;
-	private String adminName;
-	private JPanel contentPane;
-	private JButton btnADD;
-	private JButton btnDELETE;
-	private JButton btnMODIFY;
-	JTable table;
+	private JTable table;
+	private JButton btnADD, btnDELETE, btnMODIFY;
+	private Image backgroundImage = new ImageIcon("images/FondoListaCruceros.png").getImage();
 
 	public ListCruiseWindow(JFrame mainWindow, LoginController cont) {
 		super(mainWindow, true);
-		setTitle("Cruises");
 		this.cont = cont;
 
+		setTitle("Cruises");
 		setIconImage(Toolkit.getDefaultToolkit().getImage("images/icon.png"));
 		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 607, 420);
-		contentPane = new JPanel();
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		setSize(663, 450);
+		setLocationRelativeTo(null);
+
+		JPanel contentPane = new JPanel() {
+			@Override
+			protected void paintComponent(Graphics g) {
+				super.paintComponent(g);
+				g.drawImage(backgroundImage, 0, 0, getWidth(), getHeight(), this);
+			}
+		};
+		contentPane.setBorder(new EmptyBorder(10, 10, 10, 10));
 		setContentPane(contentPane);
-
-		loadTable();
-
 		contentPane.setLayout(null);
 
+		// TITTLE
+		JLabel title = new JLabel("Cruise Management");
+		title.setHorizontalAlignment(SwingConstants.CENTER);
+		title.setBounds(202, 13, 226, 49);
+		title.setFont(new Font("SansSerif", Font.BOLD, 22));
+		title.setForeground(Color.WHITE);
+		title.setBorder(new EmptyBorder(5, 5, 15, 5));
+		contentPane.add(title);
+
+		// TABLE
+		loadTable();
 		JScrollPane scrollPane = new JScrollPane(table);
-		scrollPane.setBounds(12, 44, 567, 231);
-		getContentPane().add(scrollPane);
+		scrollPane.setBounds(12, 59, 625, 237);
+
+		scrollPane.setOpaque(false);
+		scrollPane.getViewport().setOpaque(false);
+		table.setOpaque(false);
+		table.setBackground(new Color(255, 255, 255, 180));
+
+		contentPane.add(scrollPane);
+
+		// BUTTONS
+		JPanel buttonPanel = new JPanel();
+		buttonPanel.setBounds(159, 309, 319, 45);
+		buttonPanel.setOpaque(false);
 
 		btnADD = new JButton("ADD");
-		btnADD.setBounds(96, 303, 97, 25);
-		btnADD.addActionListener(this);
-		contentPane.add(btnADD);
-
+		btnADD.setBounds(20, 10, 67, 25);
 		btnDELETE = new JButton("DELETE");
-		btnDELETE.setBounds(247, 343, 97, 25);
-		btnDELETE.addActionListener(this);
-		contentPane.add(btnDELETE);
-
+		btnDELETE.setBounds(198, 10, 88, 25);
 		btnMODIFY = new JButton("MODIFY");
+		btnMODIFY.setBounds(99, 10, 87, 25);
+
+		btnADD.addActionListener(this);
+		btnDELETE.addActionListener(this);
 		btnMODIFY.addActionListener(this);
 
-		btnMODIFY.setBounds(400, 303, 97, 25);
-		contentPane.add(btnMODIFY);
+		btnADD.setBackground(new Color(46, 204, 113));
+		btnADD.setForeground(Color.WHITE);
 
+		btnDELETE.setBackground(new Color(231, 76, 60));
+		btnDELETE.setForeground(Color.WHITE);
+
+		btnMODIFY.setBackground(new Color(52, 152, 219));
+		btnMODIFY.setForeground(Color.WHITE);
+		buttonPanel.setLayout(null);
+
+		buttonPanel.add(btnADD);
+		buttonPanel.add(btnMODIFY);
+		buttonPanel.add(btnDELETE);
+
+		contentPane.add(buttonPanel);
 	}
 
 	@Override
@@ -77,17 +102,13 @@ public class ListCruiseWindow extends JDialog implements ActionListener {
 		int row = table.getSelectedRow();
 
 		if (e.getSource() == btnDELETE) {
-
 			if (row == -1) {
-				// No hay fila seleccionada
 				JOptionPane.showMessageDialog(this, "Select a cruise to delete.");
 				return;
 			}
 
-			// Obtener el código de la columna 0
 			String codCruise = table.getValueAt(row, 0).toString();
 
-			// Llamar al controlador con el código
 			if (!cont.checkCruiseInWorker(codCruise)) {
 				if (!cont.checkCruiseInBook(codCruise)) {
 					if (cont.deleteCruise(codCruise)) {
@@ -102,63 +123,60 @@ public class ListCruiseWindow extends JDialog implements ActionListener {
 			} else {
 				JOptionPane.showMessageDialog(this, "Cruise not deleted because exists in Worker");
 			}
-			
-
 		}
 
 		if (e.getSource() == btnMODIFY) {
-
-			Cruise cruise = new Cruise();
 			int viewRow = table.getSelectedRow();
 			if (viewRow != -1) {
 				int modelRow = table.convertRowIndexToModel(viewRow);
 				TableModel model = table.getModel();
+
+				Cruise cruise = new Cruise();
 				cruise.setCodCruise((Integer) model.getValueAt(modelRow, 0));
 				cruise.setTypeCruise(TypeCruise.valueOf((String) model.getValueAt(modelRow, 1)));
 				cruise.setNameCruise((String) model.getValueAt(modelRow, 2));
 				cruise.setNumRooms((Integer) model.getValueAt(modelRow, 3));
 				cruise.setCapacityMax((Integer) model.getValueAt(modelRow, 4));
-				FormCruiseWindow formCruiseWindow = new FormCruiseWindow(this, cont, cruise, false);
-				formCruiseWindow.setVisible(true);
+
+				new FormCruiseWindow(this, cont, cruise, false).setVisible(true);
 			} else {
 				JOptionPane.showMessageDialog(this, "Select a cruise to modify");
 			}
 		}
-		if (e.getSource() == btnADD) {
-			FormCruiseWindow formCruiseWindow = new FormCruiseWindow(this, cont, null, true);
-			formCruiseWindow.setVisible(true);
-			refreshModel();
 
+		if (e.getSource() == btnADD) {
+			new FormCruiseWindow(this, cont, null, true).setVisible(true);
+			refreshModel();
 		}
 	}
 
 	private void loadTable() {
-		// Crear modelo de tabla no editable
 		DefaultTableModel modelo = new DefaultTableModel(new String[] { "Code", "Type", "Name", "Rooms", "Capacity" },
 				0) {
-			private static final long serialVersionUID = 1L;
 
 			@Override
 			public boolean isCellEditable(int row, int column) {
 				return false;
-			}// Esto es para que la tabla no sea editable
+			}
 		};
+
 		table = new JTable(modelo);
-		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);// Permitir seleccionar solo una fila
+		table.setRowHeight(28);
+		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		table.getTableHeader().setFont(new Font("SansSerif", Font.BOLD, 14));
+
 		refreshModel();
 	}
 
 	public void refreshModel() {
-		List<Cruise> cruises = cont.getAllCruise(); // Obtener la lista actualizada de cruceros
-		DefaultTableModel modelo = (DefaultTableModel) table.getModel(); // Obtener el modelo de la tabla
+		List<Cruise> cruises = cont.getAllCruise();
+		DefaultTableModel modelo = (DefaultTableModel) table.getModel();
 
-		// Limpiar tabla
 		modelo.setRowCount(0);
-		// Rellenar tabla
+
 		for (Cruise cruise : cruises) {
 			modelo.addRow(new Object[] { cruise.getCodCruise(), cruise.getTypeCruise().toString(),
 					cruise.getNameCruise(), cruise.getNumRooms(), cruise.getCapacityMax() });
 		}
 	}
-
 }

@@ -46,11 +46,17 @@ public class DBImplementationCruise implements CruiseDAO {
 		}
 	}
 
-	@Override
 	/**
 	 * This method retrieves all cruises from the database by executing the
-	 * SQLSELECTALL
+	 * SQLSELECTALL query and returns a list of Cruise objects representing the
+	 * retrieved cruises. It opens a connection to the database, prepares and
+	 * executes the SQL query, and iterates through the result set to create Cruise
+	 * objects for each retrieved cruise. Finally, it closes all resources and
+	 * returns the list of cruises.
+	 * 
+	 * @return cruises
 	 */
+	@Override
 	public List<Cruise> getAllCruise() {
 		List<Cruise> cruises = new ArrayList<>();
 		Cruise cruise;
@@ -76,7 +82,6 @@ public class DBImplementationCruise implements CruiseDAO {
 		return cruises;
 	}
 
-	@Override
 	/**
 	 * This method deletes a cruise from the database based on the provided cruise
 	 * ID. It opens a connection to the database, prepares a SQL statement to delete
@@ -85,7 +90,11 @@ public class DBImplementationCruise implements CruiseDAO {
 	 * otherwise, it returns false. The method also handles any SQL exceptions that
 	 * may occur during the process and ensures that all resources are properly
 	 * closed after use.
+	 * 
+	 * @param id
+	 * @return deletePerformed
 	 */
+	@Override
 	public boolean deleteCruise(String id) {
 		boolean deletePerformed = false;
 		this.openConnection();
@@ -103,7 +112,6 @@ public class DBImplementationCruise implements CruiseDAO {
 		return deletePerformed;
 	}
 
-	@Override
 	/**
 	 * This method retrieves a cruise from the database based on the provided cruise
 	 * ID. It opens a connection to the database, prepares a SQL statement to select
@@ -112,7 +120,12 @@ public class DBImplementationCruise implements CruiseDAO {
 	 * representing the retrieved cruise. If no matching record is found, it returns
 	 * null. The method also handles any SQL exceptions that may occur during the
 	 * process and ensures that all resources are properly closed after use.
+	 * 
+	 * @param id
+	 * @return cruise
 	 */
+	@Override
+
 	public Cruise getCruiseByCode(String id) {
 		Cruise cruise = null;
 		this.openConnection();
@@ -136,7 +149,6 @@ public class DBImplementationCruise implements CruiseDAO {
 		return cruise;
 	}
 
-	@Override
 	/**
 	 * This method updates the information of a cruise in the database based on the
 	 * provided Cruise object. It opens a connection to the database, prepares a SQL
@@ -145,7 +157,11 @@ public class DBImplementationCruise implements CruiseDAO {
 	 * affected), it returns true; otherwise, it returns false. The method also
 	 * handles any SQL exceptions that may occur during the process and ensures that
 	 * all resources are properly closed after use.
+	 * 
+	 * @param cruise
+	 * @return updatePerformed
 	 */
+	@Override
 	public boolean updateCruiseByCode(Cruise cruise) {
 		boolean updatePerformed = false;
 		this.openConnection();
@@ -169,7 +185,6 @@ public class DBImplementationCruise implements CruiseDAO {
 		return updatePerformed;
 	}
 
-	@Override
 	/**
 	 * This method inserts a new cruise into the database based on the provided
 	 * Cruise object. It opens a connection to the database, prepares a SQL
@@ -178,7 +193,11 @@ public class DBImplementationCruise implements CruiseDAO {
 	 * affected), it returns true; otherwise, it returns false. The method also
 	 * handles any SQL exceptions that may occur during the process and ensures that
 	 * all resources are properly closed after use.
+	 * 
+	 * @param cruise
+	 * @return insertPerformed
 	 */
+	@Override
 	public boolean insertCruise(Cruise cruise) {
 		boolean insertPerformed = false;
 		this.openConnection();
@@ -201,7 +220,6 @@ public class DBImplementationCruise implements CruiseDAO {
 		return insertPerformed;
 	}
 
-	@Override
 	/**
 	 * This method checks if a cruise with the given identifier (id) is associated
 	 * with at least one worker in the database. It opens a connection to the
@@ -210,7 +228,11 @@ public class DBImplementationCruise implements CruiseDAO {
 	 * the result set, it returns true; otherwise, it returns false. The method also
 	 * handles any SQL exceptions that may occur during the process and ensures that
 	 * all resources are properly closed after use.
+	 * 
+	 * @param id
+	 * @return cruiseExistInWorker
 	 */
+	@Override
 	public boolean checkCruiseInWorker(String id) {
 		boolean cruiseExistInWorker = false;
 		this.openConnection();
@@ -230,7 +252,6 @@ public class DBImplementationCruise implements CruiseDAO {
 		return cruiseExistInWorker;
 	}
 
-	@Override
 	/**
 	 * This method checks if a cruise with the given identifier (id) is associated
 	 * with at least one booking in the database. It opens a connection to the
@@ -239,7 +260,11 @@ public class DBImplementationCruise implements CruiseDAO {
 	 * the result set, it returns true; otherwise, it returns false. The method also
 	 * handles any SQL exceptions that may occur during the process and ensures that
 	 * all resources are properly closed after use.
+	 * 
+	 * @param id
+	 * @return cruiseExistInBook
 	 */
+	@Override
 	public boolean checkCruiseInBook(String id) {
 		boolean cruiseExistInBook = false;
 		this.openConnection();

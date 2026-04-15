@@ -34,7 +34,7 @@ public class LoginController {
 	 * Retrieves a list of all cruises by calling the getAllCruise method of the
 	 * CruiseDAO implementation and returns it.
 	 * 
-	 * @return
+	 * @return 
 	 */
 	public List<Cruise> getAllCruise() {
 		return daoCruise.getAllCruise();
@@ -45,7 +45,7 @@ public class LoginController {
 	 * implementation with the provided id and returns the result.
 	 * 
 	 * @param id
-	 * @return
+	 * @return 
 	 */
 	public boolean deleteCruise(String id) {
 		return daoCruise.deleteCruise(id);
@@ -260,18 +260,34 @@ public class LoginController {
 	public boolean checkUser(Administrator user) {
 		return daoAdministrator.checkUser(user);
 	}
+//
+//	public boolean deleteWorker(String id) {
+//		return dao.deleteWorker(id);
+//	}
+//
+//	public boolean deleteClient(String id) {
+//		return dao.deleteClient(id);
+//	}
+//
+//	public boolean deleteBook(String codCruise, String idClient) {
+//		return dao.deleteBook(codCruise, idClient);
+//	}
 
+//	public ArrayList<String> getClientCodes() {
+//		return daoWorker.getClientCodes();
+//	}
+//
 	public boolean deleteWorker(String id) {
 		return daoWorker.deleteWorker(id);
 	}
-
-	public boolean insertWorker(Worker worker) {
-		return daoWorker.insertWorker(worker);
-	}
-	
-	public boolean updateWorker(Worker worker) {
-		return daoWorker.updateWorker(worker);
-	}
+//
+//	public boolean deleteClient(String id) {
+//		return daoWorker.deleteClient(id);
+//	}
+//
+//	public boolean deleteBook(String codCruise, String idClient) {
+//		return daoWorker.deleteBook(codCruise, idClient);
+//	}
 
 	/**
 	 * Retrieves a worker by calling the getWorkerByCode method of the WorkerDAO
