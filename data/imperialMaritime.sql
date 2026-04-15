@@ -52,7 +52,7 @@ CREATE TABLE worker(
     hiring_date DATE,
     phone_number CHAR(9),
     email VARCHAR(30),
-    age INTEGER CHECK(age > 18),
+    age INTEGER CHECK(age >= 18),
     spanish_language BOOLEAN, 
     english_language BOOLEAN,
     cod_cruise INTEGER,
