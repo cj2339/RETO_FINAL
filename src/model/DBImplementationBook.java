@@ -17,7 +17,7 @@ public class DBImplementationBook implements BookDAO {
     private Connection connection;
     private PreparedStatement statement;
     private ResourceBundle configFile;
-    private String driverDB;//TENGO QUE PREGUNTARLE A LEIRE!!!!!
+    private String driverDB;
     private String urlDB;
     private String userDB;
     private String passwordDB;
