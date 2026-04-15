@@ -70,7 +70,7 @@ public class XMLExporter {
 			// CLIENTS
 			pw.println("  <clients>");
 			for (Client c : cont.getAllClient()) {
-				pw.println("    <client id=\"" + c.getIdClient() + "\" vip=\"no\">");
+				pw.println("    <client id=\"" + c.getIdClient() + "\">");
 				pw.println("        <name>" + c.getNameClient() + "</name>");
 				pw.println("        <surname>" + c.getSurnameClient() + "</surname>");
 				pw.println("        <age>" + c.getAgeClient() + "</age>");
