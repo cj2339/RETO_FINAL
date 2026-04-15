@@ -1,8 +1,6 @@
 package model;
 
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 public class Worker {
 	private String idWorker;
@@ -13,8 +11,8 @@ public class Worker {
 	private String phoneNumber;
 	private String email;
 	private int age;
-	private boolean spanish; 
-	private boolean english; 
+	private boolean spanish;
+	private boolean english;
 	private Cruise cruise;
 
 	public Worker() {
