@@ -56,12 +56,11 @@ public class ListAdminWindow extends JDialog implements ActionListener {
 		this.cont = cont;
 
 		setIconImage(Toolkit.getDefaultToolkit().getImage("images/icon.png"));
-		setIconImage(Toolkit.getDefaultToolkit().getImage("images/icon.png"));
 		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		setSize(663, 450);
 		setLocationRelativeTo(null);
 
-		JPanel contentPane = new JPanel() {
+		contentPane = new JPanel() {
 			@Override
 			protected void paintComponent(Graphics g) {
 				super.paintComponent(g);
@@ -73,7 +72,6 @@ public class ListAdminWindow extends JDialog implements ActionListener {
 		contentPane.setLayout(null);
 		
 		
-		// TITTLE
 		JLabel title = new JLabel("Administrator Management");
 		title.setHorizontalAlignment(SwingConstants.CENTER);
 		title.setBounds(202, 13, 249, 49);
@@ -82,7 +80,6 @@ public class ListAdminWindow extends JDialog implements ActionListener {
 		title.setBorder(new EmptyBorder(5, 5, 15, 5));
 		contentPane.add(title);
 
-		// TABLE
 		loadTable();
 		JScrollPane scrollPane = new JScrollPane(table);
 		scrollPane.setBounds(12, 59, 625, 271);
@@ -94,7 +91,6 @@ public class ListAdminWindow extends JDialog implements ActionListener {
 
 		contentPane.add(scrollPane);
 
-		// BUTTONS
 		JPanel buttonPanel = new JPanel();
 		buttonPanel.setBounds(159, 340, 319, 45);
 		buttonPanel.setOpaque(false);
@@ -119,7 +115,6 @@ public class ListAdminWindow extends JDialog implements ActionListener {
 		btnMODIFY.setBackground(new Color(63, 117, 243));
 		btnMODIFY.setForeground(Color.WHITE);
 		buttonPanel.setLayout(null);
-
 		buttonPanel.add(btnADD);
 		buttonPanel.add(btnMODIFY);
 		buttonPanel.add(btnDELETE);
@@ -212,7 +207,7 @@ public class ListAdminWindow extends JDialog implements ActionListener {
 	public void refreshModel() {
 		List<Administrator> administrators = cont.getAllAdministrators(); //Get the updated list of administrators
 		DefaultTableModel modelo = (DefaultTableModel) table.getModel(); //Retrieve the table model
-		//Limpiar tabla
+		//Clear table
 		modelo.setRowCount(0);
 		//Fill in the table
 		for (Administrator admin : administrators) {

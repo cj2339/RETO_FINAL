@@ -155,102 +155,115 @@ public class FormBookWindow extends JDialog implements ActionListener {
 
     private void loadClients() {
         List<Client> clients = controller.getAllClient();
-        for (Client c : clients) comboClient.addItem(c);
+        int i = 0;
+        while (i < clients.size()) {
+            comboClient.addItem(clients.get(i));
+            i++;
+        }
     }
 
     private void loadCruises() {
         List<Cruise> cruises = controller.getAllCruise();
-        for (Cruise c : cruises) comboCruise.addItem(c);
+        int i = 0;
+        while (i < cruises.size()) {
+            comboCruise.addItem(cruises.get(i));
+            i++;
+        }
     }
 
     private void selectClient(String id) {
-        for (int i = 0; i < comboClient.getItemCount(); i++) {
+        int i = 0;
+        boolean found = false;
+        while (i < comboClient.getItemCount() && !found) {
             if (comboClient.getItemAt(i).getIdClient().equals(id)) {
                 comboClient.setSelectedIndex(i);
-                break;
+                found = true;
             }
+            i++;
         }
     }
 
     private void selectCruise(int code) {
-        for (int i = 0; i < comboCruise.getItemCount(); i++) {
+        int i = 0;
+        boolean found = false;
+        while (i < comboCruise.getItemCount() && !found) {
             if (comboCruise.getItemAt(i).getCodCruise() == code) {
                 comboCruise.setSelectedIndex(i);
-                break;
+                found = true;
             }
+            i++;
         }
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-
         if (e.getSource() == okButton) {
-
+            boolean valid = true;
+            String errorMsg = "";
             if (txtOrigin.getText().trim().isEmpty() ||
                 txtDestination.getText().trim().isEmpty() ||
                 txtRoom.getText().trim().isEmpty()) {
-
-                JOptionPane.showMessageDialog(this, "Please fill in all fields.");
-                return;
+                valid = false;
+                errorMsg = "Please fill in all fields.";
             }
 
-            int roomNumber;
-            try {
-                roomNumber = Integer.parseInt(txtRoom.getText().trim());
-            } catch (NumberFormatException ex) {
-                JOptionPane.showMessageDialog(this, "Room number must be numeric.");
-                return;
+            int roomNumber = 0;
+            if (valid) {
+                try {
+                    roomNumber = Integer.parseInt(txtRoom.getText().trim());
+                } catch (NumberFormatException ex) {
+                    valid = false;
+                    errorMsg = "Room number must be numeric.";
+                }
             }
 
-            Date start = (Date) spStartDate.getValue();
-            Date end = (Date) spEndDate.getValue();
+            Date start = null;
+            Date end = null;
+            if (valid) {
+                start = (Date) spStartDate.getValue();
+                end = (Date) spEndDate.getValue();
 
-            if (!start.before(end)) {
-                JOptionPane.showMessageDialog(this, "Start date must be before end date.");
-                return;
+                if (!start.before(end)) {
+                    valid = false;
+                    errorMsg = "Start date must be before end date.";
+                }
             }
 
-            LocalDate startLD = start.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-            LocalDate today = LocalDate.now();
+            if (valid) {
+                LocalDate startLD = start.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+                LocalDate today = LocalDate.now();
+                if (startLD.isBefore(today.plusDays(15))) {
+                    valid = false;
+                    errorMsg = "Bookings must be made at least 15 days in advance.";
+                }
+            }
 
-            if (startLD.isBefore(today.plusDays(15))) {
-                JOptionPane.showMessageDialog(this, "Bookings must be made at least 15 days in advance.");
+            if (!valid) {
+                JOptionPane.showMessageDialog(this, errorMsg);
                 return;
             }
 
             Client client = (Client) comboClient.getSelectedItem();
             Cruise cruise = (Cruise) comboCruise.getSelectedItem();
-
-            Book newB = new Book(
-                    client.getIdClient(),
-                    cruise.getCodCruise(),
-                    txtOrigin.getText().trim(),
-                    txtDestination.getText().trim(),
-                    start,
-                    end,
-                    0.0,
-                    0.0,
-                    roomNumber
-            );
+            Book newB = new Book(client.getIdClient(), cruise.getCodCruise(), txtOrigin.getText().trim(), txtDestination.getText().trim(), start, end, 0.0, 0.0, roomNumber);
 
             if (isInsert) {
-
                 String msg = controller.createBooking(newB);
-
-                JOptionPane.showMessageDialog(
-                        this,
-                        msg,
-                        msg.startsWith("Booking successfully") ? "Success" : "Error",
-                        msg.startsWith("Booking successfully") ? JOptionPane.INFORMATION_MESSAGE : JOptionPane.ERROR_MESSAGE
-                );
-
+                String title;
+                int type;
+                if (msg.startsWith("Booking successfully")) {
+                    title = "Success";
+                    type = JOptionPane.INFORMATION_MESSAGE;
+                } else {
+                    title = "Error";
+                    type = JOptionPane.ERROR_MESSAGE;
+                }
+                JOptionPane.showMessageDialog(this, msg, title, type);
                 if (msg.startsWith("Booking successfully")) {
                     parent.refreshModel();
                     this.dispose();
                 }
-
             } else {
-
                 boolean updated = controller.updateBooking(oldBooking, newB);
 
                 if (updated) {
@@ -262,7 +275,6 @@ public class FormBookWindow extends JDialog implements ActionListener {
                 }
             }
         }
-
         if (e.getSource() == cancelButton) {
             this.dispose();
         }

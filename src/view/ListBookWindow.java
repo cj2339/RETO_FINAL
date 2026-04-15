@@ -61,7 +61,7 @@ public class ListBookWindow extends JDialog implements ActionListener {
 		setSize(663, 450);
 		setLocationRelativeTo(null);
 
-		JPanel contentPane = new JPanel() {
+		contentPane = new JPanel() {
 			@Override
 			protected void paintComponent(Graphics g) {
 				super.paintComponent(g);
