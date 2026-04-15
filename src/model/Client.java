@@ -1,59 +1,76 @@
 package model;
 
-public class Client {
+import java.io.Serializable;
 
-	private String idClient;
-	private String nameClient;
-	private String surnameClient;
-	private int ageClient;
+public class Client implements Serializable {
+    private static final long serialVersionUID = 1L;
 
-	/**
-	 * Constructor that initializes the client's information with the provided id,
-	 * name, surname, and age.
-	 * 
-	 * @param idClient
-	 * @param nameClient
-	 * @param surnameClient
-	 * @param ageClient
-	 */
-	public Client(String idClient, String nameClient, String surnameClient, int ageClient) {
-		this.idClient = idClient;
-		this.nameClient = nameClient;
-		this.surnameClient = surnameClient;
-		this.ageClient = ageClient;
+    private String idClient;
+    private String nameClient;
+    private String surnameClient;
+    private int ageClient;
+    private int phoneClient;  
+    private String emailClient;
 
-	}
+    public Client() {
+        super();
+    }
 
-	public String getIdClient() {
-		return idClient;
-	}
+    public Client(String idClient, String nameClient, String surnameClient, int ageClient, int phoneClient, String emailClient) {
+        this.idClient = idClient;
+        this.nameClient = nameClient;
+        this.surnameClient = surnameClient;
+        this.ageClient = ageClient;
+        this.phoneClient = phoneClient;
+        this.emailClient = emailClient;
+    }
 
-	public void setIdClient(String idClient) {
-		this.idClient = idClient;
-	}
+    // Getters y Setters
+    public String getIdClient() {
+        return idClient;
+    }
 
-	public String getNameClient() {
-		return nameClient;
-	}
+    public void setIdClient(String idClient) {
+        this.idClient = idClient;
+    }
 
-	public void setNameClient(String nameClient) {
-		this.nameClient = nameClient;
-	}
+    public String getNameClient() {
+        return nameClient;
+    }
 
-	public String getSurnameClient() {
-		return surnameClient;
-	}
+    public void setNameClient(String nameClient) {
+        this.nameClient = nameClient;
+    }
 
-	public void setSurnameClient(String surnameClient) {
-		this.surnameClient = surnameClient;
-	}
+    public String getSurnameClient() {
+        return surnameClient;
+    }
 
-	public int getAgeClient() {
-		return ageClient;
-	}
+    public void setSurnameClient(String surnameClient) {
+        this.surnameClient = surnameClient;
+    }
 
-	public void setAgeClient(int ageClient) {
-		this.ageClient = ageClient;
-	}
+    public int getAgeClient() {
+        return ageClient;
+    }
 
+    public void setAgeClient(int ageClient) {
+        this.ageClient = ageClient;
+    }
+
+    public int getPhoneClient() {
+        return phoneClient;
+    }
+
+    public void setPhoneClient(int phoneClient) {
+        this.phoneClient = phoneClient;
+    }
+
+    public String getEmailClient() {
+        return emailClient;
+    }
+
+    public void setEmailClient(String emailClient) {
+        this.emailClient = emailClient;
+    }
 }

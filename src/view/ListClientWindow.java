@@ -1,12 +1,18 @@
 package view;
 
+import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.List;
 
+import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.ListSelectionModel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
@@ -14,56 +20,47 @@ import javax.swing.table.TableModel;
 import controller.LoginController;
 import model.Client;
 
-import javax.swing.JTable;
-import javax.swing.ListSelectionModel;
-import javax.swing.JButton;
-import java.awt.Toolkit;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-
 public class ListClientWindow extends JDialog implements ActionListener {
 
     private static final long serialVersionUID = 1L;
     private LoginController cont;
     private JPanel contentPane;
-    private JButton btnADD;
-    private JButton btnDELETE;
-    private JButton btnMODIFY;
-    JTable table;
+    private JButton btnADD, btnDELETE, btnMODIFY;
+    private JTable table;
 
     public ListClientWindow(JFrame mainWindow, LoginController cont) {
         super(mainWindow, true);
-        setTitle("Clients");
         this.cont = cont;
 
+        setTitle("Clients Management");
         setIconImage(Toolkit.getDefaultToolkit().getImage("images/icon.png"));
         setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-        setBounds(100, 100, 607, 420);
+        setBounds(100, 100, 750, 420);
         contentPane = new JPanel();
         contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
         setContentPane(contentPane);
-
-        loadTable();
-
         contentPane.setLayout(null);
 
+        // Llamamos a fillTable igual que en Worker
+        fillTable();
+
         JScrollPane scrollPane = new JScrollPane(table);
-        scrollPane.setBounds(12, 44, 567, 231);
-        getContentPane().add(scrollPane);
+        scrollPane.setBounds(12, 44, 710, 231);
+        contentPane.add(scrollPane);
 
         btnADD = new JButton("ADD");
-        btnADD.setBounds(96, 303, 97, 25);
+        btnADD.setBounds(150, 303, 97, 25);
         btnADD.addActionListener(this);
         contentPane.add(btnADD);
 
         btnDELETE = new JButton("DELETE");
-        btnDELETE.setBounds(247, 343, 97, 25);
+        btnDELETE.setBounds(320, 343, 97, 25);
         btnDELETE.addActionListener(this);
         contentPane.add(btnDELETE);
 
         btnMODIFY = new JButton("MODIFY");
+        btnMODIFY.setBounds(500, 303, 97, 25);
         btnMODIFY.addActionListener(this);
-        btnMODIFY.setBounds(400, 303, 97, 25);
         contentPane.add(btnMODIFY);
     }
 
@@ -74,74 +71,83 @@ public class ListClientWindow extends JDialog implements ActionListener {
         if (e.getSource() == btnDELETE) {
             if (row == -1) {
                 JOptionPane.showMessageDialog(this, "Select a client to delete.");
-                return;
-                //hay que cambiar este return
-            }
-
-            String idClient = table.getValueAt(row, 0).toString();
-            Client client = new Client(idClient, null, null, 0);
-
-            if (!cont.checkClientInBook(idClient)) {
-                if (cont.deleteClient(client)) {
-                    refreshModel();
-                    JOptionPane.showMessageDialog(this, "Client has been deleted.");
-                } else {
-                    JOptionPane.showMessageDialog(this, "Client not deleted.");
-                }
             } else {
-                JOptionPane.showMessageDialog(this, "Client not deleted because exists in Book");
+                String idClient = table.getValueAt(row, 0).toString();
+                int confirm = JOptionPane.showConfirmDialog(this, "Are you sure you want to delete this client?", "Warning", JOptionPane.YES_NO_OPTION);
+                
+                if (confirm == JOptionPane.YES_OPTION) {
+                    // Verificamos si tiene reservas antes de borrar
+                    if (!cont.checkClientInBook(idClient)) {
+                        // Creamos un objeto cliente auxiliar para el borrado
+                        Client aux = new Client(idClient, null, null, 0, 0, null);
+                        if (cont.deleteClient(aux)) {
+                            refreshModel();
+                            JOptionPane.showMessageDialog(this, "Client has been deleted.");
+                        } else {
+                            JOptionPane.showMessageDialog(this, "Error: Client not deleted.");
+                        }
+                    } else {
+                        JOptionPane.showMessageDialog(this, "Cannot delete: Client has active bookings.");
+                    }
+                }
             }
         }
 
         if (e.getSource() == btnMODIFY) {
-            if (row != -1) {
+            if (row == -1) {
+                JOptionPane.showMessageDialog(this, "Select a client to modify.");
+            } else {
                 int modelRow = table.convertRowIndexToModel(row);
                 TableModel model = table.getModel();
+                
+                // Extraemos los 6 campos asegurando los tipos
                 Client client = new Client(
-                    (String) model.getValueAt(modelRow, 0),
-                    (String) model.getValueAt(modelRow, 1),
-                    (String) model.getValueAt(modelRow, 2),
-                    (Integer) model.getValueAt(modelRow, 3)
+                    model.getValueAt(modelRow, 0).toString(),
+                    model.getValueAt(modelRow, 1).toString(),
+                    model.getValueAt(modelRow, 2).toString(),
+                    Integer.parseInt(model.getValueAt(modelRow, 3).toString()),
+                    Integer.parseInt(model.getValueAt(modelRow, 4).toString()),
+                    model.getValueAt(modelRow, 5).toString()
                 );
-                FormClientWindow formClientWindow = new FormClientWindow(this, cont, client, false);
-                formClientWindow.setVisible(true);
+                
+                FormClientWindow form = new FormClientWindow(this, cont, client, false);
+                form.setVisible(true);
                 refreshModel();
-            } else {
-                JOptionPane.showMessageDialog(this, "Select a client to modify");
             }
         }
 
         if (e.getSource() == btnADD) {
-            FormClientWindow formClientWindow = new FormClientWindow(this, cont, null, true);
-            formClientWindow.setVisible(true);
+            FormClientWindow form = new FormClientWindow(this, cont, null, true);
+            form.setVisible(true);
             refreshModel();
         }
     }
 
-    private void loadTable() {
-        DefaultTableModel modelo = new DefaultTableModel(
-                new String[]{"ID", "Name", "Surname", "Age"}, 0) {
+    private void fillTable() {
+        // Configuramos el modelo igual que en Worker
+        DefaultTableModel model = new DefaultTableModel(
+            new String[] { "ID", "Name", "Surname", "Age", "Phone", "Email" }, 0) {
             private static final long serialVersionUID = 1L;
             @Override
-            public boolean isCellEditable(int row, int column) {
-                return false;
-            }
+            public boolean isCellEditable(int row, int column) { return false; }
         };
-        table = new JTable(modelo);
+        table = new JTable(model);
         table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         refreshModel();
     }
 
     public void refreshModel() {
         List<Client> clients = cont.getAllClient();
-        DefaultTableModel modelo = (DefaultTableModel) table.getModel();
-        modelo.setRowCount(0);
-        for (Client client : clients) {
-            modelo.addRow(new Object[]{
-                client.getIdClient(),
-                client.getNameClient(),
-                client.getSurnameClient(),
-                client.getAgeClient()
+        DefaultTableModel model = (DefaultTableModel) table.getModel();
+        model.setRowCount(0);
+        for (Client c : clients) {
+            model.addRow(new Object[] {
+                c.getIdClient(), 
+                c.getNameClient(), 
+                c.getSurnameClient(), 
+                c.getAgeClient(), 
+                c.getPhoneClient(), 
+                c.getEmailClient()
             });
         }
     }
