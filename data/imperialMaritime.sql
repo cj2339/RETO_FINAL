@@ -37,18 +37,18 @@ CREATE TABLE worker(
     phone_number CHAR(9),
     email VARCHAR(30),
     age INTEGER CHECK(age > 18),
-    language_worker ENUM('Spanish','English','French','German','Chinese','Arabic'),
+    spanish_language BOOLEAN, 
+    english_language BOOLEAN,
     cod_cruise INTEGER,
-    FOREIGN KEY(cod_cruise) REFERENCES cruise(cod_cruise)
-        ON UPDATE CASCADE ON DELETE CASCADE
+    FOREIGN KEY(cod_cruise) REFERENCES cruise(cod_cruise) ON UPDATE CASCADE ON DELETE CASCADE
 );
 
 INSERT INTO worker VALUES 
-('12345678A', 'cook', 'Taylor', 'Robert', '2023-01-15', '600111222', 'taylor.r@email.com', 34, 'Spanish', 1),
-('12345678B', 'guide', 'Wilson', 'Louis', '2022-11-05', '600333444', 'wilson.l@email.com', 28, 'English', 1),
-('12345678C', 'receptionist', 'Anderson', 'Laura', '2024-02-10', '600555666', 'anderson.l@email.com', 41, 'French', 2),
-('12345678D', 'captain', 'Thomas', 'Frank', '2020-05-20', '600777888', 'thomas.f@email.com', 52, 'German', 3),
-('12345678F', 'guide', 'White', 'Martha', '2021-08-12', '600999000', 'white.m@email.com', 30, 'Chinese', 4);
+('12345678A', 'cook', 'Taylor', 'Robert', '2023-01-15', '600111222', 'taylor.r@email.com', 34, true, true, 1),
+('12345678B', 'guide', 'Wilson', 'Louis', '2022-11-05', '600333444', 'wilson.l@email.com', 28, true, false, 1),
+('12345678C', 'receptionist', 'Anderson', 'Laura', '2024-02-10', '600555666', 'anderson.l@email.com', 41, true, false, 2),
+('12345678D', 'captain', 'Thomas', 'Frank', '2020-05-20', '600777888', 'thomas.f@email.com', 52, true, true, 3),
+('12345678F', 'guide', 'White', 'Martha', '2021-08-12', '600999000', 'white.m@email.com', 30, true, true, 4);
 
 CREATE TABLE client(
     id_client CHAR(9) PRIMARY KEY,
