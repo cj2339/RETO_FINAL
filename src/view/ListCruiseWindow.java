@@ -28,6 +28,12 @@ public class ListCruiseWindow extends JDialog implements ActionListener {
 	private JButton btnADD, btnDELETE, btnMODIFY;
 	private Image backgroundImage = new ImageIcon("images/FondoListaCruceros.png").getImage();
 
+	/**
+	 * Constructs the list cruises window dialog.
+	 *
+	 * @param mainWindow The main interface frame.
+	 * @param cont       The overarching application controller.
+	 */
 	public ListCruiseWindow(JFrame mainWindow, LoginController cont) {
 		super(mainWindow, true);
 		this.cont = cont;
@@ -104,6 +110,11 @@ public class ListCruiseWindow extends JDialog implements ActionListener {
 		contentPane.add(buttonPanel);
 	}
 
+	/**
+	 * Process events originated from interface interactions.
+	 *
+	 * @param e The action event details.
+	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		int row = table.getSelectedRow();
@@ -157,6 +168,9 @@ public class ListCruiseWindow extends JDialog implements ActionListener {
 		}
 	}
 
+	/**
+	 * Sets the required definitions into the user table components.
+	 */
 	private void loadTable() {
 		DefaultTableModel modelo = new DefaultTableModel(new String[] { "Code", "Type", "Name", "Rooms", "Capacity" },
 				0) {
@@ -175,6 +189,9 @@ public class ListCruiseWindow extends JDialog implements ActionListener {
 		refreshModel();
 	}
 
+	/**
+	 * Reloads updated database data into the table layout.
+	 */
 	public void refreshModel() {
 		List<Cruise> cruises = cont.getAllCruise();
 		DefaultTableModel modelo = (DefaultTableModel) table.getModel();

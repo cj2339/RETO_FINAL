@@ -27,6 +27,11 @@ public class StartWindow extends JFrame implements MouseListener {
 	private Image BackgroundImage = new ImageIcon("images/background1.png").getImage();
 	private JTextField lblText;
 	
+	/**
+	 * Launches the startup window setting up graphical dependencies.
+	 *
+	 * @param loginController The application overarching communication logic.
+	 */
 	public StartWindow(LoginController loginController) {
 		this.cont=loginController; 
 		
@@ -78,6 +83,11 @@ public class StartWindow extends JFrame implements MouseListener {
 	    lblText.setBorder(null);
 	}
 
+	/**
+	 * Responds to mouse click events over the window canvas.
+	 *
+	 * @param e Details related to the mouse input event.
+	 */
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		dispose();

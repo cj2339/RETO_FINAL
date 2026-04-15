@@ -36,6 +36,12 @@ public class ListAdminWindow extends JDialog implements ActionListener {
 	private JButton btnMODIFY;
 	JTable table;
 
+	/**
+	 * Constructs the administrator list window.
+	 *
+	 * @param mainWindow The parent main window.
+	 * @param cont       The login controller.
+	 */
 	public ListAdminWindow(JFrame mainWindow, LoginController cont) {
 		super(mainWindow, true);
 		setTitle("Administrators");
@@ -73,6 +79,11 @@ public class ListAdminWindow extends JDialog implements ActionListener {
 
 	}
 
+	/**
+	 * Handles action events from the Add, Delete, and Modify buttons.
+	 *
+	 * @param e The action event object.
+	 */
 	@SuppressWarnings("unused")
 	@Override
 	public void actionPerformed(ActionEvent e) {
@@ -129,6 +140,9 @@ public class ListAdminWindow extends JDialog implements ActionListener {
 		}
 	}
 
+	/**
+	 * Initializes the table model and properties.
+	 */
 	private void loadTable() {
 		// Create a non-editable table template
 		DefaultTableModel modelo = new DefaultTableModel(new String[] { "Name", "Password" },
@@ -145,6 +159,9 @@ public class ListAdminWindow extends JDialog implements ActionListener {
 		refreshModel();
 	}
 
+	/**
+	 * Refreshes the table data by requesting all administrators from the database.
+	 */
 	public void refreshModel() {
 		List<Administrator> administrators = cont.getAllAdministrators(); //Get the updated list of administrators
 		DefaultTableModel modelo = (DefaultTableModel) table.getModel(); //Retrieve the table model

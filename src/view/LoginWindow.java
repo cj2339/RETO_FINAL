@@ -46,6 +46,12 @@ public class LoginWindow extends JDialog implements ActionListener {
 	private JButton btnLogin;
 	private int atempts = 3;
 
+	/**
+	 * Constructs the login graphical dialog.
+	 *
+	 * @param startWindow The initial visual window.
+	 * @param cont        The interaction controller.
+	 */
 	public LoginWindow(StartWindow startWindow, LoginController cont) {
 		super(startWindow, true);
 		this.cont = cont;
@@ -113,6 +119,12 @@ public class LoginWindow extends JDialog implements ActionListener {
 
 	}
 
+	/**
+	 * Responds to the interactions generated over the login button.
+	 * Validates the credentials provided against the system.
+	 *
+	 * @param e Event encapsulating the interactions.
+	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
 

@@ -60,6 +60,14 @@ public class FormWorkerWindow extends JDialog implements ActionListener{
 	
 	private List<Cruise> cruiseCodes;
 
+	/**
+	 * Constructs the worker form dialog window.
+	 *
+	 * @param workerListWindow The modal parent window.
+	 * @param cont             The controller for executing logic.
+	 * @param worker           The worker object to edit, or null if inserting a new worker.
+	 * @param b                Flag to specify insertion or update.
+	 */
 	public FormWorkerWindow(ListWorkerWindow workerListWindow, LoginController cont, Worker worker, boolean b) {
 		super(workerListWindow, true);
 		this.cont=cont;
@@ -247,6 +255,9 @@ public class FormWorkerWindow extends JDialog implements ActionListener{
 		
 	}
 	
+	/**
+	 * Selects the corresponding cruise code in the combo box based on the worker's cruise.
+	 */
 	public void selectCruiseCode() {
 		int id = worker.getCruise().getCodCruise();
 		int i = 0;
@@ -262,6 +273,12 @@ public class FormWorkerWindow extends JDialog implements ActionListener{
 		}
 	}
 
+	/**
+	 * Handles interactions with the interface buttons to either clear the form
+	 * or confirm the worker insertion/modification.
+	 *
+	 * @param e The triggered action event.
+	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		String dateStr;

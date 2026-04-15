@@ -43,6 +43,13 @@ public class ChangePasswordAdminWindow extends JDialog implements ActionListener
 	private Image BackgroundImage = new ImageIcon("images/adminWindow.png").getImage();
 	private int atempts=3;
 	
+	/**
+	 * Creates a new dialog to change the administrator's password.
+	 *
+	 * @param listAdminWindow The parent list administrator window.
+	 * @param cont            The login controller used for database operations.
+	 * @param adminName       The name of the administrator whose password is being changed.
+	 */
 	public ChangePasswordAdminWindow(ListAdminWindow listAdminWindow, LoginController cont, String adminName) {
 		super(listAdminWindow, true);
 		this.cont = cont;
@@ -109,6 +116,12 @@ public class ChangePasswordAdminWindow extends JDialog implements ActionListener
 	}
 
 
+	/**
+	 * Handles the action events triggered by the dialog's buttons.
+	 * Validates the input and attempts to change the password.
+	 *
+	 * @param e The action event object.
+	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == btnChange) {

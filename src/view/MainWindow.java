@@ -35,6 +35,12 @@ public class MainWindow extends JFrame implements ActionListener {
 	private JLabel lblNewLabel;
 	private Image imagenFondo = new ImageIcon("images/ManagementAnchor.png").getImage();	
 
+	/**
+	 * Initializes the main dashboard interface window.
+	 *
+	 * @param loginWindow The login window prior to this application state.
+	 * @param cont        The system login controller.
+	 */
 	public MainWindow(LoginWindow loginWindow, LoginController cont) {
 		super();
 		this.cont=cont;
@@ -92,6 +98,9 @@ public class MainWindow extends JFrame implements ActionListener {
 
 	}
 
+	/**
+	 * Triggers the routine to dump the application data to an XML export file.
+	 */
 	public void exportXML() {
 		try {
 			export.XMLExporter exporter = new export.XMLExporter(cont);
@@ -103,6 +112,11 @@ public class MainWindow extends JFrame implements ActionListener {
 	}
 
 
+	/**
+	 * Orchestrates interaction processing against the navigation action buttons.
+	 *
+	 * @param e The interaction operation context details.
+	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
 

@@ -45,6 +45,14 @@ public class FormBookWindow extends JDialog implements ActionListener {
 	private Book oldBooking;
 	private ListBookWindow parent;
 
+	/**
+	 * Constructs the booking form dialog.
+	 *
+	 * @param parentWindow The parent dialog.
+	 * @param controller   The login controller for database operations.
+	 * @param booking      The booking to modify, or null if creating a new one.
+	 * @param isInsert     True if inserting a new booking, false if updating an existing one.
+	 */
 	public FormBookWindow(JDialog parentWindow, LoginController controller, Book booking, boolean isInsert) {
 		super(parentWindow, true);
 		setBounds(100, 100, 500, 380);
@@ -144,6 +152,12 @@ public class FormBookWindow extends JDialog implements ActionListener {
 		buttonPane.add(cancelButton);
 	}
 
+	/**
+	 * Handles action events from the OK and Cancel buttons.
+	 * Validates forms fields and performs database modifications.
+	 *
+	 * @param e The action event object.
+	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
 

@@ -41,6 +41,14 @@ public class FormClientWindow extends JDialog implements ActionListener {
     private Client client;
     private ListClientWindow parent;
 
+	/**
+	 * Constructs a new dialog for client management (creation or modification).
+	 *
+	 * @param clientManagement The parent dialog window.
+	 * @param controller       The application's logic controller.
+	 * @param client           The client object to edit, or null if inserting.
+	 * @param isInsert         Boolean flag indicating whether it's an insertion or update.
+	 */
     public FormClientWindow(JDialog clientManagement, LoginController controller, Client client, boolean isInsert) {
         super(clientManagement, true);
         setTitle(isInsert ? "Add Client" : "Modify Client");
@@ -158,6 +166,11 @@ public class FormClientWindow extends JDialog implements ActionListener {
     }
     
 
+    /**
+     * Responds to action events from the interface components (buttons).
+     *
+     * @param e The fired action event.
+     */
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == okButton) {

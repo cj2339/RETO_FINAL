@@ -46,6 +46,12 @@ public class ListWorkerWindow extends JDialog implements ActionListener {
 	private Image backgroundImage = new ImageIcon("images/FondoListaCruceros.png").getImage();
 	JTable table;
 
+	/**
+	 * Creates the dialog for listing and managing workers.
+	 *
+	 * @param mainWindow The parent main window.
+	 * @param cont       The application controller containing logic.
+	 */
 	public ListWorkerWindow(MainWindow mainWindow, LoginController cont) {
 		super(mainWindow, true);
 		this.cont = cont;
@@ -125,6 +131,11 @@ public class ListWorkerWindow extends JDialog implements ActionListener {
 
 	}
 
+	/**
+	 * Detects and responds to the interaction with the specific interface option selected.
+	 *
+	 * @param e The object encapsulating the user event.
+	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		int row = table.getSelectedRow();
@@ -194,6 +205,9 @@ public class ListWorkerWindow extends JDialog implements ActionListener {
 
 	}
 
+	/**
+	 * Configures the data table model definition.
+	 */
 	private void loadTable() {
 		List<Worker> workers=cont.getAllWorker();
 
@@ -211,6 +225,9 @@ public class ListWorkerWindow extends JDialog implements ActionListener {
 		refreshModel();
 	}
 
+	/**
+	 * Connects to the database and populates the table rows with the currently existing workers.
+	 */
 	public void refreshModel() {
 		// Rellenar tabla con los usuarios
 		List<Worker> workers = cont.getAllWorker();

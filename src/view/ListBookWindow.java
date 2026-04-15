@@ -37,6 +37,12 @@ public class ListBookWindow extends JDialog implements ActionListener {
 	private JButton btnMODIFY;
 	JTable table;
 
+	/**
+	 * Constructs the list booking dialog.
+	 *
+	 * @param mainWindow The internal frame acting as parent.
+	 * @param cont       The controller for operational queries and logic.
+	 */
 	public ListBookWindow(JFrame mainWindow, LoginController cont) {
 		super(mainWindow, true);
 		setTitle("Bookings");
@@ -73,6 +79,11 @@ public class ListBookWindow extends JDialog implements ActionListener {
 		contentPane.add(btnDELETE);
 	}
 
+	/**
+	 * Handles actions originating from the interface buttons.
+	 *
+	 * @param e The triggered action event object.
+	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
 
@@ -143,6 +154,9 @@ public class ListBookWindow extends JDialog implements ActionListener {
 		}
 	}
 
+	/**
+	 * Prepares and initializes the default table model to hold bookings.
+	 */
 	private void loadTable() {
 		DefaultTableModel modelo = new DefaultTableModel(
 				new String[] {
@@ -163,6 +177,9 @@ public class ListBookWindow extends JDialog implements ActionListener {
 		refreshModel();
 	}
 
+	/**
+	 * Fetches updated information from the database and updates the dialog table.
+	 */
 	public void refreshModel() {
 		List<Book> bookings = cont.getAllBookings();
 		DefaultTableModel modelo = (DefaultTableModel) table.getModel();

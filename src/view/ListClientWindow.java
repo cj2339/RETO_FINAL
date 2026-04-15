@@ -33,6 +33,12 @@ public class ListClientWindow extends JDialog implements ActionListener {
     private JButton btnADD, btnDELETE, btnMODIFY;
     private JTable table;
 
+    /**
+     * Constructs the window showing all clients.
+     *
+     * @param mainWindow The main window that launches this dialog.
+     * @param cont       The program's login controller.
+     */
     public ListClientWindow(JFrame mainWindow, LoginController cont) {
         super(mainWindow, true);
         this.cont = cont;
@@ -69,6 +75,11 @@ public class ListClientWindow extends JDialog implements ActionListener {
         contentPane.add(btnMODIFY);
     }
 
+    /**
+     * Responds to the clicking of buttons within the dialog.
+     *
+     * @param e An ActionEvent encapsulating the click.
+     */
     @Override
     public void actionPerformed(ActionEvent e) {
         int row = table.getSelectedRow();
@@ -128,6 +139,9 @@ public class ListClientWindow extends JDialog implements ActionListener {
         }
     }
 
+    /**
+     * Creates and loads the base model format for the Table.
+     */
     private void fillTable() {
         // Configuramos el modelo igual que en Worker
         DefaultTableModel model = new DefaultTableModel(
@@ -141,6 +155,9 @@ public class ListClientWindow extends JDialog implements ActionListener {
         refreshModel();
     }
 
+    /**
+     * Retrieves all client information and reflects it on the table.
+     */
     public void refreshModel() {
         List<Client> clients = cont.getAllClient();
         DefaultTableModel model = (DefaultTableModel) table.getModel();

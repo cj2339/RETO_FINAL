@@ -36,6 +36,14 @@ public class FormAdminWindow extends JDialog implements ActionListener {
 	private Administrator administrator;
 	private ListAdminWindow parent;
 
+	/**
+	 * Constructs the form dialog for adding or editing an administrator.
+	 *
+	 * @param adminListWindow The parent dialog.
+	 * @param controller      The login controller for managing data.
+	 * @param administrator   The administrator object to edit, or null if inserting.
+	 * @param isInsert        True if adding a new administrator, false if updating.
+	 */
 	public FormAdminWindow(JDialog adminListWindow, LoginController controller, Administrator administrator, boolean isInsert) {
 		super(adminListWindow, true);
 		setBounds(100, 100, 476, 300);
@@ -91,6 +99,11 @@ public class FormAdminWindow extends JDialog implements ActionListener {
 
 	}
 
+	/**
+	 * Handles the action events for the OK and Cancel buttons.
+	 *
+	 * @param e The action event object.
+	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == okButton) {
