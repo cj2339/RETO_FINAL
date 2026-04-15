@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Imperial Maritime</title>
-    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 
@@ -16,26 +16,24 @@
 </div>
 
 <div class="container">
-
-    <div class="upload-area">
+    <div class="upload-area" id="dropZone">
         <h3>Import XML data</h3>
-        <p>Paste XML content below or upload a .xml file — XSL transformations will be applied automatically</p>
+        <p>Paste XML content below or **drag and drop** a .xml file</p>
         <textarea id="xmlInput" placeholder="Paste your XML file content here..."></textarea>
         <br>
-			<label class="btn" for="fileInput">Upload .xml file</label>
-			<input type="file" id="fileInput" accept=".xml">
-			<button onclick="procesarXML()">Process XML with XSLT</button>
+        <label class="btn" for="fileInput">Upload .xml file</label>
+        <input type="file" id="fileInput" accept=".xml">
+        <button onclick="procesarXML()">Process XML with XSLT</button>
         <br>
         <div id="status" class="status"></div>
     </div>
 
     <div id="resultado"></div>
-
 </div>
 
 <footer>&copy; 2026 Imperial Maritime. All rights reserved.</footer>
 
-<script src="../js/main.js"></script>
+<script src="js/main.js"></script>
 
 </body>
 </html>

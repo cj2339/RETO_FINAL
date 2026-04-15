@@ -134,14 +134,56 @@ var xslDetalle = `<?xml version="1.0" encoding="UTF-8"?>
 
 var xmlDoc = null;
 
-document.getElementById('fileInput').addEventListener('change', function(e) {
-    var reader = new FileReader();
-    reader.onload = function(ev) { document.getElementById('xmlInput').value = ev.target.result; };
-    reader.readAsText(e.target.files[0]);
+// GESTIÓN DE ARCHIVOS
+
+const dropZone = document.querySelector('.upload-area');
+const xmlInput = document.getElementById('xmlInput');
+const fileInput = document.getElementById('fileInput');
+
+fileInput.addEventListener('change', function(e) {
+    if (e.target.files.length > 0) {
+        readXML(e.target.files[0]);
+    }
 });
 
+['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+    dropZone.addEventListener(eventName, e => {
+        e.preventDefault();
+        e.stopPropagation();
+    }, false);
+});
+
+['dragenter', 'dragover'].forEach(eventName => {
+    dropZone.addEventListener(eventName, () => dropZone.style.borderColor = '#007bff', false);
+});
+
+['dragleave', 'drop'].forEach(eventName => {
+    dropZone.addEventListener(eventName, () => dropZone.style.borderColor = '', false);
+});
+
+dropZone.addEventListener('drop', (e) => {
+    const files = e.dataTransfer.files;
+    if (files.length > 0) {
+        readXML(files[0]);
+    }
+}, false);
+
+function readXML(file) {
+    if (file.name.endsWith('.xml')) {
+        const reader = new FileReader();
+        reader.onload = function(ev) {
+            xmlInput.value = ev.target.result;
+        };
+        reader.readAsText(file);
+    } else {
+        alert("Please upload a valid .xml file.");
+    }
+}
+
+// PROCESAMIENTO XSLT 
+
 function procesarXML() {
-    var raw = document.getElementById('xmlInput').value.trim();
+    var raw = xmlInput.value.trim();
     var st  = document.getElementById('status');
 
     if (!raw) {
@@ -160,8 +202,7 @@ function procesarXML() {
     }
 
     st.className = 'status success';
-    st.textContent = 'XML processed — XSL transformation applied correctly.';
-
+    st.textContent = 'XML processed correctly.';
     aplicarXSLTabla();
 }
 
@@ -181,7 +222,6 @@ function mostrarDetalle(code) {
     var xslDoc    = xslParser.parseFromString(xslDetalle, 'application/xml');
     var processor = new XSLTProcessor();
     processor.importStylesheet(xslDoc);
- 
     processor.setParameter(null, 'codeCruise', code);
     var result    = processor.transformToFragment(xmlDoc, document);
     var container = document.getElementById('resultado');
