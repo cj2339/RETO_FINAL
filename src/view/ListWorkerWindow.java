@@ -43,7 +43,7 @@ public class ListWorkerWindow extends JDialog implements ActionListener {
 	private LoginController cont;
 	private JPanel contentPane;
 	private JButton btnADD, btnDELETE, btnMODIFY;
-	private Image backgroundImage = new ImageIcon("images/FondoListaCruceros.png").getImage();
+	private Image backgroundImage = new ImageIcon("images/CruiseBackground.png").getImage();
 	JTable table;
 
 	/**
@@ -69,16 +69,15 @@ public class ListWorkerWindow extends JDialog implements ActionListener {
 				g.drawImage(backgroundImage, 0, 0, getWidth(), getHeight(), this);
 			}
 		};
-		
 		contentPane.setBorder(new EmptyBorder(10, 10, 10, 10));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
 		
 		// TITTLE
-		JLabel title = new JLabel("Cruise Management");
+		JLabel title = new JLabel("Worker Management");
 		title.setHorizontalAlignment(SwingConstants.CENTER);
-		title.setBounds(202, 13, 226, 49);
+		title.setBounds(202, 13, 249, 49);
 		title.setFont(new Font("SansSerif", Font.BOLD, 22));
 		title.setForeground(Color.WHITE);
 		title.setBorder(new EmptyBorder(5, 5, 15, 5));
@@ -87,7 +86,7 @@ public class ListWorkerWindow extends JDialog implements ActionListener {
 		// TABLE
 		loadTable();
 		JScrollPane scrollPane = new JScrollPane(table);
-		scrollPane.setBounds(12, 59, 625, 237);
+		scrollPane.setBounds(12, 59, 625, 271);
 
 		scrollPane.setOpaque(false);
 		scrollPane.getViewport().setOpaque(false);
@@ -98,27 +97,27 @@ public class ListWorkerWindow extends JDialog implements ActionListener {
 
 		// BUTTONS
 		JPanel buttonPanel = new JPanel();
-		buttonPanel.setBounds(159, 309, 319, 45);
+		buttonPanel.setBounds(159, 340, 319, 45);
 		buttonPanel.setOpaque(false);
 
 		btnADD = new JButton("ADD");
-		btnADD.setBounds(20, 10, 67, 25);
+		btnADD.setBounds(20, 10, 88, 25);
 		btnDELETE = new JButton("DELETE");
-		btnDELETE.setBounds(198, 10, 88, 25);
+		btnDELETE.setBounds(216, 10, 88, 25);
 		btnMODIFY = new JButton("MODIFY");
-		btnMODIFY.setBounds(99, 10, 87, 25);
+		btnMODIFY.setBounds(118, 10, 88, 25);
 
 		btnADD.addActionListener(this);
 		btnDELETE.addActionListener(this);
 		btnMODIFY.addActionListener(this);
 
-		btnADD.setBackground(new Color(46, 204, 113));
+		btnADD.setBackground(new Color(63, 117, 243));
 		btnADD.setForeground(Color.WHITE);
 
-		btnDELETE.setBackground(new Color(231, 76, 60));
+		btnDELETE.setBackground(new Color(63, 117, 243));
 		btnDELETE.setForeground(Color.WHITE);
 
-		btnMODIFY.setBackground(new Color(52, 152, 219));
+		btnMODIFY.setBackground(new Color(63, 117, 243));
 		btnMODIFY.setForeground(Color.WHITE);
 		buttonPanel.setLayout(null);
 
@@ -127,8 +126,6 @@ public class ListWorkerWindow extends JDialog implements ActionListener {
 		buttonPanel.add(btnDELETE);
 
 		contentPane.add(buttonPanel);
-
-
 	}
 
 	/**
@@ -158,11 +155,11 @@ public class ListWorkerWindow extends JDialog implements ActionListener {
 					}
 
 				}
-			}
+			} 
 
 
 		}else if(e.getSource()==btnMODIFY) {
-			
+
 			int viewRow=table.getSelectedRow();
 			int cruiseCode, modelRow;
 			String dateStr;

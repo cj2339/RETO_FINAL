@@ -1,10 +1,15 @@
 package view;
 
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.Graphics;
+import java.awt.Image;
 import java.awt.Toolkit;
 import java.util.List;
 
 import javax.swing.JDialog;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -17,6 +22,8 @@ import model.Administrator;
 
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
+import javax.swing.SwingConstants;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -34,7 +41,8 @@ public class ListAdminWindow extends JDialog implements ActionListener {
 	private JButton btnADD;
 	private JButton btnDELETE;
 	private JButton btnMODIFY;
-	JTable table;
+	private JTable table;
+	private Image backgroundImage = new ImageIcon("images/CruiseBackground.png").getImage();
 
 	/**
 	 * Constructs the administrator list window.
@@ -48,37 +56,76 @@ public class ListAdminWindow extends JDialog implements ActionListener {
 		this.cont = cont;
 
 		setIconImage(Toolkit.getDefaultToolkit().getImage("images/icon.png"));
+		setIconImage(Toolkit.getDefaultToolkit().getImage("images/icon.png"));
 		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 607, 420);
-		contentPane = new JPanel();
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		setSize(663, 450);
+		setLocationRelativeTo(null);
+
+		JPanel contentPane = new JPanel() {
+			@Override
+			protected void paintComponent(Graphics g) {
+				super.paintComponent(g);
+				g.drawImage(backgroundImage, 0, 0, getWidth(), getHeight(), this);
+			}
+		};
+		contentPane.setBorder(new EmptyBorder(10, 10, 10, 10));
 		setContentPane(contentPane);
-
-		loadTable();
-
 		contentPane.setLayout(null);
+		
+		
+		// TITTLE
+		JLabel title = new JLabel("Administrator Management");
+		title.setHorizontalAlignment(SwingConstants.CENTER);
+		title.setBounds(202, 13, 249, 49);
+		title.setFont(new Font("SansSerif", Font.BOLD, 22));
+		title.setForeground(Color.WHITE);
+		title.setBorder(new EmptyBorder(5, 5, 15, 5));
+		contentPane.add(title);
 
+		// TABLE
+		loadTable();
 		JScrollPane scrollPane = new JScrollPane(table);
-		scrollPane.setBounds(12, 44, 567, 231);
-		getContentPane().add(scrollPane);
+		scrollPane.setBounds(12, 59, 625, 271);
+
+		scrollPane.setOpaque(false);
+		scrollPane.getViewport().setOpaque(false);
+		table.setOpaque(false);
+		table.setBackground(new Color(255, 255, 255, 180));
+
+		contentPane.add(scrollPane);
+
+		// BUTTONS
+		JPanel buttonPanel = new JPanel();
+		buttonPanel.setBounds(159, 340, 319, 45);
+		buttonPanel.setOpaque(false);
 
 		btnADD = new JButton("ADD");
-		btnADD.setBounds(96, 303, 97, 25);
-		btnADD.addActionListener(this);
-		contentPane.add(btnADD);
-
+		btnADD.setBounds(20, 10, 88, 25);
 		btnDELETE = new JButton("DELETE");
-		btnDELETE.setBounds(247, 343, 97, 25);
-		btnDELETE.addActionListener(this);
-		contentPane.add(btnDELETE);
-
+		btnDELETE.setBounds(216, 10, 88, 25);
 		btnMODIFY = new JButton("MODIFY");
+		btnMODIFY.setBounds(118, 10, 88, 25);
+
+		btnADD.addActionListener(this);
+		btnDELETE.addActionListener(this);
 		btnMODIFY.addActionListener(this);
-		btnMODIFY.setBounds(400, 303, 97, 25);
-		contentPane.add(btnMODIFY);
 
+		btnADD.setBackground(new Color(63, 117, 243));
+		btnADD.setForeground(Color.WHITE);
+
+		btnDELETE.setBackground(new Color(63, 117, 243));
+		btnDELETE.setForeground(Color.WHITE);
+
+		btnMODIFY.setBackground(new Color(63, 117, 243));
+		btnMODIFY.setForeground(Color.WHITE);
+		buttonPanel.setLayout(null);
+
+		buttonPanel.add(btnADD);
+		buttonPanel.add(btnMODIFY);
+		buttonPanel.add(btnDELETE);
+
+		contentPane.add(buttonPanel);
 	}
-
 	/**
 	 * Handles action events from the Add, Delete, and Modify buttons.
 	 *

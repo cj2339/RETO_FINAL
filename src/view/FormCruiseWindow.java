@@ -22,6 +22,7 @@ import model.Cruise;
 import model.TypeCruise;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import java.awt.Font;
 
 public class FormCruiseWindow extends JDialog implements ActionListener {
 
@@ -33,7 +34,6 @@ public class FormCruiseWindow extends JDialog implements ActionListener {
 	private JTextField txtMaxCapacity;
 	private JComboBox<TypeCruise> cmbType;
 	private JButton okButton;
-	private JButton cancelButton;
 	private boolean isInsert;
 	private LoginController controller;
 	private Cruise cruise;
@@ -52,17 +52,20 @@ public class FormCruiseWindow extends JDialog implements ActionListener {
 		this.parent = (ListCruiseWindow) cruiseListWindow;
 
 		txtCode = new JTextField();
+		txtCode.setFont(new Font("SansSerif", Font.PLAIN, 20));
 		txtCode.setEnabled(false);
 		txtCode.setBounds(266, 60, 116, 22);
 		panel.add(txtCode);
 		txtCode.setColumns(10);
 
 		txtNameCruise = new JTextField();
+		txtNameCruise.setFont(new Font("SansSerif", Font.PLAIN, 20));
 		txtNameCruise.setColumns(10);
 		txtNameCruise.setBounds(266, 112, 116, 22);
 		panel.add(txtNameCruise);
 
 		txtNumRooms = new JTextField();
+		txtNumRooms.setFont(new Font("SansSerif", Font.PLAIN, 20));
 		txtNumRooms.setColumns(10);
 		txtNumRooms.setBounds(266, 171, 116, 22);
 		panel.add(txtNumRooms);
@@ -79,6 +82,7 @@ public class FormCruiseWindow extends JDialog implements ActionListener {
 		});
 
 		txtMaxCapacity = new JTextField();
+		txtMaxCapacity.setFont(new Font("SansSerif", Font.PLAIN, 20));
 		txtMaxCapacity.setColumns(10);
 		txtMaxCapacity.setBounds(266, 290, 116, 22);
 		panel.add(txtMaxCapacity);
@@ -95,28 +99,34 @@ public class FormCruiseWindow extends JDialog implements ActionListener {
 		});
 
 		cmbType = new JComboBox<TypeCruise>();
+		cmbType.setFont(new Font("SansSerif", Font.PLAIN, 20));
 		cmbType.setModel(new DefaultComboBoxModel<TypeCruise>(TypeCruise.values()));
 		cmbType.setBounds(266, 230, 116, 24);
 		panel.add(cmbType);
 
 		JLabel lblCode = new JLabel("Cruise Code:");
-		lblCode.setBounds(52, 63, 88, 16);
+		lblCode.setFont(new Font("SansSerif", Font.PLAIN, 20));
+		lblCode.setBounds(52, 63, 130, 16);
 		panel.add(lblCode);
 
 		JLabel lblNameCruise = new JLabel("Name:");
-		lblNameCruise.setBounds(52, 115, 56, 16);
+		lblNameCruise.setFont(new Font("SansSerif", Font.PLAIN, 20));
+		lblNameCruise.setBounds(52, 115, 108, 16);
 		panel.add(lblNameCruise);
 
 		JLabel lblNumRooms = new JLabel("Number of Rooms:");
-		lblNumRooms.setBounds(52, 174, 108, 16);
+		lblNumRooms.setFont(new Font("SansSerif", Font.PLAIN, 20));
+		lblNumRooms.setBounds(52, 174, 170, 16);
 		panel.add(lblNumRooms);
 
 		JLabel lblType = new JLabel("Type:");
-		lblType.setBounds(52, 234, 56, 16);
+		lblType.setFont(new Font("SansSerif", Font.PLAIN, 20));
+		lblType.setBounds(52, 234, 70, 16);
 		panel.add(lblType);
 
 		JLabel lblCapacity = new JLabel("Capacity:");
-		lblCapacity.setBounds(52, 293, 56, 16);
+		lblCapacity.setFont(new Font("SansSerif", Font.PLAIN, 20));
+		lblCapacity.setBounds(52, 293, 108, 16);
 		panel.add(lblCapacity);
 
 		if (this.cruise != null) {
@@ -131,17 +141,12 @@ public class FormCruiseWindow extends JDialog implements ActionListener {
 			buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
 			{
-				okButton = new JButton("OK");
+				okButton = new JButton("Confirm");
+				okButton.setFont(new Font("SansSerif", Font.PLAIN, 20));
 				okButton.setActionCommand("OK");
 				buttonPane.add(okButton);
 				getRootPane().setDefaultButton(okButton);
 				okButton.addActionListener(this);
-			}
-			{
-				cancelButton = new JButton("Cancel");
-				cancelButton.setActionCommand("Cancel");
-				buttonPane.add(cancelButton);
-				cancelButton.addActionListener(this);
 			}
 		}
 	}
@@ -177,9 +182,7 @@ public class FormCruiseWindow extends JDialog implements ActionListener {
 					}
 				}
 			}
-			if (e.getSource() == cancelButton) {
-				this.dispose();
-			}
+			
 		}
 	}
 }

@@ -22,7 +22,6 @@ public class StartWindow extends JFrame implements MouseListener {
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private LoginController cont;
-	private JLabel lblTitle;
 	private JLabel lblName;
 	private Image BackgroundImage = new ImageIcon("images/background1.png").getImage();
 	private JTextField lblText;
@@ -60,14 +59,6 @@ public class StartWindow extends JFrame implements MouseListener {
 	    lblName.setFont(new Font("Tahoma", Font.BOLD, 10));
 	    lblName.setBackground(new Color(255, 255, 255));
 	    contentPane.add(lblName);
-
-	    lblTitle = new JLabel();
-	    lblTitle.setHorizontalAlignment(SwingConstants.CENTER);
-	    lblTitle.setText("Click to start");
-	    lblTitle.setBounds(227, 440, 250, 34);
-	    lblTitle.setFont(new Font("Mongolian Baiti", Font.PLAIN, 30));
-	    lblTitle.setBackground(new Color(255, 255, 255));
-	    contentPane.add(lblTitle);
 	    
 	    lblText = new JTextField();
 	    lblText.setEditable(false);

@@ -26,7 +26,7 @@ public class ListCruiseWindow extends JDialog implements ActionListener {
 	private LoginController cont;
 	private JTable table;
 	private JButton btnADD, btnDELETE, btnMODIFY;
-	private Image backgroundImage = new ImageIcon("images/FondoListaCruceros.png").getImage();
+	private Image backgroundImage = new ImageIcon("images/CruiseBackground.png").getImage();
 
 	/**
 	 * Constructs the list cruises window dialog.
@@ -79,27 +79,27 @@ public class ListCruiseWindow extends JDialog implements ActionListener {
 
 		// BUTTONS
 		JPanel buttonPanel = new JPanel();
-		buttonPanel.setBounds(159, 309, 319, 45);
+		buttonPanel.setBounds(159, 340, 319, 45);
 		buttonPanel.setOpaque(false);
 
 		btnADD = new JButton("ADD");
-		btnADD.setBounds(20, 10, 67, 25);
+		btnADD.setBounds(20, 10, 88, 25);
 		btnDELETE = new JButton("DELETE");
-		btnDELETE.setBounds(198, 10, 88, 25);
+		btnDELETE.setBounds(216, 10, 88, 25);
 		btnMODIFY = new JButton("MODIFY");
-		btnMODIFY.setBounds(99, 10, 87, 25);
+		btnMODIFY.setBounds(118, 10, 88, 25);
 
 		btnADD.addActionListener(this);
 		btnDELETE.addActionListener(this);
 		btnMODIFY.addActionListener(this);
 
-		btnADD.setBackground(new Color(46, 204, 113));
+		btnADD.setBackground(new Color(63, 117, 243));
 		btnADD.setForeground(Color.WHITE);
 
-		btnDELETE.setBackground(new Color(231, 76, 60));
+		btnDELETE.setBackground(new Color(63, 117, 243));
 		btnDELETE.setForeground(Color.WHITE);
 
-		btnMODIFY.setBackground(new Color(52, 152, 219));
+		btnMODIFY.setBackground(new Color(63, 117, 243));
 		btnMODIFY.setForeground(Color.WHITE);
 		buttonPanel.setLayout(null);
 

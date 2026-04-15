@@ -73,12 +73,6 @@ public class FormWorkerWindow extends JDialog implements ActionListener{
 		this.cont=cont;
 		this.worker=worker;
 
-		if (worker==null) {
-			setTitle("Add worker");
-		}else {
-			setTitle("Modify worker");
-		}
-
 		setBounds(100, 100, 600, 814);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -86,72 +80,81 @@ public class FormWorkerWindow extends JDialog implements ActionListener{
 		contentPanel.setLayout(null);
 
 		JLabel lblNewLabel = new JLabel("Fill the worker data:");
-		lblNewLabel.setFont(new Font("Bahnschrift", Font.BOLD, 20));
+		lblNewLabel.setFont(new Font("SansSerif", Font.BOLD, 20));
 		lblNewLabel.setBounds(33, 36, 228, 25);
 		contentPanel.add(lblNewLabel);
 
 		JLabel lblId = new JLabel("ID:");
-		lblId.setFont(new Font("Bahnschrift", Font.PLAIN, 20));
+		lblId.setFont(new Font("SansSerif", Font.PLAIN, 20));
 		lblId.setBounds(57, 93, 126, 25);
 		contentPanel.add(lblId);
-
-		textFieldId = new JTextField();
-		textFieldId.setFont(new Font("Bahnschrift", Font.PLAIN, 19));
-		textFieldId.setBounds(318, 93, 175, 24);
-		contentPanel.add(textFieldId);
-		textFieldId.setColumns(10);
-
+		
 		JLabel lblName = new JLabel("Name:");
-		lblName.setFont(new Font("Bahnschrift", Font.PLAIN, 20));
+		lblName.setFont(new Font("SansSerif", Font.PLAIN, 20));
 		lblName.setBounds(57, 210, 126, 25);
 		contentPanel.add(lblName);
 
 		JLabel lblName_1 = new JLabel("Surname:");
-		lblName_1.setFont(new Font("Bahnschrift", Font.PLAIN, 20));
+		lblName_1.setFont(new Font("SansSerif", Font.PLAIN, 20));
 		lblName_1.setBounds(57, 268, 126, 25);
 		contentPanel.add(lblName_1);
 
 		JLabel lblService = new JLabel("Service:");
-		lblService.setFont(new Font("Bahnschrift", Font.PLAIN, 20));
+		lblService.setFont(new Font("SansSerif", Font.PLAIN, 20));
 		lblService.setBounds(57, 149, 126, 25);
 		contentPanel.add(lblService);
 
+		textFieldId = new JTextField();
+		textFieldId.setFont(new Font("SansSerif", Font.PLAIN, 19));
+		textFieldId.setBounds(318, 93, 175, 24);
+		contentPanel.add(textFieldId);
+		textFieldId.setColumns(10);
+		textFieldId.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+				char c = e.getKeyChar();
+				if (textFieldId.getText().length() > 8) {
+					e.consume();
+				}
+			}
+		});
+
 		comboBoxService = new JComboBox();
-		comboBoxService.setFont(new Font("Bahnschrift", Font.PLAIN, 19));
+		comboBoxService.setFont(new Font("SansSerif", Font.PLAIN, 19));
 		comboBoxService.setModel(new DefaultComboBoxModel(TypeWorker.values()));
 		comboBoxService.setBounds(318, 149, 175, 25);
 		contentPanel.add(comboBoxService);
 
 		textFieldName = new JTextField();
-		textFieldName.setFont(new Font("Bahnschrift", Font.PLAIN, 19));
+		textFieldName.setFont(new Font("SansSerif", Font.PLAIN, 19));
 		textFieldName.setColumns(10);
 		textFieldName.setBounds(318, 210, 175, 24);
 		contentPanel.add(textFieldName);
 
 		textFieldSurname = new JTextField();
-		textFieldSurname.setFont(new Font("Bahnschrift", Font.PLAIN, 19));
+		textFieldSurname.setFont(new Font("SansSerif", Font.PLAIN, 19));
 		textFieldSurname.setColumns(10);
 		textFieldSurname.setBounds(318, 268, 175, 24);
 		contentPanel.add(textFieldSurname);
 
 		JLabel lblCruiseCode = new JLabel("Cruise code:");
-		lblCruiseCode.setFont(new Font("Bahnschrift", Font.PLAIN, 20));
+		lblCruiseCode.setFont(new Font("SansSerif", Font.PLAIN, 20));
 		lblCruiseCode.setBounds(57, 541, 126, 25);
 		contentPanel.add(lblCruiseCode);
 
 		btnConfirm = new JButton("Confirm");
-		btnConfirm.setFont(new Font("Bahnschrift", Font.PLAIN, 20));
+		btnConfirm.setFont(new Font("SansSerif", Font.PLAIN, 20));
 		btnConfirm.setBounds(318, 714, 133, 37);
 		contentPanel.add(btnConfirm);
 		btnConfirm.addActionListener(this);
 
 		btnClear = new JButton("Clear");
-		btnClear.setFont(new Font("Bahnschrift", Font.PLAIN, 20));
+		btnClear.setFont(new Font("SansSerif", Font.PLAIN, 20));
 		btnClear.setBounds(115, 714, 133, 37);
 		contentPanel.add(btnClear);
 
 		JLabel lblHiringDate = new JLabel("Hiring date:");
-		lblHiringDate.setFont(new Font("Bahnschrift", Font.PLAIN, 20));
+		lblHiringDate.setFont(new Font("SansSerif", Font.PLAIN, 20));
 		lblHiringDate.setBounds(57, 324, 126, 25);
 		contentPanel.add(lblHiringDate);
 
@@ -161,12 +164,12 @@ public class FormWorkerWindow extends JDialog implements ActionListener{
 		contentPanel.add(calendarHiringDate);
 
 		JLabel lblPhoneNumber = new JLabel("Phone number:");
-		lblPhoneNumber.setFont(new Font("Bahnschrift", Font.PLAIN, 20));
+		lblPhoneNumber.setFont(new Font("SansSerif", Font.PLAIN, 20));
 		lblPhoneNumber.setBounds(57, 379, 151, 25);
 		contentPanel.add(lblPhoneNumber);
 
 		textFieldPhone = new JTextField();
-		textFieldPhone.setFont(new Font("Bahnschrift", Font.PLAIN, 19));
+		textFieldPhone.setFont(new Font("SansSerif", Font.PLAIN, 19));
 		textFieldPhone.setColumns(10);
 		textFieldPhone.setBounds(318, 379, 175, 24);
 		contentPanel.add(textFieldPhone);
@@ -183,39 +186,39 @@ public class FormWorkerWindow extends JDialog implements ActionListener{
 		});
 
 		JLabel lblEmail = new JLabel("Email:");
-		lblEmail.setFont(new Font("Bahnschrift", Font.PLAIN, 20));
+		lblEmail.setFont(new Font("SansSerif", Font.PLAIN, 20));
 		lblEmail.setBounds(57, 437, 151, 25);
 		contentPanel.add(lblEmail);
 
 		textFieldEmail = new JTextField();
-		textFieldEmail.setFont(new Font("Bahnschrift", Font.PLAIN, 19));
+		textFieldEmail.setFont(new Font("SansSerif", Font.PLAIN, 19));
 		textFieldEmail.setColumns(10);
 		textFieldEmail.setBounds(318, 437, 175, 24);
 		contentPanel.add(textFieldEmail);
 
 		JLabel lblLanguage = new JLabel("Language:");
-		lblLanguage.setFont(new Font("Bahnschrift", Font.PLAIN, 20));
+		lblLanguage.setFont(new Font("SansSerif", Font.PLAIN, 20));
 		lblLanguage.setBounds(57, 589, 126, 25);
 		contentPanel.add(lblLanguage);
 
 		chckbxSpanish = new JCheckBox("Spanish");
-		chckbxSpanish.setFont(new Font("Bahnschrift", Font.PLAIN, 20));
+		chckbxSpanish.setFont(new Font("SansSerif", Font.PLAIN, 20));
 		chckbxSpanish.setBounds(82, 627, 144, 20);
 		contentPanel.add(chckbxSpanish);
 
 		chckbxEnglish = new JCheckBox("English");
-		chckbxEnglish.setFont(new Font("Bahnschrift", Font.PLAIN, 20));
+		chckbxEnglish.setFont(new Font("SansSerif", Font.PLAIN, 20));
 		chckbxEnglish.setBounds(82, 661, 144, 20);
 		contentPanel.add(chckbxEnglish);
 
 		JLabel lblAge = new JLabel("Age:");
-		lblAge.setFont(new Font("Bahnschrift", Font.PLAIN, 20));
+		lblAge.setFont(new Font("SansSerif", Font.PLAIN, 20));
 		lblAge.setBounds(57, 493, 151, 25);
 		contentPanel.add(lblAge);
 
 		spinnerAge = new JSpinner();
 		spinnerAge.setModel(new SpinnerNumberModel(18, 18, 75, 1));
-		spinnerAge.setFont(new Font("Bahnschrift", Font.PLAIN, 20));
+		spinnerAge.setFont(new Font("SansSerif", Font.PLAIN, 20));
 		spinnerAge.setBounds(318, 492, 175, 25);
 		contentPanel.add(spinnerAge);
 
@@ -229,6 +232,7 @@ public class FormWorkerWindow extends JDialog implements ActionListener{
 		btnClear.addActionListener(this);
 
 		if(worker!=null) {
+			setTitle("Modify worker");
 			textFieldId.setText(worker.getIdWorker());
 			comboBoxService.setSelectedItem(worker.getService());
 			textFieldName.setText(worker.getName());
@@ -248,8 +252,9 @@ public class FormWorkerWindow extends JDialog implements ActionListener{
 				chckbxEnglish.setSelected(false);
 			}
 			selectCruiseCode();
-			
-			
+		}else {
+			setTitle("Add worker");
+			calendarHiringDate.setDate(new java.util.Date());
 		}
 		
 		
@@ -287,7 +292,7 @@ public class FormWorkerWindow extends JDialog implements ActionListener{
 			comboBoxService.setSelectedIndex(0);
 			textFieldName.setText(null);
 			textFieldSurname.setText(null);
-			calendarHiringDate.setDate(null);
+			calendarHiringDate.setDate(new java.util.Date());
 			textFieldPhone.setText(null);
 			textFieldEmail.setText(null);
 			spinnerAge.setValue(18);
@@ -296,11 +301,15 @@ public class FormWorkerWindow extends JDialog implements ActionListener{
 			comboBoxCruiseCode.setSelectedIndex(0);
 		}
 		if(e.getSource()==btnConfirm) {
+			String dniRegexp = "^[0-9]{8}[A-Z]$";
+		    String idInput = textFieldId.getText().toUpperCase();
 			if(textFieldId.getText().isEmpty()||textFieldName.getText().isEmpty()||textFieldSurname.getText().isEmpty()||
 					textFieldPhone.getText().isEmpty()||textFieldEmail.getText().isEmpty()) {
 				JOptionPane.showMessageDialog(this, "Please fill in all fields");
 			}else if(textFieldPhone.getText().length() < 9) {
 				JOptionPane.showMessageDialog(this, "The phone number must have 9 digits");
+			} else if (!idInput.matches(dniRegexp)) {
+		        JOptionPane.showMessageDialog(this, "ID format invalid");
 			}else {
 				Worker workerTemp=new Worker(
 						textFieldId.getText(),

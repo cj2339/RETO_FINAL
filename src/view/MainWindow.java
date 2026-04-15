@@ -14,6 +14,8 @@ import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.Color;
+import javax.swing.SwingConstants;
 
 /**
  * Main management window used by administrators to navigate to the different
@@ -33,7 +35,7 @@ public class MainWindow extends JFrame implements ActionListener {
 	private JButton btnBook;
 	private JButton btnExport;
 	private JLabel lblNewLabel;
-	private Image imagenFondo = new ImageIcon("images/ManagementAnchor.png").getImage();	
+	private Image imagenFondo = new ImageIcon("images/water.jpg").getImage();	
 
 	/**
 	 * Initializes the main dashboard interface window.
@@ -54,7 +56,7 @@ public class MainWindow extends JFrame implements ActionListener {
 		};
 		setContentPane(contentPane);
 
-		setTitle("Main Management");
+		setTitle("Management");
 		setBounds(100, 100, 450, 333);
 		getContentPane().setLayout(null);
 		contentPane.setLayout(null);
@@ -62,37 +64,45 @@ public class MainWindow extends JFrame implements ActionListener {
 
 
 		lblNewLabel = new JLabel("MANAGEMENT");
-		lblNewLabel.setBounds(148, 22, 160, 21);
-		lblNewLabel.setFont(new Font("Arial", Font.BOLD, 20));
+		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel.setForeground(new Color(255, 255, 255));
+		lblNewLabel.setBounds(95, 29, 261, 30);
+		lblNewLabel.setFont(new Font("SansSerif", Font.BOLD, 30));
 		getContentPane().add(lblNewLabel);
 
 		btnCruise = new JButton("CRUISE");
-		btnCruise.setBounds(24, 82, 112, 38);
+		btnCruise.setFont(new Font("SansSerif", Font.PLAIN, 20));
+		btnCruise.setBounds(61, 79, 150, 47);
 		getContentPane().add(btnCruise);
 		btnCruise.addActionListener(this);
 
 		btnWorker = new JButton("WORKER"); 
-		btnWorker.setBounds(299, 82, 112, 38);
+		btnWorker.setFont(new Font("SansSerif", Font.PLAIN, 20));
+		btnWorker.setBounds(235, 83, 150, 47);
 		getContentPane().add(btnWorker);
 		btnWorker.addActionListener(this);
 
 		btnClient = new JButton("CLIENT");
-		btnClient.setBounds(24, 168, 112, 38);
+		btnClient.setFont(new Font("SansSerif", Font.PLAIN, 20));
+		btnClient.setBounds(61, 136, 150, 47);
 		getContentPane().add(btnClient);
 		btnClient.addActionListener(this);
 
 		btnAdmins = new JButton("ADMIN");
-		btnAdmins.setBounds(180, 254, 81, 21);
+		btnAdmins.setFont(new Font("SansSerif", Font.PLAIN, 20));
+		btnAdmins.setBounds(61, 193, 150, 47);
 		getContentPane().add(btnAdmins);
 		btnAdmins.addActionListener(this);
 
 		btnBook = new JButton("BOOK");
-		btnBook.setBounds(299, 168, 112, 38);
+		btnBook.setFont(new Font("SansSerif", Font.PLAIN, 20));
+		btnBook.setBounds(235, 136, 150, 47);
 		contentPane.add(btnBook);
 		btnBook.addActionListener(this);
 
 		btnExport = new JButton("EXPORT XML");
-		btnExport.setBounds(170, 210, 120, 30);
+		btnExport.setFont(new Font("SansSerif", Font.PLAIN, 17));
+		btnExport.setBounds(236, 193, 149, 47);
 		contentPane.add(btnExport);
 		btnExport.addActionListener(this);
 

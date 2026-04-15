@@ -45,6 +45,7 @@ public class LoginWindow extends JDialog implements ActionListener {
 	private JLabel lblPassword;
 	private JButton btnLogin;
 	private int atempts = 3;
+	private JTextField textField_1;
 
 	/**
 	 * Constructs the login graphical dialog.
@@ -77,41 +78,35 @@ public class LoginWindow extends JDialog implements ActionListener {
 		contentPane.setLayout(null);
 
 		lblUser = new JLabel("Username");
-		lblUser.setFont(new Font("Bahnschrift", Font.PLAIN, 30));
+		lblUser.setFont(new Font("SerifSans", Font.PLAIN, 30));
 		lblUser.setBounds(50, 40, 217, 58);
 		contentPane.add(lblUser);
 
 		lblPassword = new JLabel("Password");
-		lblPassword.setFont(new Font("Bahnschrift", Font.PLAIN, 30));
-		lblPassword.setBounds(50, 108, 217, 58);
+		lblPassword.setFont(new Font("SerifSans", Font.PLAIN, 30));
+		lblPassword.setBounds(50, 111, 217, 47);
 		contentPane.add(lblPassword);
 
 		textField = new JTextField();
-		textField.setFont(new Font("Bahnschrift", Font.PLAIN, 30));
-		textField.setOpaque(false);
-		textField.setBackground(new Color(255, 255, 255, 100));
-		textField.setBorder(BorderFactory.createLineBorder(Color.WHITE, 0));
+		textField.setFont(new Font("SerifSans", Font.PLAIN, 30));
 		textField.setBounds(277, 55, 183, 34);
 		contentPane.add(textField);
 		textField.setColumns(10);
 
 		passwordField = new JPasswordField();
-		passwordField.setFont(new Font("Bahnschrift", Font.PLAIN, 30));
-		passwordField.setOpaque(false);
-		passwordField.setBackground(new Color(255, 255, 255, 100));
-		passwordField.setBorder(BorderFactory.createLineBorder(Color.WHITE, 0));
+		passwordField.setFont(new Font("SerifSans", Font.PLAIN, 30));
 		passwordField.setBounds(277, 117, 183, 34);
 		contentPane.add(passwordField);
 
 		btnLogin = new JButton("Login");
-		btnLogin.setFont(new Font("Bahnschrift", Font.PLAIN, 30));
-		btnLogin.setBounds(277, 280, 183, 58);
+		btnLogin.setFont(new Font("SerifSans", Font.PLAIN, 30));
+		btnLogin.setBounds(277, 269, 183, 47);
 		btnLogin.addActionListener(this);
 		contentPane.add(btnLogin);
 
 		lblError = new JLabel("");
 		lblError.setHorizontalAlignment(SwingConstants.CENTER);
-		lblError.setFont(new Font("Bahnschrift", Font.PLAIN, 17));
+		lblError.setFont(new Font("SerifSans", Font.PLAIN, 17));
 		lblError.setBounds(277, 161, 183, 77);
 		contentPane.add(lblError);
 		
@@ -155,5 +150,4 @@ public class LoginWindow extends JDialog implements ActionListener {
 			}
 		}
 	}
-
 }

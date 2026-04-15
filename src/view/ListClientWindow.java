@@ -1,18 +1,25 @@
 package view;
 
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.Graphics;
+import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
+import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
@@ -32,6 +39,7 @@ public class ListClientWindow extends JDialog implements ActionListener {
     private JPanel contentPane;
     private JButton btnADD, btnDELETE, btnMODIFY;
     private JTable table;
+    private Image backgroundImage = new ImageIcon("images/CruiseBackground.png").getImage();
 
     /**
      * Constructs the window showing all clients.
@@ -45,35 +53,75 @@ public class ListClientWindow extends JDialog implements ActionListener {
 
         setTitle("Clients Management");
         setIconImage(Toolkit.getDefaultToolkit().getImage("images/icon.png"));
-        setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-        setBounds(100, 100, 750, 420);
-        contentPane = new JPanel();
-        contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-        setContentPane(contentPane);
-        contentPane.setLayout(null);
+		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+		setSize(663, 450);
+		setLocationRelativeTo(null);
 
-        // Llamamos a fillTable igual que en Worker
-        fillTable();
+		JPanel contentPane = new JPanel() {
+			@Override
+			protected void paintComponent(Graphics g) {
+				super.paintComponent(g);
+				g.drawImage(backgroundImage, 0, 0, getWidth(), getHeight(), this);
+			}
+		};
+		contentPane.setBorder(new EmptyBorder(10, 10, 10, 10));
+		setContentPane(contentPane);
+		contentPane.setLayout(null);
+		
+		
+		// TITTLE
+		JLabel title = new JLabel("Client Management");
+		title.setHorizontalAlignment(SwingConstants.CENTER);
+		title.setBounds(202, 13, 226, 49);
+		title.setFont(new Font("SansSerif", Font.BOLD, 22));
+		title.setForeground(Color.WHITE);
+		title.setBorder(new EmptyBorder(5, 5, 15, 5));
+		contentPane.add(title);
 
-        JScrollPane scrollPane = new JScrollPane(table);
-        scrollPane.setBounds(12, 44, 710, 231);
-        contentPane.add(scrollPane);
+		// TABLE
+		loadTable();
+		JScrollPane scrollPane = new JScrollPane(table);
+		scrollPane.setBounds(12, 59, 625, 237);
 
-        btnADD = new JButton("ADD");
-        btnADD.setBounds(150, 303, 97, 25);
-        btnADD.addActionListener(this);
-        contentPane.add(btnADD);
+		scrollPane.setOpaque(false);
+		scrollPane.getViewport().setOpaque(false);
+		table.setOpaque(false);
+		table.setBackground(new Color(255, 255, 255, 180));
 
-        btnDELETE = new JButton("DELETE");
-        btnDELETE.setBounds(320, 343, 97, 25);
-        btnDELETE.addActionListener(this);
-        contentPane.add(btnDELETE);
+		contentPane.add(scrollPane);
 
-        btnMODIFY = new JButton("MODIFY");
-        btnMODIFY.setBounds(500, 303, 97, 25);
-        btnMODIFY.addActionListener(this);
-        contentPane.add(btnMODIFY);
-    }
+		// BUTTONS
+		JPanel buttonPanel = new JPanel();
+		buttonPanel.setBounds(159, 340, 319, 45);
+		buttonPanel.setOpaque(false);
+
+		btnADD = new JButton("ADD");
+		btnADD.setBounds(20, 10, 88, 25);
+		btnDELETE = new JButton("DELETE");
+		btnDELETE.setBounds(216, 10, 88, 25);
+		btnMODIFY = new JButton("MODIFY");
+		btnMODIFY.setBounds(118, 10, 88, 25);
+
+		btnADD.addActionListener(this);
+		btnDELETE.addActionListener(this);
+		btnMODIFY.addActionListener(this);
+
+		btnADD.setBackground(new Color(63, 117, 243));
+		btnADD.setForeground(Color.WHITE);
+
+		btnDELETE.setBackground(new Color(63, 117, 243));
+		btnDELETE.setForeground(Color.WHITE);
+
+		btnMODIFY.setBackground(new Color(63, 117, 243));
+		btnMODIFY.setForeground(Color.WHITE);
+		buttonPanel.setLayout(null);
+
+		buttonPanel.add(btnADD);
+		buttonPanel.add(btnMODIFY);
+		buttonPanel.add(btnDELETE);
+
+		contentPane.add(buttonPanel);
+	}
 
     /**
      * Responds to the clicking of buttons within the dialog.
@@ -142,7 +190,7 @@ public class ListClientWindow extends JDialog implements ActionListener {
     /**
      * Creates and loads the base model format for the Table.
      */
-    private void fillTable() {
+    private void loadTable() {
         // Configuramos el modelo igual que en Worker
         DefaultTableModel model = new DefaultTableModel(
             new String[] { "ID", "Name", "Surname", "Age", "Phone", "Email" }, 0) {
