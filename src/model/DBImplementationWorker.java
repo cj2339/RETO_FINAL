@@ -25,8 +25,8 @@ public class DBImplementationWorker implements WorkerDAO {
 			+ "w.age, w.spanish_language, w.english_language, w.cod_cruise, c.name_cruise, c.type_cruise, c.num_rooms, c.capacity_max FROM worker w "
 			+ "JOIN cruise c ON w.cod_cruise=c.cod_cruise";//SQL query to select all workers from the database
 	final String SQLDELETEBYCODE ="DELETE FROM worker WHERE id_worker = ?";
-	final String SQLUPDATEBYCODE ="UPDATE worker SET id_worker";
-	final String SQLINSERT="INSERT INTO worker VALUES(?,?,?,?,?,?,?,?,?,?)";
+	final String SQLUPDATEBYCODE ="UPDATE worker SET service = ?, name_worker = ?, surname_worker = ?, hiring_date = ?, phone_number = ?, email = ?, age = ?, spanish_language = ?, english_language = ?, cod_cruise = ? WHERE id_worker = ?";
+	final String SQLINSERT="INSERT INTO worker VALUES(?,?,?,?,?,?,?,?,?,?,?)";
 	
 	public DBImplementationWorker() {
 		this.configFile = ResourceBundle.getBundle("configClass");
@@ -115,17 +115,22 @@ public class DBImplementationWorker implements WorkerDAO {
 		boolean updated=false;
 		this.openConnection();
 		try {
-			stmt=con.prepareStatement(SQLUPDATEBYCODE);
-			stmt.setString(1, worker.getIdWorker());
-			stmt.setString(2, worker.getService().toString());
-			stmt.setString(3, worker.getName());
-			stmt.setString(4, worker.getSurname());
-			stmt.setDate(5, (Date) worker.getHiringDate());
-			stmt.setString(6, worker.getPhoneNumber());
-			stmt.setString(7, worker.getEmail());
-			stmt.setInt(8, worker.getAge());
-			stmt.setBoolean(9, worker.isSpanish());
-			stmt.setBoolean(10, worker.isEnglish());
+			stmt = con.prepareStatement(SQLUPDATEBYCODE);
+			
+			java.util.Date utilDate=worker.getHiringDate();
+			java.sql.Date sqlDate=new java.sql.Date(utilDate.getTime());
+			
+			stmt.setString(1, worker.getService().toString().toLowerCase());
+			stmt.setString(2, worker.getName());
+			stmt.setString(3, worker.getSurname());
+			stmt.setDate(4, sqlDate);
+			stmt.setString(5, worker.getPhoneNumber());
+			stmt.setString(6, worker.getEmail());
+			stmt.setInt(7, worker.getAge());
+			stmt.setBoolean(8, worker.isSpanish());
+			stmt.setBoolean(9, worker.isEnglish());
+			stmt.setInt(10, worker.getCruise().getCodCruise());
+			stmt.setString(11, worker.getIdWorker());
 			
 			if(stmt.executeUpdate()>0) {
 				updated=true;
@@ -146,16 +151,20 @@ public class DBImplementationWorker implements WorkerDAO {
 		this.openConnection();
 		try {
 			stmt = con.prepareStatement(SQLINSERT);
+			java.util.Date utilDate=worker.getHiringDate();
+			java.sql.Date sqlDate=new java.sql.Date(utilDate.getTime());
+			
 			stmt.setString(1, worker.getIdWorker());
-			stmt.setString(2, worker.getService().toString());
+			stmt.setString(2, worker.getService().toString().toLowerCase());
 			stmt.setString(3, worker.getName());
 			stmt.setString(4, worker.getSurname());
-			stmt.setDate(5, (Date) worker.getHiringDate());
+			stmt.setDate(5, sqlDate);
 			stmt.setString(6, worker.getPhoneNumber());
 			stmt.setString(7, worker.getEmail());
 			stmt.setInt(8, worker.getAge());
 			stmt.setBoolean(9, worker.isSpanish());
 			stmt.setBoolean(10, worker.isEnglish());
+			stmt.setInt(11, worker.getCruise().getCodCruise());
 
 			if (stmt.executeUpdate() > 0) {
 				added = true;

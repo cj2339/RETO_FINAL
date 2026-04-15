@@ -42,6 +42,7 @@ public class ListCruiseWindow extends JDialog implements ActionListener {
 		contentPane.setBorder(new EmptyBorder(10, 10, 10, 10));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
+		
 
 		// TITTLE
 		JLabel title = new JLabel("Cruise Management");

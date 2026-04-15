@@ -11,11 +11,14 @@ import javax.swing.border.EmptyBorder;
 import controller.LoginController;
 import model.Worker;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 import javax.swing.JTextField;
@@ -160,6 +163,8 @@ public class FormWorkerWindow extends JDialog implements ActionListener{
 				char c = e.getKeyChar();
 				if (!Character.isDigit(c)) {
 					e.consume();
+				}else if (textFieldPhone.getText().length() > 8) {
+					e.consume();
 				}
 			}
 		});
@@ -254,6 +259,7 @@ public class FormWorkerWindow extends JDialog implements ActionListener{
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
+		String dateStr;
 		if(e.getSource()==btnClear) {
 			textFieldId.setText(null);
 			comboBoxService.setSelectedIndex(0);
@@ -265,10 +271,36 @@ public class FormWorkerWindow extends JDialog implements ActionListener{
 			spinnerAge.setValue(18);
 			chckbxSpanish.setSelected(false);
 			chckbxEnglish.setSelected(false);
-			comboBoxCruiseCode.setSelectedIndex(1);
+			comboBoxCruiseCode.setSelectedIndex(0);
 		}
 		if(e.getSource()==btnConfirm) {
-
+			if(textFieldId.getText().isEmpty()||textFieldName.getText().isEmpty()||textFieldSurname.getText().isEmpty()||
+					textFieldPhone.getText().isEmpty()||textFieldEmail.getText().isEmpty()) {
+				JOptionPane.showMessageDialog(this, "Please fill in all fields");
+			}else if(textFieldPhone.getText().length() < 9) {
+				JOptionPane.showMessageDialog(this, "The phone number must have 9 digits");
+			}else {
+				Worker workerTemp=new Worker(
+						textFieldId.getText(),
+						(TypeWorker) comboBoxService.getSelectedItem(),
+						textFieldName.getText(),
+						textFieldSurname.getText(),
+						calendarHiringDate.getDate(),
+						textFieldPhone.getText(),
+						textFieldEmail.getText(),
+						(int)spinnerAge.getValue(),
+						chckbxSpanish.isSelected(),
+						chckbxEnglish.isSelected(),
+						(Cruise)comboBoxCruiseCode.getSelectedItem()
+						);
+				if(worker!=null) {
+					cont.updateWorker(workerTemp);
+					JOptionPane.showMessageDialog(this, "Worker updated successfully.");
+				}else {
+					cont.insertWorker(workerTemp);
+					JOptionPane.showMessageDialog(this, "Worker added successfully.");
+				}
+			}
 		}
 	}
 }

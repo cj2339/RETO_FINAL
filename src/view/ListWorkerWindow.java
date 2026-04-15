@@ -1,10 +1,15 @@
 package view;
 
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.Graphics;
+import java.awt.Image;
 import java.awt.Toolkit;
 import java.util.Date;
 import java.util.List;
 
 import javax.swing.JDialog;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -20,6 +25,8 @@ import model.Worker;
 
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
+import javax.swing.SwingConstants;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.text.SimpleDateFormat;
@@ -30,9 +37,8 @@ public class ListWorkerWindow extends JDialog implements ActionListener {
 	private static final long serialVersionUID = 1L;
 	private LoginController cont;
 	private JPanel contentPane;
-	private JButton btnADD;
-	private JButton btnDELETE;
-	private JButton btnMODIFY;
+	private JButton btnADD, btnDELETE, btnMODIFY;
+	private Image backgroundImage = new ImageIcon("images/FondoListaCruceros.png").getImage();
 	JTable table;
 
 	public ListWorkerWindow(MainWindow mainWindow, LoginController cont) {
@@ -42,35 +48,75 @@ public class ListWorkerWindow extends JDialog implements ActionListener {
 		setTitle("Workers");
 		setIconImage(Toolkit.getDefaultToolkit().getImage("images/icon.png"));
 		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 1150, 420);
-		contentPane = new JPanel();
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		setContentPane(contentPane);
+		setSize(663, 450);
+		setLocationRelativeTo(null);
 
-		fillTable();
+		JPanel contentPane = new JPanel() {
+			@Override
+			protected void paintComponent(Graphics g) {
+				super.paintComponent(g);
+				g.drawImage(backgroundImage, 0, 0, getWidth(), getHeight(), this);
+			}
+		};
 		
+		contentPane.setBorder(new EmptyBorder(10, 10, 10, 10));
+		setContentPane(contentPane);
 		contentPane.setLayout(null);
+		
 
+		// TITTLE
+		JLabel title = new JLabel("Cruise Management");
+		title.setHorizontalAlignment(SwingConstants.CENTER);
+		title.setBounds(202, 13, 226, 49);
+		title.setFont(new Font("SansSerif", Font.BOLD, 22));
+		title.setForeground(Color.WHITE);
+		title.setBorder(new EmptyBorder(5, 5, 15, 5));
+		contentPane.add(title);
+
+		// TABLE
+		loadTable();
 		JScrollPane scrollPane = new JScrollPane(table);
-		scrollPane.setBounds(12, 44, 1114, 283);
-		getContentPane().add(scrollPane);
+		scrollPane.setBounds(12, 59, 625, 237);
+
+		scrollPane.setOpaque(false);
+		scrollPane.getViewport().setOpaque(false);
+		table.setOpaque(false);
+		table.setBackground(new Color(255, 255, 255, 180));
+
+		contentPane.add(scrollPane);
+
+		// BUTTONS
+		JPanel buttonPanel = new JPanel();
+		buttonPanel.setBounds(159, 309, 319, 45);
+		buttonPanel.setOpaque(false);
 
 		btnADD = new JButton("ADD");
-		btnADD.setBounds(922, 348, 97, 25);
-		btnADD.addActionListener(this);
-		contentPane.add(btnADD);
-
+		btnADD.setBounds(20, 10, 67, 25);
 		btnDELETE = new JButton("DELETE");
-		btnDELETE.setBounds(815, 348, 97, 25);
-		btnDELETE.addActionListener(this);
-		contentPane.add(btnDELETE);
-
+		btnDELETE.setBounds(198, 10, 88, 25);
 		btnMODIFY = new JButton("MODIFY");
+		btnMODIFY.setBounds(99, 10, 87, 25);
+
+		btnADD.addActionListener(this);
+		btnDELETE.addActionListener(this);
 		btnMODIFY.addActionListener(this);
 
-		btnMODIFY.setBounds(1029, 348, 97, 25);
-		contentPane.add(btnMODIFY);
-		
+		btnADD.setBackground(new Color(46, 204, 113));
+		btnADD.setForeground(Color.WHITE);
+
+		btnDELETE.setBackground(new Color(231, 76, 60));
+		btnDELETE.setForeground(Color.WHITE);
+
+		btnMODIFY.setBackground(new Color(52, 152, 219));
+		btnMODIFY.setForeground(Color.WHITE);
+		buttonPanel.setLayout(null);
+
+		buttonPanel.add(btnADD);
+		buttonPanel.add(btnMODIFY);
+		buttonPanel.add(btnDELETE);
+
+		contentPane.add(buttonPanel);
+
 
 	}
 
@@ -79,49 +125,45 @@ public class ListWorkerWindow extends JDialog implements ActionListener {
 		int row = table.getSelectedRow();
 		int confirm;
 		boolean selected=true;
-		String idWorker = table.getValueAt(row, 0).toString();
+		String idWorker;
 
 		if (e.getSource() == btnDELETE&&selected) {
 			if (row == -1) {
-				selected=false;
-			}
-			
-			if(selected) {
-				confirm=JOptionPane.showConfirmDialog(this,"Are you sure you want to delete this worker?", "Warning" , JOptionPane.YES_NO_OPTION);
+				JOptionPane.showMessageDialog(this, "Select a worker to delete.");
+			}else {
+				idWorker = table.getValueAt(row, 0).toString();
+				confirm=JOptionPane.showConfirmDialog(this,"Are you sure you want to delete this worker?", "Warning" , JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
 				if(confirm==JOptionPane.YES_OPTION) {
-					// Llamar al controlador con el código
-					DefaultTableModel modelo = (DefaultTableModel) table.getModel();
 					if(cont.deleteWorker(idWorker)) {
 						refreshModel();
 						JOptionPane.showMessageDialog(this, "Worker has been deleted.");
 					}else {
 						JOptionPane.showMessageDialog(this, "Worker not deleted.");
 					}
-					
-					
+
 				}
-				
-			}else {
-				JOptionPane.showMessageDialog(this, "Select a worker to delete.");
 			}
 
+
 		}else if(e.getSource()==btnMODIFY) {
-			Worker worker=new Worker();
-			int viewRow=table.getSelectedRow();
-			int cruiseCode;
 			
-			if(viewRow == -1) {
+			int viewRow=table.getSelectedRow();
+			int cruiseCode, modelRow;
+			String dateStr;
+
+			if(row == -1) {
 				JOptionPane.showMessageDialog(this, "Select a worker to modify");
 			}else {
-				int modelRow = table.convertRowIndexToModel(viewRow);
+				Worker worker=new Worker();
+				modelRow = table.convertRowIndexToModel(row);
 				TableModel model = table.getModel();
 				worker.setIdWorker((String) model.getValueAt(modelRow, 0));
 				worker.setService(TypeWorker.valueOf((String)model.getValueAt(modelRow,1)));
 				worker.setName((String) model.getValueAt(modelRow, 2));
 				worker.setSurname((String) model.getValueAt(modelRow, 3));
 				try {
-					String dateStr = model.getValueAt(modelRow, 4).toString();
-		            worker.setHiringDate(new SimpleDateFormat("dd/MM/yyyy").parse(dateStr));
+					dateStr = model.getValueAt(modelRow, 4).toString();
+					worker.setHiringDate(new SimpleDateFormat("dd/MM/yyyy").parse(dateStr));
 				}catch(Exception d) {
 					System.out.println("Error date format: "+d.getMessage());
 				}
@@ -131,10 +173,10 @@ public class ListWorkerWindow extends JDialog implements ActionListener {
 				worker.setSpanish((Boolean)model.getValueAt(modelRow, 8));
 				worker.setEnglish((Boolean)model.getValueAt(modelRow, 9));
 				cruiseCode = Integer.parseInt(model.getValueAt(modelRow, 10).toString());
-		        Cruise tempCruise = new Cruise();
-		        tempCruise.setCodCruise(cruiseCode); //se crea un objeto crucero solo con el código
-		        worker.setCruise(tempCruise);
-				
+				Cruise tempCruise = new Cruise();
+				tempCruise.setCodCruise(cruiseCode); //se crea un objeto crucero solo con el código
+				worker.setCruise(tempCruise);
+
 				FormWorkerWindow workerFormWindow=new FormWorkerWindow(this, cont, worker, true);
 				workerFormWindow.setVisible(true);
 				refreshModel();
@@ -146,8 +188,8 @@ public class ListWorkerWindow extends JDialog implements ActionListener {
 		}
 
 	}
-	
-	private void fillTable() {
+
+	private void loadTable() {
 		List<Worker> workers=cont.getAllWorker();
 
 		// Crear modelo de tabla no editable
@@ -163,7 +205,7 @@ public class ListWorkerWindow extends JDialog implements ActionListener {
 		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		refreshModel();
 	}
-	
+
 	public void refreshModel() {
 		// Rellenar tabla con los usuarios
 		List<Worker> workers = cont.getAllWorker();
