@@ -39,7 +39,7 @@ public class FormCruiseWindow extends JDialog implements ActionListener {
 	private Cruise cruise;
 	private ListCruiseWindow parent;
 	private JButton btnClear;
-	private Image backgroundImage = new ImageIcon("images/FondoForms.png").getImage();
+	private Image backgroundImage = new ImageIcon("images/FondoForms2.png").getImage();
 
 	public FormCruiseWindow(JDialog cruiseListWindow, LoginController controller, Cruise cruise, boolean isInsert) {
 		super(cruiseListWindow, true);
