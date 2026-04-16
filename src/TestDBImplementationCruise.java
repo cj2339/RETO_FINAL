@@ -101,4 +101,12 @@ class TestDBImplementationCruise {
 		assertFalse(dao.checkCruiseInBook(nonExistentId));
 	}
 
+	@Test
+	void testInsertNullCruiseThrowsException() throws Exception {
+		// Test that inserting a null cruise throws an exception
+		assertThrows(Exception.class, () -> {
+			dao.insertCruise(null);
+		});
+	}
+
 }

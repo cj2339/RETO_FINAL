@@ -206,7 +206,7 @@ public class FormCruiseWindow extends JDialog implements ActionListener {
 			txtMaxCapacity.setText(String.valueOf(cruise.getCapacityMax()));
 			txtMaxCapacity.setEditable(false);
 		} else {
-			txtCode.setText(controller.getNextCruiseCode());
+			txtCode.setText(String.valueOf(controller.getNextCruiseCode()));
 			cmbType.setSelectedIndex(0);
 		} 
 	}
