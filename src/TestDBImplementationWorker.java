@@ -96,27 +96,27 @@ class TestDBImplementationWorker {
 		//The worker should no longer exist
 		assertFalse(dao.idWorkerExists(testId), "The worker should not exist after deletion");
 	}
-	
+
 	@Test
 	void testNonExistentWorkerOperations() {
-	    //Use an ID that does not exist in the database
-	    String nonExistentId = "NOT_EXIST";
+		//Use an ID that does not exist in the database
+		String nonExistentId = "NOT_EXIST";
 
 
-	    //Checking existence for a fake ID should return false
-	    assertFalse(dao.idWorkerExists(nonExistentId), "idWorkerExists should be false for unknown ID");
-	    assertFalse(dao.phoneWorkerExists("000000"), "phoneWorkerExists should be false for unknown phone");
-	    assertFalse(dao.emailWorkerExists("fake@email.com"), "emailWorkerExists should be false for unknown email");
+		//Checking existence for a fake ID should return false
+		assertFalse(dao.idWorkerExists(nonExistentId), "idWorkerExists should be false for unknown ID");
+		assertFalse(dao.phoneWorkerExists("000000"), "phoneWorkerExists should be false for unknown phone");
+		assertFalse(dao.emailWorkerExists("fake@email.com"), "emailWorkerExists should be false for unknown email");
 
-	    //Deleting an ID that doesn't exist should return false
-	    boolean isDeleted = dao.deleteWorker(nonExistentId);
-	    assertFalse(isDeleted, "deleteWorker should return false when the ID is not in the database");
-	    
-	    //Updating a non-existent worker should return false
-	    Worker fakeWorker = new Worker();
-	    fakeWorker.setIdWorker(nonExistentId);
-	    fakeWorker.setName("Fake");
-	    assertFalse(dao.updateWorker(fakeWorker), "updateWorker should return false if the record doesn't exist");
+		//Deleting an ID that doesn't exist should return false
+		boolean isDeleted = dao.deleteWorker(nonExistentId);
+		assertFalse(isDeleted, "deleteWorker should return false when the ID is not in the database");
+
+		//Updating a non-existent worker should return false
+		Worker fakeWorker = new Worker();
+		fakeWorker.setIdWorker(nonExistentId);
+		fakeWorker.setName("Fake");
+		assertFalse(dao.updateWorker(fakeWorker), "updateWorker should return false if the record doesn't exist");
 	}
 
 }
