@@ -10,6 +10,12 @@ import org.junit.jupiter.api.Test;
 import model.Book;
 import model.DBImplementationBook;
 
+/**
+ * JUnit test class for DBImplementationBook. Verifies booking insertion,
+ * retrieval, update, deletion, and error handling.
+ * 
+ * @author Iker
+ */
 class TestDBImplementationBook {
 
 	private DBImplementationBook dao;
