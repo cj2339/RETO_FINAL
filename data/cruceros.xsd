@@ -1,34 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
 
-  <xs:simpleType name="tipoID">
-    <xs:restriction base="xs:integer">
-      <xs:minInclusive value="1"/>
+  <xs:simpleType name="tipoCruceroEnum">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="LUXURY"/>
+      <xs:enumeration value="PREMIUM"/>
+      <xs:enumeration value="FAMILY"/>
+      <xs:enumeration value="EXPEDITION"/>
     </xs:restriction>
   </xs:simpleType>
 
-  <xs:simpleType name="tipoEdadTrabajador">
+  <xs:simpleType name="tipoServicioEnum">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="COOK"/>
+      <xs:enumeration value="GUIDE"/>
+      <xs:enumeration value="RECEPTIONIST"/>
+      <xs:enumeration value="CAPTAIN"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="tipoEdad">
     <xs:restriction base="xs:integer">
       <xs:minInclusive value="18"/>
       <xs:maxInclusive value="70"/>
-    </xs:restriction>
-  </xs:simpleType>
-
-  <xs:simpleType name="tipoCruceroSQL">
-    <xs:restriction base="xs:string">
-      <xs:enumeration value="luxury"/>
-      <xs:enumeration value="premium"/>
-      <xs:enumeration value="family"/>
-      <xs:enumeration value="expedition"/>
-    </xs:restriction>
-  </xs:simpleType>
-
-  <xs:simpleType name="tipoServicio">
-    <xs:restriction base="xs:string">
-      <xs:enumeration value="captain"/>
-      <xs:enumeration value="cook"/>
-      <xs:enumeration value="guide"/>
-      <xs:enumeration value="receptionist"/>
     </xs:restriction>
   </xs:simpleType>
 
@@ -43,11 +37,13 @@
                 <xs:complexType>
                   <xs:sequence>
                     <xs:element name="name" type="xs:string"/>
-                    <xs:element name="num_rooms" type="xs:integer"/>
+                    <xs:element name="rooms" type="xs:integer"/>
                     <xs:element name="capacity" type="xs:integer"/>
+                    <xs:element name="photo" type="xs:string"/>
                   </xs:sequence>
-                  <xs:attribute name="code" type="tipoID" use="required"/>
-                  <xs:attribute name="type" type="tipoCruceroSQL"/>
+                  <xs:attribute name="code" type="xs:integer" use="required"/>
+                  <xs:attribute name="type" type="tipoCruceroEnum"/>
+                  <xs:attribute name="status" type="xs:string"/>
                 </xs:complexType>
               </xs:element>
             </xs:sequence>
@@ -62,12 +58,28 @@
                   <xs:sequence>
                     <xs:element name="name" type="xs:string"/>
                     <xs:element name="surname" type="xs:string"/>
-                    <xs:element name="age" type="tipoEdadTrabajador"/>
-                    <xs:element name="email" type="xs:string"/>
-                    <xs:element name="cruiseAssigned" type="tipoID"/>
+                    <xs:element name="service" type="tipoServicioEnum"/>
+                    <xs:element name="age" type="tipoEdad"/>
+                    <xs:element name="languages">
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element name="spanish" type="xs:boolean"/>
+                          <xs:element name="english" type="xs:boolean"/>
+                        </xs:sequence>
+                      </xs:complexType>
+                    </xs:element>
+                    <xs:element name="contact">
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element name="email" type="xs:string"/>
+                          <xs:element name="phone" type="xs:string"/>
+                        </xs:sequence>
+                      </xs:complexType>
+                    </xs:element>
+                    <xs:element name="cruiseAssigned" type="xs:integer"/>
                   </xs:sequence>
                   <xs:attribute name="id" type="xs:string" use="required"/>
-                  <xs:attribute name="service" type="tipoServicio"/>
+                  <xs:attribute name="contract" type="xs:string"/>
                 </xs:complexType>
               </xs:element>
             </xs:sequence>
@@ -83,10 +95,31 @@
                     <xs:element name="name" type="xs:string"/>
                     <xs:element name="surname" type="xs:string"/>
                     <xs:element name="age" type="xs:integer"/>
-                    <xs:element name="phone" type="xs:integer"/>
                     <xs:element name="email" type="xs:string"/>
+                    <xs:element name="phone" type="xs:string"/>
                   </xs:sequence>
                   <xs:attribute name="id" type="xs:string" use="required"/>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+
+        <xs:element name="bookings">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="booking" maxOccurs="unbounded">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="cruise" type="xs:integer"/>
+                    <xs:element name="client" type="xs:string"/>
+                    <xs:element name="originCity" type="xs:string"/>
+                    <xs:element name="destinationCity" type="xs:string"/>
+                    <xs:element name="startDate" type="xs:date"/>
+                    <xs:element name="endDate" type="xs:date"/>
+                    <xs:element name="room" type="xs:integer"/>
+                    <xs:element name="finalPrice" type="xs:decimal"/>
+                  </xs:sequence>
                 </xs:complexType>
               </xs:element>
             </xs:sequence>
@@ -97,4 +130,3 @@
     </xs:complexType>
   </xs:element>
 </xs:schema>
-
