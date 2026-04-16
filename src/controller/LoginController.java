@@ -368,7 +368,7 @@ public class LoginController {
 	 * @param newB The newly updated booking.
 	 * @return true if successfully updated, false otherwise.
 	 */
-	public boolean updateBooking(Book oldB, Book newB) {
+	public String updateBooking(Book oldB, Book newB) {
 		return daoBooking.updateBooking(oldB, newB);
 	}
 

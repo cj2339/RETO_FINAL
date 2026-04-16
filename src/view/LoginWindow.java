@@ -109,7 +109,7 @@ public class LoginWindow extends JDialog implements ActionListener {
 		lblError.setFont(new Font("SerifSans", Font.PLAIN, 17));
 		lblError.setBounds(277, 161, 183, 77);
 		contentPane.add(lblError);
-		
+
 		contentPane.getRootPane().setDefaultButton(btnLogin);
 
 	}

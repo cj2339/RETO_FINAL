@@ -47,6 +47,7 @@ public class MainWindow extends JFrame implements ActionListener {
 		super();
 		this.cont=cont;
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setResizable(false);
 		contentPane = new JPanel() {
 			@Override
 			protected void paintComponent(Graphics g) {

@@ -71,8 +71,8 @@ public class ListBookWindow extends JDialog implements ActionListener {
 		contentPane.setBorder(new EmptyBorder(10, 10, 10, 10));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
-		
-		
+
+
 		// TITTLE
 		JLabel title = new JLabel("Book Management");
 		title.setHorizontalAlignment(SwingConstants.CENTER);
@@ -210,15 +210,15 @@ public class ListBookWindow extends JDialog implements ActionListener {
 				new String[] {
 						"Client", "Cruise", "Start Date", "Origin", "Destination", "End Date", "Base Price", "Final Price", "Room"
 				},
-					0
-					) {
-				private static final long serialVersionUID = 1L;
+				0
+				) {
+			private static final long serialVersionUID = 1L;
 
-				@Override
-				public boolean isCellEditable(int row, int column) {
-					return false;
-				}
-			};
+			@Override
+			public boolean isCellEditable(int row, int column) {
+				return false;
+			}
+		};
 
 		table = new JTable(modelo);
 		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);

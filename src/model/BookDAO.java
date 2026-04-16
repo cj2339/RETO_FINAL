@@ -40,5 +40,5 @@ public interface BookDAO {
 	 * @param newBooking The updated booking data.
 	 * @return true if update is successful, false otherwise.
 	 */
-	boolean updateBooking(Book oldBooking, Book newBooking);
+	String updateBooking(Book oldBooking, Book newBooking);
 }

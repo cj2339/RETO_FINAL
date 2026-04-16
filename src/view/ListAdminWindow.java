@@ -70,8 +70,8 @@ public class ListAdminWindow extends JDialog implements ActionListener {
 		contentPane.setBorder(new EmptyBorder(10, 10, 10, 10));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
-		
-		
+
+
 		JLabel title = new JLabel("Administrator Management");
 		title.setHorizontalAlignment(SwingConstants.CENTER);
 		title.setBounds(202, 13, 249, 49);
@@ -132,29 +132,29 @@ public class ListAdminWindow extends JDialog implements ActionListener {
 		int row = table.getSelectedRow();
 
 		if (e.getSource() == btnDELETE) {
-		    if (row == -1) {
-		        JOptionPane.showMessageDialog(this, "Select an administrator to delete.");
-		        return;
-		    }
+			if (row == -1) {
+				JOptionPane.showMessageDialog(this, "Select an administrator to delete.");
+				return;
+			}
 
-		    String adminName = table.getValueAt(row, 0).toString();
+			String adminName = table.getValueAt(row, 0).toString();
 
-		    int confirm = JOptionPane.showConfirmDialog(
-		            this,
-		            "Are you sure you want to delete administrator: " + adminName + "?",
-		            "Confirm deletion",
-		            JOptionPane.YES_NO_OPTION,
-		            JOptionPane.WARNING_MESSAGE
-		    );
+			int confirm = JOptionPane.showConfirmDialog(
+					this,
+					"Are you sure you want to delete administrator: " + adminName + "?",
+					"Confirm deletion",
+					JOptionPane.YES_NO_OPTION,
+					JOptionPane.WARNING_MESSAGE
+					);
 
-		    if (confirm == JOptionPane.YES_OPTION) {
-		        if (cont.deleteAdministrator(adminName)) {
-		            refreshModel();
-		            JOptionPane.showMessageDialog(this, "Administrator has been deleted.");
-		        } else {
-		            JOptionPane.showMessageDialog(this, "Administrator not deleted.");
-		        }
-		    }
+			if (confirm == JOptionPane.YES_OPTION) {
+				if (cont.deleteAdministrator(adminName)) {
+					refreshModel();
+					JOptionPane.showMessageDialog(this, "Administrator has been deleted.");
+				} else {
+					JOptionPane.showMessageDialog(this, "Administrator not deleted.");
+				}
+			}
 		}
 
 		if (e.getSource() == btnMODIFY) {
@@ -205,13 +205,22 @@ public class ListAdminWindow extends JDialog implements ActionListener {
 	 * Refreshes the table data by requesting all administrators from the database.
 	 */
 	public void refreshModel() {
-		List<Administrator> administrators = cont.getAllAdministrators(); //Get the updated list of administrators
-		DefaultTableModel modelo = (DefaultTableModel) table.getModel(); //Retrieve the table model
-		//Clear table
+		List<Administrator> administrators = cont.getAllAdministrators();
+		DefaultTableModel modelo = (DefaultTableModel) table.getModel();
 		modelo.setRowCount(0);
-		//Fill in the table
-		for (Administrator admin : administrators) {
-			modelo.addRow(new Object[] {admin.getName(),admin.getPassword()});
+		String logged = cont.getLoggedInAdminName();
+		int i = 0;
+		while (i < administrators.size()) {
+			Administrator admin = administrators.get(i);
+			String passToShow = "";
+			if (admin.getName().trim().equalsIgnoreCase(logged.trim())) {
+				passToShow = admin.getPassword();//show the one logged
+			} else {
+				passToShow = "********";//hide the rest
+			}
+			modelo.addRow(new Object[]{admin.getName(), passToShow});
+			i++;
 		}
 	}
+
 }
