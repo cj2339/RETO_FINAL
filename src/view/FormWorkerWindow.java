@@ -2,6 +2,9 @@ package view;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
+import java.awt.Graphics;
+import java.awt.Image;
+import javax.swing.ImageIcon;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -41,7 +44,14 @@ import javax.swing.SpinnerNumberModel;
 public class FormWorkerWindow extends JDialog implements ActionListener{
 
 	private static final long serialVersionUID = 1L;
-	private final JPanel contentPanel = new JPanel();
+	private Image backgroundImage = new ImageIcon("images/FondoForms.png").getImage();
+	private final JPanel contentPanel = new JPanel() {
+		@Override
+		protected void paintComponent(Graphics g) {
+			super.paintComponent(g);
+			g.drawImage(backgroundImage, 0, 0, getWidth(), getHeight(), this);
+		}
+	};
 	private LoginController cont;
 	private Worker worker;
 	private JTextField textFieldId;

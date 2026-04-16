@@ -4,6 +4,9 @@ import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.Graphics;
+import java.awt.Image;
+import javax.swing.ImageIcon;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -27,7 +30,14 @@ import model.Administrator;
 public class FormAdminWindow extends JDialog implements ActionListener {
 
 	private static final long serialVersionUID = 1L;
-	private final JPanel panel = new JPanel();
+	private Image backgroundImage = new ImageIcon("images/FondoForms.png").getImage();
+	private final JPanel panel = new JPanel() {
+		@Override
+		protected void paintComponent(Graphics g) {
+			super.paintComponent(g);
+			g.drawImage(backgroundImage, 0, 0, getWidth(), getHeight(), this);
+		}
+	};
 	private JTextField txtName;
 	private JPasswordField txtPassword;
 	private JButton okButton;
