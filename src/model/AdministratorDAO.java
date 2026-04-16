@@ -4,6 +4,8 @@ import java.util.List;
 
 /**
  * Data Access Object interface for managing Administrator entities.
+ * 
+ * @author Iker
  */
 public interface AdministratorDAO {
 	/**

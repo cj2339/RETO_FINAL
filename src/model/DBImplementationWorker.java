@@ -11,6 +11,8 @@ import java.util.ResourceBundle;
 
 /**
  * Database implementation logic for matching Worker processes with a SQL connection.
+ * 
+ * @author Etna
  */
 public class DBImplementationWorker implements WorkerDAO {
 	private Connection con;
@@ -192,19 +194,19 @@ public class DBImplementationWorker implements WorkerDAO {
 			stmt.setString(1, id);
 			ResultSet rs = stmt.executeQuery();
 			if (rs.next()) { 
-	            exists = true;
-	        }
-	        
-	        rs.close();
+				exists = true;
+			}
+
+			rs.close();
 			stmt.close();
 			con.close(); 
 		} catch (SQLException e) {
 			System.out.println("Error: " + e.getMessage());
 		}
-		
+
 		return exists;
 	}
-	
+
 	@Override
 	public boolean phoneWorkerExists(String phone) {
 		boolean exists=false;
@@ -214,19 +216,19 @@ public class DBImplementationWorker implements WorkerDAO {
 			stmt.setString(1, phone);
 			ResultSet rs = stmt.executeQuery();
 			if (rs.next()) { 
-	            exists = true;
-	        }
-	        
-	        rs.close();
+				exists = true;
+			}
+
+			rs.close();
 			stmt.close();
 			con.close();
 		} catch (SQLException e) {
 			System.out.println("Error: " + e.getMessage());
 		}
-		
+
 		return exists;
 	}
-	
+
 	@Override
 	public boolean emailWorkerExists(String email) {
 		boolean exists=false;
@@ -236,16 +238,16 @@ public class DBImplementationWorker implements WorkerDAO {
 			stmt.setString(1, email);
 			ResultSet rs = stmt.executeQuery();
 			if (rs.next()) { 
-	            exists = true;
-	        }
-	        
-	        rs.close();
+				exists = true;
+			}
+
+			rs.close();
 			stmt.close();
 			con.close();
 		} catch (SQLException e) {
 			System.out.println("Error: " + e.getMessage());
 		}
-		
+
 		return exists;
 	}
 

@@ -4,6 +4,8 @@ import java.util.List;
 
 /**
  * Data Access Object interface defining operations for Cruise management.
+ * 
+ * @author Aritz
  */
 public interface CruiseDAO {
 
@@ -65,6 +67,6 @@ public interface CruiseDAO {
 	 * @return
 	 */
 	public boolean checkCruiseInBook(String id);
-	
+
 	public int getNextCruiseCode();
 }

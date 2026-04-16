@@ -4,6 +4,8 @@ import java.util.List;
 
 /**
  * Data Access Object interface defining operations for Client entities.
+ * 
+ * @author Santiago
  */
 public interface ClientDAO {
 	/**

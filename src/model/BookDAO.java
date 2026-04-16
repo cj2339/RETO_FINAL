@@ -5,9 +5,11 @@ import java.util.List;
 
 /**
  * Data Access Object interface for managing Book entities.
+ * 
+ * @author Iker
  */
 public interface BookDAO {
-	
+
 	/**
 	 * Creates a new booking in the underlying database.
 	 *

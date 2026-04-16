@@ -4,6 +4,8 @@ import java.util.Date;
 
 /**
  * Represents a worker providing services within the cruise system.
+ * 
+ * @author Etna
  */
 public class Worker {
 	private String idWorker;

@@ -4,6 +4,8 @@ import java.io.Serializable;
 
 /**
  * Represents a Client interacting with the cruise system.
+ * 
+ * @author Santiago
  */
 public class Client implements Serializable {
 	private static final long serialVersionUID = 1L;

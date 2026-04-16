@@ -4,6 +4,8 @@ import java.util.List;
 
 /**
  * Data Access Object interface identifying operations for Worker data.
+ * 
+ * @author Etna
  */
 public interface WorkerDAO {
 	/**
@@ -37,11 +39,11 @@ public interface WorkerDAO {
 	 * @return
 	 */
 	public boolean insertWorker(Worker worker);
-	
+
 	public boolean idWorkerExists(String id);
-	
+
 	public boolean phoneWorkerExists(String phone);
-	
+
 	public boolean emailWorkerExists(String email);
 
 

@@ -4,6 +4,8 @@ import java.util.Date;
 
 /**
  * Represents a booking entity containing details about the client, cruise, dates, and prices.
+ * 
+ * @author Iker
  */
 public class Book {
 

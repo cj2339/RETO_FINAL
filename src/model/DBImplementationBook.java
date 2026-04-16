@@ -14,6 +14,8 @@ import java.util.ResourceBundle;
 
 /**
  * Implementation of the BookDAO interface mapping interactions to a relational database.
+ * 
+ * @author Iker
  */
 public class DBImplementationBook implements BookDAO {
 
@@ -159,13 +161,13 @@ public class DBImplementationBook implements BookDAO {
 		String message = "";
 		boolean deleted = deleteBooking(oldBooking.getIdClient(), oldBooking.getCodCruise(), oldBooking.getStartDate());
 
-	    if (!deleted) {
-	        lastMessage = "Error deleting old booking";
-	    }else {
-		    createBooking(newBooking);
-	        message = lastMessage;
-	    }
-	    return message;
+		if (!deleted) {
+			lastMessage = "Error deleting old booking";
+		}else {
+			createBooking(newBooking);
+			message = lastMessage;
+		}
+		return message;
 	}
 
 }

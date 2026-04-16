@@ -2,6 +2,8 @@ package model;
 
 /**
  * Represents an administrator entity in the system handling login and credentials.
+ * 
+ * @author Iker
  */
 public class Administrator {
 	private String name;

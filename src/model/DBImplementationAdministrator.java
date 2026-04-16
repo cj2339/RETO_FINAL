@@ -8,6 +8,8 @@ import java.util.ResourceBundle;
 /**
  * Concrete implementation of AdministratorDAO connecting to a database.
  * Handles all Administrator-related persistence operations.
+ * 
+ * @author Iker
  */
 public class DBImplementationAdministrator implements AdministratorDAO {
 
@@ -254,7 +256,7 @@ public class DBImplementationAdministrator implements AdministratorDAO {
 		}
 		return ok;
 	}
-	
+
 	/**
 	 * This method deletes an administrator from the database based on the
 	 * administrator's name. It takes the administrator's name as a parameter,

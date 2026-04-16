@@ -2,6 +2,8 @@ package model;
 
 /**
  * Represents a Cruise entity detailing its characteristics and capacity.
+ * 
+ * @author Aritz
  */
 public class Cruise {
 
@@ -80,10 +82,10 @@ public class Cruise {
 	public void setCapacityMax(int capacityMax) {
 		this.capacityMax = capacityMax;
 	}
-	
+
 	@Override
 	public String toString() {
-	    return codCruise + " - " + nameCruise;
+		return codCruise + " - " + nameCruise;
 	}
 
 }
