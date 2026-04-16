@@ -117,29 +117,31 @@ public class FormAdminWindow extends JDialog implements ActionListener {
 	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
+        boolean valido = true;
 		if (e.getSource() == okButton) {
 			// Check that the fields are not empty
-			if (txtName.getText().trim().isEmpty() || txtPassword.getText().trim().isEmpty()) {
+			if (txtName.getText().trim().isEmpty() ||  new String(txtPassword.getPassword()).trim().isEmpty()) {
 				JOptionPane.showMessageDialog(this, "Please fill in all fields.");
-				return;
+				 valido = false;;
 			}
-
-			if (isInsert) {
-				Administrator admin = new Administrator(txtName.getText(), txtPassword.getText());
-				if (controller.insertAdministrator(admin)) {
-					JOptionPane.showMessageDialog(this, "Administrator has been inserted.");
-					this.dispose();
+			if(valido) {
+				if (isInsert) {
+					Administrator admin = new Administrator(txtName.getText(), new String(txtPassword.getPassword()));
+					if (controller.insertAdministrator(admin)) {
+						JOptionPane.showMessageDialog(this, "Administrator has been inserted.");
+						this.dispose();
+					} else {
+						JOptionPane.showMessageDialog(this, "Administrator already exists.");
+					}
 				} else {
-					JOptionPane.showMessageDialog(this, "Administrator already exists.");
-				}
-			} else {
-				Administrator admin = new Administrator(txtName.getText(), txtPassword.getText());
-				if (controller.updateAdministrator(admin)) {
-					JOptionPane.showMessageDialog(this, "Administrator has been updated.");
-					parent.refreshModel();
-					this.dispose();
-				} else {
-					JOptionPane.showMessageDialog(this, "Error updating administrator.");
+					Administrator admin = new Administrator(txtName.getText(), new String(txtPassword.getPassword()));
+					if (controller.updateAdministrator(admin)) {
+						JOptionPane.showMessageDialog(this, "Administrator has been updated.");
+						parent.refreshModel();
+						this.dispose();
+					} else {
+						JOptionPane.showMessageDialog(this, "Error updating administrator.");
+					}
 				}
 			}
 		}
