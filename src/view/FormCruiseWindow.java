@@ -42,6 +42,13 @@ public class FormCruiseWindow extends JDialog implements ActionListener {
 
 	public FormCruiseWindow(JDialog cruiseListWindow, LoginController controller, Cruise cruise, boolean isInsert) {
 		super(cruiseListWindow, true);
+		
+		if(isInsert) {
+			setTitle("Add cruise");
+		}else {
+			setTitle("Modify cruise");
+		}
+		
 		setBounds(100, 100, 529, 437);
 		getContentPane().setLayout(new BorderLayout());
 		panel.setBorder(new EmptyBorder(5, 5, 5, 5));
