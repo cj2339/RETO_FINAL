@@ -5,7 +5,6 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Toolkit;
-import java.util.Date;
 import java.util.List;
 
 import javax.swing.JDialog;
@@ -19,7 +18,6 @@ import javax.swing.table.TableModel;
 
 import controller.LoginController;
 import model.Cruise;
-import model.Language;
 import model.TypeWorker;
 import model.Worker;
 
@@ -64,7 +62,7 @@ public class ListWorkerWindow extends JDialog implements ActionListener {
 		setSize(663, 450);
 		setLocationRelativeTo(null);
 
-		JPanel contentPane = new JPanel() {
+		contentPane = new JPanel() {
 			@Override
 			protected void paintComponent(Graphics g) {
 				super.paintComponent(g);

@@ -7,7 +7,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import model.Cruise;
-import model.DBImplementationCruise;
 import model.DBImplementationWorker;
 import model.TypeWorker;
 import model.Worker;
