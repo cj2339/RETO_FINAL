@@ -29,6 +29,7 @@ public class DBImplementationCruise implements CruiseDAO {
 	final String SQLINSERT = "INSERT INTO cruise(name_cruise, type_cruise, num_rooms, capacity_max) VALUES(?,?,?,?)";
 	final String SQLSELECTWORKERBYCRUISE = "SELECT * FROM WORKER WHERE cod_cruise=?";
 	final String SQLSELECTBOOKBYCREUISE = "SELECT * FROM BOOK WHERE cod_cruise=?";
+	final String SQLNEXTCODE="SELECT MAX(cod_cruise)+1 FROM cruise";
 
 	public DBImplementationCruise() {
 		this.configFile = ResourceBundle.getBundle("configClass");
@@ -285,6 +286,26 @@ public class DBImplementationCruise implements CruiseDAO {
 			System.out.println("Error: " + e.getMessage());
 		}
 		return cruiseExistInBook;
+	}
+
+	@Override
+	public int getNextCruiseCode() {
+		int code = 0;
+		this.openConnection();
+		try {
+			statement = connection.prepareStatement(SQLNEXTCODE); 
+			ResultSet resultset = statement.executeQuery();
+
+			if (resultset.next()) {
+				code = resultset.getInt(1);
+			}
+			resultset.close();
+			statement.close();
+			connection.close();
+		} catch (SQLException e) {
+			System.out.println("Error calculating next cruise code: " + e.getMessage());
+		}
+		return code;
 	}
 
 }

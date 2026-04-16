@@ -65,4 +65,6 @@ public interface CruiseDAO {
 	 * @return
 	 */
 	public boolean checkCruiseInBook(String id);
+	
+	public int getNextCruiseCode();
 }

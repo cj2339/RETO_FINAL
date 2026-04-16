@@ -112,6 +112,10 @@ public class LoginController {
 	public boolean checkCruiseInBook(String id) {
 		return daoCruise.checkCruiseInBook(id);
 	}
+	
+	public int getNextCruiseCode() {
+		return daoCruise.getNextCruiseCode();
+	}
 
 	// Administrator CRUD Methods
 	/**
