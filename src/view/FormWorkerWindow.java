@@ -298,6 +298,7 @@ public class FormWorkerWindow extends JDialog implements ActionListener{
 	public void actionPerformed(ActionEvent e) {
 		String dateStr;
 		String dniRegexp = "^[0-9]{8}[A-Z]$";
+		String emailRegexp = "^[\\w.-]+@[\\w.-]+\\.[a-zA-Z]{2,6}$";
 	    String idInput = textFieldId.getText().toUpperCase();
 		if(e.getSource()==btnClear) {
 			textFieldId.setText(null);
@@ -318,8 +319,16 @@ public class FormWorkerWindow extends JDialog implements ActionListener{
 				JOptionPane.showMessageDialog(this, "Please fill the data in all fields");
 			}else if(textFieldPhone.getText().length() < 9) {
 				JOptionPane.showMessageDialog(this, "The phone number must have 9 digits");
-			} else if (!idInput.matches(dniRegexp)) {
+			}else if (!idInput.matches(dniRegexp)) {
 		        JOptionPane.showMessageDialog(this, "ID format invalid");
+			}else if (!textFieldEmail.getText().matches(emailRegexp)) {
+		        JOptionPane.showMessageDialog(this, "Email format invalid");
+			}else if(cont.idWorkerExists(textFieldId.getText())) {
+				JOptionPane.showMessageDialog(this, "ID alrready exists");
+			}else if(cont.phoneWorkerExists((textFieldPhone.getText()))) {
+				JOptionPane.showMessageDialog(this, "Phone number already exists");
+			}else if(cont.emailWorkerExists((textFieldEmail.getText()))) {
+				JOptionPane.showMessageDialog(this, "Email already exists");
 			}else {
 				Worker workerTemp=new Worker(
 						textFieldId.getText(),

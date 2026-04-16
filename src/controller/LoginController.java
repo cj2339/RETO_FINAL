@@ -294,6 +294,18 @@ public class LoginController {
 	public boolean insertWorker(Worker worker) {
 		return daoWorker.insertWorker(worker);
 	}
+	
+	public boolean idWorkerExists(String id) {
+		return daoWorker.idWorkerExists(id);
+	}
+	
+	public boolean phoneWorkerExists(String phone) {
+		return daoWorker.phoneWorkerExists(phone);
+	}
+	
+	public boolean emailWorkerExists(String email) {
+		return daoWorker.idWorkerExists(email);
+	}
 
 	/**
 	 * Gets the name of the administrator currently logged into the system.

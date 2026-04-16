@@ -28,6 +28,10 @@ public class DBImplementationWorker implements WorkerDAO {
 	final String SQLDELETEBYCODE = "DELETE FROM worker WHERE id_worker = ?";
 	final String SQLUPDATEBYCODE = "UPDATE worker SET service = ?, name_worker = ?, surname_worker = ?, hiring_date = ?, phone_number = ?, email = ?, age = ?, spanish_language = ?, english_language = ?, cod_cruise = ? WHERE id_worker = ?";
 	final String SQLINSERT = "INSERT INTO worker VALUES(?,?,?,?,?,?,?,?,?,?,?)";
+	final String SQLID = "SELECT * FROM worker WHERE id_worker=?";
+	final String SQLPHONE = "SELECT * FROM worker WHERE phone_worker=?";
+	final String SQLEMAIL = "SELECT * FROM worker WHERE email_worker=?";
+
 
 	public DBImplementationWorker() {
 		this.configFile = ResourceBundle.getBundle("configClass");
@@ -61,14 +65,8 @@ public class DBImplementationWorker implements WorkerDAO {
 			ResultSet resultset = stmt.executeQuery();
 
 			while (resultset.next()) {
-				TypeWorker typeWorker = TypeWorker.valueOf(resultset.getString("service").toUpperCase());// Al
-																											// conectarlo
-																											// con la
-																											// base de
-																											// datos
-																											// para que
-																											// salga en
-																											// mayusculas
+				TypeWorker typeWorker = TypeWorker.valueOf(resultset.getString("service").toUpperCase());
+				// Al conectarlo con la base de datos para que salga en mayusculas
 				TypeCruise typeCruise = TypeCruise.valueOf(resultset.getString("type_cruise").toUpperCase());
 				Cruise cruise = new Cruise(
 						resultset.getInt("cod_cruise"),
@@ -89,7 +87,7 @@ public class DBImplementationWorker implements WorkerDAO {
 						resultset.getBoolean("english_language"),
 						cruise);
 				workers.add(worker);// creates a new Worker object using the data retrieved from the database and
-									// adds it to the workers list
+				// adds it to the workers list
 			}
 			resultset.close();
 			stmt.close();
@@ -150,7 +148,7 @@ public class DBImplementationWorker implements WorkerDAO {
 			System.out.println("Error: " + e.getMessage());
 		}
 
-		return updated;
+		return updated; 
 	}
 
 	@Override
@@ -183,6 +181,72 @@ public class DBImplementationWorker implements WorkerDAO {
 			System.out.println("Error: " + e.getMessage());
 		}
 		return added;
+	}
+
+	@Override
+	public boolean idWorkerExists(String id) {
+		boolean exists=false;
+		this.openConnection();
+		try {
+			stmt = con.prepareStatement(SQLID);
+			stmt.setString(1, id);
+			ResultSet rs = stmt.executeQuery();
+			if (rs.next()) { 
+	            exists = true;
+	        }
+	        
+	        rs.close();
+			stmt.close();
+			con.close();
+		} catch (SQLException e) {
+			System.out.println("Error: " + e.getMessage());
+		}
+		
+		return exists;
+	}
+	
+	@Override
+	public boolean phoneWorkerExists(String phone) {
+		boolean exists=false;
+		this.openConnection();
+		try {
+			stmt = con.prepareStatement(SQLPHONE);
+			stmt.setString(1, phone);
+			ResultSet rs = stmt.executeQuery();
+			if (rs.next()) { 
+	            exists = true;
+	        }
+	        
+	        rs.close();
+			stmt.close();
+			con.close();
+		} catch (SQLException e) {
+			System.out.println("Error: " + e.getMessage());
+		}
+		
+		return exists;
+	}
+	
+	@Override
+	public boolean emailWorkerExists(String email) {
+		boolean exists=false;
+		this.openConnection();
+		try {
+			stmt = con.prepareStatement(SQLEMAIL);
+			stmt.setString(1, email);
+			ResultSet rs = stmt.executeQuery();
+			if (rs.next()) { 
+	            exists = true;
+	        }
+	        
+	        rs.close();
+			stmt.close();
+			con.close();
+		} catch (SQLException e) {
+			System.out.println("Error: " + e.getMessage());
+		}
+		
+		return exists;
 	}
 
 }

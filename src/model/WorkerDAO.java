@@ -37,5 +37,12 @@ public interface WorkerDAO {
 	 * @return
 	 */
 	public boolean insertWorker(Worker worker);
+	
+	public boolean idWorkerExists(String id);
+	
+	public boolean phoneWorkerExists(String phone);
+	
+	public boolean emailWorkerExists(String email);
+
 
 }
