@@ -18,11 +18,12 @@ public class XMLExporter {
 
 	public void exportToXML() {
 		try {
-			PrintWriter pw = new PrintWriter("dataExported.xml");
+			PrintWriter pw = new PrintWriter("data/dataExported.xml");
 
 			pw.println("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
 			pw.println("<cruiseManagement>");
-
+			pw.println("    xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"");
+			pw.println("    xsi:noNamespaceSchemaLocation=\"cruceros.xsd\">");
 			// CRUISES
 			pw.println("  <cruises>");
 			for (Cruise c : cont.getAllCruise()) {
