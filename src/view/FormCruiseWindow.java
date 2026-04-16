@@ -191,6 +191,7 @@ public class FormCruiseWindow extends JDialog implements ActionListener {
 			}
 		});
 
+		
 		if (this.cruise != null) {
 			txtCode.setText(String.valueOf(cruise.getCodCruise()));
 			cmbType.setSelectedItem(cruise.getTypeCruise());
