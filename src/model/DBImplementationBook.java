@@ -72,8 +72,8 @@ public class DBImplementationBook implements BookDAO {
 						rs.getInt("cod_cruise"),
 						rs.getString("originCity"),
 						rs.getString("destinationCity"),
-						rs.getDate("startDate"),
-						rs.getDate("endDate"),
+						rs.getTimestamp("startDate"),
+						rs.getTimestamp("endDate"),
 						rs.getDouble("basePrice"),
 						rs.getDouble("finalPrice"),
 						rs.getInt("room_number")
