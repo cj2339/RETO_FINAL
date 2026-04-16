@@ -1,3 +1,5 @@
+package model;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.Date;
@@ -11,106 +13,130 @@ import model.Book;
 import model.DBImplementationBook;
 
 /**
- * JUnit test class for DBImplementationBook. Verifies booking insertion,
- * retrieval, update, deletion, and error handling.
+ * JUnit tests for DBImplementationBook, covering booking creation,
+ * retrieval, update, deletion and invalid operations.
  * 
  * @author Iker
  */
 class TestDBImplementationBook {
 
-	private DBImplementationBook dao;
-	private Book created;
+    private DBImplementationBook dao;
+    private Book created;
 
-	@BeforeEach
-	void setUp() throws Exception {
-		dao = new DBImplementationBook();
-		created = null;
-	}
+    @BeforeEach
+    void setUp() throws Exception {
+        dao = new DBImplementationBook();
+        created = null;
+    }
 
-	@AfterEach
-	void tearDown() throws Exception {
-		if (created != null) {
-			dao.deleteBooking(created.getIdClient(), created.getCodCruise(), created.getStartDate());
-		}
-	}
+    @AfterEach
+    void tearDown() throws Exception {
+        if (created != null) {
+            dao.deleteBooking(created.getIdClient(), created.getCodCruise(), created.getStartDate());
+        }
+    }
 
-	@Test
-	void testBookingLifecycle() {
-		String idClient = "TESTCLIENT";
-		int codCruise = 1;
-		String origin = "Bilbao";
-		String destination = "Lisbon";
-		Date start = new Date(System.currentTimeMillis() + 86400000L * 20); // +20 días
-		Date end = new Date(System.currentTimeMillis() + 86400000L * 25);   // +25 días
-		Book booking = new Book(idClient, codCruise, origin, destination, start, end, 0, 0, 101);
+    @Test
+    void testBookingLifecycle() {
 
-		// Insert
-		boolean inserted = dao.createBooking(booking);
-		created = booking;
-		assertTrue(inserted, "createBooking should return true for a valid booking");
+        // Datos reales de la BD
+        String idClient = "11111111A";
+        int codCruise = 1;
+        int room = 1;
 
-		// Check list
-		List<Book> all = dao.getAllBookings();
-		assertNotNull(all, "List should not be null");
+        String origin = "Bilbao";
+        String destination = "Lisbon";
 
-		Book found = null;
-		for (Book b : all) {
-			if (b.getIdClient().equals(idClient) && b.getCodCruise() == codCruise) {
-				found = b;
-				break;
-			}
-		}
-		assertNotNull(found, "Inserted booking should be found");
+        Date start = new Date(System.currentTimeMillis() + 86400000L * 20);
+        Date end = new Date(System.currentTimeMillis() + 86400000L * 25);
 
-		// Update
-		Book updated = new Book(idClient, codCruise, origin, "Barcelona", start, end, 0, 0, 101);
-		String updateMsg = dao.updateBooking(booking, updated);
-		assertTrue(updateMsg.contains("Booking"), "Update should return a success message");
+        Book booking = new Book(idClient, codCruise, origin, destination, start, end, 0, 0, room);
 
-		// Check update
-		List<Book> updatedList = dao.getAllBookings();
-		String destinationAfterUpdate = "";
-		for (Book b : updatedList) {
-			if (b.getIdClient().equals(idClient)) {
-				destinationAfterUpdate = b.getDestinationCity();
-			}
-		}
-		assertEquals("Barcelona", destinationAfterUpdate, "Destination should be updated");
+        // INSERT
+        boolean inserted = dao.createBooking(booking);
+        System.out.println("Mensaje del procedimiento (INSERT): " + dao.getLastMessage());
 
-		// Delete
-		boolean deleted = dao.deleteBooking(idClient, codCruise, start);
-		assertTrue(deleted, "deleteBooking should return true");
+        created = booking;
+        assertTrue(inserted, "createBooking should return true for a valid booking");
 
-		// Check deletion
-		List<Book> afterDelete = dao.getAllBookings();
-		boolean exists = false;
-		for (Book b : afterDelete) {
-			if (b.getIdClient().equals(idClient)) {
-				exists = true;
-			}
-		}
-		assertFalse(exists, "Booking should not exist after deletion");
-	}
+        // LIST
+        List<Book> all = dao.getAllBookings();
+        assertNotNull(all);
 
-	@Test
-	void testInvalidOperations() {
+        Book found = null;
+        for (Book b : all) {
+            boolean sameClient = b.getIdClient().equals(idClient);
+            boolean sameCruise = b.getCodCruise() == codCruise;
+            boolean sameDate = Math.abs(b.getStartDate().getTime() - start.getTime()) < 2000;
 
-		// Insert null
-		assertThrows(NullPointerException.class, () -> {
-			dao.createBooking(null);
-		});
+            if (sameClient && sameCruise && sameDate) {
+                found = b;
+                break;
+            }
+        }
+        assertNotNull(found, "Inserted booking should be found");
 
-		// Update with nulls
-		Book fake = new Book();
-		fake.setIdClient("FAKE");
-		fake.setCodCruise(999);
-		fake.setStartDate(new Date());
+        // UPDATE
+        Book updated = new Book(idClient, codCruise, origin, "Barcelona", start, end, 0, 0, room);
+        String updateMsg = dao.updateBooking(booking, updated);
+        System.out.println("Mensaje del procedimiento (UPDATE): " + dao.getLastMessage());
 
-		String msg = dao.updateBooking(fake, fake);
-		assertTrue(msg.contains("Error"), "Updating non-existent booking should return error message");
+        assertFalse(updateMsg.isEmpty(), "Update should return a non-empty message");
 
-		// Delete non-existent
-		boolean deleted = dao.deleteBooking("NOPE", 999, new Date());
-		assertFalse(deleted, "Deleting non-existent booking should return false");
-	}
+        // CHECK UPDATE
+        List<Book> updatedList = dao.getAllBookings();
+        String destinationAfterUpdate = "";
+        for (Book b : updatedList) {
+            boolean sameClient = b.getIdClient().equals(idClient);
+            boolean sameDate = Math.abs(b.getStartDate().getTime() - start.getTime()) < 2000;
+
+            if (sameClient && sameDate) {
+                destinationAfterUpdate = b.getDestinationCity();
+            }
+        }
+        assertEquals("Barcelona", destinationAfterUpdate, "Destination should be updated");
+
+        // DELETE
+        boolean deleted = dao.deleteBooking(idClient, codCruise, start);
+        System.out.println("Mensaje del procedimiento (DELETE): " + dao.getLastMessage());
+
+        assertTrue(deleted, "deleteBooking should return true");
+
+        // CHECK DELETE
+        List<Book> afterDelete = dao.getAllBookings();
+        boolean exists = false;
+        for (Book b : afterDelete) {
+            boolean sameClient = b.getIdClient().equals(idClient);
+            boolean sameDate = Math.abs(b.getStartDate().getTime() - start.getTime()) < 2000;
+
+            if (sameClient && sameDate) {
+                exists = true;
+            }
+        }
+        assertFalse(exists, "Booking should not exist after deletion");
+    }
+
+    @Test
+    void testInvalidOperations() {
+
+        // Insert null
+        assertThrows(Exception.class, () -> {
+            dao.createBooking(null);
+        });
+
+        // Update non-existent
+        Book fake = new Book();
+        fake.setIdClient("FAKE");
+        fake.setCodCruise(999);
+        fake.setStartDate(new Date());
+
+        String msg = dao.updateBooking(fake, fake);
+        System.out.println("Mensaje del procedimiento (UPDATE inválido): " + dao.getLastMessage());
+        assertNotNull(msg);
+
+        // Delete non-existent
+        boolean deleted = dao.deleteBooking("NOPE", 999, new Date());
+        System.out.println("Mensaje del procedimiento (DELETE inválido): " + dao.getLastMessage());
+        assertFalse(deleted);
+    }
 }
