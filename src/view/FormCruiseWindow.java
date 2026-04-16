@@ -25,7 +25,7 @@ import model.Cruise;
 import model.TypeCruise;
 
 /**
- *  * Dialog to add or modify a cruise. Handles form input, validation,
+ * Dialog to add or modify a cruise. Handles form input, validation,
  * and delegates insert/update operations to the LoginController.
  * 
  * @author Aritz
