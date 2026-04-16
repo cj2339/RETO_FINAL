@@ -184,3 +184,49 @@ function mostrarDetalle(code) {
 function volverTabla() {
     aplicarXSLTabla();
 }
+
+
+// VALIDACION DE XSD
+async function validarYCargar() {
+    const contenedor = document.getElementById("contenedor-tabla");
+    
+    try {
+        const res = await fetch('data/dataExported.xml');
+        const xmlText = await res.text();
+        const xmlDoc = new DOMParser().parseFromString(xmlText, "text/xml");
+
+        const trabajadores = xmlDoc.getElementsByTagName("worker");
+        
+        let errorEncontrado = false; 
+        let mensaje = "";
+
+        // REGLA 1: VALIDAR EDAD (Mín 18, Máx 70 según tu XSD)
+        for (let i = 0; i < trabajadores.length && errorEncontrado == false; i++) {
+            let edad = parseInt(trabajadores[i].getElementsByTagName("age")[0].textContent);
+            
+            if (edad < 18 || edad > 70) {
+                errorEncontrado = true;
+                mensaje = "ERROR XSD (Edad): El trabajador " + 
+                          trabajadores[i].getElementsByTagName("name")[0].textContent + 
+                          " tiene una edad no permitida: " + edad;
+            }
+        }
+
+        // REGLA 2: VALIDAR SERVICIO (Si quieres añadir más reglas del XSD)
+        // Podrías mirar si el servicio es COOK, GUIDE, etc.
+
+        // RESULTADO FINAL
+        if (errorEncontrado == true) {
+            // SI NO VALIDA: Alerta y aviso en pantalla. NO SE EJECUTA LA TABLA.
+            alert("FALLO DE VALIDACIÓN XSD:\n" + mensaje);
+            contenedor.innerHTML = `<h2 style="color:red; background:yellow; border:2px solid red; padding:10px;">
+                                    ${mensaje}</h2>`;
+        } else {
+            // SI VALIDA: Pintamos la tabla normalmente
+            renderizarTabla(xmlDoc);
+        }
+
+    } catch (err) {
+        console.error("Error al cargar:", err);
+    }
+}

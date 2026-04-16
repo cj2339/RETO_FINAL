@@ -1,35 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
 
-  <xs:simpleType name="tipoCruceroEnum">
-    <xs:restriction base="xs:string">
-      <xs:enumeration value="LUXURY"/>
-      <xs:enumeration value="PREMIUM"/>
-      <xs:enumeration value="FAMILY"/>
-      <xs:enumeration value="EXPEDITION"/>
-    </xs:restriction>
-  </xs:simpleType>
-
-  <xs:simpleType name="tipoServicioEnum">
-    <xs:restriction base="xs:string">
-      <xs:enumeration value="COOK"/>
-      <xs:enumeration value="GUIDE"/>
-      <xs:enumeration value="RECEPTIONIST"/>
-      <xs:enumeration value="CAPTAIN"/>
-    </xs:restriction>
-  </xs:simpleType>
-
-  <xs:simpleType name="tipoEdad">
-    <xs:restriction base="xs:integer">
-      <xs:minInclusive value="18"/>
-      <xs:maxInclusive value="70"/>
-    </xs:restriction>
-  </xs:simpleType>
-
   <xs:element name="cruiseManagement">
     <xs:complexType>
       <xs:sequence>
-        
         <xs:element name="cruises">
           <xs:complexType>
             <xs:sequence>
@@ -41,8 +15,8 @@
                     <xs:element name="capacity" type="xs:integer"/>
                     <xs:element name="photo" type="xs:string"/>
                   </xs:sequence>
-                  <xs:attribute name="code" type="xs:integer" use="required"/>
-                  <xs:attribute name="type" type="tipoCruceroEnum"/>
+                  <xs:attribute name="code" type="xs:integer"/>
+                  <xs:attribute name="type" type="xs:string"/>
                   <xs:attribute name="status" type="xs:string"/>
                 </xs:complexType>
               </xs:element>
@@ -58,8 +32,15 @@
                   <xs:sequence>
                     <xs:element name="name" type="xs:string"/>
                     <xs:element name="surname" type="xs:string"/>
-                    <xs:element name="service" type="tipoServicioEnum"/>
-                    <xs:element name="age" type="tipoEdad"/>
+                    <xs:element name="service" type="xs:string"/>
+                    <xs:element name="age">
+                      <xs:simpleType>
+                        <xs:restriction base="xs:integer">
+                          <xs:minInclusive value="18"/>
+                          <xs:maxInclusive value="70"/>
+                        </xs:restriction>
+                      </xs:simpleType>
+                    </xs:element>
                     <xs:element name="languages">
                       <xs:complexType>
                         <xs:sequence>
@@ -78,7 +59,7 @@
                     </xs:element>
                     <xs:element name="cruiseAssigned" type="xs:integer"/>
                   </xs:sequence>
-                  <xs:attribute name="id" type="xs:string" use="required"/>
+                  <xs:attribute name="id" type="xs:string"/>
                   <xs:attribute name="contract" type="xs:string"/>
                 </xs:complexType>
               </xs:element>
@@ -98,7 +79,7 @@
                     <xs:element name="email" type="xs:string"/>
                     <xs:element name="phone" type="xs:string"/>
                   </xs:sequence>
-                  <xs:attribute name="id" type="xs:string" use="required"/>
+                  <xs:attribute name="id" type="xs:string"/>
                 </xs:complexType>
               </xs:element>
             </xs:sequence>
