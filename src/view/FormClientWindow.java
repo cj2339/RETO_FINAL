@@ -17,7 +17,7 @@ import controller.LoginController;
 import javax.swing.JTextField;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-
+ 
 import model.Client;
 import java.awt.Font;
 import javax.swing.JSpinner;
