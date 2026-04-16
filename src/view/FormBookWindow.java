@@ -63,6 +63,7 @@ public class FormBookWindow extends JDialog implements ActionListener {
 
 	public FormBookWindow(JDialog parentWindow, LoginController controller, Book booking, boolean isInsert) {
 		super(parentWindow, true);
+		setTitle("Modify Book ");
 		setBounds(100, 100, 500, 380);
 		getContentPane().setLayout(new BorderLayout());
 		panel.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -289,7 +290,6 @@ public class FormBookWindow extends JDialog implements ActionListener {
 			}
 
 			JOptionPane.showMessageDialog(this, msg, title, type);
-
 			if (success) {
 				parent.refreshModel();
 				this.dispose();
