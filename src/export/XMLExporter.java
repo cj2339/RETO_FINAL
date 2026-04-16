@@ -8,6 +8,14 @@ import model.Client;
 
 import java.io.PrintWriter;
 
+/**
+ * Utility class responsible for exporting all cruise management data
+ * (cruises, workers, clients and bookings) into a structured XML file.
+ * Retrieves the information through the LoginController and generates
+ * the final XML document following the project's schema.
+ *
+ * @author Iker
+ */
 public class XMLExporter {
 
 	private LoginController cont;
