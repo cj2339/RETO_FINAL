@@ -24,6 +24,12 @@ import controller.LoginController;
 import model.Cruise;
 import model.TypeCruise;
 
+/**
+ *  * Dialog to add or modify a cruise. Handles form input, validation,
+ * and delegates insert/update operations to the LoginController.
+ * 
+ * @author Aritz
+ */
 public class FormCruiseWindow extends JDialog implements ActionListener {
 
 	private static final long serialVersionUID = 1L;
@@ -159,7 +165,7 @@ public class FormCruiseWindow extends JDialog implements ActionListener {
 		panel.add(lblFill);
 		okButton.addActionListener(this);
 
-		
+
 		cmbType.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -182,8 +188,8 @@ public class FormCruiseWindow extends JDialog implements ActionListener {
 					}
 					txtMaxCapacity.setText(String.valueOf(maxCapacity));
 					txtMaxCapacity.setEditable(false);
-					
-				
+
+
 					int numRooms = maxCapacity / 5;
 					txtNumRooms.setText(String.valueOf(numRooms));
 					txtNumRooms.setEditable(false);
@@ -191,7 +197,7 @@ public class FormCruiseWindow extends JDialog implements ActionListener {
 			}
 		});
 
-		
+
 		if (this.cruise != null) {
 			txtCode.setText(String.valueOf(cruise.getCodCruise()));
 			cmbType.setSelectedItem(cruise.getTypeCruise());

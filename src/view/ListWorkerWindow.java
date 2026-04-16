@@ -36,6 +36,8 @@ import java.awt.event.ActionEvent;
  * Modal dialog that displays the list of workers in a table and provides
  * operations to add, modify and delete workers. It uses the provided
  * LoginController to perform CRUD operations and refresh the table model.
+ * 
+ * @author Etna
  */
 public class ListWorkerWindow extends JDialog implements ActionListener {
 
@@ -72,8 +74,8 @@ public class ListWorkerWindow extends JDialog implements ActionListener {
 		contentPane.setBorder(new EmptyBorder(10, 10, 10, 10));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
-		
-		
+
+
 		// TITTLE
 		JLabel title = new JLabel("Worker Management");
 		title.setHorizontalAlignment(SwingConstants.CENTER);

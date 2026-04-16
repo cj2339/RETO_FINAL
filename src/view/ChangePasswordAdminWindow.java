@@ -27,6 +27,8 @@ import model.Administrator;
  * Dialog that allows changing an administrator password. Validates the old
  * password, enforces attempt limits and updates the password via the
  * LoginController.
+ * 
+ * @author Iker
  */
 public class ChangePasswordAdminWindow extends JDialog implements ActionListener {
 

@@ -20,7 +20,7 @@ import controller.LoginController;
 import javax.swing.JTextField;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
- 
+
 import model.Client;
 import java.awt.Font;
 import javax.swing.JSpinner;
@@ -29,6 +29,8 @@ import javax.swing.SpinnerNumberModel;
 /**
  * Dialog that displays a form to add or modify a Client. Validates numeric
  * fields and delegates insert/update actions to the LoginController.
+ * 
+ * @author Santiago
  */
 public class FormClientWindow extends JDialog implements ActionListener {
 
@@ -230,21 +232,21 @@ public class FormClientWindow extends JDialog implements ActionListener {
 						);
 				if (isInsert) {
 					if (controller.insertClient(newClient)) {
-		                JOptionPane.showMessageDialog(this, "Client added successfully.");
-		                parent.refreshModel();
-		                this.dispose();
-		            } else {
-		                JOptionPane.showMessageDialog(this, "Error adding client.");
-		            }
-		        } else {
-		            if (controller.updateClientByCode(newClient)) {
-		                JOptionPane.showMessageDialog(this, "Client modified successfully.");
-		                parent.refreshModel();
-		                this.dispose();
-		            } else {
-		                JOptionPane.showMessageDialog(this, "Error modifying client.");
-		            }
-		        }
+						JOptionPane.showMessageDialog(this, "Client added successfully.");
+						parent.refreshModel();
+						this.dispose();
+					} else {
+						JOptionPane.showMessageDialog(this, "Error adding client.");
+					}
+				} else {
+					if (controller.updateClientByCode(newClient)) {
+						JOptionPane.showMessageDialog(this, "Client modified successfully.");
+						parent.refreshModel();
+						this.dispose();
+					} else {
+						JOptionPane.showMessageDialog(this, "Error modifying client.");
+					}
+				}
 			}
 
 
@@ -257,5 +259,5 @@ public class FormClientWindow extends JDialog implements ActionListener {
 			txtEmail.setText(null);
 		}
 	}
-	
+
 }

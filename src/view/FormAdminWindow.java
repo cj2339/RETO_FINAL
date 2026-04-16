@@ -26,6 +26,8 @@ import model.Administrator;
  * Dialog to add or modify an Administrator. Delegates insert/update actions to
  * the provided LoginController and refreshes the administrators list on the
  * parent dialog when needed.
+ * 
+ * @author Iker
  */
 public class FormAdminWindow extends JDialog implements ActionListener {
 
@@ -117,12 +119,12 @@ public class FormAdminWindow extends JDialog implements ActionListener {
 	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
-        boolean valido = true;
+		boolean valido = true;
 		if (e.getSource() == okButton) {
 			// Check that the fields are not empty
 			if (txtName.getText().trim().isEmpty() ||  new String(txtPassword.getPassword()).trim().isEmpty()) {
 				JOptionPane.showMessageDialog(this, "Please fill in all fields.");
-				 valido = false;;
+				valido = false;;
 			}
 			if(valido) {
 				if (isInsert) {

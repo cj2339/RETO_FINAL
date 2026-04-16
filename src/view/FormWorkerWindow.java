@@ -40,6 +40,8 @@ import javax.swing.SpinnerNumberModel;
  * Modal dialog that shows a form to add or modify a Worker. The form collects
  * personal data, hiring date, language flags and associated cruise. Uses
  * LoginController to persist or update the worker record.
+ * 
+ * @author Etna
  */
 public class FormWorkerWindow extends JDialog implements ActionListener{
 
@@ -67,7 +69,7 @@ public class FormWorkerWindow extends JDialog implements ActionListener{
 	private JSpinner spinnerAge;
 	private JCheckBox chckbxEnglish;
 	private JComboBox comboBoxCruiseCode;
-	
+
 	private List<Cruise> cruiseCodes;
 
 	/**
@@ -98,7 +100,7 @@ public class FormWorkerWindow extends JDialog implements ActionListener{
 		lblId.setFont(new Font("SansSerif", Font.PLAIN, 20));
 		lblId.setBounds(57, 93, 126, 25);
 		contentPanel.add(lblId);
-		
+
 		JLabel lblName = new JLabel("Name:");
 		lblName.setFont(new Font("SansSerif", Font.PLAIN, 20));
 		lblName.setBounds(57, 210, 126, 25);
@@ -266,10 +268,10 @@ public class FormWorkerWindow extends JDialog implements ActionListener{
 			setTitle("Add worker");
 			calendarHiringDate.setDate(new java.util.Date());
 		}
-		
-		
+
+
 	}
-	
+
 	/**
 	 * Selects the corresponding cruise code in the combo box based on the worker's cruise.
 	 */
@@ -279,12 +281,12 @@ public class FormWorkerWindow extends JDialog implements ActionListener{
 		boolean found = false;
 		//getItemCount cuenta la cantidad de elementos de un combo
 		while (i < comboBoxCruiseCode.getItemCount() && !found) {
-		    Cruise c = (Cruise) comboBoxCruiseCode.getItemAt(i);
-		    if (c.getCodCruise()==id) {
-		        comboBoxCruiseCode.setSelectedIndex(i);
-		        found = true;
-		    }
-		    i++;
+			Cruise c = (Cruise) comboBoxCruiseCode.getItemAt(i);
+			if (c.getCodCruise()==id) {
+				comboBoxCruiseCode.setSelectedIndex(i);
+				found = true;
+			}
+			i++;
 		}
 	}
 
@@ -299,7 +301,7 @@ public class FormWorkerWindow extends JDialog implements ActionListener{
 		String dateStr;
 		String dniRegexp = "^[0-9]{8}[A-Z]$";
 		String emailRegexp = "^[\\w.-]+@[\\w.-]+\\.[a-zA-Z]{2,6}$";
-	    String idInput = textFieldId.getText().toUpperCase();
+		String idInput = textFieldId.getText().toUpperCase();
 		if(e.getSource()==btnClear) {
 			textFieldId.setText(null);
 			comboBoxService.setSelectedIndex(0);
@@ -320,9 +322,9 @@ public class FormWorkerWindow extends JDialog implements ActionListener{
 			}else if(textFieldPhone.getText().length() < 9) {
 				JOptionPane.showMessageDialog(this, "The phone number must have 9 digits");
 			}else if (!idInput.matches(dniRegexp)) {
-		        JOptionPane.showMessageDialog(this, "ID format invalid");
+				JOptionPane.showMessageDialog(this, "ID format invalid");
 			}else if (!textFieldEmail.getText().matches(emailRegexp)) {
-		        JOptionPane.showMessageDialog(this, "Email format invalid");
+				JOptionPane.showMessageDialog(this, "Email format invalid");
 			}else if(cont.idWorkerExists(textFieldId.getText())) {
 				JOptionPane.showMessageDialog(this, "ID alrready exists");
 			}else if(cont.phoneWorkerExists((textFieldPhone.getText()))) {

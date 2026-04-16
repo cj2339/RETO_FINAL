@@ -31,6 +31,8 @@ import model.Client;
  * Modal dialog that displays the list of clients and allows adding, modifying
  * and deleting clients. Interacts with the LoginController to perform
  * persistence operations and prevents deletion when the client has bookings.
+ * 
+ * @author Santiago
  */
 public class ListClientWindow extends JDialog implements ActionListener {
 

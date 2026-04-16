@@ -31,6 +31,8 @@ import model.Cruise;
 /**
  * Dialog that shows a form to create or modify a booking. Validates required
  * fields and date order, then delegates creation/update to the LoginController.
+ * 
+ * @author Iker
  */
 public class FormBookWindow extends JDialog implements ActionListener {
 

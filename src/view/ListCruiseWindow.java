@@ -19,6 +19,8 @@ import model.TypeCruise;
  * modify and delete cruises. Communicates with LoginController for CRUD
  * operations and prevents deletion when a cruise is referenced by workers or
  * bookings.
+ * 
+ * @author Aritz
  */
 public class ListCruiseWindow extends JDialog implements ActionListener {
 
@@ -54,8 +56,8 @@ public class ListCruiseWindow extends JDialog implements ActionListener {
 		contentPane.setBorder(new EmptyBorder(10, 10, 10, 10));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
-		
-		
+
+
 		// TITTLE
 		JLabel title = new JLabel("Cruise Management");
 		title.setHorizontalAlignment(SwingConstants.CENTER);

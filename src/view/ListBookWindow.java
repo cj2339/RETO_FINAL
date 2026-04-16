@@ -33,6 +33,8 @@ import java.awt.event.ActionEvent;
  * Modal dialog that lists bookings and provides operations to create, modify
  * and delete bookings. Uses the LoginController to perform persistence
  * operations and refresh the displayed booking list.
+ * 
+ * @author Iker
  */
 public class ListBookWindow extends JDialog implements ActionListener {
 

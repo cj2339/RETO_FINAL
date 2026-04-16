@@ -1,6 +1,5 @@
 package view;
 
-import java.awt.EventQueue;
 import javax.swing.*;
 
 import controller.LoginController;
@@ -16,6 +15,11 @@ import java.awt.Image;
  * Initial application window that displays a welcome screen.
  * When the user clicks the window it closes and opens the login dialog.
  * This class extends JFrame and implements MouseListener to detect clicks.
+ * 
+ * @author Santiago
+ * @author Iker
+ * @author Etna
+ * @author Aritz
  */
 public class StartWindow extends JFrame implements MouseListener {
 
@@ -25,7 +29,7 @@ public class StartWindow extends JFrame implements MouseListener {
 	private JLabel lblName;
 	private Image BackgroundImage = new ImageIcon("images/background1.png").getImage();
 	private JTextField lblText;
-	
+
 	/**
 	 * Launches the startup window setting up graphical dependencies.
 	 *
@@ -33,45 +37,45 @@ public class StartWindow extends JFrame implements MouseListener {
 	 */
 	public StartWindow(LoginController loginController) {
 		this.cont=loginController; 
-		
+
 		setIconImage(Toolkit.getDefaultToolkit().getImage("images/icon.png"));
-	    setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-	    setBounds(100, 100, 779, 550);
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setBounds(100, 100, 779, 550);
 
-	    //Bloquear que la ventana pueda redimensionarse o maximizarse
-	    setResizable(false);
+		//Prevent the window from being resized or maximised
+		setResizable(false);
 
-	    contentPane = new JPanel() {
-	        @Override
-	        protected void paintComponent(Graphics g) {
-	            super.paintComponent(g);
-	            g.drawImage(BackgroundImage, 0, 0, getWidth(), getHeight(), this);
-	        }
-	    };
-	    
-	    contentPane.addMouseListener(this);
-	    
-	    setContentPane(contentPane);
-	    contentPane.setLayout(null);
- 
-	    lblName = new JLabel();
-	    lblName.setBounds(148, 40, 250, 20);
-	    lblName.setFont(new Font("Tahoma", Font.BOLD, 10));
-	    lblName.setBackground(new Color(255, 255, 255));
-	    contentPane.add(lblName);
-	    
-	    lblText = new JTextField();
-	    lblText.setEditable(false);
-	    lblText.setFocusable(false);
-	    lblText.setBackground(new Color(251, 251, 251));
-	    lblText.setBounds(244, 182, 207, 34);
-	    lblText.setFont(new Font("Mistral", Font.PLAIN, 25));
-	    lblText.setForeground(new Color(0, 0, 0));
-	    lblText.setHorizontalAlignment(SwingConstants.CENTER);
-	    lblText.setText("WELCOME ABOARD!");
-	    contentPane.add(lblText);
-	    lblText.setColumns(10);
-	    lblText.setBorder(null);
+		contentPane = new JPanel() {
+			@Override
+			protected void paintComponent(Graphics g) {
+				super.paintComponent(g);
+				g.drawImage(BackgroundImage, 0, 0, getWidth(), getHeight(), this);
+			}
+		};
+
+		contentPane.addMouseListener(this);
+
+		setContentPane(contentPane);
+		contentPane.setLayout(null);
+
+		lblName = new JLabel();
+		lblName.setBounds(148, 40, 250, 20);
+		lblName.setFont(new Font("Tahoma", Font.BOLD, 10));
+		lblName.setBackground(new Color(255, 255, 255));
+		contentPane.add(lblName);
+
+		lblText = new JTextField();
+		lblText.setEditable(false);
+		lblText.setFocusable(false);
+		lblText.setBackground(new Color(251, 251, 251));
+		lblText.setBounds(244, 182, 207, 34);
+		lblText.setFont(new Font("Mistral", Font.PLAIN, 25));
+		lblText.setForeground(new Color(0, 0, 0));
+		lblText.setHorizontalAlignment(SwingConstants.CENTER);
+		lblText.setText("WELCOME ABOARD!");
+		contentPane.add(lblText);
+		lblText.setColumns(10);
+		lblText.setBorder(null);
 	}
 
 	/**

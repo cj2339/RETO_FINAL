@@ -1,14 +1,12 @@
 package view;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -30,6 +28,11 @@ import javax.swing.SwingConstants;
  * Login dialog that prompts for username and password and validates credentials
  * using the provided LoginController. Limits the number of failed attempts and
  * opens the main window upon successful authentication.
+ * 
+ * @author Santiago
+ * @author Iker
+ * @author Etna
+ * @author Aritz
  */
 public class LoginWindow extends JDialog implements ActionListener {
 
@@ -45,7 +48,6 @@ public class LoginWindow extends JDialog implements ActionListener {
 	private JLabel lblPassword;
 	private JButton btnLogin;
 	private int atempts = 3;
-	private JTextField textField_1;
 
 	/**
 	 * Constructs the login graphical dialog.
