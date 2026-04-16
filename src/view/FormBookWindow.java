@@ -290,7 +290,6 @@ public class FormBookWindow extends JDialog implements ActionListener {
 			}
 
 			JOptionPane.showMessageDialog(this, msg, title, type);
-
 			if (success) {
 				parent.refreshModel();
 				this.dispose();
