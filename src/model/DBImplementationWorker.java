@@ -197,7 +197,7 @@ public class DBImplementationWorker implements WorkerDAO {
 	        
 	        rs.close();
 			stmt.close();
-			con.close();
+			con.close(); 
 		} catch (SQLException e) {
 			System.out.println("Error: " + e.getMessage());
 		}
