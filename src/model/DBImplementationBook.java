@@ -155,12 +155,17 @@ public class DBImplementationBook implements BookDAO {
 	 * @return true if the operation succeeds, false otherwise
 	 */
 	@Override
-	public boolean updateBooking(Book oldBooking, Book newBooking) {
-	    boolean deleted = deleteBooking(oldBooking.getIdClient(),oldBooking.getCodCruise(),oldBooking.getStartDate());
-	    boolean updated = false;
-	    if (deleted) {
-	        updated = createBooking(newBooking);
+	public String updateBooking(Book oldBooking, Book newBooking) {
+		String message = "";
+		boolean deleted = deleteBooking(oldBooking.getIdClient(), oldBooking.getCodCruise(), oldBooking.getStartDate());
+
+	    if (!deleted) {
+	        lastMessage = "Error deleting old booking";
+	    }else {
+		    createBooking(newBooking);
+	        message = lastMessage;
 	    }
-	    return updated;
+	    return message;
 	}
+
 }

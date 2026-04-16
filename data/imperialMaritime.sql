@@ -23,25 +23,26 @@ CREATE TABLE cruise(
 
 INSERT INTO cruise(name_cruise, type_cruise, num_rooms, capacity_max) VALUES 
 ('North Sea', 'luxury', 200, 1000),
-('Tropical Adventure', 'family', 150, 800),
-('Antarctic Ice', 'expedition', 50, 150),
-('Mediterranean Diamond', 'luxury', 300, 1000),
-('Coastal Breeze', 'family', 100, 800),
-('Ocean Spirit', 'premium', 120, 500),
-('Blue Horizon', 'luxury', 250, 1000),
-('Sunset Voyager', 'family', 180, 800),
-('Polar Explorer', 'expedition', 60, 150),
-('Emerald Wave', 'premium', 140, 500),
-('Golden Pearl', 'luxury', 280, 1000),
+('Tropical Adventure', 'family', 160, 800),
+('Antarctic Ice', 'expedition', 30, 150),
+('Mediterranean Diamond', 'luxury', 200, 1000),
+('Coastal Breeze', 'family', 160, 800),
+('Ocean Spirit', 'premium', 100, 500),
+('Blue Horizon', 'luxury', 200, 1000),
+('Sunset Voyager', 'family', 160, 800),
+('Polar Explorer', 'expedition', 30, 150),
+('Emerald Wave', 'premium', 100, 500),
+('Golden Pearl', 'luxury', 200, 1000),
 ('Caribbean Star', 'family', 160, 800),
-('Northern Lights', 'expedition', 55, 150),
-('Pacific Dream', 'luxury', 300, 1000),
-('Baltic Breeze', 'premium', 130, 500),
-('Royal Seagull', 'family', 170, 800),
-('Arctic Wind', 'expedition', 45, 150),
-('Mediterranean Sun', 'luxury', 260, 1000),
-('Coral Princess', 'family', 155, 800),
-('Stormbreaker', 'expedition', 50, 150);
+('Northern Lights', 'expedition', 30, 150),
+('Pacific Dream', 'luxury', 200, 1000),
+('Baltic Breeze', 'premium', 100, 500),
+('Royal Seagull', 'family', 160, 800),
+('Arctic Wind', 'expedition', 30, 150),
+('Mediterranean Sun', 'luxury', 200, 1000),
+('Coral Princess', 'family', 160, 800),
+('Stormbreaker', 'expedition', 30, 150);
+
 
 
 CREATE TABLE worker(

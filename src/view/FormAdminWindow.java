@@ -8,6 +8,7 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
+import javax.swing.JPasswordField;
 import javax.swing.border.EmptyBorder;
 
 import controller.LoginController;
@@ -28,7 +29,7 @@ public class FormAdminWindow extends JDialog implements ActionListener {
 	private static final long serialVersionUID = 1L;
 	private final JPanel panel = new JPanel();
 	private JTextField txtName;
-	private JTextField txtPassword;
+	private JPasswordField txtPassword;
 	private JButton okButton;
 	private JButton cancelButton;
 	private boolean isInsert;
@@ -64,7 +65,7 @@ public class FormAdminWindow extends JDialog implements ActionListener {
 		panel.add(txtName);
 		txtName.setColumns(10);
 
-		txtPassword = new JTextField();
+		txtPassword = new JPasswordField();
 		txtPassword.setColumns(10);
 		txtPassword.setBounds(266, 112, 116, 22);
 		panel.add(txtPassword);
@@ -81,17 +82,17 @@ public class FormAdminWindow extends JDialog implements ActionListener {
 			txtName.setText(administrator.getName());
 			txtPassword.setText(administrator.getPassword());
 		}
-		
+
 		JPanel buttonPane = new JPanel();
 		buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
 		getContentPane().add(buttonPane, BorderLayout.SOUTH);
-		
+
 		okButton = new JButton("OK");
 		okButton.setActionCommand("OK");
 		buttonPane.add(okButton);
 		getRootPane().setDefaultButton(okButton);
 		okButton.addActionListener(this);
-		
+
 		cancelButton = new JButton("Cancel");
 		cancelButton.setActionCommand("Cancel");
 		buttonPane.add(cancelButton);
