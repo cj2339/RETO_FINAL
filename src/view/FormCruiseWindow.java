@@ -202,7 +202,7 @@ public class FormCruiseWindow extends JDialog implements ActionListener {
 		} else {
 			txtCode.setText(controller.getNextCruiseCode());
 			cmbType.setSelectedIndex(0);
-		}
+		} 
 	}
 
 	@Override
