@@ -80,8 +80,8 @@ public class FormWorkerWindow extends JDialog implements ActionListener{
 		contentPanel.setLayout(null);
 
 		JLabel lblNewLabel = new JLabel("Fill the worker data:");
-		lblNewLabel.setFont(new Font("SansSerif", Font.BOLD, 20));
-		lblNewLabel.setBounds(33, 36, 228, 25);
+		lblNewLabel.setFont(new Font("SansSerif", Font.BOLD, 30));
+		lblNewLabel.setBounds(57, 37, 320, 25);
 		contentPanel.add(lblNewLabel);
 
 		JLabel lblId = new JLabel("ID:");
@@ -106,7 +106,7 @@ public class FormWorkerWindow extends JDialog implements ActionListener{
 
 		textFieldId = new JTextField();
 		textFieldId.setFont(new Font("SansSerif", Font.PLAIN, 19));
-		textFieldId.setBounds(318, 93, 175, 24);
+		textFieldId.setBounds(292, 93, 201, 24);
 		contentPanel.add(textFieldId);
 		textFieldId.setColumns(10);
 		textFieldId.addKeyListener(new KeyAdapter() {
@@ -122,19 +122,19 @@ public class FormWorkerWindow extends JDialog implements ActionListener{
 		comboBoxService = new JComboBox();
 		comboBoxService.setFont(new Font("SansSerif", Font.PLAIN, 19));
 		comboBoxService.setModel(new DefaultComboBoxModel(TypeWorker.values()));
-		comboBoxService.setBounds(318, 149, 175, 25);
+		comboBoxService.setBounds(292, 149, 201, 25);
 		contentPanel.add(comboBoxService);
 
 		textFieldName = new JTextField();
 		textFieldName.setFont(new Font("SansSerif", Font.PLAIN, 19));
 		textFieldName.setColumns(10);
-		textFieldName.setBounds(318, 210, 175, 24);
+		textFieldName.setBounds(292, 210, 201, 24);
 		contentPanel.add(textFieldName);
 
 		textFieldSurname = new JTextField();
 		textFieldSurname.setFont(new Font("SansSerif", Font.PLAIN, 19));
 		textFieldSurname.setColumns(10);
-		textFieldSurname.setBounds(318, 268, 175, 24);
+		textFieldSurname.setBounds(292, 268, 201, 24);
 		contentPanel.add(textFieldSurname);
 
 		JLabel lblCruiseCode = new JLabel("Cruise code:");
@@ -160,7 +160,7 @@ public class FormWorkerWindow extends JDialog implements ActionListener{
 
 		calendarHiringDate = new JDateChooser();
 		calendarHiringDate.setDateFormatString("dd/MM/yyyy");
-		calendarHiringDate.setBounds(318, 324, 175, 25);
+		calendarHiringDate.setBounds(292, 324, 201, 25);
 		contentPanel.add(calendarHiringDate);
 
 		JLabel lblPhoneNumber = new JLabel("Phone number:");
@@ -171,7 +171,7 @@ public class FormWorkerWindow extends JDialog implements ActionListener{
 		textFieldPhone = new JTextField();
 		textFieldPhone.setFont(new Font("SansSerif", Font.PLAIN, 19));
 		textFieldPhone.setColumns(10);
-		textFieldPhone.setBounds(318, 379, 175, 24);
+		textFieldPhone.setBounds(292, 379, 201, 24);
 		contentPanel.add(textFieldPhone);
 		textFieldPhone.addKeyListener(new KeyAdapter() {
 			@Override
@@ -193,7 +193,7 @@ public class FormWorkerWindow extends JDialog implements ActionListener{
 		textFieldEmail = new JTextField();
 		textFieldEmail.setFont(new Font("SansSerif", Font.PLAIN, 19));
 		textFieldEmail.setColumns(10);
-		textFieldEmail.setBounds(318, 437, 175, 24);
+		textFieldEmail.setBounds(292, 437, 201, 24);
 		contentPanel.add(textFieldEmail);
 
 		JLabel lblLanguage = new JLabel("Language:");
@@ -219,7 +219,7 @@ public class FormWorkerWindow extends JDialog implements ActionListener{
 		spinnerAge = new JSpinner();
 		spinnerAge.setModel(new SpinnerNumberModel(18, 18, 75, 1));
 		spinnerAge.setFont(new Font("SansSerif", Font.PLAIN, 20));
-		spinnerAge.setBounds(318, 492, 175, 25);
+		spinnerAge.setBounds(292, 492, 201, 25);
 		contentPanel.add(spinnerAge);
 
 		comboBoxCruiseCode = new JComboBox<Cruise>();
@@ -227,7 +227,7 @@ public class FormWorkerWindow extends JDialog implements ActionListener{
 		for(Cruise c:cruises) {
 			comboBoxCruiseCode.addItem(c);
 		}
-		comboBoxCruiseCode.setBounds(318, 541, 175, 25);
+		comboBoxCruiseCode.setBounds(292, 541, 201, 25);
 		contentPanel.add(comboBoxCruiseCode);
 		btnClear.addActionListener(this);
 
@@ -287,6 +287,8 @@ public class FormWorkerWindow extends JDialog implements ActionListener{
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		String dateStr;
+		String dniRegexp = "^[0-9]{8}[A-Z]$";
+	    String idInput = textFieldId.getText().toUpperCase();
 		if(e.getSource()==btnClear) {
 			textFieldId.setText(null);
 			comboBoxService.setSelectedIndex(0);
@@ -301,11 +303,9 @@ public class FormWorkerWindow extends JDialog implements ActionListener{
 			comboBoxCruiseCode.setSelectedIndex(0);
 		}
 		if(e.getSource()==btnConfirm) {
-			String dniRegexp = "^[0-9]{8}[A-Z]$";
-		    String idInput = textFieldId.getText().toUpperCase();
 			if(textFieldId.getText().isEmpty()||textFieldName.getText().isEmpty()||textFieldSurname.getText().isEmpty()||
 					textFieldPhone.getText().isEmpty()||textFieldEmail.getText().isEmpty()) {
-				JOptionPane.showMessageDialog(this, "Please fill in all fields");
+				JOptionPane.showMessageDialog(this, "Please fill the data in all fields");
 			}else if(textFieldPhone.getText().length() < 9) {
 				JOptionPane.showMessageDialog(this, "The phone number must have 9 digits");
 			} else if (!idInput.matches(dniRegexp)) {
