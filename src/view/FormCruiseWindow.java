@@ -26,146 +26,174 @@ import java.awt.Font;
 
 public class FormCruiseWindow extends JDialog implements ActionListener {
 
-	private static final long serialVersionUID = 1L;
-	private final JPanel panel = new JPanel();
-	private JTextField txtCode;
-	private JTextField txtNameCruise;
-	private JTextField txtNumRooms;
-	private JTextField txtMaxCapacity;
-	private JComboBox<TypeCruise> cmbType;
-	private JButton okButton;
-	private boolean isInsert;
-	private LoginController controller;
-	private Cruise cruise;
-	private ListCruiseWindow parent;
-	private JButton btnClear;
+    private static final long serialVersionUID = 1L;
+    private final JPanel panel = new JPanel();
+    private JTextField txtCode;
+    private JTextField txtNameCruise;
+    private JTextField txtNumRooms;
+    private JTextField txtMaxCapacity;
+    private JComboBox<TypeCruise> cmbType;
+    private JButton okButton;
+    private boolean isInsert;
+    private LoginController controller;
+    private Cruise cruise;
+    private ListCruiseWindow parent;
+    private JButton btnClear;
 
-	public FormCruiseWindow(JDialog cruiseListWindow, LoginController controller, Cruise cruise, boolean isInsert) {
-		super(cruiseListWindow, true);
-		
-		if(isInsert) {
-			setTitle("Add cruise");
-		}else {
-			setTitle("Modify cruise");
-		}
-		
-		setBounds(100, 100, 529, 437);
-		getContentPane().setLayout(new BorderLayout());
-		panel.setBorder(new EmptyBorder(5, 5, 5, 5));
-		getContentPane().add(panel, BorderLayout.CENTER);
-		panel.setLayout(null);
-		this.isInsert = isInsert;
-		this.controller = controller;
-		this.cruise = cruise;
-		this.parent = (ListCruiseWindow) cruiseListWindow;
+    public FormCruiseWindow(JDialog cruiseListWindow, LoginController controller, Cruise cruise, boolean isInsert) {
+        super(cruiseListWindow, true);
+        
+        if(isInsert) {
+            setTitle("Add cruise");
+        }else {
+            setTitle("Modify cruise");
+        }
+        
+        setBounds(100, 100, 529, 437);
+        getContentPane().setLayout(new BorderLayout());
+        panel.setBorder(new EmptyBorder(5, 5, 5, 5));
+        getContentPane().add(panel, BorderLayout.CENTER);
+        panel.setLayout(null);
+        this.isInsert = isInsert;
+        this.controller = controller;
+        this.cruise = cruise;
+        this.parent = (ListCruiseWindow) cruiseListWindow;
 
-		txtCode = new JTextField();
-		txtCode.setFont(new Font("SansSerif", Font.PLAIN, 20));
-		txtCode.setEnabled(false);
-		txtCode.setBounds(266, 80, 191, 22);
-		panel.add(txtCode);
-		txtCode.setColumns(10);
+        txtCode = new JTextField();
+        txtCode.setFont(new Font("SansSerif", Font.PLAIN, 20));
+        txtCode.setEnabled(false);
+        txtCode.setBounds(266, 80, 191, 22);
+        panel.add(txtCode);
+        txtCode.setColumns(10);
 
-		txtNameCruise = new JTextField();
-		txtNameCruise.setFont(new Font("SansSerif", Font.PLAIN, 20));
-		txtNameCruise.setColumns(10);
-		txtNameCruise.setBounds(266, 126, 191, 22);
-		panel.add(txtNameCruise);
+        txtNameCruise = new JTextField();
+        txtNameCruise.setFont(new Font("SansSerif", Font.PLAIN, 20));
+        txtNameCruise.setColumns(10);
+        txtNameCruise.setBounds(266, 126, 191, 22);
+        panel.add(txtNameCruise);
 
-		txtNumRooms = new JTextField();
-		txtNumRooms.setFont(new Font("SansSerif", Font.PLAIN, 20));
-		txtNumRooms.setColumns(10);
-		txtNumRooms.setBounds(266, 171, 191, 22);
-		panel.add(txtNumRooms);
-		// Agregar un KeyListener para validar que solo se ingresen números
-		// TODO: validar que el numero de habitaciones no quede vacio
-		txtNumRooms.addKeyListener(new KeyAdapter() {
-			@Override
-			public void keyTyped(KeyEvent e) {
-				char c = e.getKeyChar();
-				if (!Character.isDigit(c)) {
-					e.consume();
-				}
-			}
-		});
+        txtNumRooms = new JTextField();
+        txtNumRooms.setFont(new Font("SansSerif", Font.PLAIN, 20));
+        txtNumRooms.setColumns(10);
+        txtNumRooms.setBounds(266, 171, 191, 22);
+        panel.add(txtNumRooms);
 
-		txtMaxCapacity = new JTextField();
-		txtMaxCapacity.setFont(new Font("SansSerif", Font.PLAIN, 20));
-		txtMaxCapacity.setColumns(10);
-		txtMaxCapacity.setBounds(266, 252, 191, 22);
-		panel.add(txtMaxCapacity);
-		// Agregar un KeyListener para validar que solo se ingresen números
-		// TODO: validar que el numero no quede vacio
-		txtMaxCapacity.addKeyListener(new KeyAdapter() {
-			@Override
-			public void keyTyped(KeyEvent e) {
-				char c = e.getKeyChar();
-				if (!Character.isDigit(c)) {
-					e.consume();
-				}
-			}
-		});
+        txtNumRooms.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+                char c = e.getKeyChar();
+                if (!Character.isDigit(c)) {
+                    e.consume();
+                }
+            }
+        });
 
-		cmbType = new JComboBox<TypeCruise>();
-		cmbType.setFont(new Font("SansSerif", Font.PLAIN, 20));
-		cmbType.setModel(new DefaultComboBoxModel<TypeCruise>(TypeCruise.values()));
-		cmbType.setBounds(266, 211, 191, 24);
-		panel.add(cmbType);
+        txtMaxCapacity = new JTextField();
+        txtMaxCapacity.setFont(new Font("SansSerif", Font.PLAIN, 20));
+        txtMaxCapacity.setColumns(10);
+        txtMaxCapacity.setBounds(266, 252, 191, 22);
+        panel.add(txtMaxCapacity);
 
-		JLabel lblCode = new JLabel("Cruise Code:");
-		lblCode.setFont(new Font("SansSerif", Font.PLAIN, 20));
-		lblCode.setBounds(52, 83, 130, 16);
-		panel.add(lblCode);
+        txtMaxCapacity.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+                char c = e.getKeyChar();
+                if (!Character.isDigit(c)) {
+                    e.consume();
+                }
+            }
+        });
 
-		JLabel lblNameCruise = new JLabel("Name:");
-		lblNameCruise.setFont(new Font("SansSerif", Font.PLAIN, 20));
-		lblNameCruise.setBounds(52, 129, 108, 16);
-		panel.add(lblNameCruise);
+        cmbType = new JComboBox<TypeCruise>();
+        cmbType.setFont(new Font("SansSerif", Font.PLAIN, 20));
+        cmbType.setModel(new DefaultComboBoxModel<TypeCruise>(TypeCruise.values()));
+        cmbType.setBounds(266, 211, 191, 24);
+        panel.add(cmbType);
 
-		JLabel lblNumRooms = new JLabel("Number of Rooms:");
-		lblNumRooms.setFont(new Font("SansSerif", Font.PLAIN, 20));
-		lblNumRooms.setBounds(52, 174, 170, 16);
-		panel.add(lblNumRooms);
+        JLabel lblCode = new JLabel("Cruise Code:");
+        lblCode.setFont(new Font("SansSerif", Font.PLAIN, 20));
+        lblCode.setBounds(52, 83, 130, 16);
+        panel.add(lblCode);
 
-		JLabel lblType = new JLabel("Type:");
-		lblType.setFont(new Font("SansSerif", Font.PLAIN, 20));
-		lblType.setBounds(52, 215, 70, 20);
-		panel.add(lblType);
+        JLabel lblNameCruise = new JLabel("Name:");
+        lblNameCruise.setFont(new Font("SansSerif", Font.PLAIN, 20));
+        lblNameCruise.setBounds(52, 129, 108, 16);
+        panel.add(lblNameCruise);
 
-		JLabel lblCapacity = new JLabel("Capacity:");
-		lblCapacity.setFont(new Font("SansSerif", Font.PLAIN, 20));
-		lblCapacity.setBounds(52, 255, 108, 19);
-		panel.add(lblCapacity);
-		{
-			okButton = new JButton("Confirm");
-			okButton.setBounds(266, 349, 116, 41);
-			panel.add(okButton);
-			okButton.setFont(new Font("SansSerif", Font.PLAIN, 20));
-			okButton.setActionCommand("OK");
-			getRootPane().setDefaultButton(okButton);
-			
-			btnClear = new JButton("Clear");
-			btnClear.setFont(new Font("SansSerif", Font.PLAIN, 20));
-			btnClear.setActionCommand("OK");
-			btnClear.setBounds(118, 349, 116, 41);
-			panel.add(btnClear);
-			btnClear.addActionListener(this);
-			
-			JLabel lblFill = new JLabel("Fill the cruise data:");
-			lblFill.setFont(new Font("SansSerif", Font.BOLD, 30));
-			lblFill.setBounds(52, 26, 310, 24);
-			panel.add(lblFill);
-			okButton.addActionListener(this);
-		}
+        JLabel lblNumRooms = new JLabel("Number of Rooms:");
+        lblNumRooms.setFont(new Font("SansSerif", Font.PLAIN, 20));
+        lblNumRooms.setBounds(52, 174, 170, 16);
+        panel.add(lblNumRooms);
 
-		if (this.cruise != null) {
-			txtCode.setText(String.valueOf(cruise.getCodCruise()));
-			cmbType.setSelectedItem(cruise.getTypeCruise());
-			txtNameCruise.setText(cruise.getNameCruise());
-			txtNumRooms.setText(String.valueOf(cruise.getNumRooms()));
-			txtMaxCapacity.setText(String.valueOf(cruise.getCapacityMax()));
-		}
-	}
+        JLabel lblType = new JLabel("Type:");
+        lblType.setFont(new Font("SansSerif", Font.PLAIN, 20));
+        lblType.setBounds(52, 215, 70, 20);
+        panel.add(lblType);
+
+        JLabel lblCapacity = new JLabel("Capacity:");
+        lblCapacity.setFont(new Font("SansSerif", Font.PLAIN, 20));
+        lblCapacity.setBounds(52, 255, 108, 19);
+        panel.add(lblCapacity);
+
+        okButton = new JButton("Confirm");
+        okButton.setBounds(266, 349, 116, 41);
+        panel.add(okButton);
+        okButton.setFont(new Font("SansSerif", Font.PLAIN, 20));
+        okButton.setActionCommand("OK");
+        getRootPane().setDefaultButton(okButton);
+
+        btnClear = new JButton("Clear");
+        btnClear.setFont(new Font("SansSerif", Font.PLAIN, 20));
+        btnClear.setActionCommand("OK");
+        btnClear.setBounds(118, 349, 116, 41);
+        panel.add(btnClear);
+        btnClear.addActionListener(this);
+
+        JLabel lblFill = new JLabel("Fill the cruise data:");
+        lblFill.setFont(new Font("SansSerif", Font.BOLD, 30));
+        lblFill.setBounds(52, 26, 310, 24);
+        panel.add(lblFill);
+        okButton.addActionListener(this);
+
+        cmbType.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                TypeCruise selectedType = (TypeCruise) cmbType.getSelectedItem();
+                if (selectedType != null) {
+                    int maxCapacity = 0;
+                    switch (selectedType) {
+                        case FAMILY:
+                            maxCapacity = 700;
+                            break;
+                        case LUXURY:
+                            maxCapacity = 1200;
+                            break;
+                        case EXPEDITION:
+                            maxCapacity = 1500;
+                            break;
+                        case PREMIUM:
+                            maxCapacity = 900;
+                            break;
+                    }
+                    txtMaxCapacity.setText(String.valueOf(maxCapacity));
+                    txtMaxCapacity.setEditable(false);
+                }
+            }
+        });
+
+        if (this.cruise != null) {
+            txtCode.setText(String.valueOf(cruise.getCodCruise()));
+            cmbType.setSelectedItem(cruise.getTypeCruise());
+            txtNameCruise.setText(cruise.getNameCruise());
+            txtNumRooms.setText(String.valueOf(cruise.getNumRooms()));
+            txtMaxCapacity.setText(String.valueOf(cruise.getCapacityMax()));
+            txtMaxCapacity.setEditable(false);
+        } else {
+            // Trigger the listener to set the capacity for the default type
+            cmbType.setSelectedIndex(0);
+        }
+    }
+    
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
@@ -178,7 +206,7 @@ public class FormCruiseWindow extends JDialog implements ActionListener {
 				valid = false;
 
 			}
-			if (valid == true) {
+			if (valid) {
 				if (isInsert) {
 					Cruise cruise = new Cruise(0, (TypeCruise) cmbType.getSelectedItem(), txtNameCruise.getText(),
 							Integer.parseInt(txtNumRooms.getText()), Integer.parseInt(txtMaxCapacity.getText()));
@@ -199,11 +227,10 @@ public class FormCruiseWindow extends JDialog implements ActionListener {
 				}
 			}
 			
-		}else if(e.getSource()==btnClear) {
+		} else if (e.getSource() == btnClear) {
 			txtNameCruise.setText(null);
 			txtNumRooms.setText(null);
-			cmbType.setSelectedIndex(0);
-			txtMaxCapacity.setText(null);
+			cmbType.setSelectedIndex(0); // This triggers the action listener and resets the capacity correctly
 		}
 	}
 }
