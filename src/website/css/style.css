@@ -327,4 +327,45 @@ footer {
     display: block;
 }
 
+/* --- ACCESIBILIDAD VISUAL --- */
 
+/* MODO GRANDE: Agranda tablas y textos de forma proporcional */
+body.modo-grande #resultado {
+    transform: scale(1.1);
+    transform-origin: top center;
+    margin-top: 20px;
+}
+
+body.modo-grande table {
+    width: 90% !important; /* Para que no se salga de la pantalla al escalar */
+    margin: 0 auto;
+}
+
+/* MODO DALTONISMO: Basado en Azul y Amarillo (Profesional) */
+body.daltonismo {
+    background-color: #f8f9fa !important;
+    color: #004488 !important;
+}
+
+body.daltonismo th {
+    background-color: #004488 !important;
+    color: #ffffff !important;
+}
+
+body.daltonismo .btn-detalle {
+    background-color: #ffcc00 !important;
+    color: #004488 !important;
+    border: 2px solid #004488 !important;
+    font-weight: bold;
+}
+
+/* MODO CONTRASTE ROJO */
+body.high-contrast {
+    background-color: #000 !important;
+    color: #ff0000 !important;
+}
+
+body.high-contrast table, 
+body.high-contrast td {
+    border: 1px solid #ff0000 !important;
+}

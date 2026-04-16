@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+  <xs:simpleType name="tipoID">
+    <xs:restriction base="xs:integer">
+      <xs:minInclusive value="1"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="tipoEdadTrabajador">
+    <xs:restriction base="xs:integer">
+      <xs:minInclusive value="18"/>
+      <xs:maxInclusive value="70"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="tipoCruceroSQL">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="luxury"/>
+      <xs:enumeration value="premium"/>
+      <xs:enumeration value="family"/>
+      <xs:enumeration value="expedition"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="tipoServicio">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="captain"/>
+      <xs:enumeration value="cook"/>
+      <xs:enumeration value="guide"/>
+      <xs:enumeration value="receptionist"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:element name="cruiseManagement">
+    <xs:complexType>
+      <xs:sequence>
+        
+        <xs:element name="cruises">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="cruise" maxOccurs="unbounded">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="name" type="xs:string"/>
+                    <xs:element name="num_rooms" type="xs:integer"/>
+                    <xs:element name="capacity" type="xs:integer"/>
+                  </xs:sequence>
+                  <xs:attribute name="code" type="tipoID" use="required"/>
+                  <xs:attribute name="type" type="tipoCruceroSQL"/>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+
+        <xs:element name="workers">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="worker" maxOccurs="unbounded">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="name" type="xs:string"/>
+                    <xs:element name="surname" type="xs:string"/>
+                    <xs:element name="age" type="tipoEdadTrabajador"/>
+                    <xs:element name="email" type="xs:string"/>
+                    <xs:element name="cruiseAssigned" type="tipoID"/>
+                  </xs:sequence>
+                  <xs:attribute name="id" type="xs:string" use="required"/>
+                  <xs:attribute name="service" type="tipoServicio"/>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+
+        <xs:element name="clients">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="client" maxOccurs="unbounded">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="name" type="xs:string"/>
+                    <xs:element name="surname" type="xs:string"/>
+                    <xs:element name="age" type="xs:integer"/>
+                    <xs:element name="phone" type="xs:integer"/>
+                    <xs:element name="email" type="xs:string"/>
+                  </xs:sequence>
+                  <xs:attribute name="id" type="xs:string" use="required"/>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

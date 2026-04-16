@@ -32,7 +32,15 @@
         <br>
         <div id="status" class="status"></div>
     </div>
-
+	
+	<div class="accessibility-panel" style="background:#eee; padding:15px; border-radius:8px; margin-bottom:20px; text-align:center;">
+	    <strong style="margin-right:15px;">Accesibilidad:</strong>
+	    
+	    <button onclick="toggleModoGrande()" class="btn" style="background:#444; color:white;">Zoom Tablas</button>
+	    <button onclick="toggleDaltonismo()" class="btn" style="background:#004488; color:white;">Modo Daltónico</button>
+	    <button onclick="toggleContraste()" class="btn" style="background:#ff0000; color:white;">Modo Rojo</button>
+	</div>
+	
     <div id="resultado"></div>
 </div>
 
@@ -40,6 +48,7 @@
 
 <script src="../js/main.js"></script>
 <script src="../js/fileHandler.js"></script>
+<script src="../js/accessibility.js"></script>
 
 </body>
 </html>
