@@ -31,7 +31,6 @@ import model.Client;
  * @author Aritz
  */
 public class LoginController {
-
 	AdministratorDAO daoAdministrator = new DBImplementationAdministrator();
 	CruiseDAO daoCruise = new DBImplementationCruise();
 	WorkerDAO daoWorker = new DBImplementationWorker();
