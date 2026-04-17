@@ -186,6 +186,27 @@ public class DBImplementationWorker implements WorkerDAO {
 		return added;
 	}
 
+	@Override
+	public boolean idWorkerExists(String id) {
+		boolean exists=false;
+		this.openConnection();
+		try {
+			stmt = con.prepareStatement(SQLID);
+			stmt.setString(1, id);
+			ResultSet rs = stmt.executeQuery();
+			if (rs.next()) { 
+				exists = true;
+			}
+
+			rs.close();
+			stmt.close();
+			con.close();
+		} catch (SQLException e) {
+			System.out.println("Error: " + e.getMessage());
+		}
+
+		return exists;
+	}
 
 	@Override
 	public boolean phoneWorkerExists(String phone) {
