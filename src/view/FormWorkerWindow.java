@@ -47,7 +47,7 @@ import javax.swing.SpinnerNumberModel;
 public class FormWorkerWindow extends JDialog implements ActionListener{
 
 	private static final long serialVersionUID = 1L;
-	private Image backgroundImage = new ImageIcon("images/FondoForms.png").getImage();
+	private Image backgroundImage = new ImageIcon("images/FondoFormu.png").getImage();
 	private final JPanel contentPanel = new JPanel() {
 		@Override
 		protected void paintComponent(Graphics g) {
@@ -169,7 +169,7 @@ public class FormWorkerWindow extends JDialog implements ActionListener{
 
 		JLabel lblHiringDate = new JLabel("Hiring date:");
 		lblHiringDate.setFont(new Font("SansSerif", Font.PLAIN, 20));
-		lblHiringDate.setBounds(57, 324, 126, 25);
+		lblHiringDate.setBounds(57, 334, 126, 25);
 		contentPanel.add(lblHiringDate);
 
 		calendarHiringDate = new JDateChooser();

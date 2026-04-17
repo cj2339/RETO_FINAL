@@ -44,7 +44,7 @@ public class ChangePasswordAdminWindow extends JDialog implements ActionListener
 	private JTextField txtName;
 	private JLabel lblName;
 	private JLabel lblWarning;
-	private Image BackgroundImage = new ImageIcon("images/adminWindow.png").getImage();
+	private Image BackgroundImage = new ImageIcon("images/FondoLoginn.png").getImage();
 	private int atempts=3;
 
 	/**
@@ -61,7 +61,7 @@ public class ChangePasswordAdminWindow extends JDialog implements ActionListener
 		setIconImage(Toolkit.getDefaultToolkit().getImage("images/icon.png"));
 		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		setResizable(false);
-		setSize(600, 400);
+		setSize(601, 324);
 		setLocationRelativeTo(null);
 		contentPane = new JPanel() {
 			@Override
@@ -79,21 +79,21 @@ public class ChangePasswordAdminWindow extends JDialog implements ActionListener
 		setIconImage(Toolkit.getDefaultToolkit().getImage("images/icon.png"));
 		getContentPane().setLayout(null);
 
-		lblPassword = new JLabel("PASSWORD");
-		lblPassword.setFont(new Font("Bahnschrift", Font.BOLD, 25));
-		lblPassword.setBounds(103, 84, 155, 25);
+		lblPassword = new JLabel("Password");
+		lblPassword.setFont(new Font("SansSerif", Font.PLAIN, 25));
+		lblPassword.setBounds(78, 87, 155, 25);
 		getContentPane().add(lblPassword);
 
-		lblNewPassword = new JLabel("NEW PASSWORD");
-		lblNewPassword.setFont(new Font("Bahnschrift", Font.BOLD, 25));
-		lblNewPassword.setBounds(102, 140, 232, 25);
+		lblNewPassword = new JLabel("New Password");
+		lblNewPassword.setFont(new Font("SansSerif", Font.PLAIN, 25));
+		lblNewPassword.setBounds(78, 137, 232, 25);
 		getContentPane().add(lblNewPassword);
 
 		btnChange = new JButton("CHANGE");
 		btnChange.addActionListener(this);
 		btnChange.setVerticalAlignment(SwingConstants.TOP);
-		btnChange.setFont(new Font("Bahnschrift", Font.PLAIN, 30));
-		btnChange.setBounds(356, 193, 183, 34);
+		btnChange.setFont(new Font("SansSerif", Font.PLAIN, 30));
+		btnChange.setBounds(356, 193, 183, 56);
 		getContentPane().add(btnChange);
 
 		textFieldPassword = new JPasswordField();
@@ -108,20 +108,21 @@ public class ChangePasswordAdminWindow extends JDialog implements ActionListener
 
 		lblWarning = new JLabel("");
 		lblWarning.setBackground(new Color(128, 255, 255));
-		lblWarning.setFont(new Font("Bahnschrift", Font.PLAIN, 15));
-		lblWarning.setBounds(139, 284, 400, 30);
-		lblWarning.setForeground(Color.RED);	
+		lblWarning.setFont(new Font("SansSerif", Font.PLAIN, 15));
+		lblWarning.setBounds(78, 208, 273, 30);
+		lblWarning.setForeground(new Color(0, 0, 0));	
 		contentPane.add(lblWarning);
 
 		txtName = new JTextField();
 		txtName.setBounds(355, 30, 183, 34);
-		txtName.setFont(new Font("Bahnschrift", Font.PLAIN, 20));
+		txtName.setFont(new Font("SansSerif", Font.PLAIN, 20));
 		txtName.setText(adminName);
 		getContentPane().add(txtName);
 
-		lblName = new JLabel("NAME");
-		lblName.setFont(new Font("Bahnschrift", Font.BOLD, 25));
-		lblName.setBounds(103, 35, 155, 25);
+		lblName = new JLabel("Name");
+		lblName.setForeground(new Color(0, 0, 0));
+		lblName.setFont(new Font("SansSerif", Font.PLAIN, 25));
+		lblName.setBounds(78, 33, 155, 25);
 		getContentPane().add(lblName);
 
 	}

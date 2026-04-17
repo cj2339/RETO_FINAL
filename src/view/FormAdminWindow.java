@@ -34,7 +34,7 @@ import model.Administrator;
 public class FormAdminWindow extends JDialog implements ActionListener {
 
 	private static final long serialVersionUID = 1L;
-	private Image backgroundImage = new ImageIcon("images/FondoForms.png").getImage();
+	private Image backgroundImage = new ImageIcon("images/FondoFormu.png").getImage();
 	private final JPanel panel = new JPanel() {
 		@Override
 		protected void paintComponent(Graphics g) {
@@ -61,6 +61,7 @@ public class FormAdminWindow extends JDialog implements ActionListener {
 	 */
 	public FormAdminWindow(JDialog adminListWindow, LoginController controller, Administrator administrator, boolean isInsert) {
 		super(adminListWindow, true);
+		setTitle("Add Admin");
 		setIconImage(Toolkit.getDefaultToolkit().getImage("images/icon.png"));
 		setBounds(100, 100, 476, 300);
 		getContentPane().setLayout(new BorderLayout());
