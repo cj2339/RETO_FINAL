@@ -1,5 +1,4 @@
 function toggleModoGrande() {
-    // Añade o quita una clase que agranda todo visualmente
     document.body.classList.toggle('modo-grande');
 }
 
