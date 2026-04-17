@@ -79,7 +79,7 @@ public class LoginController {
 	 * @param id
 	 * @return
 	 */
-	public Cruise getCruiseByCode(String id) {
+	public Cruise getCruiseByCode(int id) {
 		return daoCruise.getCruiseByCode(id);
 	}
 
