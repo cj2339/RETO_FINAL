@@ -114,7 +114,6 @@ public class FormWorkerWindow extends JDialog implements ActionListener{
 		contentPanel.add(lblService);
 
 		textFieldId = new JTextField();
-		textFieldId.setEditable(false);
 		textFieldId.setFont(new Font("SansSerif", Font.PLAIN, 19));
 		textFieldId.setBounds(292, 93, 201, 24);
 		contentPanel.add(textFieldId);
@@ -243,6 +242,7 @@ public class FormWorkerWindow extends JDialog implements ActionListener{
 
 		if(worker!=null) {
 			setTitle("Modify worker");
+			textFieldId.setEditable(false);
 			textFieldId.setText(worker.getIdWorker());
 			comboBoxService.setSelectedItem(worker.getService());
 			textFieldName.setText(worker.getName());

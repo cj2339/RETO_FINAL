@@ -85,7 +85,6 @@ public class FormClientWindow extends JDialog implements ActionListener {
 		this.parent = (ListClientWindow) clientManagement;
 
 		txtId = new JTextField();
-		txtId.setEditable(false);
 		txtId.setFont(new Font("SansSerif", Font.PLAIN, 20));
 		txtId.setColumns(10);
 		txtId.setBounds(287, 58, 186, 30);
@@ -190,16 +189,21 @@ public class FormClientWindow extends JDialog implements ActionListener {
 		spinnerAge.setBounds(287, 208, 186, 31);
 		panel.add(spinnerAge);
 		okButton.addActionListener(this);
-
-
-		//		if (this.client != null) {
-		//			txtId.setText(client.getIdClient());
-		//			txtName.setText(client.getNameClient());
-		//			txtSurname.setText(client.getSurnameClient());
-		//			(int)spinnerAge.getValue();
-		//			txtPhone.setText(String.valueOf(client.getPhoneClient()));
-		//			txtEmail.setText(client.getEmailClient());
-		//		}
+		
+		if(isInsert) {
+	        setTitle("Add client");
+	        txtId.setEditable(true);
+	    } else {
+	        setTitle("Modify client");
+	        txtId.setText(client.getIdClient());
+	        txtId.setEditable(false);
+	        
+	        txtName.setText(client.getNameClient());
+	        txtSurname.setText(client.getSurnameClient());
+	        spinnerAge.setValue(client.getAgeClient());
+	        txtPhone.setText(String.valueOf(client.getPhoneClient()));
+	        txtEmail.setText(client.getEmailClient());
+	    }
 	}
 
 
@@ -210,55 +214,101 @@ public class FormClientWindow extends JDialog implements ActionListener {
 	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		String dniRegexp;
-		String idInput;
-		if (e.getSource() == okButton) {
-			dniRegexp = "^[0-9]{8}[A-Z]$";
-			idInput = txtId.getText().toUpperCase();
-			if (txtId.getText().isEmpty()||txtName.getText().isEmpty()||txtSurname.getText().isEmpty()||txtPhone.getText().isEmpty()
-					||txtEmail.getText().isEmpty()) {
-				JOptionPane.showMessageDialog(this, "Please fill the data in all fields.");
-			}else if(txtPhone.getText().length() < 9) {
-				JOptionPane.showMessageDialog(this, "The phone number must have 9 digits");
-			} else if (!idInput.matches(dniRegexp)) {
-				JOptionPane.showMessageDialog(this, "ID format invalid");
-			}else {
-				Client newClient = new Client(
-						txtId.getText(),
-						txtName.getText(),
-						txtSurname.getText(),
-						(int)spinnerAge.getValue(),
-						Integer.parseInt(txtPhone.getText()), 
-						txtEmail.getText()                    
-						);
-				if (isInsert) {
-					if (controller.insertClient(newClient)) {
-						JOptionPane.showMessageDialog(this, "Client added successfully.");
-						parent.refreshModel();
-						this.dispose();
-					} else {
-						JOptionPane.showMessageDialog(this, "Error adding client.");
-					}
-				} else {
-					if (controller.updateClientByCode(newClient)) {
-						JOptionPane.showMessageDialog(this, "Client modified successfully.");
-						parent.refreshModel();
-						this.dispose();
-					} else {
-						JOptionPane.showMessageDialog(this, "Error modifying client.");
-					}
-				}
-			}
+		String dniRegexp = "^[0-9]{8}[A-Z]$";
+	    String emailRegexp = "^[\\w.-]+@[\\w.-]+\\.[a-zA-Z]{2,6}$";
+	    String idInput = txtId.getText().toUpperCase();
+	    boolean isValid;
+	    if (e.getSource() == btnClear) {
+	        txtId.setText(null);
+	        txtName.setText(null);
+	        txtSurname.setText(null);
+	        spinnerAge.setValue(18);
+	        txtPhone.setText(null);
+	        txtEmail.setText(null);
+	    }
+
+	    if (e.getSource() == okButton) {
+	        isValid = true;
+
+	        // 1. Validar campos vacíos
+	        if (txtId.getText().isEmpty() || txtName.getText().isEmpty() || 
+	            txtSurname.getText().isEmpty() || txtPhone.getText().isEmpty() || 
+	            txtEmail.getText().isEmpty()) {
+	            JOptionPane.showMessageDialog(this, "Please fill the data in all fields.");
+	            isValid = false;
+	        }
+
+	        // 2. Validar formatos (Teléfono, DNI y Email)
+	        if (isValid) {
+	            if (txtPhone.getText().length() < 9) {
+	                JOptionPane.showMessageDialog(this, "The phone number must have 9 digits");
+	                isValid = false;
+	            } else if (!idInput.matches(dniRegexp)) {
+	                JOptionPane.showMessageDialog(this, "ID format invalid");
+	                isValid = false;
+	            } else if (!txtEmail.getText().matches(emailRegexp)) {
+	                JOptionPane.showMessageDialog(this, "Email format invalid");
+	                isValid = false;
+	            }
+	        }
 
 
-		}else if(e.getSource()==btnClear) {
-			txtId.setText(null);
-			txtName.setText(null);
-			txtSurname.setText(null);
-			spinnerAge.setValue(18);
-			txtPhone.setText(null);
-			txtEmail.setText(null);
-		}
+	        if (isValid) {
+	            Client newClient = new Client(
+	                    txtId.getText(),
+	                    txtName.getText(),
+	                    txtSurname.getText(),
+	                    (int) spinnerAge.getValue(),
+	                    Integer.parseInt(txtPhone.getText()),
+	                    txtEmail.getText()
+	            );
+
+	            if (!isInsert) {
+	            	
+	            	if (!isInsert) {
+	            	    
+	            	    if (controller.phoneClientExistsExclude(txtPhone.getText(), txtId.getText())) {
+	            	        JOptionPane.showMessageDialog(this, "Phone number already exists in another client");
+	            	        isValid = false;
+	            	    }
+
+	            	    if (isValid && controller.emailClientExistsExclude(txtEmail.getText(), txtId.getText())) {
+	            	        JOptionPane.showMessageDialog(this, "Email already exists in another client");
+	            	        isValid = false;
+	            	    }
+
+	            	    if (isValid) {
+	            	        if (controller.updateClientByCode(newClient)) {
+	            	            JOptionPane.showMessageDialog(this, "Client modified successfully.");
+	            	            parent.refreshModel();
+	            	            this.dispose();
+	            	        } else {
+	            	            JOptionPane.showMessageDialog(this, "Error modifying client.");
+	            	        }
+	            	    }
+	            	}
+	            } else { 
+	                
+	               if (controller.phoneClientExists(txtPhone.getText())) {
+	                    JOptionPane.showMessageDialog(this, "Phone number already exists");
+	                    isValid = false;
+	                } else if (controller.emailClientExists(txtEmail.getText())) {
+	                    JOptionPane.showMessageDialog(this, "Email already exists");
+	                    isValid = false;
+	                }
+
+	                if (isValid) {
+	                    if (controller.insertClient(newClient)) {
+	                        JOptionPane.showMessageDialog(this, "Client added successfully.");
+	                        parent.refreshModel();
+	                        this.dispose();
+	                    } else {
+	                        JOptionPane.showMessageDialog(this, "Error adding client.");
+	                    }
+	                }
+	            }
+	        }
+	    }
 	}
 
 }

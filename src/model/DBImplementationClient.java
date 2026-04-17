@@ -30,10 +30,10 @@ public class DBImplementationClient implements ClientDAO {
 	final String SQLUPDATEBYCODE = "UPDATE client SET name_client=?, surname_client=?, age_client=?, phone_client=?, email_client=? WHERE id_client=?";//SQL query to update a client's information in the database based on their unique identifier (code)
 	final String SQLINSERT = "INSERT INTO client VALUES(?,?,?,?,?,?)";//SQL query to insert a new client into the database with the provided id, name, surname, age, phone and email
 	final String SQLSELECTBOOKCLIENT = "SELECT * FROM book WHERE id_client=?";//SQL query to check if a client is associated with any booking in the database by their unique identifier (id)
-	final String SQLPHONE = "SELECT * FROM client WHERE phone_number=?";
-	final String SQLEMAIL = "SELECT * FROM client WHERE email=?";
-	final String SQLPHONEEXCLUDE = "SELECT * FROM client WHERE phone_number!=? AND id_client!=?";
-	final String SQLEMAILEXCLUDE = "SELECT * FROM client WHERE email!=? AND id_client!=?";
+	final String SQLPHONE = "SELECT * FROM client WHERE phone_client=?";
+	final String SQLEMAIL = "SELECT * FROM client WHERE email_client=?";
+	final String SQLPHONEEXCLUDE = "SELECT * FROM client WHERE phone_client=? AND id_client<>?";
+	final String SQLEMAILEXCLUDE = "SELECT * FROM client WHERE email_client=? AND id_client<>?";
 	
 	public DBImplementationClient() {
 		this.configFile = ResourceBundle.getBundle("configClass");
