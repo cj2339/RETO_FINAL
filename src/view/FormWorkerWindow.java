@@ -30,6 +30,8 @@ import model.Cruise;
 import model.TypeWorker;
 import javax.swing.JSpinner;
 import com.toedter.calendar.JDateChooser;
+import com.toedter.calendar.JTextFieldDateEditor;
+
 import javax.swing.JCheckBox;
 import javax.swing.SpinnerNumberModel;
 
@@ -171,6 +173,7 @@ public class FormWorkerWindow extends JDialog implements ActionListener{
 		calendarHiringDate.setDateFormatString("dd/MM/yyyy");
 		calendarHiringDate.setBounds(292, 324, 201, 25);
 		contentPanel.add(calendarHiringDate);
+		((JTextFieldDateEditor)calendarHiringDate.getDateEditor()).setFont(new Font("SansSerif", Font.PLAIN, 20));
 
 		JLabel lblPhoneNumber = new JLabel("Phone number:");
 		lblPhoneNumber.setFont(new Font("SansSerif", Font.PLAIN, 20));
@@ -212,13 +215,15 @@ public class FormWorkerWindow extends JDialog implements ActionListener{
 
 		chckbxSpanish = new JCheckBox("Spanish");
 		chckbxSpanish.setFont(new Font("SansSerif", Font.PLAIN, 20));
-		chckbxSpanish.setBounds(82, 627, 144, 20);
+		chckbxSpanish.setBounds(82, 627, 144, 25);
 		contentPanel.add(chckbxSpanish);
+		chckbxSpanish.setOpaque(false);
 
 		chckbxEnglish = new JCheckBox("English");
 		chckbxEnglish.setFont(new Font("SansSerif", Font.PLAIN, 20));
-		chckbxEnglish.setBounds(82, 661, 144, 20);
+		chckbxEnglish.setBounds(82, 661, 144, 25);
 		contentPanel.add(chckbxEnglish);
+		chckbxEnglish.setOpaque(false);
 
 		JLabel lblAge = new JLabel("Age:");
 		lblAge.setFont(new Font("SansSerif", Font.PLAIN, 20));
@@ -232,6 +237,7 @@ public class FormWorkerWindow extends JDialog implements ActionListener{
 		contentPanel.add(spinnerAge);
 
 		comboBoxCruiseCode = new JComboBox<Cruise>();
+		comboBoxCruiseCode.setFont(new Font("SansSerif", Font.PLAIN, 20));
 		List<Cruise> cruises = cont.getAllCruise();
 		for(Cruise c:cruises) {
 			comboBoxCruiseCode.addItem(c);

@@ -32,8 +32,8 @@ public class DBImplementationWorker implements WorkerDAO {
 	final String SQLID = "SELECT * FROM worker WHERE id_worker=?";
 	final String SQLPHONE = "SELECT * FROM worker WHERE phone_number=?";
 	final String SQLEMAIL = "SELECT * FROM worker WHERE email=?";
-	final String SQLPHONEEXCLUDE = "SELECT * FROM worker WHERE phone_number!=? AND id_worker!=?";
-	final String SQLEMAILEXCLUDE = "SELECT * FROM worker WHERE email!=? AND id_worker!=?";
+	final String SQLPHONEEXCLUDE = "SELECT * FROM worker WHERE phone_number=? AND id_worker<>?";
+	final String SQLEMAILEXCLUDE = "SELECT * FROM worker WHERE email=? AND id_worker<>?";
 
 
 	public DBImplementationWorker() {
