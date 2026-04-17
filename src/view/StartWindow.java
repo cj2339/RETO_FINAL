@@ -76,6 +76,12 @@ public class StartWindow extends JFrame implements MouseListener {
 		contentPane.add(lblText);
 		lblText.setColumns(10);
 		lblText.setBorder(null);
+		
+		JLabel lblNewLabel = new JLabel("CLICK TO START!");
+		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel.setFont(new Font("SansSerif", Font.PLAIN, 30));
+		lblNewLabel.setBounds(212, 415, 274, 34);
+		contentPane.add(lblNewLabel);
 	}
 
 	/**
@@ -105,5 +111,4 @@ public class StartWindow extends JFrame implements MouseListener {
 	@Override
 	public void mouseExited(MouseEvent e) {
 	}
-
 }

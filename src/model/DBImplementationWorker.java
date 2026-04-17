@@ -32,6 +32,8 @@ public class DBImplementationWorker implements WorkerDAO {
 	final String SQLID = "SELECT * FROM worker WHERE id_worker=?";
 	final String SQLPHONE = "SELECT * FROM worker WHERE phone_number=?";
 	final String SQLEMAIL = "SELECT * FROM worker WHERE email=?";
+	final String SQLPHONEEXCLUDE = "SELECT * FROM worker WHERE phone_number!=? AND id_worker!=?";
+	final String SQLEMAILEXCLUDE = "SELECT * FROM worker WHERE email!=? AND id_worker!=?";
 
 
 	public DBImplementationWorker() {
@@ -184,27 +186,6 @@ public class DBImplementationWorker implements WorkerDAO {
 		return added;
 	}
 
-	@Override
-	public boolean idWorkerExists(String id) {
-		boolean exists=false;
-		this.openConnection();
-		try {
-			stmt = con.prepareStatement(SQLID);
-			stmt.setString(1, id);
-			ResultSet rs = stmt.executeQuery();
-			if (rs.next()) { 
-				exists = true;
-			}
-
-			rs.close();
-			stmt.close();
-			con.close(); 
-		} catch (SQLException e) {
-			System.out.println("Error: " + e.getMessage());
-		}
-
-		return exists;
-	}
 
 	@Override
 	public boolean phoneWorkerExists(String phone) {
@@ -234,6 +215,51 @@ public class DBImplementationWorker implements WorkerDAO {
 		this.openConnection();
 		try {
 			stmt = con.prepareStatement(SQLEMAIL);
+			stmt.setString(1, email);
+			ResultSet rs = stmt.executeQuery();
+			if (rs.next()) { 
+				exists = true;
+			}
+
+			rs.close();
+			stmt.close();
+			con.close();
+		} catch (SQLException e) {
+			System.out.println("Error: " + e.getMessage());
+		}
+
+		return exists;
+	}
+	
+
+	@Override
+	public boolean phoneWorkerExistsExclude(String phone, String id) {
+		boolean exists=false;
+		this.openConnection();
+		try {
+			stmt = con.prepareStatement(SQLPHONEEXCLUDE);
+			stmt.setString(1, phone);
+			ResultSet rs = stmt.executeQuery();
+			if (rs.next()) { 
+				exists = true;
+			}
+
+			rs.close();
+			stmt.close();
+			con.close();
+		} catch (SQLException e) {
+			System.out.println("Error: " + e.getMessage());
+		}
+
+		return exists;
+	}
+
+	@Override
+	public boolean emailWorkerExistsExclude(String email, String id) {
+		boolean exists=false;
+		this.openConnection();
+		try {
+			stmt = con.prepareStatement(SQLEMAILEXCLUDE);
 			stmt.setString(1, email);
 			ResultSet rs = stmt.executeQuery();
 			if (rs.next()) { 

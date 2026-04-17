@@ -80,12 +80,12 @@ public class LoginWindow extends JDialog implements ActionListener {
 		contentPane.setLayout(null);
 
 		lblUser = new JLabel("Username");
-		lblUser.setFont(new Font("SerifSans", Font.PLAIN, 30));
+		lblUser.setFont(new Font("SansSerif", Font.PLAIN, 30));
 		lblUser.setBounds(50, 40, 217, 58);
 		contentPane.add(lblUser);
 
 		lblPassword = new JLabel("Password");
-		lblPassword.setFont(new Font("SerifSans", Font.PLAIN, 30));
+		lblPassword.setFont(new Font("SansSerif", Font.PLAIN, 30));
 		lblPassword.setBounds(50, 111, 217, 47);
 		contentPane.add(lblPassword);
 
@@ -102,7 +102,7 @@ public class LoginWindow extends JDialog implements ActionListener {
 
 		btnLogin = new JButton("Login");
 		btnLogin.setFont(new Font("SerifSans", Font.PLAIN, 30));
-		btnLogin.setBounds(277, 269, 183, 47);
+		btnLogin.setBounds(277, 258, 183, 58);
 		btnLogin.addActionListener(this);
 		contentPane.add(btnLogin);
 

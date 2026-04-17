@@ -40,11 +40,13 @@ public interface WorkerDAO {
 	 */
 	public boolean insertWorker(Worker worker);
 
-	public boolean idWorkerExists(String id);
-
 	public boolean phoneWorkerExists(String phone);
 
 	public boolean emailWorkerExists(String email);
+	
+	public boolean phoneWorkerExistsExclude(String phone, String id);
+
+	public boolean emailWorkerExistsExclude(String email, String id);
 
 
 }

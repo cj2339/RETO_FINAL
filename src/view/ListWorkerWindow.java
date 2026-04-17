@@ -59,7 +59,7 @@ public class ListWorkerWindow extends JDialog implements ActionListener {
 		setTitle("Workers");
 		setIconImage(Toolkit.getDefaultToolkit().getImage("images/icon.png"));
 		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-		setSize(663, 450);
+		setSize(734, 450);
 		setLocationRelativeTo(null);
 
 		contentPane = new JPanel() {
@@ -77,7 +77,7 @@ public class ListWorkerWindow extends JDialog implements ActionListener {
 		// TITTLE
 		JLabel title = new JLabel("Worker Management");
 		title.setHorizontalAlignment(SwingConstants.CENTER);
-		title.setBounds(202, 13, 249, 49);
+		title.setBounds(245, 10, 249, 49);
 		title.setFont(new Font("SansSerif", Font.BOLD, 22));
 		title.setForeground(Color.WHITE);
 		title.setBorder(new EmptyBorder(5, 5, 15, 5));
@@ -86,7 +86,7 @@ public class ListWorkerWindow extends JDialog implements ActionListener {
 		// TABLE
 		loadTable();
 		JScrollPane scrollPane = new JScrollPane(table);
-		scrollPane.setBounds(12, 59, 625, 271);
+		scrollPane.setBounds(12, 59, 698, 271);
 
 		scrollPane.setOpaque(false);
 		scrollPane.getViewport().setOpaque(false);
@@ -97,7 +97,7 @@ public class ListWorkerWindow extends JDialog implements ActionListener {
 
 		// BUTTONS
 		JPanel buttonPanel = new JPanel();
-		buttonPanel.setBounds(159, 340, 319, 45);
+		buttonPanel.setBounds(202, 340, 319, 45);
 		buttonPanel.setOpaque(false);
 
 		btnADD = new JButton("ADD");

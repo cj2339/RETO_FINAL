@@ -114,6 +114,7 @@ public class FormWorkerWindow extends JDialog implements ActionListener{
 		contentPanel.add(lblService);
 
 		textFieldId = new JTextField();
+		textFieldId.setEditable(false);
 		textFieldId.setFont(new Font("SansSerif", Font.PLAIN, 19));
 		textFieldId.setBounds(292, 93, 201, 24);
 		contentPanel.add(textFieldId);
@@ -299,6 +300,8 @@ public class FormWorkerWindow extends JDialog implements ActionListener{
 		String dniRegexp = "^[0-9]{8}[A-Z]$";
 		String emailRegexp = "^[\\w.-]+@[\\w.-]+\\.[a-zA-Z]{2,6}$";
 		String idInput = textFieldId.getText().toUpperCase();
+		boolean isValid;
+
 		if(e.getSource()==btnClear) {
 			textFieldId.setText(null);
 			comboBoxService.setSelectedIndex(0);
@@ -313,22 +316,25 @@ public class FormWorkerWindow extends JDialog implements ActionListener{
 			comboBoxCruiseCode.setSelectedIndex(0);
 		}
 		if(e.getSource()==btnConfirm) {
+			isValid=true;
 			if(textFieldId.getText().isEmpty()||textFieldName.getText().isEmpty()||textFieldSurname.getText().isEmpty()||
 					textFieldPhone.getText().isEmpty()||textFieldEmail.getText().isEmpty()) {
 				JOptionPane.showMessageDialog(this, "Please fill the data in all fields");
-			}else if(textFieldPhone.getText().length() < 9) {
-				JOptionPane.showMessageDialog(this, "The phone number must have 9 digits");
-			}else if (!idInput.matches(dniRegexp)) {
-				JOptionPane.showMessageDialog(this, "ID format invalid");
-			}else if (!textFieldEmail.getText().matches(emailRegexp)) {
-				JOptionPane.showMessageDialog(this, "Email format invalid");
-			}else if(cont.idWorkerExists(textFieldId.getText())) {
-				JOptionPane.showMessageDialog(this, "ID alrready exists");
-			}else if(cont.phoneWorkerExists((textFieldPhone.getText()))) {
-				JOptionPane.showMessageDialog(this, "Phone number already exists");
-			}else if(cont.emailWorkerExists((textFieldEmail.getText()))) {
-				JOptionPane.showMessageDialog(this, "Email already exists");
-			}else {
+				isValid=false;
+			}
+			if(isValid) {
+				if(textFieldPhone.getText().length() < 9) {
+					JOptionPane.showMessageDialog(this, "The phone number must have 9 digits");
+					isValid=false;
+				}else if (!idInput.matches(dniRegexp)) {
+					JOptionPane.showMessageDialog(this, "ID format invalid");
+					isValid=false;
+				}else if (!textFieldEmail.getText().matches(emailRegexp)) {
+					JOptionPane.showMessageDialog(this, "Email format invalid");
+					isValid=false;
+				}
+			}
+			if(isValid) {
 				Worker workerTemp=new Worker(
 						textFieldId.getText(),
 						(TypeWorker) comboBoxService.getSelectedItem(),
@@ -343,13 +349,41 @@ public class FormWorkerWindow extends JDialog implements ActionListener{
 						(Cruise)comboBoxCruiseCode.getSelectedItem()
 						);
 				if(worker!=null) {
-					cont.updateWorker(workerTemp);
-					JOptionPane.showMessageDialog(this, "Worker updated successfully.");
+					if(!worker.getPhoneNumber().equals(textFieldPhone.getText()) && cont.phoneWorkerExists(textFieldPhone.getText())) {
+	                    JOptionPane.showMessageDialog(this, "Phone number already exists");
+	                    isValid = false;
+	                }
+	                
+	                if(isValid && !worker.getEmail().equals(textFieldEmail.getText()) && cont.emailWorkerExists(textFieldEmail.getText())) {
+	                    JOptionPane.showMessageDialog(this, "Email already exists");
+	                    isValid = false;
+	                }
+
+	                if(isValid) {
+	                    cont.updateWorker(workerTemp);
+	                    JOptionPane.showMessageDialog(this, "Worker updated successfully.");
+	                    this.dispose();
+	                }
+
 				}else {
-					cont.insertWorker(workerTemp);
-					JOptionPane.showMessageDialog(this, "Worker added successfully.");
+					if(cont.phoneWorkerExists(textFieldPhone.getText())) {
+	                    JOptionPane.showMessageDialog(this, "Phone number already exists");
+	                    isValid = false;
+	                } else if(cont.emailWorkerExists(textFieldEmail.getText())) {
+	                    JOptionPane.showMessageDialog(this, "Email already exists");
+	                    isValid = false;
+	                }
+
+	                if(isValid) {
+	                    cont.insertWorker(workerTemp);
+	                    JOptionPane.showMessageDialog(this, "Worker added successfully.");
+	                    this.dispose();
+	                }
 				}
 			}
+
+
+
 		}
 	}
 }
