@@ -62,7 +62,7 @@ class TestDBImplementationAdministrator {
 		String newPassword = "updatedPass123";
 		byName.setPassword(newPassword);
 
-		boolean updated = dao.updateAdministrator(byName);
+		boolean updated = dao.updateAdministrator(uniqueName, uniqueName, newPassword);
 		assertTrue(updated, "updateAdministrator should return true when update succeeds");
 
 		Administrator updatedAdmin = dao.getAdministratorByName(uniqueName);
