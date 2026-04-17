@@ -6,6 +6,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.Graphics;
 import java.awt.Image;
+import java.awt.Toolkit;
+
 import javax.swing.ImageIcon;
 
 import javax.swing.JButton;
@@ -59,6 +61,7 @@ public class FormAdminWindow extends JDialog implements ActionListener {
 	 */
 	public FormAdminWindow(JDialog adminListWindow, LoginController controller, Administrator administrator, boolean isInsert) {
 		super(adminListWindow, true);
+		setIconImage(Toolkit.getDefaultToolkit().getImage("images/icon.png"));
 		setBounds(100, 100, 476, 300);
 		getContentPane().setLayout(new BorderLayout());
 		panel.setBorder(new EmptyBorder(5, 5, 5, 5));

@@ -7,6 +7,7 @@ import java.awt.event.KeyEvent;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Image;
+import java.awt.Toolkit;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -48,7 +49,7 @@ public class FormCruiseWindow extends JDialog implements ActionListener {
 
 	public FormCruiseWindow(JDialog cruiseListWindow, LoginController controller, Cruise cruise, boolean isInsert) {
 		super(cruiseListWindow, true);
-
+		setIconImage(Toolkit.getDefaultToolkit().getImage("images/icon.png"));
 		if (isInsert) {
 			setTitle("Add cruise");
 		} else {

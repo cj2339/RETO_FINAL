@@ -6,6 +6,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.Graphics;
 import java.awt.Image;
+import java.awt.Toolkit;
+
 import javax.swing.ImageIcon;
 import java.time.LocalDate;
 import java.time.ZoneId;
@@ -65,6 +67,7 @@ public class FormBookWindow extends JDialog implements ActionListener {
 
 	public FormBookWindow(JDialog parentWindow, LoginController controller, Book booking, boolean isInsert) {
 		super(parentWindow, true);
+		setIconImage(Toolkit.getDefaultToolkit().getImage("images/icon.png"));
 		setTitle("Modify Book ");
 		setBounds(100, 100, 500, 380);
 		getContentPane().setLayout(new BorderLayout());

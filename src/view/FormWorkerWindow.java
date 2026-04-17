@@ -3,6 +3,8 @@ package view;
 import java.awt.BorderLayout;
 import java.awt.Graphics;
 import java.awt.Image;
+import java.awt.Toolkit;
+
 import javax.swing.ImageIcon;
 
 import javax.swing.JButton;
@@ -84,6 +86,7 @@ public class FormWorkerWindow extends JDialog implements ActionListener{
 		this.cont=cont;
 		this.worker=worker;
 
+		setIconImage(Toolkit.getDefaultToolkit().getImage("images/icon.png"));
 		setBounds(100, 100, 600, 814);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -356,35 +359,35 @@ public class FormWorkerWindow extends JDialog implements ActionListener{
 						);
 				if(worker!=null) {
 					if(!worker.getPhoneNumber().equals(textFieldPhone.getText()) && cont.phoneWorkerExists(textFieldPhone.getText())) {
-	                    JOptionPane.showMessageDialog(this, "Phone number already exists");
-	                    isValid = false;
-	                }
-	                
-	                if(isValid && !worker.getEmail().equals(textFieldEmail.getText()) && cont.emailWorkerExists(textFieldEmail.getText())) {
-	                    JOptionPane.showMessageDialog(this, "Email already exists");
-	                    isValid = false;
-	                }
+						JOptionPane.showMessageDialog(this, "Phone number already exists");
+						isValid = false;
+					}
 
-	                if(isValid) {
-	                    cont.updateWorker(workerTemp);
-	                    JOptionPane.showMessageDialog(this, "Worker updated successfully.");
-	                    this.dispose();
-	                }
+					if(isValid && !worker.getEmail().equals(textFieldEmail.getText()) && cont.emailWorkerExists(textFieldEmail.getText())) {
+						JOptionPane.showMessageDialog(this, "Email already exists");
+						isValid = false;
+					}
+
+					if(isValid) {
+						cont.updateWorker(workerTemp);
+						JOptionPane.showMessageDialog(this, "Worker updated successfully.");
+						this.dispose();
+					}
 
 				}else {
 					if(cont.phoneWorkerExists(textFieldPhone.getText())) {
-	                    JOptionPane.showMessageDialog(this, "Phone number already exists");
-	                    isValid = false;
-	                } else if(cont.emailWorkerExists(textFieldEmail.getText())) {
-	                    JOptionPane.showMessageDialog(this, "Email already exists");
-	                    isValid = false;
-	                }
+						JOptionPane.showMessageDialog(this, "Phone number already exists");
+						isValid = false;
+					} else if(cont.emailWorkerExists(textFieldEmail.getText())) {
+						JOptionPane.showMessageDialog(this, "Email already exists");
+						isValid = false;
+					}
 
-	                if(isValid) {
-	                    cont.insertWorker(workerTemp);
-	                    JOptionPane.showMessageDialog(this, "Worker added successfully.");
-	                    this.dispose();
-	                }
+					if(isValid) {
+						cont.insertWorker(workerTemp);
+						JOptionPane.showMessageDialog(this, "Worker added successfully.");
+						this.dispose();
+					}
 				}
 			}
 
