@@ -60,6 +60,7 @@ public class LoginWindow extends JDialog implements ActionListener {
 		this.cont = cont;
 
 		setTitle("Login");
+		setIconImage(new ImageIcon("images/icon.png").getImage());
 		setBounds(100, 100, 553, 403);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setLayout(new FlowLayout());
