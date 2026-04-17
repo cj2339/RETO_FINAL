@@ -1,8 +1,15 @@
-* { margin: 0; padding: 0; box-sizing: border-box; }
+/* Reset basic spacing and ensure consistent box sizing across elements */
+* { 
+    margin: 0; 
+    padding: 0; 
+    box-sizing: border-box; 
+}
 
+/* Global page styling: background image, font, and minimum height */
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), url('https://services.meteored.com/img/article/por-que-nos-atrae-mar-azul-ciencia-revela-secreto-mejorar-salud-mental-1732094912064_1024.jpeg');
+    background: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)),
+                url('https://services.meteored.com/img/article/por-que-nos-atrae-mar-azul-ciencia-revela-secreto-mejorar-salud-mental-1732094912064_1024.jpeg');
     background-size: cover;
     background-position: center;
     background-attachment: fixed;
@@ -11,6 +18,7 @@ body {
     min-height: 100vh;
 }
 
+/* Navigation bar styling */
 nav {
     background: #1a2a4a;
     padding: 14px 30px;
@@ -18,6 +26,7 @@ nav {
     align-items: center;
 }
 
+/* Brand text inside the navigation bar */
 nav .brand {
     color: #fff;
     font-size: 20px;
@@ -25,6 +34,7 @@ nav .brand {
     letter-spacing: 1px;
 }
 
+/* Hero section with gradient background and centered text */
 .hero {
     text-align: center;
     padding: 28px 20px 18px;
@@ -33,16 +43,23 @@ nav .brand {
 }
 
 .hero h1 { 
-	font-size: 30px; margin-bottom: 4px; }
-.hero p  { 
-	font-size: 14px; opacity: .8; }
+    font-size: 30px; 
+    margin-bottom: 4px; 
+}
 
+.hero p { 
+    font-size: 14px; 
+    opacity: .8; 
+}
+
+/* Main container for page content */
 .container {
     max-width: 1060px;
     margin: 20px auto;
     padding: 0 20px;
 }
 
+/* Upload box styling */
 .upload-area {
     background: #fff;
     border: 2px dashed #b0bec5;
@@ -53,11 +70,18 @@ nav .brand {
     box-shadow: 0 1px 4px rgba(0,0,0,.06);
 }
 
-.upload-area h3  { 
-	color: #1a2a4a; margin-bottom: 10px; }
-.upload-area p   { 
-	color: #666; font-size: 13px; margin-bottom: 8px; }
+.upload-area h3 { 
+    color: #1a2a4a; 
+    margin-bottom: 10px; 
+}
 
+.upload-area p { 
+    color: #666; 
+    font-size: 13px; 
+    margin-bottom: 8px; 
+}
+
+/* Textarea for XML input */
 .upload-area textarea {
     width: 100%;
     height: 120px;
@@ -69,6 +93,7 @@ nav .brand {
     resize: vertical;
 }
 
+/* Buttons and upload label styling */
 .upload-area button,
 .upload-area label.btn {
     display: inline-block;
@@ -85,11 +110,15 @@ nav .brand {
 
 .upload-area button:hover,
 .upload-area label.btn:hover { 
-	background: #2c4a7c; }
+    background: #2c4a7c; 
+}
 
+/* Hide the file input element */
 .upload-area input[type=file] { 
-	display: none; }
+    display: none; 
+}
 
+/* Link to sample XML */
 .sample-link {
     color: #1a2a4a;
     cursor: pointer;
@@ -99,6 +128,7 @@ nav .brand {
     margin-top: 6px;
 }
 
+/* Status message box (success or error) */
 .status {
     margin: 8px 0 0;
     padding: 8px 12px;
@@ -107,11 +137,19 @@ nav .brand {
     display: none;
 }
 
-.status.error   { 
-	display: block; background: #fce4ec; color: #c62828; }
-.status.success { 
-	display: block; background: #e8f5e9; color: #2e7d32; }
+.status.error { 
+    display: block; 
+    background: #fce4ec; 
+    color: #c62828; 
+}
 
+.status.success { 
+    display: block; 
+    background: #e8f5e9; 
+    color: #2e7d32; 
+}
+
+/* Table styling for XSLT results */
 table {
     width: 100%;
     border-collapse: collapse;
@@ -137,10 +175,14 @@ td {
 }
 
 tr:nth-child(even) { 
-	background: #f0f4fa; }
-tr:hover           { 
-	background: #e4ecf7; }
+    background: #f0f4fa; 
+}
 
+tr:hover { 
+    background: #e4ecf7; 
+}
+
+/* Badge styles for cruise categories */
 .badge {
     display: inline-block;
     padding: 3px 10px;
@@ -151,17 +193,12 @@ tr:hover           {
     color: #fff;
 }
 
-	
-.badge-lujo { 
-	background: #c49a2a; }
-.badge-premium   { 
-	background: #6a5acd; }
-.badge-estandar  { 
-	background: #2e8b57; }
-.badge-economico { 
-	background: #4682b4; }
+.badge-lujo      { background: #c49a2a; }
+.badge-premium   { background: #6a5acd; }
+.badge-estandar  { background: #2e8b57; }
+.badge-economico { background: #4682b4; }
 
-
+/* Button for viewing cruise details */
 .btn-detalle {
     padding: 5px 14px;
     background: #2c4a7c;
@@ -174,8 +211,10 @@ tr:hover           {
 }
 
 .btn-detalle:hover { 
-	background: #1a2a4a; }
+    background: #1a2a4a; 
+}
 
+/* Button to return from detail view */
 .btn-volver {
     padding: 8px 18px;
     background: #1a2a4a;
@@ -189,9 +228,10 @@ tr:hover           {
 }
 
 .btn-volver:hover { 
-	background: #2c4a7c; }
+    background: #2c4a7c; 
+}
 
-
+/* Cruise detail card */
 .detalle-crucero {
     background: #fff;
     border-radius: 8px;
@@ -199,6 +239,7 @@ tr:hover           {
     box-shadow: 0 2px 8px rgba(0,0,0,.1);
 }
 
+/* Header section inside cruise detail */
 .detalle-header {
     display: flex;
     gap: 20px;
@@ -206,6 +247,7 @@ tr:hover           {
     flex-wrap: wrap;
 }
 
+/* Cruise image */
 .detalle-img {
     width: 320px;
     height: 180px;
@@ -214,13 +256,27 @@ tr:hover           {
     flex-shrink: 0;
 }
 
-.detalle-info h2  { 
-	color: #1a2a4a; font-size: 24px; margin-bottom: 6px; }
-.detalle-code     { 
-	color: #666; margin-bottom: 8px; }
-.detalle-estado   { 
-	display: inline-block; margin-left: 10px; color: #2e7d32; font-weight: 600; font-size: 13px; }
+/* Cruise detail text */
+.detalle-info h2 { 
+    color: #1a2a4a; 
+    font-size: 24px; 
+    margin-bottom: 6px; 
+}
 
+.detalle-code { 
+    color: #666; 
+    margin-bottom: 8px; 
+}
+
+.detalle-estado { 
+    display: inline-block; 
+    margin-left: 10px; 
+    color: #2e7d32; 
+    font-weight: 600; 
+    font-size: 13px; 
+}
+
+/* Stats section inside cruise detail */
 .detalle-stats {
     display: flex;
     gap: 16px;
@@ -237,11 +293,19 @@ tr:hover           {
     min-width: 100px;
 }
 
-.stat-num   { 
-	display: block; font-size: 24px; font-weight: 700; color: #1a2a4a; }
-.stat-label { 
-	font-size: 12px; color: #666; }
+.stat-num { 
+    display: block; 
+    font-size: 24px; 
+    font-weight: 700; 
+    color: #1a2a4a; 
+}
 
+.stat-label { 
+    font-size: 12px; 
+    color: #666; 
+}
+
+/* Description box inside cruise detail */
 .detalle-desc {
     background: #f8f9fb;
     padding: 14px 18px;
@@ -251,16 +315,34 @@ tr:hover           {
 }
 
 .detalle-desc h3 { 
-	color: #1a2a4a; margin-bottom: 6px; font-size: 15px; }
-.detalle-desc p  { 
-	color: #555; font-size: 14px; line-height: 1.5; }
+    color: #1a2a4a; 
+    margin-bottom: 6px; 
+    font-size: 15px; 
+}
 
-.detalle-section          { 
-	margin-top: 18px; }
-.detalle-section h3       { 
-		color: #1a2a4a; margin-bottom: 10px; font-size: 16px; }
+.detalle-desc p { 
+    color: #555; 
+    font-size: 14px; 
+    line-height: 1.5; 
+}
 
-.rutas-lista { display: flex; flex-wrap: wrap; gap: 10px; }
+/* Section titles inside detail view */
+.detalle-section { 
+    margin-top: 18px; 
+}
+
+.detalle-section h3 { 
+    color: #1a2a4a; 
+    margin-bottom: 10px; 
+    font-size: 16px; 
+}
+
+/* Route list styling */
+.rutas-lista { 
+    display: flex; 
+    flex-wrap: wrap; 
+    gap: 10px; 
+}
 
 .ruta-item {
     background: #eef2f9;
@@ -273,11 +355,18 @@ tr:hover           {
 }
 
 .ruta-flecha { 
-		color: #2c4a7c; font-weight: 700; }
+    color: #2c4a7c; 
+    font-weight: 700; 
+}
 
+/* Section title for XSLT result blocks */
 .xsl-result h2 { 
-		color: #1a2a4a; margin: 18px 0 12px; font-size: 20px; }
+    color: #1a2a4a; 
+    margin: 18px 0 12px; 
+    font-size: 20px; 
+}
 
+/* Info box used for metadata or explanations */
 .info-box {
     background: #fff;
     border-radius: 6px;
@@ -289,13 +378,24 @@ tr:hover           {
     color: #555;
 }
 
-.info-box h3   { 
-		color: #1a2a4a; margin-bottom: 8px; font-size: 15px; }
-.info-box code { 
-		background: #eef2f9; padding: 1px 5px; border-radius: 3px; font-size: 12px; }
-.info-box ul   { 
-		margin: 6px 0 0 18px; }
+.info-box h3 { 
+    color: #1a2a4a; 
+    margin-bottom: 8px; 
+    font-size: 15px; 
+}
 
+.info-box code { 
+    background: #eef2f9; 
+    padding: 1px 5px; 
+    border-radius: 3px; 
+    font-size: 12px; 
+}
+
+.info-box ul { 
+    margin: 6px 0 0 18px; 
+}
+
+/* Footer styling */
 footer {
     text-align: center;
     padding: 18px;
@@ -304,32 +404,36 @@ footer {
     margin-top: 30px;
 }
 
+/* Highlight effect when dragging a file over the upload area */
 .upload-area.highlight {
     border: 2px solid #007bff;
     background-color: rgba(0, 123, 255, 0.05);
     transition: all 0.3s ease;
 }
 
+/* Hide file input */
 #fileInput {
     display: none;
 }
 
-
+/* Brand container inside navbar */
 .brand-container {
     display: flex;
     align-items: center;
     gap: 10px; 
 }
 
+/* Logo inside navbar */
 .nav-logo {
     height: 40px;
     width: auto;
     display: block;
 }
 
-/* --- ACCESIBILIDAD VISUAL --- */
 
-/* MODO GRANDE: Agranda tablas y textos de forma proporcional */
+/* ACCESSIBILITY MODES    
+
+/* Enlarged mode: scales tables and results */
 body.modo-grande #resultado {
     transform: scale(1.1);
     transform-origin: top center;
@@ -337,11 +441,11 @@ body.modo-grande #resultado {
 }
 
 body.modo-grande table {
-    width: 90% !important; /* Para que no se salga de la pantalla al escalar */
+    width: 90% !important;
     margin: 0 auto;
 }
 
-/* MODO DALTONISMO: Basado en Azul y Amarillo (Profesional) */
+/* Color-blind mode: blue-yellow palette */
 body.daltonismo {
     background-color: #f8f9fa !important;
     color: #004488 !important;
@@ -359,7 +463,7 @@ body.daltonismo .btn-detalle {
     font-weight: bold;
 }
 
-/* MODO CONTRASTE ROJO */
+/* High-contrast red mode */
 body.high-contrast {
     background-color: #000 !important;
     color: #ff0000 !important;

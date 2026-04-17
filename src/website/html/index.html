@@ -1,16 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
-	<head>
-	    <meta charset="UTF-8">
-	    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-	    <title>Imperial Maritime</title>
-	    <link rel="icon" type="image/png" href="../../../images/icon.png"> 
-	    <link rel="stylesheet" href="../css/style.css">
-	</head>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Imperial Maritime</title>
+
+    <link rel="icon" type="image/png" href="../img/icon.png">
+    <link rel="stylesheet" href="../css/style.css">
+</head>
 
 <nav>
+    <!-- Navigation bar with logo + brand name -->
     <div class="brand-container">
-        <img src="../../../images/icon.png" alt="Logo" class="nav-logo">
+        <img src="../img/icon.png" alt="Logo" class="nav-logo">
         <span class="brand">Imperial Maritime</span>
     </div>
 </nav>
@@ -21,36 +24,46 @@
 </div>
 
 <div class="container">
+    <!-- XML upload area (textarea, file input, drag & drop) -->
     <div class="upload-area" id="dropZone">
+
         <h3>Import XML data</h3>
-        <p>Paste XML content below or **drag and drop** a .xml file</p>
+        <p>Paste XML content below or <strong>drag and drop</strong> a .xml file</p>
+
         <textarea id="xmlInput" placeholder="Paste your XML file content here..."></textarea>
+
         <br>
+
         <label class="btn" for="fileInput">Upload .xml file</label>
         <input type="file" id="fileInput" accept=".xml">
+
         <button onclick="procesarXML()">Process XML with XSLT</button>
+
         <br>
+
         <div id="status" class="status"></div>
+        <!-- Status messages (errors / success) -->
     </div>
-	
-	<div class="accessibility-panel" style="background:#eee; padding:15px; border-radius:8px; margin-bottom:20px; text-align:center;">
-	    <strong style="margin-right:15px;">Accesibilidad:</strong>
-	    
-	    <button onclick="toggleModoGrande()" class="btn" style="background:#444; color:white;">Zoom Tablas</button>
-	    <button onclick="toggleDaltonismo()" class="btn" style="background:#004488; color:white;">Modo Daltónico</button>
-	    <button onclick="toggleContraste()" class="btn" style="background:#ff0000; color:white;">Modo Rojo</button>
-	</div>
-	
+
+    <!-- Accessibility controls -->
+    <div class="accessibility-panel" style="background:#eee; padding:15px; border-radius:8px; margin-bottom:20px; text-align:center;">
+
+        <strong style="margin-right:15px;">Accesibilidad:</strong>
+
+        <button onclick="toggleModoGrande()" class="btn" style="background:#444; color:white;">Zoom Tablas</button>
+        <button onclick="toggleDaltonismo()" class="btn" style="background:#004488; color:white;">Modo Daltónico</button>
+        <button onclick="toggleContraste()" class="btn" style="background:#ff0000; color:white;">Modo Rojo</button>
+    </div>
+
     <div id="resultado"></div>
+    <!-- XSLT output is injected here -->
 </div>
 
 <footer>&copy; 2026 Imperial Maritime. All rights reserved.</footer>
 
-
 <script src="../js/main.js"></script>
 <script src="../js/fileHandler.js"></script>
 <script src="../js/accessibility.js"></script>
-
 
 </body>
 </html>
