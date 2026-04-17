@@ -19,6 +19,10 @@ import org.mockito.MockedStatic;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
+import model.Cruise;
+import model.DBImplementationCruise;
+import model.TypeCruise;
+
 /**
  * JUnit 5 test class that validates the CRUD operations and query
  * behaviors of DBImplementationCruise using Mockito. It verifies

@@ -1,3 +1,4 @@
+package model;
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.List;
@@ -6,8 +7,6 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import model.Administrator;
-import model.DBImplementationAdministrator;
 
 /**
  * JUnit 5 test class that verifies the CRUD operations of

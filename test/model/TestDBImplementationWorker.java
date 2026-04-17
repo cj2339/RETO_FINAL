@@ -2,17 +2,13 @@ package model;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.sql.Date;
+import java.time.LocalDate;
 import java.util.List;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import model.Cruise;
-import model.DBImplementationCruise;
-import model.DBImplementationWorker;
-import model.TypeWorker;
-import model.Worker;
 
 /**
  * JUnit 5 test class that validates the CRUD operations and integrity checks
@@ -126,6 +122,16 @@ class TestDBImplementationWorker {
 		Worker fakeWorker = new Worker();
 		fakeWorker.setIdWorker(nonExistentId);
 		fakeWorker.setName("Fake");
+		fakeWorker.setService(TypeWorker.CAPTAIN);
+		fakeWorker.setHiringDate(Date.valueOf(LocalDate.now()));
+		fakeWorker.setPhoneNumber("600000000");
+		fakeWorker.setEmail("fake@test.com");
+		fakeWorker.setAge(30);
+		fakeWorker.setSpanish(true);
+		fakeWorker.setEnglish(false);
+		Cruise fakeCruise = new Cruise();
+		fakeCruise.setCodCruise(1);
+		fakeWorker.setCruise(fakeCruise);
 		assertFalse(dao.updateWorker(fakeWorker), "updateWorker should return false if the record doesn't exist");
 	}
 
