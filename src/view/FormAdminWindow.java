@@ -136,8 +136,10 @@ public class FormAdminWindow extends JDialog implements ActionListener {
 						JOptionPane.showMessageDialog(this, "Administrator already exists.");
 					}
 				} else {
-					Administrator admin = new Administrator(txtName.getText(), new String(txtPassword.getPassword()));
-					if (controller.updateAdministrator(admin)) {
+					String oldName = administrator.getName();
+					String newPass = new String(txtPassword.getPassword());
+
+					if (controller.updateAdministrator(oldName, oldName, newPass)) {
 						JOptionPane.showMessageDialog(this, "Administrator has been updated.");
 						parent.refreshModel();
 						this.dispose();

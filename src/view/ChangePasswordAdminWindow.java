@@ -183,11 +183,12 @@ public class ChangePasswordAdminWindow extends JDialog implements ActionListener
 
 		// 4. All correct → update name + password
 		if (valido) {
-            if (cont.updateAdministrator(adminName, newName, newPass)) {
-                lblWarning.setForeground(Color.BLACK);
-                lblWarning.setText("Administrator updated successfully!");
-                atempts = 3;
+			if (cont.updateAdministrator(adminName, newName, newPass)) {
+				lblWarning.setForeground(Color.BLACK);
+				lblWarning.setText("Administrator updated successfully!");
+				atempts = 3;
 				adminName = newName;
+				cont.setLoggedInAdminName(newName);
 			} else {
 				lblWarning.setText("Error updating administrator. Please try again.");
 			}
