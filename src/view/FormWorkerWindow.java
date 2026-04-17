@@ -223,7 +223,7 @@ public class FormWorkerWindow extends JDialog implements ActionListener{
 		chckbxEnglish.setFont(new Font("SansSerif", Font.PLAIN, 20));
 		chckbxEnglish.setBounds(82, 661, 144, 25);
 		contentPanel.add(chckbxEnglish);
-		chckbxEnglish.setOpaque(false);
+		chckbxEnglish.setOpaque(false); 
 
 		JLabel lblAge = new JLabel("Age:");
 		lblAge.setFont(new Font("SansSerif", Font.PLAIN, 20));
