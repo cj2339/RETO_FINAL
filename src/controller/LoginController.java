@@ -258,11 +258,11 @@ public class LoginController {
 	}
 	
 	public boolean phoneClientExistsExclude(String phone, String id) {
-		return daoClient.phoneClientExistsExclude(phone);
+		return daoClient.phoneClientExistsExclude(phone, id);
 	}
 	
 	public boolean emailClientExistsExclude(String email, String id) {
-		return daoClient.emailClientExistsExclude(email);
+		return daoClient.emailClientExistsExclude(email, id);
 	}
 
 	// worker CRUD Methods
@@ -326,6 +326,10 @@ public class LoginController {
 
 	public boolean phoneWorkerExists(String phone) {
 		return daoWorker.phoneWorkerExists(phone);
+	}
+	
+	public boolean emailWorkerExists(String email) {
+		return daoWorker.emailWorkerExists(email);
 	}
 
 	public boolean phoneWorkerExistsExclude(String phone, String id) {
