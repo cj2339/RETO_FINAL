@@ -1,105 +1,120 @@
-# 🚀 Proyecto: Imperial Maritime
+# 🚀 Project: Imperial Maritime
 
-## 📝 Descripción
+## 📝 Description
 
-**Imperial Maritime** es una aplicación de escritorio diseñada para la gestión integral de una compañía de cruceros. Su objetivo principal es proporcionar una plataforma robusta y fácil de usar para administrar diversos aspectos del negocio, incluyendo la gestión de administradores, cruceros, clientes y reservas. La aplicación permite a los administradores realizar operaciones CRUD (Crear, Leer, Actualizar, Eliminar) sobre estas entidades, garantizando un control eficiente y centralizado de la información.
-
-El sistema está diseñado para facilitar la operativa diaria de una empresa de cruceros, desde la planificación de rutas y la asignación de recursos hasta la gestión de la clientela y la tramitación de reservas, incluyendo la aplicación de lógicas de precios y descuentos complejas a través de procedimientos almacenados en la base de datos.
+**Imperial Maritime** is a robust desktop application designed for the comprehensive management of a cruise line company. Developed in Java, this application allows administrators to efficiently manage cruises, clients, bookings, and administrator information. Its architecture follows the Model-View-Controller (MVC) pattern and utilizes the Data Access Object (DAO) pattern for clean and modular interaction with the database. It includes advanced features such as booking discount management through stored procedures and an intuitive user interface.
 
 ---
 
-## 🧰 Tecnologías utilizadas
+## 🧰 Technologies Used
 
-*   **Java Development Kit (JDK) 21**
-*   **Swing** (para la interfaz gráfica de usuario, con el apoyo de **WindowBuilder** en Eclipse)
-*   **MySQL 8.0** (como sistema de gestión de bases de datos relacionales)
-*   **JDBC** (Java Database Connectivity, para la conexión y manipulación de la base de datos MySQL)
-*   **Mockito** (para la implementación de pruebas unitarias, aunque aún no está completamente integrado en la versión actual)
+*   **Java JDK 21**
+*   **Swing** (for the Graphical User Interface)
+*   **WindowBuilder** (for visual interface design in Eclipse)
+*   **🗄️ MySQL 8.0**
+*   **🔌 JDBC** (MySQL connector for database connectivity)
+*   **Mockito** (for unit testing)
+*   **JUnit 5** (testing framework)
 
-**Herramientas de Desarrollo:**
+**Tools:**
 
-*   **Eclipse IDE** (entorno de desarrollo principal)
-*   **MySQL Workbench** (para la gestión y administración de la base de datos)
-
----
-
-## 📚 Dependencias
-
-Este proyecto utiliza las siguientes librerías externas, las cuales deben ser añadidas al classpath del proyecto para su correcta compilación y ejecución:
-
-*   **Conector JDBC MySQL**: `mysql-connector-java-8.0.15.jar` (o una versión compatible)
-*   **JCalendar**: `jcalendar-1.4.jar` (para la selección de fechas en la interfaz gráfica)
-*   **Mockito**: `mockito-core-x.x.x.jar` (para la creación de mocks en pruebas unitarias)
-
-**Asegúrate de añadir los archivos `.jar` al proyecto siguiendo las instrucciones de tu IDE:**
-
-*   **En Eclipse**: Haz clic derecho en el proyecto → `Properties` → `Java Build Path` → `Libraries` → `Add External JARs...`
-*   **En IntelliJ IDEA**: `File` → `Project Structure` → `Modules` → `Dependencies` → `+` → `JARs or directories...`
+*   **Eclipse IDE** (primary development environment)
+*   **MySQL Workbench** (for database management)
 
 ---
 
-## 🗄️ Base de datos
+## 📚 Dependencies
 
-El proyecto incluye el script completo de la base de datos necesario para su funcionamiento: `imperialMaritime.sql`.
+This project uses the following external libraries:
 
-### ▶️ Cómo usarlo
+*   MySQL JDBC Connector (e.g., `mysql-connector-java-8.0.15.jar`)
+*   Mockito Libraries (e.g., `mockito-core-5.23.0.jar`, `mockito-junit-jupiter-5.23.0.jar`)
+*   JUnit 5 Libraries (e.g., `junit-jupiter-api-5.10.0.jar`, `junit-jupiter-engine-5.10.0.jar`)
+*   JCalendar (e.g., `jcalendar-1.4.jar`)
 
-Para configurar la base de datos, sigue estos pasos:
+**Make sure to add the .jar files to the project in Eclipse:**
 
-1.  Crea una nueva base de datos en tu servidor MySQL (por ejemplo, `imperialmaritime`).
-2.  Importa el contenido del fichero `imperialMaritime.sql` en la base de datos recién creada.
+1.  Right-click on your project.
+2.  Select `Properties`.
+3.  Go to `Java Build Path`.
+4.  In the `Libraries` tab, click `Add External JARs...` and select all the mentioned `.jar` files.
 
-**a. Desde la consola (terminal):**
+---
+
+## 🗄️ Database
+
+The project includes the database script: `imperialMaritime.sql`
+
+### ▶️ How to Use It
+
+1.  Create a database in MySQL (e.g., `imperialmaritime`).
+2.  Import the `imperialMaritime.sql` file.
+
+**a. From the console:**
 
 ```bash
-mysql -u tu_usuario -p tu_base_de_datos < imperialMaritime.sql
+mysql -u your_user -p your_database_name < imperialMaritime.sql
 ```
 
-*(Reemplaza `tu_usuario` con tu nombre de usuario de MySQL y `tu_base_de_datos` con el nombre de la base de datos que creaste.)*
+*(Replace `your_user` with your MySQL username and `your_database_name` with the name of the database you created.)*
 
-**b. O usando una herramienta gráfica como MySQL Workbench:**
+**b. Or using a graphical tool like MySQL Workbench:**
 
-1.  Abre MySQL Workbench y conéctate a tu servidor MySQL.
-2.  Selecciona la base de datos `imperialmaritime`.
-3.  Ve a `File` → `Open SQL Script...` y selecciona `imperialMaritime.sql`.
-4.  Ejecuta el script (icono del rayo).
+1.  Open MySQL Workbench.
+2.  Connect to your MySQL instance.
+3.  Go to `Server` > `Data Import`.
+4.  Select `Import from Self-Contained File` and choose `imperialMaritime.sql`.
+5.  Ensure the correct target schema is selected.
 
 ---
 
-## 📦 Instalación
+## 📦 Installation
 
-### 📥 Clonar el repositorio
-
-Para obtener una copia local del proyecto, clona el repositorio de GitHub:
+### 📥 Clone the Repository
 
 ```bash
 git clone https://github.com/cj2339/RETO_FINAL.git
 ```
 
-### 📁 Importar el proyecto en Eclipse
+### 📁 Import the Project into Eclipse
 
-1.  Abre Eclipse IDE.
-2.  Ve a `File` → `Import...`.
-3.  Selecciona `General` → `Existing Projects into Workspace` y haz clic en `Next`.
-4.  Haz clic en `Browse...` junto a `Select root directory:` y navega hasta la carpeta donde clonaste el repositorio (`RETO_FINAL`).
-5.  Asegúrate de que el proyecto `RETO_FINAL` esté seleccionado y haz clic en `Finish`.
+1.  Open Eclipse IDE.
+2.  Go to `File` > `Import...`.
+3.  Select `General` > `Existing Projects into Workspace` and click `Next`.
+4.  Click `Browse...` next to `Select root directory:` and navigate to the folder where you cloned the repository (`RETO_FINAL`).
+5.  Ensure the `RETO_FINAL` project is selected and click `Finish`.
 
 ---
 
-## ▶️ Ejecución
+## ▶️ Execution
 
-Una vez que el proyecto esté importado en Eclipse y las dependencias JAR estén configuradas, puedes ejecutar la aplicación:
+Once the project is imported into Eclipse and the JAR dependencies are configured, you can run the application:
 
-1.  Abre el archivo `Main.java` ubicado en `src/main/Main.java`.
-2.  Haz clic derecho en el editor de código y selecciona `Run As` → `Java Application`.
+1.  **Configure the database connection:**
+    *   Open the file `src/configClass.properties`.
+    *   Ensure the values for `Conn`, `DBUser`, and `DBPass` match your MySQL configuration.
+2.  **Run the application:**
+    *   Open the class `src/main/Main.java`.
+    *   Right-click in the editor and select `Run As` > `Java Application`.
 
 ---
 
 ## 🧪 Tests
 
-El proyecto está preparado para incluir pruebas unitarias utilizando la librería Mockito. Aunque la implementación de los tests no está completa en la versión actual, la estructura está lista para su adición.
+The project includes unit and integration tests for the DAO layers, using **JUnit 5** and **Mockito**.
 
-**Para ejecutar tests (una vez implementados):**
+### Test Coverage:
 
-*   Desde Eclipse: Haz clic derecho en el archivo de test o en el paquete de tests y selecciona `Run As` → `JUnit Test`.
-*   Asegúrate de que los JAR de Mockito están correctamente añadidos al classpath del proyecto.
+*   **`TestDBImplementationAdministrator.java`**: Contains full integration tests for the administrator CRUD (insert, get, update, delete, check existence). These tests interact directly with the database.
+*   **`TestDBImplementationCruise.java`**: Implements unit tests for the cruise CRUD. **Uses Mockito** to mock the database connection (JDBC), `PreparedStatement`, and `ResultSet`, allowing the DAO logic to be tested in isolation without depending on a real database.
+*   **`TestDBImplementationClient.java`**: Contains full integration tests for the client CRUD (insert, get, update, delete, check existence). These tests interact directly with the database.
+*   **`TestDBImplementationWorker.java`**: Contains full integration tests for the worker CRUD (insert, get, update, delete, check existence). These tests interact directly with the database.
+
+### To run them in Eclipse:
+
+1.  Ensure the JUnit 5 and Mockito JARs are correctly added to the project libraries (see `📚 Dependencies` section).
+2.  Navigate to the `test/model` folder.
+3.  Right-click on any of the `TestDBImplementation*.java` files or the `test/model` folder.
+4.  Select `Run As` > `JUnit Test`.
+
+The tests verify the correct interaction with the database and the business logic implemented in the DAOs.
