@@ -62,6 +62,7 @@ public class ListBookWindow extends JDialog implements ActionListener {
 		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		setSize(663, 450);
 		setLocationRelativeTo(null);
+		setResizable(false);
 
 		contentPane = new JPanel() {
 			@Override

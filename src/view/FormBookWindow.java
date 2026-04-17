@@ -71,6 +71,7 @@ public class FormBookWindow extends JDialog implements ActionListener {
 		panel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(panel, BorderLayout.CENTER);
 		panel.setLayout(null);
+		setResizable(false);
 
 		this.isInsert = isInsert;
 		this.controller = controller;

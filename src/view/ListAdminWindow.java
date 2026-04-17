@@ -61,6 +61,7 @@ public class ListAdminWindow extends JDialog implements ActionListener {
 		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		setSize(663, 450);
 		setLocationRelativeTo(null);
+		setResizable(false);
 
 		contentPane = new JPanel() {
 			@Override
@@ -76,7 +77,7 @@ public class ListAdminWindow extends JDialog implements ActionListener {
 
 		JLabel title = new JLabel("Administrator Management");
 		title.setHorizontalAlignment(SwingConstants.CENTER);
-		title.setBounds(202, 13, 249, 49);
+		title.setBounds(134, 10, 365, 49);
 		title.setFont(new Font("SansSerif", Font.BOLD, 22));
 		title.setForeground(Color.WHITE);
 		title.setBorder(new EmptyBorder(5, 5, 15, 5));

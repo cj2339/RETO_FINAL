@@ -45,6 +45,7 @@ public class ListCruiseWindow extends JDialog implements ActionListener {
 		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		setSize(663, 450);
 		setLocationRelativeTo(null);
+		setResizable(false);
 
 		JPanel contentPane = new JPanel() {
 			@Override

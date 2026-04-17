@@ -40,7 +40,7 @@ public class MainWindow extends JFrame implements ActionListener {
 	private JButton btnBook;
 	private JButton btnExport;
 	private JLabel lblNewLabel;
-	private Image imagenFondo = new ImageIcon("images/water.jpg").getImage();
+	private Image imagenFondo = new ImageIcon("images/FondoManagment.png").getImage();
 
 
 	private ImageIcon insertIcon(String ruta, int ancho, int alto) {
@@ -73,44 +73,44 @@ public class MainWindow extends JFrame implements ActionListener {
 		lblNewLabel = new JLabel("MANAGEMENT");
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel.setForeground(Color.WHITE);
-		lblNewLabel.setBounds(204, 33, 261, 30);
-		lblNewLabel.setFont(new Font("SansSerif", Font.BOLD, 30));
+		lblNewLabel.setBounds(197, 37, 305, 39);
+		lblNewLabel.setFont(new Font("SansSerif", Font.BOLD, 35));
 		getContentPane().add(lblNewLabel);
 
 
-		btnCruise = new JButton("CRUISE", insertIcon("images/IconoCruise.png", 32, 32));
+		btnCruise = new JButton("CRUISE", insertIcon("images/IconoCruise.png", 43, 43));
 		btnCruise.setFont(new Font("SansSerif", Font.PLAIN, 20));
-		btnCruise.setBounds(61, 136, 200, 55);
+		btnCruise.setBounds(61, 118, 213, 69);
 		getContentPane().add(btnCruise);
 		btnCruise.addActionListener(this);
 
-		btnWorker = new JButton("WORKER", insertIcon("images/IconoWorker.png", 32, 32));
+		btnWorker = new JButton("WORKER", insertIcon("images/IconoWorker.png",  43,  43));
 		btnWorker.setFont(new Font("SansSerif", Font.PLAIN, 20));
-		btnWorker.setBounds(399, 136, 200, 55);
+		btnWorker.setBounds(399, 118, 200, 69);
 		getContentPane().add(btnWorker);
 		btnWorker.addActionListener(this);
 
 		btnClient = new JButton("CLIENT", insertIcon("images/IconoClient.png", 43, 43));
 		btnClient.setFont(new Font("SansSerif", Font.PLAIN, 20));
-		btnClient.setBounds(61, 253, 200, 55);
+		btnClient.setBounds(61, 241, 213, 69);
 		getContentPane().add(btnClient);
 		btnClient.addActionListener(this);
 
-		btnAdmins = new JButton("ADMIN", insertIcon("images/IconoAdmin.png", 32, 32));
+		btnAdmins = new JButton("ADMIN", insertIcon("images/IconoAdmin.png",  43,  43));
 		btnAdmins.setFont(new Font("SansSerif", Font.PLAIN, 20));
-		btnAdmins.setBounds(61, 378, 200, 55);
+		btnAdmins.setBounds(61, 365, 213, 69);
 		getContentPane().add(btnAdmins);
 		btnAdmins.addActionListener(this);
 
-		btnBook = new JButton("BOOK", insertIcon("images/IconoReserva.png", 32, 32));
+		btnBook = new JButton("BOOK", insertIcon("images/IconoReserva.png",  43,  43));
 		btnBook.setFont(new Font("SansSerif", Font.PLAIN, 20));
-		btnBook.setBounds(399, 253, 200, 54);
+		btnBook.setBounds(399, 241, 200, 69);
 		contentPane.add(btnBook);
 		btnBook.addActionListener(this);
 
-		btnExport = new JButton("EXPORT XML", insertIcon("images/IconoXml.png", 32, 32));
+		btnExport = new JButton("EXPORT XML", insertIcon("images/IconoXml.png",  43,  43));
 		btnExport.setFont(new Font("SansSerif", Font.PLAIN, 17));
-		btnExport.setBounds(399, 379, 200, 55);
+		btnExport.setBounds(399, 366, 200, 68);
 		contentPane.add(btnExport);
 		btnExport.addActionListener(this);
 

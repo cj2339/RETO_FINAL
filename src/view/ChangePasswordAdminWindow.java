@@ -68,7 +68,7 @@ public class ChangePasswordAdminWindow extends JDialog implements ActionListener
 			protected void paintComponent(Graphics g) {
 				super.paintComponent(g);
 				g.drawImage(BackgroundImage, 0, 0, getWidth(), getHeight(), this);
-			}
+			} 
 		};
 
 		setContentPane(contentPane);

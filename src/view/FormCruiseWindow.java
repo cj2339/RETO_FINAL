@@ -56,6 +56,7 @@ public class FormCruiseWindow extends JDialog implements ActionListener {
 		}
 
 		setBounds(100, 100, 529, 437);
+		setResizable(false);
 
 		panel = new JPanel() {
 			@Override
