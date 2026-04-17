@@ -153,8 +153,8 @@ public class LoginController {
 	 * @param admin
 	 * @return
 	 */
-	public boolean updateAdministrator(Administrator admin) {
-		return daoAdministrator.updateAdministrator(admin);
+	public boolean updateAdministrator(String oldName, String newName, String newPass) {
+	    return daoAdministrator.updateAdministrator(oldName, newName, newPass);
 	}
 
 	/**

@@ -223,8 +223,29 @@ public class DBImplementationAdministrator implements AdministratorDAO {
 	 */
 	@Override
 
-	public boolean updateAdministrator(Administrator admin) {
-		return updatePassword(admin.getName(), admin.getPassword());
+	public boolean updateAdministrator(String oldName, String newName, String newPass) {
+	    boolean updated = false;
+	    openConnection();
+
+	    try {
+	        stmt = con.prepareStatement(
+	            "UPDATE administrator SET name_admin=?, password_admin=? WHERE name_admin=?"
+	        );
+
+	        stmt.setString(1, newName);
+	        stmt.setString(2, newPass);
+	        stmt.setString(3, oldName);
+
+	        updated = stmt.executeUpdate() > 0;
+
+	        stmt.close();
+	        con.close();
+
+	    } catch (SQLException e) {
+	        System.out.println("Error updating admin: " + e.getMessage());
+	    }
+
+	    return updated;
 	}
 
 	/**

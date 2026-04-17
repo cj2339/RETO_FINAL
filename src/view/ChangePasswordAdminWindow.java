@@ -116,7 +116,7 @@ public class ChangePasswordAdminWindow extends JDialog implements ActionListener
 		txtName = new JTextField();
 		txtName.setBounds(355, 30, 183, 34);
 		txtName.setFont(new Font("Bahnschrift", Font.PLAIN, 20));
-		txtName.setText(adminName); // Rellenar con el nombre actual
+		txtName.setText(adminName);
 		getContentPane().add(txtName);
 
 		lblName = new JLabel("NAME");
@@ -152,7 +152,7 @@ public class ChangePasswordAdminWindow extends JDialog implements ActionListener
 
 		// 1. We check that they are not empty
 		if (valido) {
-			if (oldPass.isEmpty() || newPass.isEmpty() || newName.isEmpty()) { // AÑADIDO newName
+			if (oldPass.isEmpty() || newPass.isEmpty() || newName.isEmpty()) {
 				lblWarning.setText("You must fill in all fields!");
 				valido = false;
 			}
@@ -183,12 +183,10 @@ public class ChangePasswordAdminWindow extends JDialog implements ActionListener
 
 		// 4. All correct → update name + password
 		if (valido) {
-			Administrator updated = new Administrator(newName, newPass);
-
-			if (cont.updateAdministrator(updated)) {
-				lblWarning.setForeground(Color.BLACK);
-				lblWarning.setText("Administrator updated successfully!");
-				atempts = 3;
+            if (cont.updateAdministrator(adminName, newName, newPass)) {
+                lblWarning.setForeground(Color.BLACK);
+                lblWarning.setText("Administrator updated successfully!");
+                atempts = 3;
 				adminName = newName;
 			} else {
 				lblWarning.setText("Error updating administrator. Please try again.");

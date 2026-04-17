@@ -32,7 +32,7 @@ public interface AdministratorDAO {
 	 * @param admin
 	 * @return
 	 */
-	public boolean updateAdministrator(Administrator admin);
+	public boolean updateAdministrator(String oldName, String newName, String newPass);
 
 	/**
 	 * Deletes an administrator by calling the deleteAdministrator method with the
