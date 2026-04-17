@@ -40,7 +40,7 @@ public class LoginWindow extends JDialog implements ActionListener {
 	private JPanel contentPane;
 	private final JPanel contentPanel = new JPanel();
 	private LoginController cont;
-	private Image imagenFondo = new ImageIcon("images/ship.png").getImage();
+	private Image imagenFondo = new ImageIcon("images/FondoLoginn.png").getImage();
 	private JTextField textField;
 	private JPasswordField passwordField;
 	private JLabel lblError;
