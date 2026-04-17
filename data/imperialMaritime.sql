@@ -271,20 +271,19 @@ proc:BEGIN
         LEAVE proc;
     END IF;
     -- 7) Validate room availability based on cruise type
-    SELECT 
-        CASE type_cruise
-            WHEN 'luxury' THEN 1000
-            WHEN 'premium' THEN 500
-            WHEN 'family' THEN 800
-            WHEN 'expedition' THEN 150
-        END
-    INTO v_max_rooms
-    FROM cruise
-    WHERE cod_cruise = p_cod_cruise;
-    IF p_room_number > v_max_rooms THEN
-        SET p_message = 'Room number exceeds allowed range for this cruise type';
-        LEAVE proc;
-    END IF;
+SELECT num_rooms
+INTO v_max_rooms
+FROM cruise
+WHERE cod_cruise = p_cod_cruise;
+
+IF p_room_number < 1 OR p_room_number > v_max_rooms THEN
+    SET p_message = CONCAT(
+        'Room number must be between 1 and ',
+        v_max_rooms,
+        ' for this cruise'
+    );
+    LEAVE proc;
+END IF;
     -- 8) Validate cruise total capacity
     SELECT capacity_max INTO v_capacity FROM cruise WHERE cod_cruise = p_cod_cruise;
     SELECT COUNT(*) INTO v_booked FROM book WHERE cod_cruise = p_cod_cruise;

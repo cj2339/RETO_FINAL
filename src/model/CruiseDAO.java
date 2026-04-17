@@ -22,8 +22,8 @@ public interface CruiseDAO {
 	 * @param id
 	 * @return
 	 */
-	public Cruise getCruiseByCode(String id);
-
+	public Cruise getCruiseByCode(int code);
+	
 	/**
 	 * Deletes a cruise by calling the deleteCruise method of the CruiseDAO
 	 * 

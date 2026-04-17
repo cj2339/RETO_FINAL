@@ -132,12 +132,12 @@ public class DBImplementationCruise implements CruiseDAO {
 	 */
 	@Override
 
-	public Cruise getCruiseByCode(String id) {
+	public Cruise getCruiseByCode(int id) {
 		Cruise cruise = null;
 		this.openConnection();
 		try {
 			statement = connection.prepareStatement(SQLSELECTBYCODE);
-			statement.setString(1, id);
+			statement.setInt(1, id);
 			ResultSet resultset = statement.executeQuery();
 
 			while (resultset.next()) {

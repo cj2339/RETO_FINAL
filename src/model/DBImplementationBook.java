@@ -97,6 +97,13 @@ public class DBImplementationBook implements BookDAO {
 	@Override
 	public boolean createBooking(Book b) {
 		boolean ok = false;
+		CruiseDAO daoCruise = new DBImplementationCruise();
+	    Cruise c = daoCruise.getCruiseByCode(b.getCodCruise());
+
+	    if (b.getRoomNumber() < 1 || b.getRoomNumber() > c.getNumRooms()) {
+	        lastMessage = "Error: Room number exceeds available rooms.";
+	        return false;
+	    }
 		openConnection();
 
 		try {

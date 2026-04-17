@@ -154,7 +154,7 @@ public class LoginController {
 	 * @return
 	 */
 	public boolean updateAdministrator(String oldName, String newName, String newPass) {
-	    return daoAdministrator.updateAdministrator(oldName, newName, newPass);
+		return daoAdministrator.updateAdministrator(oldName, newName, newPass);
 	}
 
 	/**
@@ -312,7 +312,7 @@ public class LoginController {
 	public boolean emailWorkerExists(String email) {
 		return daoWorker.idWorkerExists(email);
 	}
-	
+
 	public boolean phoneWorkerExistsExclude(String phone, String id) {
 		return daoWorker.phoneWorkerExistsExclude(phone, id);
 	}
@@ -371,6 +371,10 @@ public class LoginController {
 	 * @return true if booking creation was successful, false otherwise.
 	 */
 	public String createBooking(Book b) {
+		Cruise c = daoCruise.getCruiseByCode(b.getCodCruise());
+		if (b.getRoomNumber() < 1 || b.getRoomNumber() > c.getNumRooms()) {
+			return "Error: Room number exceeds the number of rooms for this cruise.";
+		}
 		daoBooking.createBooking(b);
 		return ((DBImplementationBook) daoBooking).getLastMessage();
 	}
@@ -395,6 +399,10 @@ public class LoginController {
 	 * @return true if successfully updated, false otherwise.
 	 */
 	public String updateBooking(Book oldB, Book newB) {
+		Cruise c = daoCruise.getCruiseByCode(newB.getCodCruise());
+		if (newB.getRoomNumber() < 1 || newB.getRoomNumber() > c.getNumRooms()) {
+			return "Error: Room number exceeds the number of rooms for this cruise.";
+		}
 		return daoBooking.updateBooking(oldB, newB);
 	}
 

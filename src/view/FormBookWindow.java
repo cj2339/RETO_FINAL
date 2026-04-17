@@ -251,6 +251,15 @@ public class FormBookWindow extends JDialog implements ActionListener {
 				}
 			}
 
+			if (valid) {
+				Cruise cruise = (Cruise) comboCruise.getSelectedItem();
+				int maxRooms = cruise.getNumRooms();
+				if (roomNumber < 1 || roomNumber > maxRooms) {
+					valid = false;
+					errorMsg = "Room number must be between 1 and " + maxRooms + " for this cruise.";
+				}
+			}
+
 			if (!valid) {
 				JOptionPane.showMessageDialog(this, errorMsg);
 				return;
