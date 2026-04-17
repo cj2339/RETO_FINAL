@@ -128,14 +128,13 @@ class TestDBImplementationCruise {
 		when(mockResultSet.getInt("num_rooms")).thenReturn(150);
 		when(mockResultSet.getInt("capacity_max")).thenReturn(600);
 
-		Cruise cruise = dao.getCruiseByCode("5");
-
+		Cruise cruise = dao.getCruiseByCode(5);
 		assertNotNull(cruise);
 		assertEquals(5, cruise.getCodCruise());
 		assertEquals("Test Premium", cruise.getNameCruise());
 		assertEquals(TypeCruise.PREMIUM, cruise.getTypeCruise());
 
-		verify(mockStatement).setString(1, "5");
+		verify(mockStatement).setInt(1, 5);
 		verify(mockStatement).executeQuery();
 	}
 
