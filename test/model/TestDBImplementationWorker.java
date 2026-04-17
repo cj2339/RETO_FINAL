@@ -14,6 +14,14 @@ import model.DBImplementationWorker;
 import model.TypeWorker;
 import model.Worker;
 
+/**
+ * JUnit 5 test class that validates the CRUD operations and integrity checks
+ * of DBImplementationWorker. It verifies correct insertion, retrieval,
+ * update and deletion of Worker records, as well as proper handling of
+ * invalid and non‑existent worker data.
+ *
+ * @author Etna
+ */
 class TestDBImplementationWorker {
 
 	private DBImplementationWorker dao;

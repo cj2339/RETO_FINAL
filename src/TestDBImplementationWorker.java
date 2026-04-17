@@ -1,5 +1,3 @@
-
-
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.List;
@@ -9,11 +7,18 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import model.Cruise;
-import model.DBImplementationCruise;
 import model.DBImplementationWorker;
 import model.TypeWorker;
 import model.Worker;
 
+/**
+ * JUnit 5 test class that validates the core CRUD operations of
+ * DBImplementationWorker. It verifies correct insertion, retrieval,
+ * update and deletion of Worker records, as well as proper handling
+ * of invalid or non‑existent data.
+ *
+ * @author Etna
+ */
 class TestDBImplementationWorker {
 
 	private DBImplementationWorker dao;

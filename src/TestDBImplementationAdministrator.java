@@ -9,6 +9,14 @@ import org.junit.jupiter.api.Test;
 import model.Administrator;
 import model.DBImplementationAdministrator;
 
+/**
+ * JUnit 5 test class that verifies the CRUD operations of
+ * DBImplementationAdministrator. It checks correct insertion,
+ * retrieval, update and deletion of Administrator records, as well
+ * as proper handling of invalid and non‑existent cases.
+ *
+ * @author Iker
+ */
 class TestDBImplementationAdministrator {
 
 	private DBImplementationAdministrator dao;

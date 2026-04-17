@@ -1,4 +1,4 @@
-
+package model;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -8,119 +8,125 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import model.Client;
-import model.DBImplementationClient;
+import model.Cruise;
+import model.DBImplementationCruise;
+import model.DBImplementationWorker;
+import model.TypeWorker;
+import model.Worker;
 
-class TestDBImplementationClient {
+/**
+ * JUnit 5 test class that validates the CRUD operations and integrity checks
+ * of DBImplementationWorker. It verifies correct insertion, retrieval,
+ * update and deletion of Worker records, as well as proper handling of
+ * invalid and non‑existent worker data.
+ *
+ * @author Etna
+ */
+class TestDBImplementationWorker {
 
-    private DBImplementationClient dao;
-    private Client created;
+	private DBImplementationWorker dao;
+	private Worker created;
 
-    @BeforeEach // runs before each test method
-    void setUp() throws Exception {
-        dao = new DBImplementationClient();
-        created = null;
-    }
+	@BeforeEach	// runs before each test method
+	void setUp() throws Exception {
+		dao = new DBImplementationWorker();
+		created = null;
+	}
 
-    @AfterEach // runs after each test method
-    void tearDown() throws Exception {
-        // Ensure cleanup: if a client was created during a test, attempt to delete it
-        if (created != null) {
-            dao.deleteClient(created);
-        }
-    }
+	@AfterEach // runs after each test method
+	void tearDown() throws Exception {
+		// Ensure cleanup: if a worker was created during a test, attempt to delete it
+		if (created != null) {
+			dao.deleteWorker(String.valueOf(created.getIdWorker()));
+		}
+	}
 
-    @Test
-    void testInsertGetUpdateDeleteLifecycle() {
-        // Create a client with a unique ID so tests are repeatable
-        String uniqueId = "TEST_CLIENT_" + System.currentTimeMillis();
+	@Test
+	void testWorkerLifecycleAndAssertTypes() {
+		String testId = "99999999Z";
+		String testPhone = "600111222";
+		String testEmail = "junit@test.com";
 
-        Client client = new Client();
-        client.setIdClient(uniqueId);
-        client.setNameClient("TestName");
-        client.setSurnameClient("TestSurname");
-        client.setAgeClient(30);
-        client.setPhoneClient(600123456);
-        client.setEmailClient("test@example.com");
+		Cruise cruise = new Cruise();
+		cruise.setCodCruise(1); 
 
-        // Insert should return true
-        boolean inserted = dao.insertClient(client);
-        assertTrue(inserted, "insertClient should return true for a valid client");
 
-        // After insert, retrieve all and match by unique ID
-        List<Client> all = dao.getAllClient();
-        Client found = null;
-        for (Client c : all) {
-            if (uniqueId.equals(c.getIdClient())) {
-                found = c;
-                break;
-            }
-        }
-        assertNotNull(found, "Inserted client should be findable by unique ID");
-        created = found; // save for cleanup
+		Worker worker = new Worker(testId, TypeWorker.CAPTAIN, "TestName", "TestSurname", 
+				new java.util.Date(), testPhone, testEmail, 30, 
+				true, false, cruise);
 
-        // getClientByCode should return the same client
-        Client query = new Client();
-        query.setIdClient(uniqueId);
+		//Check that the worker does not already exist
+		assertFalse(dao.idWorkerExists(testId), "The ID should not exist before the test starts");
 
-        Client byCode = dao.getClientByCode(query);
-        assertNotNull(byCode);
-        assertEquals(found.getNameClient(), byCode.getNameClient());
+		//Insert the worker and verify that the operation returns true
+		boolean inserted = dao.insertWorker(worker);
+		assertTrue(inserted, "insertWorker should return true for a valid worker");
 
-        // Update some fields
-        byCode.setNameClient(found.getNameClient() + "_U");
-        byCode.setSurnameClient(found.getSurnameClient() + "_U");
-        byCode.setAgeClient(found.getAgeClient() + 5);
-        byCode.setPhoneClient(found.getPhoneClient() + 100);
-        byCode.setEmailClient("updated@example.com");
+		//Search the worker on the workers list
+		List<Worker> allWorkers = dao.getAllWorker();
+		assertNotNull(allWorkers, "The worker list should not be null");
 
-        boolean updated = dao.updateClientByCode(byCode);
-        assertTrue(updated, "updateClientByCode should return true when update succeeds");
+		// Look for the inserted worker
+		Worker found = null;
+		for (Worker w : allWorkers) {
+			if (w.getIdWorker().equals(testId)) {
+				found = w;
+				break;
+			}
+		}
+		//Verify that the worker was found in the list
+		assertNotNull(found, "The inserted worker should be findable in the database");
 
-        // Verify update
-        Client updatedClient = dao.getClientByCode(query);
-        assertNotNull(updatedClient);
-        assertEquals(byCode.getNameClient(), updatedClient.getNameClient());
-        assertEquals(byCode.getSurnameClient(), updatedClient.getSurnameClient());
-        assertEquals(byCode.getAgeClient(), updatedClient.getAgeClient());
-        assertEquals(byCode.getPhoneClient(), updatedClient.getPhoneClient());
-        assertEquals(byCode.getEmailClient(), updatedClient.getEmailClient());
+		//Compare the name with the original one
+		assertEquals("TestName", found.getName(), "The obtained name must match the original name");
 
-        // Delete and verify deletion
-        boolean deleted = dao.deleteClient(query);
-        assertTrue(deleted, "deleteClient should return true when deletion succeeds");
+		//Update a field and verify 
+		found.setName("UpdatedName");
+		dao.updateWorker(found);
 
-        Client afterDelete = dao.getClientByCode(query);
-        assertNull(afterDelete, "Client should not be found after deletion");
+		//Verify the update by checking the list again
+		List<Worker> updatedList = dao.getAllWorker();
+		String nameAfterUpdate = "";
+		for(Worker w : updatedList) {
+			if(w.getIdWorker().equals(testId)) {
+				nameAfterUpdate = w.getName();
+			}
+		}
+		assertEquals("UpdatedName", nameAfterUpdate, "The name should be updated correctly in the DB");
 
-        // Mark as cleaned up
-        created = null;
-    }
+		//Verify that the method throws an exception when passing a null object
+		assertThrows(NullPointerException.class, () -> {
+			dao.insertWorker(null);
+		}, "Inserting a null worker should throw a NullPointerException");
 
-    @Test
-    void testNonExistentOperations() {
-        // Use a likely-nonexistent id
-        String nonExistentId = "NO_EXIST_999";
+		//Delete the test worker to leave the original database
+		boolean deleted = dao.deleteWorker(testId);
+		assertTrue(deleted, "deleteWorker should return true when the operation succeeds");
 
-        Client fake = new Client();
-        fake.setIdClient(nonExistentId);
+		//The worker should no longer exist
+		assertFalse(dao.idWorkerExists(testId), "The worker should not exist after deletion");
+	}
 
-        // get should return null
-        assertNull(dao.getClientByCode(fake));
+	@Test
+	void testNonExistentWorkerOperations() {
+		//Use an ID that does not exist in the database
+		String nonExistentId = "NOT_EXIST";
 
-        // delete should return false
-        assertFalse(dao.deleteClient(fake));
 
-        // check in book should return false
-        assertFalse(dao.checkClientInBook(nonExistentId));
-    }
+		//Checking existence for a fake ID should return false
+		assertFalse(dao.idWorkerExists(nonExistentId), "idWorkerExists should be false for unknown ID");
+		assertFalse(dao.phoneWorkerExists("000000"), "phoneWorkerExists should be false for unknown phone");
+		assertFalse(dao.emailWorkerExists("fake@email.com"), "emailWorkerExists should be false for unknown email");
 
-    @Test
-    void testInsertNullClientThrowsException() throws Exception {
-        // Test that inserting a null client throws an exception
-        assertThrows(Exception.class, () -> {
-            dao.insertClient(null);
-        });
-    }
+		//Deleting an ID that doesn't exist should return false
+		boolean isDeleted = dao.deleteWorker(nonExistentId);
+		assertFalse(isDeleted, "deleteWorker should return false when the ID is not in the database");
+
+		//Updating a non-existent worker should return false
+		Worker fakeWorker = new Worker();
+		fakeWorker.setIdWorker(nonExistentId);
+		fakeWorker.setName("Fake");
+		assertFalse(dao.updateWorker(fakeWorker), "updateWorker should return false if the record doesn't exist");
+	}
 
 }

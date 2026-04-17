@@ -19,6 +19,15 @@ import org.mockito.MockedStatic;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
+/**
+ * JUnit 5 test class that validates the CRUD operations and query
+ * behaviors of DBImplementationCruise using Mockito. It verifies
+ * correct handling of database interactions, including retrieval,
+ * insertion, update, deletion and existence checks, as well as
+ * proper behavior under simulated SQL exceptions.
+ *
+ * @author Aritz
+ */
 class TestDBImplementationCruise {
 
 	private DBImplementationCruise dao;
@@ -42,7 +51,7 @@ class TestDBImplementationCruise {
 
 		mockedDriverManager = mockStatic(DriverManager.class);
 		mockedDriverManager.when(() -> DriverManager.getConnection(anyString(), anyString(), anyString()))
-				.thenReturn(mockConnection);
+		.thenReturn(mockConnection);
 	}
 
 	@AfterEach
