@@ -304,9 +304,6 @@ public class LoginController {
 		return daoWorker.insertWorker(worker);
 	}
 
-	public boolean idWorkerExists(String id) {
-		return daoWorker.idWorkerExists(id);
-	}
 
 	public boolean phoneWorkerExists(String phone) {
 		return daoWorker.phoneWorkerExists(phone);
@@ -314,6 +311,14 @@ public class LoginController {
 
 	public boolean emailWorkerExists(String email) {
 		return daoWorker.idWorkerExists(email);
+	}
+	
+	public boolean phoneWorkerExistsExclude(String phone, String id) {
+		return daoWorker.phoneWorkerExistsExclude(phone, id);
+	}
+
+	public boolean emailWorkerExistsExclude(String email, String id) {
+		return daoWorker.idWorkerExistsExclude(email, id);
 	}
 
 	/**
