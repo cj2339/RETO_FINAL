@@ -135,55 +135,73 @@ var xslDetalle = `<?xml version="1.0" encoding="UTF-8"?>
 </xsl:stylesheet>`;
 
 
+/// Processes the XML entered or uploaded by the user
 function procesarXML() {
     var raw = document.getElementById('xmlInput').value.trim();
     var st  = document.getElementById('status');
 
+    // Empty input
     if (!raw) {
         st.className = 'status error';
         st.textContent = 'Please enter XML content.';
-        return;
+    } else {
+
+        // Parse XML
+        var parser = new DOMParser();
+        xmlDoc = parser.parseFromString(raw, 'application/xml');
+
+        // Invalid XML
+        if (xmlDoc.querySelector('parsererror')) {
+            st.className = 'status error';
+            st.textContent = 'Error parsing XML. Check the format.';
+        } else {
+            // Valid XML → apply XSLT
+            st.className = 'status success';
+            st.textContent = 'XML processed correctly.';
+            aplicarXSLTabla();
+        }
     }
-
-    var parser = new DOMParser();
-    xmlDoc = parser.parseFromString(raw, 'application/xml');
-
-    if (xmlDoc.querySelector('parsererror')) {
-        st.className = 'status error';
-        st.textContent = 'Error parsing XML. Check the format.';
-        return;
-    }
-
-    st.className = 'status success';
-    st.textContent = 'XML processed correctly.';
-    aplicarXSLTabla();
 }
 
+// Applies the main XSLT stylesheet to display the table view
 function aplicarXSLTabla() {
     var xslParser = new DOMParser();
-    var xslDoc    = xslParser.parseFromString(xslTabla, 'application/xml');
+    var xslDoc = xslParser.parseFromString(xslTabla, 'application/xml');
+
     var processor = new XSLTProcessor();
     processor.importStylesheet(xslDoc);
-    var result    = processor.transformToFragment(xmlDoc, document);
+
+    var result = processor.transformToFragment(xmlDoc, document);
+
     var container = document.getElementById('resultado');
     container.innerHTML = '';
     container.appendChild(result);
 }
 
+// Applies the detail XSLT to show information about a specific cruise
 function mostrarDetalle(code) {
     var xslParser = new DOMParser();
-    var xslDoc    = xslParser.parseFromString(xslDetalle, 'application/xml');
+    var xslDoc = xslParser.parseFromString(xslDetalle, 'application/xml');
+
     var processor = new XSLTProcessor();
     processor.importStylesheet(xslDoc);
     processor.setParameter(null, 'codeCruise', code);
-    var result    = processor.transformToFragment(xmlDoc, document);
+
+    var result = processor.transformToFragment(xmlDoc, document);
+
     var container = document.getElementById('resultado');
     container.innerHTML = '';
     container.appendChild(result);
 }
 
+// Returns to the main table view
 function volverTabla() {
     aplicarXSLTabla();
 }
+
+
+
+   
+
 
 

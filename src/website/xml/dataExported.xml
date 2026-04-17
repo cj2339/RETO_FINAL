@@ -1,0 +1,772 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<cruiseManagement>
+  <cruises>
+    <cruise code="1" type="LUXURY" status="active">
+      <name>North Sea</name>
+      <rooms>200</rooms>
+      <capacity>1000</capacity>
+      <photo>images/1.png</photo>
+    </cruise>
+    <cruise code="2" type="FAMILY" status="active">
+      <name>Tropical Adventure</name>
+      <rooms>150</rooms>
+      <capacity>800</capacity>
+      <photo>images/2.png</photo>
+    </cruise>
+    <cruise code="3" type="EXPEDITION" status="active">
+      <name>Antarctic Ice</name>
+      <rooms>50</rooms>
+      <capacity>150</capacity>
+      <photo>images/3.png</photo>
+    </cruise>
+    <cruise code="4" type="LUXURY" status="active">
+      <name>Mediterranean Diamond</name>
+      <rooms>300</rooms>
+      <capacity>1000</capacity>
+      <photo>images/4.png</photo>
+    </cruise>
+    <cruise code="5" type="FAMILY" status="active">
+      <name>Coastal Breeze</name>
+      <rooms>100</rooms>
+      <capacity>800</capacity>
+      <photo>images/5.png</photo>
+    </cruise>
+    <cruise code="6" type="PREMIUM" status="active">
+      <name>Ocean Spirit</name>
+      <rooms>120</rooms>
+      <capacity>500</capacity>
+      <photo>images/6.png</photo>
+    </cruise>
+    <cruise code="7" type="LUXURY" status="active">
+      <name>Blue Horizon</name>
+      <rooms>250</rooms>
+      <capacity>1000</capacity>
+      <photo>images/7.png</photo>
+    </cruise>
+    <cruise code="8" type="FAMILY" status="active">
+      <name>Sunset Voyager</name>
+      <rooms>180</rooms>
+      <capacity>800</capacity>
+      <photo>images/8.png</photo>
+    </cruise>
+    <cruise code="9" type="EXPEDITION" status="active">
+      <name>Polar Explorer</name>
+      <rooms>60</rooms>
+      <capacity>150</capacity>
+      <photo>images/9.png</photo>
+    </cruise>
+    <cruise code="10" type="PREMIUM" status="active">
+      <name>Emerald Wave</name>
+      <rooms>140</rooms>
+      <capacity>500</capacity>
+      <photo>images/10.png</photo>
+    </cruise>
+    <cruise code="11" type="LUXURY" status="active">
+      <name>Golden Pearl</name>
+      <rooms>280</rooms>
+      <capacity>1000</capacity>
+      <photo>images/11.png</photo>
+    </cruise>
+    <cruise code="12" type="FAMILY" status="active">
+      <name>Caribbean Star</name>
+      <rooms>160</rooms>
+      <capacity>800</capacity>
+      <photo>images/12.png</photo>
+    </cruise>
+    <cruise code="13" type="EXPEDITION" status="active">
+      <name>Northern Lights</name>
+      <rooms>55</rooms>
+      <capacity>150</capacity>
+      <photo>images/13.png</photo>
+    </cruise>
+    <cruise code="14" type="LUXURY" status="active">
+      <name>Pacific Dream</name>
+      <rooms>300</rooms>
+      <capacity>1000</capacity>
+      <photo>images/14.png</photo>
+    </cruise>
+    <cruise code="15" type="PREMIUM" status="active">
+      <name>Baltic Breeze</name>
+      <rooms>130</rooms>
+      <capacity>500</capacity>
+      <photo>images/15.png</photo>
+    </cruise>
+    <cruise code="16" type="FAMILY" status="active">
+      <name>Royal Seagull</name>
+      <rooms>170</rooms>
+      <capacity>800</capacity>
+      <photo>images/16.png</photo>
+    </cruise>
+    <cruise code="17" type="EXPEDITION" status="active">
+      <name>Arctic Wind</name>
+      <rooms>45</rooms>
+      <capacity>150</capacity>
+      <photo>images/17.png</photo>
+    </cruise>
+    <cruise code="18" type="LUXURY" status="active">
+      <name>Mediterranean Sun</name>
+      <rooms>260</rooms>
+      <capacity>1000</capacity>
+      <photo>images/18.png</photo>
+    </cruise>
+    <cruise code="19" type="FAMILY" status="active">
+      <name>Coral Princess</name>
+      <rooms>155</rooms>
+      <capacity>800</capacity>
+      <photo>images/19.png</photo>
+    </cruise>
+    <cruise code="20" type="EXPEDITION" status="active">
+      <name>Stormbreaker</name>
+      <rooms>50</rooms>
+      <capacity>150</capacity>
+      <photo>images/20.png</photo>
+    </cruise>
+  </cruises>
+<workers>
+    <worker id="11111111F" contract="fulltime">
+        <name>Mario</name>
+        <surname>Lopez</surname>
+        <service>COOK</service>
+        <age>29</age>
+        <languages>
+            <spanish>true</spanish>
+            <english>true</english>
+        </languages>
+        <contact>
+            <email>mario.lopez@email.com</email>
+            <phone>600111333</phone>
+        </contact>
+        <cruiseAssigned>1</cruiseAssigned>
+    </worker>
+    <worker id="12345678A" contract="fulltime">
+        <name>Taylor</name>
+        <surname>Robert</surname>
+        <service>COOK</service>
+        <age>34</age>
+        <languages>
+            <spanish>true</spanish>
+            <english>true</english>
+        </languages>
+        <contact>
+            <email>taylor.r@email.com</email>
+            <phone>600111222</phone>
+        </contact>
+        <cruiseAssigned>1</cruiseAssigned>
+    </worker>
+    <worker id="12345678B" contract="fulltime">
+        <name>Wilson</name>
+        <surname>Louis</surname>
+        <service>GUIDE</service>
+        <age>28</age>
+        <languages>
+            <spanish>true</spanish>
+            <english>false</english>
+        </languages>
+        <contact>
+            <email>wilson.l@email.com</email>
+            <phone>600333444</phone>
+        </contact>
+        <cruiseAssigned>1</cruiseAssigned>
+    </worker>
+    <worker id="12345678C" contract="fulltime">
+        <name>Anderson</name>
+        <surname>Laura</surname>
+        <service>RECEPTIONIST</service>
+        <age>41</age>
+        <languages>
+            <spanish>true</spanish>
+            <english>false</english>
+        </languages>
+        <contact>
+            <email>anderson.l@email.com</email>
+            <phone>600555666</phone>
+        </contact>
+        <cruiseAssigned>2</cruiseAssigned>
+    </worker>
+    <worker id="22222222G" contract="fulltime">
+        <name>Lucia</name>
+        <surname>Garcia</surname>
+        <service>GUIDE</service>
+        <age>33</age>
+        <languages>
+            <spanish>true</spanish>
+            <english>false</english>
+        </languages>
+        <contact>
+            <email>lucia.garcia@email.com</email>
+            <phone>600222333</phone>
+        </contact>
+        <cruiseAssigned>2</cruiseAssigned>
+    </worker>
+    <worker id="12345678D" contract="fulltime">
+        <name>Thomas</name>
+        <surname>Frank</surname>
+        <service>CAPTAIN</service>
+        <age>52</age>
+        <languages>
+            <spanish>true</spanish>
+            <english>true</english>
+        </languages>
+        <contact>
+            <email>thomas.f@email.com</email>
+            <phone>600777888</phone>
+        </contact>
+        <cruiseAssigned>3</cruiseAssigned>
+    </worker>
+    <worker id="33333333H" contract="fulltime">
+        <name>Carlos</name>
+        <surname>Perez</surname>
+        <service>RECEPTIONIST</service>
+        <age>27</age>
+        <languages>
+            <spanish>true</spanish>
+            <english>true</english>
+        </languages>
+        <contact>
+            <email>carlos.perez@email.com</email>
+            <phone>600333555</phone>
+        </contact>
+        <cruiseAssigned>3</cruiseAssigned>
+    </worker>
+    <worker id="12345678F" contract="fulltime">
+        <name>White</name>
+        <surname>Martha</surname>
+        <service>GUIDE</service>
+        <age>30</age>
+        <languages>
+            <spanish>true</spanish>
+            <english>true</english>
+        </languages>
+        <contact>
+            <email>white.m@email.com</email>
+            <phone>600999000</phone>
+        </contact>
+        <cruiseAssigned>4</cruiseAssigned>
+    </worker>
+    <worker id="44444444I" contract="fulltime">
+        <name>Sofia</name>
+        <surname>Martinez</surname>
+        <service>CAPTAIN</service>
+        <age>48</age>
+        <languages>
+            <spanish>true</spanish>
+            <english>true</english>
+        </languages>
+        <contact>
+            <email>sofia.martinez@email.com</email>
+            <phone>600444666</phone>
+        </contact>
+        <cruiseAssigned>4</cruiseAssigned>
+    </worker>
+    <worker id="55555555J" contract="fulltime">
+        <name>David</name>
+        <surname>Ruiz</surname>
+        <service>COOK</service>
+        <age>36</age>
+        <languages>
+            <spanish>true</spanish>
+            <english>false</english>
+        </languages>
+        <contact>
+            <email>david.ruiz@email.com</email>
+            <phone>600555777</phone>
+        </contact>
+        <cruiseAssigned>5</cruiseAssigned>
+    </worker>
+    <worker id="66666666K" contract="fulltime">
+        <name>Elena</name>
+        <surname>Santos</surname>
+        <service>GUIDE</service>
+        <age>31</age>
+        <languages>
+            <spanish>true</spanish>
+            <english>true</english>
+        </languages>
+        <contact>
+            <email>elena.santos@email.com</email>
+            <phone>600666888</phone>
+        </contact>
+        <cruiseAssigned>6</cruiseAssigned>
+    </worker>
+    <worker id="77777777L" contract="fulltime">
+        <name>Pablo</name>
+        <surname>Iglesias</surname>
+        <service>RECEPTIONIST</service>
+        <age>26</age>
+        <languages>
+            <spanish>true</spanish>
+            <english>false</english>
+        </languages>
+        <contact>
+            <email>pablo.iglesias@email.com</email>
+            <phone>600777999</phone>
+        </contact>
+        <cruiseAssigned>7</cruiseAssigned>
+    </worker>
+    <worker id="88888888M" contract="fulltime">
+        <name>Laura</name>
+        <surname>Vega</surname>
+        <service>CAPTAIN</service>
+        <age>54</age>
+        <languages>
+            <spanish>true</spanish>
+            <english>true</english>
+        </languages>
+        <contact>
+            <email>laura.vega@email.com</email>
+            <phone>600888111</phone>
+        </contact>
+        <cruiseAssigned>8</cruiseAssigned>
+    </worker>
+    <worker id="99999999N" contract="fulltime">
+        <name>Jorge</name>
+        <surname>Navarro</surname>
+        <service>COOK</service>
+        <age>38</age>
+        <languages>
+            <spanish>true</spanish>
+            <english>true</english>
+        </languages>
+        <contact>
+            <email>jorge.navarro@email.com</email>
+            <phone>600999222</phone>
+        </contact>
+        <cruiseAssigned>9</cruiseAssigned>
+    </worker>
+    <worker id="12121212O" contract="fulltime">
+        <name>Marta</name>
+        <surname>Diez</surname>
+        <service>GUIDE</service>
+        <age>29</age>
+        <languages>
+            <spanish>true</spanish>
+            <english>false</english>
+        </languages>
+        <contact>
+            <email>marta.diez@email.com</email>
+            <phone>601212333</phone>
+        </contact>
+        <cruiseAssigned>10</cruiseAssigned>
+    </worker>
+    <worker id="13131313P" contract="fulltime">
+        <name>Raul</name>
+        <surname>Serrano</surname>
+        <service>RECEPTIONIST</service>
+        <age>32</age>
+        <languages>
+            <spanish>true</spanish>
+            <english>true</english>
+        </languages>
+        <contact>
+            <email>raul.serrano@email.com</email>
+            <phone>601313444</phone>
+        </contact>
+        <cruiseAssigned>11</cruiseAssigned>
+    </worker>
+    <worker id="14141414Q" contract="fulltime">
+        <name>Irene</name>
+        <surname>Calvo</surname>
+        <service>CAPTAIN</service>
+        <age>50</age>
+        <languages>
+            <spanish>true</spanish>
+            <english>true</english>
+        </languages>
+        <contact>
+            <email>irene.calvo@email.com</email>
+            <phone>601414555</phone>
+        </contact>
+        <cruiseAssigned>12</cruiseAssigned>
+    </worker>
+    <worker id="15151515R" contract="fulltime">
+        <name>Victor</name>
+        <surname>Sanz</surname>
+        <service>COOK</service>
+        <age>40</age>
+        <languages>
+            <spanish>true</spanish>
+            <english>false</english>
+        </languages>
+        <contact>
+            <email>victor.sanz@email.com</email>
+            <phone>601515666</phone>
+        </contact>
+        <cruiseAssigned>13</cruiseAssigned>
+    </worker>
+    <worker id="16161616S" contract="fulltime">
+        <name>Nuria</name>
+        <surname>Prieto</surname>
+        <service>GUIDE</service>
+        <age>34</age>
+        <languages>
+            <spanish>true</spanish>
+            <english>true</english>
+        </languages>
+        <contact>
+            <email>nuria.prieto@email.com</email>
+            <phone>601616777</phone>
+        </contact>
+        <cruiseAssigned>14</cruiseAssigned>
+    </worker>
+    <worker id="17171717T" contract="fulltime">
+        <name>Hugo</name>
+        <surname>Rey</surname>
+        <service>RECEPTIONIST</service>
+        <age>25</age>
+        <languages>
+            <spanish>true</spanish>
+            <english>false</english>
+        </languages>
+        <contact>
+            <email>hugo.rey@email.com</email>
+            <phone>601717888</phone>
+        </contact>
+        <cruiseAssigned>15</cruiseAssigned>
+    </worker>
+</workers>
+  <clients>
+    <client id="11111111A">
+        <name>John</name>
+        <surname>Smith</surname>
+        <age>35</age>
+        <email>johnsmith@gmail.com</email>
+        <phone>604923059</phone>
+    </client>
+    <client id="12121212J">
+        <name>Lucia</name>
+        <surname>Ruiz</surname>
+        <age>33</age>
+        <email>luciaruiz@gmail.com</email>
+        <phone>656789012</phone>
+    </client>
+    <client id="13131313K">
+        <name>Diego</name>
+        <surname>Navarro</surname>
+        <age>29</age>
+        <email>diegonavarro@gmail.com</email>
+        <phone>667890123</phone>
+    </client>
+    <client id="14141414L">
+        <name>Paula</name>
+        <surname>Calvo</surname>
+        <age>36</age>
+        <email>paulacalvo@gmail.com</email>
+        <phone>678901234</phone>
+    </client>
+    <client id="15151515M">
+        <name>Alberto</name>
+        <surname>Sanz</surname>
+        <age>41</age>
+        <email>albertosanz@gmail.com</email>
+        <phone>689012345</phone>
+    </client>
+    <client id="16161616N">
+        <name>Cristina</name>
+        <surname>Rey</surname>
+        <age>26</age>
+        <email>cristinarey@gmail.com</email>
+        <phone>690123456</phone>
+    </client>
+    <client id="17171717O">
+        <name>Ruben</name>
+        <surname>Prieto</surname>
+        <age>39</age>
+        <email>rubenprieto@gmail.com</email>
+        <phone>691234567</phone>
+    </client>
+    <client id="18181818P">
+        <name>Elena</name>
+        <surname>Diez</surname>
+        <age>28</age>
+        <email>elenadiez@gmail.com</email>
+        <phone>692345678</phone>
+    </client>
+    <client id="19191919Q">
+        <name>Oscar</name>
+        <surname>Vega</surname>
+        <age>47</age>
+        <email>oscarvega@gmail.com</email>
+        <phone>693456789</phone>
+    </client>
+    <client id="20202020R">
+        <name>Marta</name>
+        <surname>Iglesias</surname>
+        <age>32</age>
+        <email>martaisglesias@gmail.com</email>
+        <phone>694567890</phone>
+    </client>
+    <client id="21212121S">
+        <name>Hector</name>
+        <surname>Garcia</surname>
+        <age>45</age>
+        <email>hectorgarcia@gmail.com</email>
+        <phone>695678901</phone>
+    </client>
+    <client id="22222222B">
+        <name>Mary</name>
+        <surname>Johnson</surname>
+        <age>28</age>
+        <email>maryjohnson@gmail.com</email>
+        <phone>693462061</phone>
+    </client>
+    <client id="22222222T">
+        <name>Nerea</name>
+        <surname>Lopez</surname>
+        <age>24</age>
+        <email>nerealopez@gmail.com</email>
+        <phone>696789012</phone>
+    </client>
+    <client id="33333333C">
+        <name>Charles</name>
+        <surname>Brown</surname>
+        <age>45</age>
+        <email>charlesbrown@gmail.com</email>
+        <phone>629403819</phone>
+    </client>
+    <client id="44444444D">
+        <name>Anna</name>
+        <surname>Miller</surname>
+        <age>52</age>
+        <email>annamiller@gmail.com</email>
+        <phone>631942840</phone>
+    </client>
+    <client id="55555555E">
+        <name>Helen</name>
+        <surname>Davis</surname>
+        <age>31</age>
+        <email>helendavis@gmail.com</email>
+        <phone>667385867</phone>
+    </client>
+    <client id="66666666F">
+        <name>Laura</name>
+        <surname>Gomez</surname>
+        <age>30</age>
+        <email>lauragomez@gmail.com</email>
+        <phone>612345678</phone>
+    </client>
+    <client id="77777777G">
+        <name>Pedro</name>
+        <surname>Lopez</surname>
+        <age>42</age>
+        <email>pedrolopez@gmail.com</email>
+        <phone>623456789</phone>
+    </client>
+    <client id="88888888H">
+        <name>Sara</name>
+        <surname>Martinez</surname>
+        <age>27</age>
+        <email>saramartinez@gmail.com</email>
+        <phone>634567890</phone>
+    </client>
+    <client id="99999999I">
+        <name>Javier</name>
+        <surname>Santos</surname>
+        <age>50</age>
+        <email>javiersantos@gmail.com</email>
+        <phone>645678901</phone>
+    </client>
+  </clients>
+  <bookings>
+    <booking>
+      <cruise>1</cruise>
+      <client>11111111A</client>
+      <originCity>London</originCity>
+      <destinationCity>Oslo</destinationCity>
+      <startDate>2026-06-01</startDate>
+      <endDate>2026-06-15</endDate>
+      <room>1</room>
+      <finalPrice>1200.5</finalPrice>
+    </booking>
+    <booking>
+      <cruise>1</cruise>
+      <client>33333333C</client>
+      <originCity>London</originCity>
+      <destinationCity>Oslo</destinationCity>
+      <startDate>2026-06-01</startDate>
+      <endDate>2026-06-15</endDate>
+      <room>1</room>
+      <finalPrice>1200.5</finalPrice>
+    </booking>
+    <booking>
+      <cruise>2</cruise>
+      <client>22222222B</client>
+      <originCity>Miami</originCity>
+      <destinationCity>Nassau</destinationCity>
+      <startDate>2026-07-10</startDate>
+      <endDate>2026-07-17</endDate>
+      <room>1</room>
+      <finalPrice>850.0</finalPrice>
+    </booking>
+    <booking>
+      <cruise>4</cruise>
+      <client>44444444D</client>
+      <originCity>Athens</originCity>
+      <destinationCity>Rome</destinationCity>
+      <startDate>2026-08-05</startDate>
+      <endDate>2026-08-12</endDate>
+      <room>1</room>
+      <finalPrice>1500.0</finalPrice>
+    </booking>
+    <booking>
+      <cruise>5</cruise>
+      <client>55555555E</client>
+      <originCity>Lisbon</originCity>
+      <destinationCity>Malaga</destinationCity>
+      <startDate>2026-09-20</startDate>
+      <endDate>2026-09-25</endDate>
+      <room>1</room>
+      <finalPrice>450.0</finalPrice>
+    </booking>
+    <booking>
+      <cruise>6</cruise>
+      <client>66666666F</client>
+      <originCity>Bilbao</originCity>
+      <destinationCity>Dublin</destinationCity>
+      <startDate>2026-10-01</startDate>
+      <endDate>2026-10-10</endDate>
+      <room>2</room>
+      <finalPrice>900.0</finalPrice>
+    </booking>
+    <booking>
+      <cruise>7</cruise>
+      <client>77777777G</client>
+      <originCity>Madrid</originCity>
+      <destinationCity>Ibiza</destinationCity>
+      <startDate>2026-11-05</startDate>
+      <endDate>2026-11-12</endDate>
+      <room>3</room>
+      <finalPrice>700.0</finalPrice>
+    </booking>
+    <booking>
+      <cruise>8</cruise>
+      <client>88888888H</client>
+      <originCity>Paris</originCity>
+      <destinationCity>London</destinationCity>
+      <startDate>2026-12-01</startDate>
+      <endDate>2026-12-08</endDate>
+      <room>4</room>
+      <finalPrice>1500.0</finalPrice>
+    </booking>
+    <booking>
+      <cruise>9</cruise>
+      <client>99999999I</client>
+      <originCity>Rome</originCity>
+      <destinationCity>Athens</destinationCity>
+      <startDate>2026-09-15</startDate>
+      <endDate>2026-09-22</endDate>
+      <room>5</room>
+      <finalPrice>1200.0</finalPrice>
+    </booking>
+    <booking>
+      <cruise>10</cruise>
+      <client>12121212J</client>
+      <originCity>Berlin</originCity>
+      <destinationCity>Oslo</destinationCity>
+      <startDate>2026-08-10</startDate>
+      <endDate>2026-08-17</endDate>
+      <room>2</room>
+      <finalPrice>900.0</finalPrice>
+    </booking>
+    <booking>
+      <cruise>11</cruise>
+      <client>13131313K</client>
+      <originCity>Lisbon</originCity>
+      <destinationCity>Madeira</destinationCity>
+      <startDate>2026-07-20</startDate>
+      <endDate>2026-07-27</endDate>
+      <room>1</room>
+      <finalPrice>700.0</finalPrice>
+    </booking>
+    <booking>
+      <cruise>12</cruise>
+      <client>14141414L</client>
+      <originCity>Barcelona</originCity>
+      <destinationCity>Naples</destinationCity>
+      <startDate>2026-06-05</startDate>
+      <endDate>2026-06-12</endDate>
+      <room>3</room>
+      <finalPrice>1500.0</finalPrice>
+    </booking>
+    <booking>
+      <cruise>13</cruise>
+      <client>15151515M</client>
+      <originCity>Valencia</originCity>
+      <destinationCity>Malta</destinationCity>
+      <startDate>2026-05-01</startDate>
+      <endDate>2026-05-08</endDate>
+      <room>4</room>
+      <finalPrice>1200.0</finalPrice>
+    </booking>
+    <booking>
+      <cruise>14</cruise>
+      <client>16161616N</client>
+      <originCity>Sevilla</originCity>
+      <destinationCity>Tenerife</destinationCity>
+      <startDate>2026-04-10</startDate>
+      <endDate>2026-04-17</endDate>
+      <room>2</room>
+      <finalPrice>900.0</finalPrice>
+    </booking>
+    <booking>
+      <cruise>15</cruise>
+      <client>17171717O</client>
+      <originCity>Bilbao</originCity>
+      <destinationCity>Santorini</destinationCity>
+      <startDate>2026-03-15</startDate>
+      <endDate>2026-03-22</endDate>
+      <room>1</room>
+      <finalPrice>700.0</finalPrice>
+    </booking>
+    <booking>
+      <cruise>16</cruise>
+      <client>18181818P</client>
+      <originCity>Madrid</originCity>
+      <destinationCity>Cádiz</destinationCity>
+      <startDate>2026-02-01</startDate>
+      <endDate>2026-02-08</endDate>
+      <room>2</room>
+      <finalPrice>1500.0</finalPrice>
+    </booking>
+    <booking>
+      <cruise>17</cruise>
+      <client>19191919Q</client>
+      <originCity>Paris</originCity>
+      <destinationCity>Nice</destinationCity>
+      <startDate>2026-01-10</startDate>
+      <endDate>2026-01-17</endDate>
+      <room>3</room>
+      <finalPrice>1200.0</finalPrice>
+    </booking>
+    <booking>
+      <cruise>18</cruise>
+      <client>20202020R</client>
+      <originCity>Rome</originCity>
+      <destinationCity>Split</destinationCity>
+      <startDate>2026-12-20</startDate>
+      <endDate>2026-12-27</endDate>
+      <room>4</room>
+      <finalPrice>900.0</finalPrice>
+    </booking>
+    <booking>
+      <cruise>19</cruise>
+      <client>21212121S</client>
+      <originCity>Berlin</originCity>
+      <destinationCity>Tallinn</destinationCity>
+      <startDate>2026-11-15</startDate>
+      <endDate>2026-11-22</endDate>
+      <room>5</room>
+      <finalPrice>700.0</finalPrice>
+    </booking>
+    <booking>
+      <cruise>20</cruise>
+      <client>22222222T</client>
+      <originCity>Lisbon</originCity>
+      <destinationCity>Porto</destinationCity>
+      <startDate>2026-10-05</startDate>
+      <endDate>2026-10-12</endDate>
+      <room>1</room>
+      <finalPrice>1500.0</finalPrice>
+    </booking>
+  </bookings>
+</cruiseManagement>
+
