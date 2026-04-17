@@ -85,6 +85,7 @@ public class FormClientWindow extends JDialog implements ActionListener {
 		this.parent = (ListClientWindow) clientManagement;
 
 		txtId = new JTextField();
+		txtId.setEditable(false);
 		txtId.setFont(new Font("SansSerif", Font.PLAIN, 20));
 		txtId.setColumns(10);
 		txtId.setBounds(287, 58, 186, 30);

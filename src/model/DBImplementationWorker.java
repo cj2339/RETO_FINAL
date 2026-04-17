@@ -260,6 +260,7 @@ public class DBImplementationWorker implements WorkerDAO {
 		try {
 			stmt = con.prepareStatement(SQLPHONEEXCLUDE);
 			stmt.setString(1, phone);
+			stmt.setString(2, id);
 			ResultSet rs = stmt.executeQuery();
 			if (rs.next()) { 
 				exists = true;
@@ -282,6 +283,7 @@ public class DBImplementationWorker implements WorkerDAO {
 		try {
 			stmt = con.prepareStatement(SQLEMAILEXCLUDE);
 			stmt.setString(1, email);
+			stmt.setString(2, id);
 			ResultSet rs = stmt.executeQuery();
 			if (rs.next()) { 
 				exists = true;

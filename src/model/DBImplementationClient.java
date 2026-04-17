@@ -3,6 +3,7 @@ package model;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -14,8 +15,8 @@ import java.util.ResourceBundle;
  * @author Santiago
  */
 public class DBImplementationClient implements ClientDAO {
-	private Connection connection;
-	private PreparedStatement statement;
+	private Connection con; 
+	private PreparedStatement stmt;
 
 	private ResourceBundle configFile;//the ResourceBundle object used to read configuration properties from a file, such as database connection details
 	private String driverDB;//the driver class name for the database connection, which is read from the configuration file
@@ -29,7 +30,11 @@ public class DBImplementationClient implements ClientDAO {
 	final String SQLUPDATEBYCODE = "UPDATE client SET name_client=?, surname_client=?, age_client=?, phone_client=?, email_client=? WHERE id_client=?";//SQL query to update a client's information in the database based on their unique identifier (code)
 	final String SQLINSERT = "INSERT INTO client VALUES(?,?,?,?,?,?)";//SQL query to insert a new client into the database with the provided id, name, surname, age, phone and email
 	final String SQLSELECTBOOKCLIENT = "SELECT * FROM book WHERE id_client=?";//SQL query to check if a client is associated with any booking in the database by their unique identifier (id)
-
+	final String SQLPHONE = "SELECT * FROM client WHERE phone_number=?";
+	final String SQLEMAIL = "SELECT * FROM client WHERE email=?";
+	final String SQLPHONEEXCLUDE = "SELECT * FROM client WHERE phone_number!=? AND id_client!=?";
+	final String SQLEMAILEXCLUDE = "SELECT * FROM client WHERE email!=? AND id_client!=?";
+	
 	public DBImplementationClient() {
 		this.configFile = ResourceBundle.getBundle("configClass");
 		this.driverDB = this.configFile.getString("Driver");
@@ -40,7 +45,7 @@ public class DBImplementationClient implements ClientDAO {
 
 	private void openConnection() {
 		try {
-			connection = DriverManager.getConnection(urlDB, this.userDB, this.passwordDB);
+			con = DriverManager.getConnection(urlDB, this.userDB, this.passwordDB);
 		} catch (SQLException e) {
 			System.out.println("Error to open BD");
 			e.printStackTrace();
@@ -60,8 +65,8 @@ public class DBImplementationClient implements ClientDAO {
 		List<Client> clients = new ArrayList<>();
 		this.openConnection();
 		try {
-			statement = connection.prepareStatement(SQLSELECTALL);
-			java.sql.ResultSet rs = statement.executeQuery();
+			stmt = con.prepareStatement(SQLSELECTALL);
+			java.sql.ResultSet rs = stmt.executeQuery();
 			while (rs.next()) {
 				clients.add(new Client(//creates a new Client object using the data retrieved from the database and adds it to the clients list
 						rs.getString("id_client"),
@@ -73,8 +78,8 @@ public class DBImplementationClient implements ClientDAO {
 						));
 			}
 			rs.close();
-			statement.close();
-			connection.close();
+			stmt.close();
+			con.close();
 		} catch (SQLException e) {
 			System.out.println("Error: " + e.getMessage());
 		}
@@ -91,9 +96,9 @@ public class DBImplementationClient implements ClientDAO {
 	public Client getClientByCode(Client client) {
 		this.openConnection();
 		try {
-			statement = connection.prepareStatement(SQLSELECTBYCODE);
-			statement.setString(1, client.getIdClient());
-			java.sql.ResultSet rs = statement.executeQuery();
+			stmt = con.prepareStatement(SQLSELECTBYCODE);
+			stmt.setString(1, client.getIdClient());
+			java.sql.ResultSet rs = stmt.executeQuery();
 			if (rs.next()) {
 				Client found = new Client(
 						rs.getString("id_client"),
@@ -103,10 +108,10 @@ public class DBImplementationClient implements ClientDAO {
 						rs.getInt("phone_client"),
 						rs.getString("email_client")
 						);
-				rs.close(); statement.close(); connection.close();
+				rs.close(); stmt.close(); con.close();
 				return found;
 			}
-			rs.close(); statement.close(); connection.close();
+			rs.close(); stmt.close(); con.close();
 		} catch (SQLException e) { System.out.println("Error: " + e.getMessage()); }
 		return null;
 	}
@@ -123,10 +128,10 @@ public class DBImplementationClient implements ClientDAO {
 		boolean ok = false;
 		this.openConnection();
 		try {
-			statement = connection.prepareStatement(SQLDELETEBYCODE);
-			statement.setString(1, client.getIdClient());
-			if (statement.executeUpdate() > 0) ok = true;
-			statement.close(); connection.close();
+			stmt = con.prepareStatement(SQLDELETEBYCODE);
+			stmt.setString(1, client.getIdClient());
+			if (stmt.executeUpdate() > 0) ok = true;
+			stmt.close(); con.close();
 		} catch (SQLException e) { System.out.println("Error: " + e.getMessage()); }
 		return ok;
 	}
@@ -142,16 +147,16 @@ public class DBImplementationClient implements ClientDAO {
 		boolean ok = false;
 		this.openConnection();
 		try {
-			statement = connection.prepareStatement(SQLUPDATEBYCODE);
-			statement.setString(1, client.getNameClient());
-			statement.setString(2, client.getSurnameClient());
-			statement.setInt(3, client.getAgeClient());
-			statement.setInt(4, client.getPhoneClient());
-			statement.setString(5, client.getEmailClient());
-			statement.setString(6, client.getIdClient());
-			if (statement.executeUpdate() > 0) ok = true;//by executing the SQLUPDATEBYCODE query with the client's updated information and unique identifier (code)
+			stmt = con.prepareStatement(SQLUPDATEBYCODE);
+			stmt.setString(1, client.getNameClient());
+			stmt.setString(2, client.getSurnameClient());
+			stmt.setInt(3, client.getAgeClient());
+			stmt.setInt(4, client.getPhoneClient());
+			stmt.setString(5, client.getEmailClient());
+			stmt.setString(6, client.getIdClient());
+			if (stmt.executeUpdate() > 0) ok = true;//by executing the SQLUPDATEBYCODE query with the client's updated information and unique identifier (code)
 			//and returns true if the update was successful, or false otherwise
-			statement.close(); connection.close();
+			stmt.close(); con.close();
 		} catch (SQLException e) { System.out.println("Error: " + e.getMessage()); }
 		return ok;
 	}
@@ -167,15 +172,15 @@ public class DBImplementationClient implements ClientDAO {
 		boolean ok = false;
 		this.openConnection();
 		try {
-			statement = connection.prepareStatement(SQLINSERT);
-			statement.setString(1, client.getIdClient());
-			statement.setString(2, client.getNameClient());
-			statement.setString(3, client.getSurnameClient());
-			statement.setInt(4, client.getAgeClient());
-			statement.setInt(5, client.getPhoneClient());
-			statement.setString(6, client.getEmailClient());
-			if (statement.executeUpdate() > 0) ok = true;
-			statement.close(); connection.close();
+			stmt = con.prepareStatement(SQLINSERT);
+			stmt.setString(1, client.getIdClient());
+			stmt.setString(2, client.getNameClient());
+			stmt.setString(3, client.getSurnameClient());
+			stmt.setInt(4, client.getAgeClient());
+			stmt.setInt(5, client.getPhoneClient());
+			stmt.setString(6, client.getEmailClient());
+			if (stmt.executeUpdate() > 0) ok = true;
+			stmt.close(); con.close();
 		} catch (SQLException e) { System.out.println("Error: " + e.getMessage()); }
 		return ok;
 	}
@@ -192,12 +197,104 @@ public class DBImplementationClient implements ClientDAO {
 		boolean existe = false;
 		this.openConnection();
 		try {
-			statement = connection.prepareStatement(SQLSELECTBOOKCLIENT);
-			statement.setString(1, id);
-			java.sql.ResultSet rs = statement.executeQuery();//and returns true if the client is associated with at least one booking, or false otherwise
+			stmt = con.prepareStatement(SQLSELECTBOOKCLIENT);
+			stmt.setString(1, id);
+			java.sql.ResultSet rs = stmt.executeQuery();//and returns true if the client is associated with at least one booking, or false otherwise
 			if (rs.next()) existe = true;
-			rs.close(); statement.close(); connection.close();
+			rs.close(); stmt.close(); con.close();
 		} catch (SQLException e) { System.out.println("Error: " + e.getMessage()); }
 		return existe;
 	}
+	
+	@Override
+	public boolean phoneClientExists(String phone) {
+		boolean exists=false;
+		this.openConnection();
+		try {
+			stmt = con.prepareStatement(SQLPHONE);
+			stmt.setString(1, phone);
+			ResultSet rs = stmt.executeQuery();
+			if (rs.next()) { 
+				exists = true;
+			}
+
+			rs.close();
+			stmt.close();
+			con.close();
+		} catch (SQLException e) {
+			System.out.println("Error: " + e.getMessage());
+		}
+
+		return exists;
+	}
+	
+	@Override
+	public boolean emailClientExists(String email) {
+		boolean exists=false;
+		this.openConnection();
+		try {
+			stmt = con.prepareStatement(SQLEMAIL);
+			stmt.setString(1, email);
+			ResultSet rs = stmt.executeQuery();
+			if (rs.next()) { 
+				exists = true;
+			}
+
+			rs.close();
+			stmt.close();
+			con.close();
+		} catch (SQLException e) {
+			System.out.println("Error: " + e.getMessage());
+		}
+
+		return exists;
+	}
+	
+	@Override
+	public boolean phoneClientExistsExclude(String phone, String id) {
+		boolean exists=false;
+		this.openConnection();
+		try {
+			stmt = con.prepareStatement(SQLPHONEEXCLUDE);
+			stmt.setString(1, phone);
+			stmt.setString(2, id);
+			ResultSet rs = stmt.executeQuery();
+			if (rs.next()) { 
+				exists = true;
+			}
+
+			rs.close();
+			stmt.close();
+			con.close();
+		} catch (SQLException e) {
+			System.out.println("Error: " + e.getMessage());
+		}
+
+		return exists;
+	}
+	
+	@Override
+	public boolean emailClientExistsExclude(String email, String id) {
+		boolean exists=false;
+		this.openConnection();
+		try {
+			stmt = con.prepareStatement(SQLEMAILEXCLUDE);
+			stmt.setString(1, email);
+			stmt.setString(2, id);
+			ResultSet rs = stmt.executeQuery();
+			if (rs.next()) { 
+				exists = true;
+			}
+
+			rs.close();
+			stmt.close();
+			con.close();
+		} catch (SQLException e) {
+			System.out.println("Error: " + e.getMessage());
+		}
+
+		return exists;
+	}
+
+
 }

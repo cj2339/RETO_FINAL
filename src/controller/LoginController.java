@@ -248,6 +248,22 @@ public class LoginController {
 	public boolean checkClientInBook(String id) {
 		return daoClient.checkClientInBook(id);
 	}
+	
+	public boolean phoneClientExists(String phone) {
+		return daoClient.phoneClientExists(phone);
+	}
+	
+	public boolean emailClientExists(String email) {
+		return daoClient.emailClientExists(email);
+	}
+	
+	public boolean phoneClientExistsExclude(String phone, String id) {
+		return daoClient.phoneClientExistsExclude(phone);
+	}
+	
+	public boolean emailClientExistsExclude(String email, String id) {
+		return daoClient.emailClientExistsExclude(email);
+	}
 
 	// worker CRUD Methods
 	//	public ArrayList<String> getWorkerCodes() {

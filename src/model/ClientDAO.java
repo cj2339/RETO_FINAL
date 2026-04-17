@@ -61,4 +61,12 @@ public interface ClientDAO {
 	 */
 	public boolean checkClientInBook(String id);
 
+	public boolean phoneClientExists(String phone);
+
+	public boolean emailClientExists(String email);
+
+	public boolean phoneClientExistsExclude(String phone, String id);
+
+	public boolean emailClientExistsExclude(String email, String id);
+
 }
