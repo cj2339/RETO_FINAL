@@ -17,7 +17,6 @@ import java.util.ResourceBundle;
 public class DBImplementationWorker implements WorkerDAO {
 	private Connection con;
 	private PreparedStatement stmt;
-
 	private ResourceBundle configFile;
 	private String driverDB;
 	private String urlDB;
@@ -31,8 +30,8 @@ public class DBImplementationWorker implements WorkerDAO {
 	final String SQLUPDATEBYCODE = "UPDATE worker SET service = ?, name_worker = ?, surname_worker = ?, hiring_date = ?, phone_number = ?, email = ?, age = ?, spanish_language = ?, english_language = ?, cod_cruise = ? WHERE id_worker = ?";
 	final String SQLINSERT = "INSERT INTO worker VALUES(?,?,?,?,?,?,?,?,?,?,?)";
 	final String SQLID = "SELECT * FROM worker WHERE id_worker=?";
-	final String SQLPHONE = "SELECT * FROM worker WHERE phone_worker=?";
-	final String SQLEMAIL = "SELECT * FROM worker WHERE email_worker=?";
+	final String SQLPHONE = "SELECT * FROM worker WHERE phone_number=?";
+	final String SQLEMAIL = "SELECT * FROM worker WHERE email=?";
 
 
 	public DBImplementationWorker() {
