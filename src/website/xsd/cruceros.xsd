@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+  <xs:element name="cruiseManagement">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="cruises">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="cruise" maxOccurs="unbounded">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="name" type="xs:string"/>
+                    <xs:element name="rooms" type="xs:integer"/>
+                    <xs:element name="capacity" type="xs:integer"/>
+                    <xs:element name="photo" type="xs:string"/>
+                  </xs:sequence>
+                  <xs:attribute name="code" type="xs:integer"/>
+                  <xs:attribute name="type" type="xs:string"/>
+                  <xs:attribute name="status" type="xs:string"/>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+
+        <xs:element name="workers">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="worker" maxOccurs="unbounded">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="name" type="xs:string"/>
+                    <xs:element name="surname" type="xs:string"/>
+                    <xs:element name="service" type="xs:string"/>
+                    <xs:element name="age">
+                      <xs:simpleType>
+                        <xs:restriction base="xs:integer">
+                          <xs:minInclusive value="18"/>
+                          <xs:maxInclusive value="70"/>
+                        </xs:restriction>
+                      </xs:simpleType>
+                    </xs:element>
+                    <xs:element name="languages">
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element name="spanish" type="xs:boolean"/>
+                          <xs:element name="english" type="xs:boolean"/>
+                        </xs:sequence>
+                      </xs:complexType>
+                    </xs:element>
+                    <xs:element name="contact">
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element name="email" type="xs:string"/>
+                          <xs:element name="phone" type="xs:string"/>
+                        </xs:sequence>
+                      </xs:complexType>
+                    </xs:element>
+                    <xs:element name="cruiseAssigned" type="xs:integer"/>
+                  </xs:sequence>
+                  <xs:attribute name="id" type="xs:string"/>
+                  <xs:attribute name="contract" type="xs:string"/>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+
+        <xs:element name="clients">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="client" maxOccurs="unbounded">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="name" type="xs:string"/>
+                    <xs:element name="surname" type="xs:string"/>
+                    <xs:element name="age" type="xs:integer"/>
+                    <xs:element name="email" type="xs:string"/>
+                    <xs:element name="phone" type="xs:string"/>
+                  </xs:sequence>
+                  <xs:attribute name="id" type="xs:string"/>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+
+        <xs:element name="bookings">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="booking" maxOccurs="unbounded">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="cruise" type="xs:integer"/>
+                    <xs:element name="client" type="xs:string"/>
+                    <xs:element name="originCity" type="xs:string"/>
+                    <xs:element name="destinationCity" type="xs:string"/>
+                    <xs:element name="startDate" type="xs:date"/>
+                    <xs:element name="endDate" type="xs:date"/>
+                    <xs:element name="room" type="xs:integer"/>
+                    <xs:element name="finalPrice" type="xs:decimal"/>
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>
